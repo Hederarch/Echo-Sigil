@@ -19,6 +19,7 @@ public class MapUnityEditor : Editor
         m_Sprite = serializedObject.FindProperty("mapSprite");
         m_Tile = serializedObject.FindProperty("tile");
         m_TileSize = serializedObject.FindProperty("tileHeight");
+
         if (map.mapSprite == null)
         {
             EditorGUILayout.PropertyField(m_Sprite);
