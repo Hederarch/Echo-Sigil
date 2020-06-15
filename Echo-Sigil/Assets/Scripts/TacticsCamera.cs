@@ -5,39 +5,47 @@ using UnityEngine;
 
 public class TacticsCamera : MonoBehaviour
 {
-    public Transform foucus;
-    Vector3 previousFoucusPosition;
+    public CameraFoucus foucus;
+    public float speed = .5f;
+    public Camera cam;
+    public static Vector3 forward;
+    public static Vector3 right;
+    float angle = (float)Math.PI;
     Vector2 previousMousePosition;
 
     // Update is called once per frame
     void Update()
     {
         PlayerInputs();
-        if (foucus != null)
-        {
-            FoucusInputs();
-        }
+        FoucusInputs();
+        forward = transform.forward;
+        right = transform.right;
+        cam.transparencySortMode = TransparencySortMode.CustomAxis;
+        cam.transparencySortAxis = transform.up;
     }
 
     private void FoucusInputs()
     {
-        transform.position += previousFoucusPosition - foucus.position;
-        previousFoucusPosition = foucus.position;
+        if (!Input.GetMouseButtonDown(1) && foucus != null)
+        {
+            transform.position = foucus.CalcPostion(angle);
+            transform.rotation = foucus.CalcRotation(transform.position,angle);
+        }
     }
 
     private void PlayerInputs()
     {
-        Vector3 desierdMovement = new Vector2();
-        desierdMovement.x += Input.GetAxis("Horizontal");
-        desierdMovement.y += Input.GetAxis("Vertical");
+        Vector3 desierdPosition = transform.position;
         if (Input.GetMouseButton(1))
         {
-            desierdMovement.x += previousMousePosition.x - Input.mousePosition.x;
-            desierdMovement.y += previousMousePosition.y - Input.mousePosition.y;
+            desierdPosition += transform.up * (previousMousePosition.x - Input.mousePosition.x) * (speed * Time.deltaTime);
+            desierdPosition += transform.right * (previousMousePosition.y - Input.mousePosition.y) * (speed * Time.deltaTime);
+        }
+        else
+        {
+            angle -= Input.GetAxis("Horizontal") * (speed * Time.deltaTime);
         }
         previousMousePosition = Input.mousePosition;
-        transform.position += desierdMovement;
-
-
+        transform.position = desierdPosition;
     }
 }

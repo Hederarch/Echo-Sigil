@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Map : MonoBehaviour
 {
-    public Sprite mapSprite;
-    public Vector2 size;
+    public Texture2D mapTexture;
+    public Vector2Int size;
     public GameObject tile;
 
     public float tileHeight = 1f;
@@ -15,7 +15,7 @@ public class Map : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GenerateMap();
+        GenerateMap(mapTexture);
     }
 
     public void GenerateMap()
@@ -32,15 +32,28 @@ public class Map : MonoBehaviour
         }
     }
 
-    public void GenerateMap(Sprite mapSprite)
+    public void GenerateMap(Texture2D mapTexture)
     {
-        if(mapSprite == null)
+        RemoveMap();
+        if (mapTexture == null)
         {
             GenerateMap();
         }
         else
         {
-            throw new NotImplementedException();
+            Vector2 mapHalfHeight = new Vector2((size.x * tileHeight) / 2 - (tileHeight / 2), (size.y * tileHeight) / 2 - (tileHeight / 2));
+            for (int x = 0; x < mapTexture.width; x++)
+            {
+                for (int y = 0; y < mapTexture.height; y++)
+                {
+                    if(mapTexture.GetPixel(x,y).a != 0)
+                    {
+                        GameObject individualTile = Instantiate(tile, new Vector3(mapHalfHeight.x - (x * tileHeight), mapHalfHeight.y - (y * tileHeight)), Quaternion.identity, transform);
+                        individualTile.name = x + "," + y + " tile";
+                        individualTile.GetComponent<SpriteRenderer>().color = mapTexture.GetPixel(x, y);
+                    }
+                }
+            }
         }
     }
     /// <summary>
@@ -54,4 +67,11 @@ public class Map : MonoBehaviour
         }
     }
 
+    private void OnValidate()
+    {
+        if (mapTexture != null)
+        {
+            size = new Vector2Int(mapTexture.width, mapTexture.height);
+        }
+    }
 }

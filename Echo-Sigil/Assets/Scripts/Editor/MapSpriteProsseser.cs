@@ -13,7 +13,7 @@ public class MapSpriteProsseser : AssetPostprocessor
         if (isInSpritesDirectory)
         {
             TextureImporter textureImporter = (TextureImporter)assetImporter;
-            textureImporter.textureType = TextureImporterType.Sprite;
+            textureImporter.textureType = TextureImporterType.Default;
             textureImporter.isReadable = true;
             textureImporter.textureCompression = TextureImporterCompression.Uncompressed;
         }
