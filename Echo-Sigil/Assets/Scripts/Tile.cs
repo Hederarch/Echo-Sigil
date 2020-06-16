@@ -17,6 +17,11 @@ public class Tile : MonoBehaviour
     public Tile parent;
     public int distance;
 
+    //A* stuff
+    public float f;
+    public float g;
+    public float h;
+
     private void Update()
     {
         GetComponent<SpriteRenderer>().color = CheckColor();
@@ -44,17 +49,17 @@ public class Tile : MonoBehaviour
         return output;
     }
 
-    public void FindNeighbors(float jumpHeight)
+    public void FindNeighbors(float jumpHeight, Tile target)
     {
         ResetTile();
         adjacencyList.Clear();
-        FindNeighbor(Vector3.up, jumpHeight);
-        FindNeighbor(Vector3.down, jumpHeight);
-        FindNeighbor(Vector3.left, jumpHeight);
-        FindNeighbor(Vector3.right, jumpHeight);
+        FindNeighbor(Vector3.up, jumpHeight, target);
+        FindNeighbor(Vector3.down, jumpHeight, target);
+        FindNeighbor(Vector3.left, jumpHeight, target);
+        FindNeighbor(Vector3.right, jumpHeight, target);
     }
 
-    void FindNeighbor(Vector3 direction, float jumpHeight)
+    void FindNeighbor(Vector3 direction, float jumpHeight, Tile target)
     {
         Vector3 halfExtents = new Vector3(.25f, .25f, (1 + jumpHeight) / 2);
         Collider[] colliders = Physics.OverlapBox(transform.position + direction, halfExtents);
@@ -63,7 +68,7 @@ public class Tile : MonoBehaviour
             Tile tile = collider.GetComponent<Tile>();
             if(tile != null && tile.walkable)
             {
-                if (tile.DirectionCheck())
+                if (tile.DirectionCheck() || tile == target)
                 {
                     adjacencyList.Add(tile);
                 }
@@ -71,7 +76,7 @@ public class Tile : MonoBehaviour
         }
     }
 
-    private bool DirectionCheck()
+    public bool DirectionCheck()
     {
         bool output = true;
         if(Physics.Raycast(transform.position,Vector3.back,out RaycastHit hit))
@@ -92,6 +97,10 @@ public class Tile : MonoBehaviour
         visited = false;
         parent = null;
         distance = 0;
+
+        f = 0;
+        g = 0;
+        h = 0;
     }
 
 }

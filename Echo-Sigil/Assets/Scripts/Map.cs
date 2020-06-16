@@ -28,7 +28,7 @@ public class Map : MonoBehaviour
             {
                 for (int y = 0; y < mapTexture.height; y++)
                 {
-                    mapTexture.SetPixel(x, y, Color.white);
+                    mapTexture.SetPixel(x, y, Color.black);
                 }
             }
         }
@@ -43,7 +43,6 @@ public class Map : MonoBehaviour
                     {
                         GameObject individualTile = Instantiate(tile, new Vector3(mapHalfHeight.x - (x * tileHeight), mapHalfHeight.y - (y * tileHeight)), Quaternion.identity, transform);
                         individualTile.name = x + "," + y + " tile";
-                        print(individualTile.transform.position.ToString() + "as init");
                         SetProperties(individualTile,mapTexture.GetPixel(x, y));
                     }
                 }
@@ -64,7 +63,6 @@ public class Map : MonoBehaviour
     void SetProperties(GameObject tile, Color color)
     {
         Vector3 position = tile.transform.position;
-        print(position.ToString() + "as fin");
         position.z += color.r;
         tile.transform.position = position;
     }
