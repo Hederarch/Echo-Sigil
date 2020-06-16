@@ -11,7 +11,6 @@ public class Map : MonoBehaviour
 
     public float tileHeight = 1f;
     
-
     // Start is called before the first frame update
     void Start()
     {
@@ -44,7 +43,8 @@ public class Map : MonoBehaviour
                     {
                         GameObject individualTile = Instantiate(tile, new Vector3(mapHalfHeight.x - (x * tileHeight), mapHalfHeight.y - (y * tileHeight)), Quaternion.identity, transform);
                         individualTile.name = x + "," + y + " tile";
-                        individualTile.GetComponent<Tile>().walkable = SetProperties(mapTexture.GetPixel(x, y));
+                        print(individualTile.transform.position.ToString() + "as init");
+                        SetProperties(individualTile,mapTexture.GetPixel(x, y));
                     }
                 }
             }
@@ -61,16 +61,12 @@ public class Map : MonoBehaviour
         }
     }
 
-    bool SetProperties(Color color)
+    void SetProperties(GameObject tile, Color color)
     {
-        if(color == Color.white)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        Vector3 position = tile.transform.position;
+        print(position.ToString() + "as fin");
+        position.z += color.r;
+        tile.transform.position = position;
     }
 
     private void OnValidate()

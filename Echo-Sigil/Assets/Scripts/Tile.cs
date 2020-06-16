@@ -83,6 +83,8 @@ public class Tile : MonoBehaviour
 
     public void ResetTile()
     {
+        adjacencyList.Clear();
+
         current = false;
         target = false;
         selectable = false;

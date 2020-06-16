@@ -15,6 +15,7 @@ public class TacticsMove : FacesTacticticsCamera
 
     public bool isTurn;
     public int moveDistance = 3;
+    public float moveSpeed = 4;
     public float jumpHeight = 2;
 
     public Tile currentTile;
@@ -22,7 +23,18 @@ public class TacticsMove : FacesTacticticsCamera
     Vector3 velocity = new Vector3();
     Vector3 heading = new Vector3();
 
+    float halfHeight;
 
+    private bool movingEdge;
+    private Vector3 jumpTarget;
+    private bool jummpingUp;
+    private bool fallingDown;
+    public float jumpVelocity = 4.5f;
+
+    public virtual void Start()
+    {
+        halfHeight = GetComponent<Collider>().bounds.extents.z;
+    }
 
     public void FindSelectableTiles()
     {
@@ -104,19 +116,158 @@ public class TacticsMove : FacesTacticticsCamera
         if(path.Count > 0)
         {
             Tile t = path.Peek();
-            if (Vector2.Distance(transform.position, t.transform.position) >= .5f)
+            Vector3 target = t.transform.position;
+
+            target.z -= halfHeight + t.GetComponent<Collider>().bounds.extents.z + .1f;
+
+            if (Vector2.Distance(transform.position, target) >= .05f)
             {
-                transform.position = new Vector3(t.transform.position.x, t.transform.position.y, transform.position.z);
+                bool jump = transform.position.z != target.z;
+
+                if (jump)
+                {
+                    Jump(target);
+                }
+                else
+                {
+                    CalculateHeading(target);
+                    SetHorizontalVelocity();
+                }
+
+                //locomation/animation
+                //transform.forward = heading;
+                transform.position += velocity * Time.deltaTime;
             }
             else
             {
-                transform.position = new Vector3(t.transform.position.x, t.transform.position.y, transform.position.z);
+                transform.position = target;
                 path.Pop();
             }
         }
         else
         {
+            RemoveSelectableTiles();
             moveing = false;
+        }
+    }
+
+    private void CalculateHeading(Vector3 target)
+    {
+        heading = target - transform.position;
+        heading.Normalize();
+    }
+
+    private void SetHorizontalVelocity()
+    {
+        velocity = heading * moveSpeed;
+    }
+
+    protected void RemoveSelectableTiles()
+    {
+        if(currentTile != null)
+        {
+            currentTile.current = false;
+            currentTile = null;
+        }
+        foreach(Tile tile in selectableTiles)
+        {
+            tile.ResetTile();
+        }
+
+        selectableTiles.Clear();
+    }
+
+    private void Jump(Vector3 target)
+    {
+        if (fallingDown)
+        {
+            FallDownward(target);
+        } 
+        else if (jummpingUp)
+        {
+            JumpUpward(target);
+        } 
+        else if (movingEdge)
+        {
+            MoveToEdge();
+        }
+        else
+        {
+            PrepareJump(target);
+        }
+    }
+
+    private void MoveToEdge()
+    {
+        if (Vector3.Distance(transform.position, jumpTarget) > .5f)
+        {
+            SetHorizontalVelocity();
+        }
+        else
+        {
+            movingEdge = false;
+            fallingDown = true;
+
+            velocity /= 3.0f;
+            velocity.z = 1.5f;
+        }
+    }
+
+    private void JumpUpward(Vector3 target)
+    {
+        velocity += Physics.gravity * Time.deltaTime;
+
+        if (transform.position.z > target.z)
+        {
+            jummpingUp = false;
+            fallingDown = true;
+        }
+    }
+
+    private void FallDownward(Vector3 target)
+    {
+        velocity += Physics.gravity * Time.deltaTime;
+
+        if (transform.position.z < target.z)
+        {
+            fallingDown = false;
+
+            Vector3 p = transform.position;
+            p.z = target.z;
+            transform.position = p;
+
+            velocity = new Vector3();
+        }
+
+    }
+
+    private void PrepareJump(Vector3 target)
+    {
+        float targetZ = target.z;
+
+        target.z = transform.position.z;
+
+        CalculateHeading(target);
+
+        if(transform.position.z > targetZ)
+        {
+            fallingDown = false;
+            jummpingUp = false;
+            movingEdge = true;
+
+            jumpTarget = transform.position + (target - transform.position) / 2;
+        } 
+        else
+        {
+            fallingDown = false;
+            jummpingUp = true;
+            movingEdge = false;
+
+            velocity = heading * moveSpeed / 3.0f;
+
+            float diffrence = targetZ - transform.position.z;
+
+            velocity.z = jumpVelocity * (0.5f + diffrence / 2);
         }
     }
 }
