@@ -18,26 +18,20 @@ public class Map : MonoBehaviour
         GenerateMap(mapTexture);
     }
 
-    public void GenerateMap()
-    {
-        RemoveMap();
-        Vector2 mapHalfHeight = new Vector2((size.x * tileHeight) / 2 - (tileHeight /2), (size.y * tileHeight) / 2 - (tileHeight / 2));
-        for (int x = 0; x < size.x; x++)
-        {
-            for (int y = 0; y < size.y; y++)
-            {
-                GameObject individualTile = Instantiate(tile, new Vector3(mapHalfHeight.x - (x * tileHeight), mapHalfHeight.y - (y * tileHeight)), Quaternion.identity, transform);
-                individualTile.name = x + "," + y + " tile";
-            }
-        }
-    }
-
     public void GenerateMap(Texture2D mapTexture)
     {
         RemoveMap();
         if (mapTexture == null)
         {
-            GenerateMap();
+            mapTexture = new Texture2D(size.x, size.y);
+
+            for (int x = 0; x < mapTexture.width; x++)
+            {
+                for (int y = 0; y < mapTexture.height; y++)
+                {
+                    mapTexture.SetPixel(x, y, Color.white);
+                }
+            }
         }
         else
         {
@@ -46,11 +40,11 @@ public class Map : MonoBehaviour
             {
                 for (int y = 0; y < mapTexture.height; y++)
                 {
-                    if(mapTexture.GetPixel(x,y).a != 0)
+                    if (mapTexture.GetPixel(x, y).a != 0)
                     {
                         GameObject individualTile = Instantiate(tile, new Vector3(mapHalfHeight.x - (x * tileHeight), mapHalfHeight.y - (y * tileHeight)), Quaternion.identity, transform);
                         individualTile.name = x + "," + y + " tile";
-                        individualTile.GetComponent<SpriteRenderer>().color = mapTexture.GetPixel(x, y);
+                        individualTile.GetComponent<Tile>().walkable = SetProperties(mapTexture.GetPixel(x, y));
                     }
                 }
             }
@@ -64,6 +58,18 @@ public class Map : MonoBehaviour
         for (int i = transform.childCount - 1; i >= 0; i--)
         {
             DestroyImmediate(transform.GetChild(i).gameObject);
+        }
+    }
+
+    bool SetProperties(Color color)
+    {
+        if(color == Color.white)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
