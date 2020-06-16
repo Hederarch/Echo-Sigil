@@ -34,6 +34,8 @@ public class TacticsMove : FacesTacticticsCamera
     public virtual void Start()
     {
         halfHeight = GetComponent<Collider>().bounds.extents.z;
+
+        TurnManager.AddUnit(this);
     }
 
     public void FindSelectableTiles()
@@ -148,6 +150,8 @@ public class TacticsMove : FacesTacticticsCamera
         {
             RemoveSelectableTiles();
             moveing = false;
+
+            TurnManager.EndTurn();
         }
     }
 
@@ -269,5 +273,16 @@ public class TacticsMove : FacesTacticticsCamera
 
             velocity.z = jumpVelocity * (0.5f + diffrence / 2);
         }
+    }
+
+    public void BeginTurn()
+    {
+        isTurn = true;
+        Camera.main.GetComponent<TacticsCamera>().foucus = this;
+    }
+
+    public void EndTurn()
+    {
+        isTurn = false;
     }
 }
