@@ -15,7 +15,8 @@ public class TacticsCamera : MonoBehaviour
 
     bool cameraMoved;
 
-    float desieredAngle = (float)Math.PI;
+    //This is only public because of that bug test. Please make it private when you fix that bug
+    public float desieredAngle = (float)Math.PI;
     private float angle = 0;
     Vector2 previousMousePosition;
 
