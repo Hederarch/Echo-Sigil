@@ -814,7 +814,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5964bc93d52f274795e9b2a29d37197, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bugText: {fileID: 550204210}
 --- !u!114 &229034362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1384,12 +1383,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fea6c7c68b769824db7aa530e735717b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foucus: {fileID: 1101671935}
+  foucus: {fileID: 0}
   speed: 0.5
   cam: {fileID: 519420031}
-  offsetDistance: 4
-  offsetAngle: 4
+  offsetFromFoucus: 4
+  offsetFromZ0: 4
   desieredAngle: 3.1415927
+  PiFix: {x: 0, y: 0, z: 180}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -1481,7 +1481,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 108.49997, y: 24.725}
+  m_AnchoredPosition: {x: 108.49994, y: 24.724976}
   m_SizeDelta: {x: 216.99997, y: -49.44937}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &550204210
@@ -2012,6 +2012,7 @@ GameObject:
   - component: {fileID: 1101671936}
   - component: {fileID: 1101671935}
   - component: {fileID: 1101671933}
+  - component: {fileID: 1101671934}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2032,6 +2033,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.1, y: 0.1, z: 0.1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1101671934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101671932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b32e83e9ff279c458c005f2658d7b13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 2103496346}
+  bugText: {fileID: 550204210}
 --- !u!114 &1101671935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2044,7 +2059,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d7306ae6e8f13242a6bd178b56a36de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 2103496346}
   moveing: 0
   isTurn: 0
   moveDistance: 3
@@ -3665,6 +3679,7 @@ GameObject:
   - component: {fileID: 1952242073}
   - component: {fileID: 1952242074}
   - component: {fileID: 1952242076}
+  - component: {fileID: 1952242075}
   m_Layer: 0
   m_Name: NPC
   m_TagString: NPC
@@ -3699,7 +3714,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89a3fabceff4a0b42a34e3ad12b77ed0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 1101994726}
   moveing: 0
   isTurn: 0
   moveDistance: 3
@@ -3707,6 +3721,20 @@ MonoBehaviour:
   jumpHeight: 2
   currentTile: {fileID: 0}
   jumpVelocity: 4.5
+--- !u!114 &1952242075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1952242072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b32e83e9ff279c458c005f2658d7b13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 1101994726}
+  bugText: {fileID: 550204210}
 --- !u!65 &1952242076
 BoxCollider:
   m_ObjectHideFlags: 0
