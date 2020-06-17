@@ -32,19 +32,16 @@ public class Map : MonoBehaviour
                 }
             }
         }
-        else
+        Vector2 mapHalfHeight = new Vector2((size.x * tileHeight) / 2 - (tileHeight / 2), (size.y * tileHeight) / 2 - (tileHeight / 2));
+        for (int x = 0; x < mapTexture.width; x++)
         {
-            Vector2 mapHalfHeight = new Vector2((size.x * tileHeight) / 2 - (tileHeight / 2), (size.y * tileHeight) / 2 - (tileHeight / 2));
-            for (int x = 0; x < mapTexture.width; x++)
+            for (int y = 0; y < mapTexture.height; y++)
             {
-                for (int y = 0; y < mapTexture.height; y++)
+                if (mapTexture.GetPixel(x, y).a != 0)
                 {
-                    if (mapTexture.GetPixel(x, y).a != 0)
-                    {
-                        GameObject individualTile = Instantiate(tile, new Vector3(mapHalfHeight.x - (x * tileHeight), mapHalfHeight.y - (y * tileHeight)), Quaternion.identity, transform);
-                        individualTile.name = x + "," + y + " tile";
-                        SetProperties(individualTile,mapTexture.GetPixel(x, y));
-                    }
+                    GameObject individualTile = Instantiate(tile, new Vector3(mapHalfHeight.x - (x * tileHeight), mapHalfHeight.y - (y * tileHeight)), Quaternion.identity, transform);
+                    individualTile.name = x + "," + y + " tile";
+                    SetProperties(individualTile, mapTexture.GetPixel(x, y));
                 }
             }
         }
@@ -66,7 +63,7 @@ public class Map : MonoBehaviour
         position.z += color.r;
         tile.transform.position = position;
     }
-
+     
     private void OnValidate()
     {
         if (mapTexture != null)

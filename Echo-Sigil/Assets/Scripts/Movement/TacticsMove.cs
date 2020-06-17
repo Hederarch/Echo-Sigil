@@ -153,6 +153,7 @@ public class TacticsMove : MonoBehaviour
             RemoveSelectableTiles();
             moveing = false;
 
+            isTurn = false;
             EndMoveEvent?.Invoke();
         }
     }

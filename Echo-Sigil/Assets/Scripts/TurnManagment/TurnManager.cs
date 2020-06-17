@@ -10,13 +10,9 @@ public class TurnManager : MonoBehaviour
     static Queue<string> turnKey = new Queue<string>();
     static Queue<ITurn> turnTeam = new Queue<ITurn>();
 
-    private static Text staticDebugText;
-    public Text debugText;
+    public static bool isPlayerTurn { get => turnKey.Peek() == "Player" ; }
+    public static ITurn currentUnit { get => turnTeam.Peek() ; }
 
-    private void Start()
-    {
-        staticDebugText = debugText;
-    }
     private void Update()
     {
         if (turnTeam.Count == 0)
@@ -41,14 +37,6 @@ public class TurnManager : MonoBehaviour
         if (turnTeam.Count > 0)
         {
             turnTeam.Peek().BeginTurn();
-        }
-        staticDebugText.text = "";
-        foreach (string s in turnKey)
-        {
-            foreach(ITurn unit in units[s])
-            {
-                staticDebugText.text += unit.GetTag() + ", ";
-            }
         }
     }
 
