@@ -5,17 +5,17 @@ using UnityEngine;
 
 public class FacesTacticticsCamera : MonoBehaviour
 {
-    public SpriteRenderer sprite;
+    public SpriteRenderer unitSprite;
     // Update is called once per frame
     void SpriteFaceCamera()
     {
-        sprite.transform.right = TacticsCamera.right;
+        unitSprite.transform.right = TacticsCamera.right;
         //seems like treating symptom, not cause. Pls find better solution
         if (TacticsCamera.IsPi)
         {
-            sprite.transform.rotation = Quaternion.Euler(0,0,180);
+            unitSprite.transform.rotation = Quaternion.Euler(0,0,180);
         }
-        Debug.DrawRay(sprite.transform.position, sprite.transform.right);
+        Debug.DrawRay(unitSprite.transform.position, unitSprite.transform.right);
     }
 
     public virtual void Update()

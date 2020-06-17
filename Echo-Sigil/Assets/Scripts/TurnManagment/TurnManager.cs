@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TurnManager : MonoBehaviour
 {
@@ -9,6 +10,13 @@ public class TurnManager : MonoBehaviour
     static Queue<string> turnKey = new Queue<string>();
     static Queue<ITurn> turnTeam = new Queue<ITurn>();
 
+    private static Text staticDebugText;
+    public Text debugText;
+
+    private void Start()
+    {
+        staticDebugText = debugText;
+    }
     private void Update()
     {
         if (turnTeam.Count == 0)
@@ -33,6 +41,14 @@ public class TurnManager : MonoBehaviour
         if (turnTeam.Count > 0)
         {
             turnTeam.Peek().BeginTurn();
+        }
+        staticDebugText.text = "";
+        foreach (string s in turnKey)
+        {
+            foreach(ITurn unit in units[s])
+            {
+                staticDebugText.text += unit.GetTag() + ", ";
+            }
         }
     }
 

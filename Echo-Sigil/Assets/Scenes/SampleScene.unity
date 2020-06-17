@@ -1389,7 +1389,6 @@ MonoBehaviour:
   offsetFromFoucus: 4
   offsetFromZ0: 4
   desieredAngle: 3.1415927
-  PiFix: {x: 0, y: 0, z: 180}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -2045,8 +2044,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b32e83e9ff279c458c005f2658d7b13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 2103496346}
-  bugText: {fileID: 550204210}
+  unitSprite: {fileID: 2103496346}
 --- !u!114 &1101671935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3733,8 +3731,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b32e83e9ff279c458c005f2658d7b13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 1101994726}
-  bugText: {fileID: 550204210}
+  unitSprite: {fileID: 1101994726}
 --- !u!65 &1952242076
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4071,6 +4068,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c9eba0d6ead4884b8ab1cc842fcae47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugText: {fileID: 550204210}
 --- !u!1 &2103496345
 GameObject:
   m_ObjectHideFlags: 0
