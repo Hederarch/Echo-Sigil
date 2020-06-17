@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class Implement : FacesTacticticsCamera, ITurn
 {
     protected TacticsMove tacticsMove;
+    protected JRPGBattle jRPGBattle;
 
     protected bool hasMoved;
     protected bool hasAttacked;
@@ -17,6 +18,7 @@ public class Implement : FacesTacticticsCamera, ITurn
     private void Start()
     {
         tacticsMove = GetComponent<TacticsMove>();
+        jRPGBattle = GetComponent<JRPGBattle>();
         Init();
     }
 
