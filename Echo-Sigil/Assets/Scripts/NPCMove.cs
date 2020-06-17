@@ -18,8 +18,8 @@ public class NPCMove : TacticsMove
             if (!moveing)
             {
                 FindSelectableTiles();
-                CalculatePath();
                 FindNearestTarget();
+                CalculatePath();
             }
             else
             {
@@ -37,6 +37,7 @@ public class NPCMove : TacticsMove
 
         foreach (GameObject obj in targets)
         {
+            print(obj.name);
             float d = Vector3.Distance(transform.position, obj.transform.position);
 
             if (d < distance)
