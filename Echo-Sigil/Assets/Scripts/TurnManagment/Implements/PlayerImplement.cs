@@ -13,7 +13,7 @@ public class PlayerImplement : Implement
 
     private void QOLEndTurn()
     {
-        if(hasMoved /*&& hasAttacked*/)
+        if(hasMoved && hasAttacked)
         {
             TurnManager.EndTurn();
         }
@@ -23,13 +23,16 @@ public class PlayerImplement : Implement
     {
         if (!hasMoved)
         {
-            tacticsMove.isTurn = true;
+            move.SetIsTurn();
         }
     }
 
     void Attack()
     {
-        print("Have not done yet");
+        if (!hasAttacked)
+        {
+            battle.SetIsTurn();
+        }
     }
 
     protected override void Subscribe()

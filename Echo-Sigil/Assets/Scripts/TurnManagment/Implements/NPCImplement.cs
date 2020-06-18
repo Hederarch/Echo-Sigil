@@ -9,8 +9,9 @@ public class NPCImplement : Implement
         base.BeginTurn();
         if (!hasMoved)
         {
-            tacticsMove.isTurn = true;
-        } else
+            move.SetIsTurn();
+        } 
+        else
         {
             TurnManager.EndTurn();
         }
@@ -19,12 +20,12 @@ public class NPCImplement : Implement
     protected override void Subscribe()
     {
         base.Subscribe();
-        tacticsMove.EndMoveEvent += TurnManager.EndTurn;
+        move.EndEvent += TurnManager.EndTurn;
     }
 
     protected override void UnSubscribe()
     {
         base.UnSubscribe();
-        tacticsMove.EndMoveEvent -= TurnManager.EndTurn;
+        move.EndEvent -= TurnManager.EndTurn;
     }
 }

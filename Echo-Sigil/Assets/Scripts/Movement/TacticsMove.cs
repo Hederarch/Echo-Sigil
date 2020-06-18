@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TacticsMove : MonoBehaviour
+public class TacticsMove : MonoBehaviour , IMovement
 {
     public bool moveing;
 
@@ -33,7 +33,7 @@ public class TacticsMove : MonoBehaviour
 
     Tile actualTargetTile;
 
-    public event Action EndMoveEvent;
+    public event Action EndEvent;
 
     void Start()
     {
@@ -154,7 +154,7 @@ public class TacticsMove : MonoBehaviour
             moveing = false;
 
             isTurn = false;
-            EndMoveEvent?.Invoke();
+            EndEvent?.Invoke();
         }
     }
 
@@ -385,5 +385,10 @@ public class TacticsMove : MonoBehaviour
         openList.Remove(lowest);
 
         return lowest;
+    }
+
+    public void SetIsTurn()
+    {
+        isTurn = true;
     }
 }

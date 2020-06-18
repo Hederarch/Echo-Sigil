@@ -24,6 +24,7 @@ public class PlayerGUIScript : MonoBehaviour
     {
         animator.SetBool("isPlayerTurn", TurnManager.isPlayerTurn);
     }
+
     public void Move()
     {
         if (TurnManager.isPlayerTurn)
@@ -51,14 +52,13 @@ public class PlayerGUIScript : MonoBehaviour
     void SetAsCurrentUnit(Implement unit)
     {
         guiCharacterImageRenderer.sprite = unit.unitSprite.sprite;
-        SetSliders(unit.jRPGBattle);
+        SetSliders(unit.battle);
     }
 
-    void SetSliders(JRPGBattle unit)
+    void SetSliders(IBattle unit)
     {
-        healthSlider.maxValue = unit.maxHealth;
-        healthSlider.value = unit.health;
-        willSlider.maxValue = unit.maxWill;
-        willSlider.value = unit.will;
+        healthSlider.value = unit.GetHealthPercent();
+        willSlider.value = unit.GetWillPercent();
     }
+
 }

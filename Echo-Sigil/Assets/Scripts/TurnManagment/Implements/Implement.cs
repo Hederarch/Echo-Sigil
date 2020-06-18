@@ -9,8 +9,8 @@ using UnityEngine.UI;
 /// </summary>
 public class Implement : FacesCamera, ITurn
 {
-    public TacticsMove tacticsMove;
-    public JRPGBattle jRPGBattle;
+    public IMovement move;
+    public IBattle battle;
 
     protected bool hasMoved;
     protected bool hasAttacked;
@@ -19,8 +19,8 @@ public class Implement : FacesCamera, ITurn
 
     private void Start()
     {
-        tacticsMove = GetComponent<TacticsMove>();
-        jRPGBattle = GetComponent<JRPGBattle>();
+        move = GetComponent<TacticsMove>();
+        battle = GetComponent<JRPGBattle>();
         Init();
     }
 
@@ -58,11 +58,13 @@ public class Implement : FacesCamera, ITurn
 
     protected virtual void Subscribe()
     {
-        tacticsMove.EndMoveEvent += HasMoved;
+        move.EndEvent += HasMoved;
+        battle.EndEvent += HasAttacked;
     }
     protected virtual void UnSubscribe()
     {
-        tacticsMove.EndMoveEvent -= HasMoved;
+        move.EndEvent -= HasMoved;
+        battle.EndEvent -= HasAttacked;
     }
 
     public virtual void ResetUnit()
