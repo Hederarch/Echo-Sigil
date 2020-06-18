@@ -8,29 +8,29 @@ public class JRPGBattleCamera : MonoBehaviour
     public Camera cam;
     public List<JRPGBattle> units = new List<JRPGBattle>();
 
-    public float offsetFromFoucus = 4;
-    public float offsetFromZ0 = 4;
+    public float offsetFromFoucus = 2;
+    public float offsetFromZ0 = 2;
 
     private void LateUpdate()
     {
-        transform.rotation = Quaternion.Euler(0, 90, -90);
         Vector3 centerPoint = GetCenterPoint();
-
         centerPoint.z += -offsetFromZ0;
-        Vector2 directionToUnit0 = units[0].transform.position - transform.position;
+
+        Vector3 forward = Vector3.left;
         if (units[0].leftSide)
         {
-            transform.right = -directionToUnit0;
-        } else
+            transform.forward = units[0].transform.forward;
+        } 
+        else
         {
-            transform.right = directionToUnit0;
+            transform.forward = -units[0].transform.forward;
         }
 
-        Vector3 newPosition = centerPoint + offsetFromFoucus * -transform.forward;
-
-        transform.position = newPosition;
+        transform.rotation = Quaternion.LookRotation(forward, Vector3.back);
+        transform.position = centerPoint + offsetFromFoucus * -transform.forward;
         
         cam.orthographic = false;
+
     }
 
     private Vector3 GetCenterPoint()

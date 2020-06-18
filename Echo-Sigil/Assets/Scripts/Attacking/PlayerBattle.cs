@@ -9,18 +9,9 @@ public class PlayerBattle : JRPGBattle
 
     private void Update()
     {
-        if (isTurn)
+        if (isTurn && !inBattle)
         {
             CheckAdjecent();
-        }
-    }
-
-    private void CheckAdjecent()
-    {
-        JRPGBattle contender = FindNeighbors();
-        if(contender != null && !contender.Equals(this))
-        {
-            SetCombatant(contender);
         }
     }
 }
