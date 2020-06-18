@@ -7,7 +7,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Character in the world
 /// </summary>
-public class Implement : FacesTacticticsCamera, ITurn
+public class Implement : FacesCamera, ITurn
 {
     protected TacticsMove tacticsMove;
     protected JRPGBattle jRPGBattle;
@@ -24,7 +24,7 @@ public class Implement : FacesTacticticsCamera, ITurn
 
     public virtual void BeginTurn()
     {
-        Camera.main.GetComponent<TacticsCamera>().foucus = this;
+        Camera.main.GetComponent<MovementCamera>().foucus = this;
         Subscribe();
     }
 

@@ -14,7 +14,6 @@ public class NPCImplement : Implement
         {
             TurnManager.EndTurn();
         }
-
     }
 
     protected override void Subscribe()

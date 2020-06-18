@@ -70,7 +70,8 @@ public class TurnManager : MonoBehaviour
             {
                 turnKey.Enqueue(unit.GetTag());
             }
-        } else
+        } 
+        else
         {
             list = units[unit.GetTag()];
         }

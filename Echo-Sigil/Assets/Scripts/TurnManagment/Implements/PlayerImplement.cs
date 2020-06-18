@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerImplement : Implement
 {
-    public override void Update()
+    protected override void Update()
     {
         base.Update();
         QOLEndTurn();
@@ -29,7 +29,7 @@ public class PlayerImplement : Implement
 
     void Attack()
     {
-        throw new NotImplementedException();
+        print("Have not done yet");
     }
 
     protected override void Subscribe()
