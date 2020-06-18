@@ -9,11 +9,13 @@ using UnityEngine.UI;
 /// </summary>
 public class Implement : FacesCamera, ITurn
 {
-    protected TacticsMove tacticsMove;
-    protected JRPGBattle jRPGBattle;
+    public TacticsMove tacticsMove;
+    public JRPGBattle jRPGBattle;
 
     protected bool hasMoved;
     protected bool hasAttacked;
+
+    public static event Action<Implement> IsTurnEvent;
 
     private void Start()
     {
@@ -24,7 +26,7 @@ public class Implement : FacesCamera, ITurn
 
     public virtual void BeginTurn()
     {
-        Camera.main.GetComponent<MovementCamera>().foucus = this;
+        IsTurnEvent?.Invoke(this);
         Subscribe();
     }
 

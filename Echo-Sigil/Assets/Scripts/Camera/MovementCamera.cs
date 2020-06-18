@@ -19,6 +19,11 @@ public class MovementCamera : MonoBehaviour
 
     public static bool IsPi { get => Math.Abs(angle - Math.PI) < .5f; }
 
+    private void Start()
+    {
+        Implement.IsTurnEvent += SetAsFoucus;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -95,5 +100,10 @@ public class MovementCamera : MonoBehaviour
     {
         cam.transparencySortMode = TransparencySortMode.CustomAxis;
         cam.transparencySortAxis = transform.up;
+    }
+
+    void SetAsFoucus(Implement unit)
+    {
+        foucus = unit;
     }
 }

@@ -34,15 +34,15 @@ public class PlayerImplement : Implement
 
     protected override void Subscribe()
     {
-        PlayerInputs.MoveEvent += Move;
-        PlayerInputs.AttackEvent += Attack;
+        PlayerGUIScript.MoveEvent += Move;
+        PlayerGUIScript.AttackEvent += Attack;
         base.Subscribe();
     }
 
     protected override void UnSubscribe()
     {
-        PlayerInputs.MoveEvent -= Move;
-        PlayerInputs.AttackEvent -= Attack;
+        PlayerGUIScript.MoveEvent -= Move;
+        PlayerGUIScript.AttackEvent -= Attack;
         base.UnSubscribe();
     }
 }
