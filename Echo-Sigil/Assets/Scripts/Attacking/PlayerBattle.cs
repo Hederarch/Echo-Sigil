@@ -11,7 +11,11 @@ public class PlayerBattle : JRPGBattle
     {
         if (isTurn && !inBattle)
         {
-            CheckAdjecent();
+            JRPGBattle j = CheckAdjecent();
+            if(j != null)
+            {
+                SetCombatant(j);
+            }
         }
     }
 }

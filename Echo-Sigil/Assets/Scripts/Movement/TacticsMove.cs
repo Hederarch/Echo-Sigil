@@ -86,7 +86,10 @@ public class TacticsMove : MonoBehaviour , IMovement
     public Tile GetCurrentTile()
     {
         currentTile = GetTargetTile(transform.position);
-        currentTile.current = true;
+        if (currentTile != null)
+        {
+            currentTile.current = true;
+        }
         return currentTile;
     }
 
@@ -390,5 +393,19 @@ public class TacticsMove : MonoBehaviour , IMovement
     public void SetIsTurn()
     {
         isTurn = true;
+    }
+
+    public bool GetCanMove()
+    {
+        GetCurrentTile();
+        if (currentTile != null)
+        {
+            currentTile.FindNeighbors(jumpHeight, null);
+            if (currentTile.adjacencyList.Count > 0)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

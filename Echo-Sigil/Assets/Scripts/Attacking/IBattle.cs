@@ -6,4 +6,5 @@ public interface IBattle
     event Action EndEvent;
     float GetHealthPercent();
     float GetWillPercent();
+    bool GetCanAttack();
 }

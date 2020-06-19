@@ -15,6 +15,9 @@ public class PlayerGUIScript : MonoBehaviour
     public Slider healthSlider;
     public Slider willSlider;
 
+    public Button moveButton;
+    public Button attackButton;
+
     private void Start()
     {
         Implement.IsTurnEvent += SetAsCurrentUnit;
@@ -53,6 +56,11 @@ public class PlayerGUIScript : MonoBehaviour
     {
         guiCharacterImageRenderer.sprite = unit.unitSprite.sprite;
         SetSliders(unit.battle);
+        if (TurnManager.isPlayerTurn)
+        {
+            moveButton.interactable = unit.move.GetCanMove();
+            attackButton.interactable = unit.battle.GetCanAttack();
+        }
     }
 
     void SetSliders(IBattle unit)

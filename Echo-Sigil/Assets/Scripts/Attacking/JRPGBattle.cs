@@ -24,8 +24,9 @@ public class JRPGBattle : MonoBehaviour , IBattle
 
     public void SetCombatant(JRPGBattle combatant)
     {
-        if(combatant != null)
+        if(combatant != null && !inBattle)
         {
+            inBattle = true;
             //needs to be a corutine for the animation to work
             StartCoroutine(SetCombatantCoroutine(combatant));
         }
@@ -41,11 +42,13 @@ public class JRPGBattle : MonoBehaviour , IBattle
         battleCamera.units.Add(this);
         battleCamera.units.Add(combatant);
         battleCamera.enabled = true;
-        inBattle = true;
+        FightGUIScript.SetMenu(this);
+        FightGUIScript.SetStats();
     }
 
     public void EndCombat()
     {
+        inBattle = false;
         StartCoroutine(EndCombatCorutine());
     }
 
@@ -55,6 +58,7 @@ public class JRPGBattle : MonoBehaviour , IBattle
         yield return new WaitForSeconds(.1f);
         ResetBattleCamera(Camera.main.GetComponent<JRPGBattleCamera>());
         Camera.main.GetComponent<TacticsMovementCamera>().enabled = true;
+        FightGUIScript.ResetMenuStats();
         EndEvent?.Invoke();
     }
 
@@ -101,31 +105,32 @@ public class JRPGBattle : MonoBehaviour , IBattle
         
     }
 
-    protected bool CheckAdjecent()
+    protected JRPGBattle CheckAdjecent()
     {
         JRPGBattle contender = FindNeighbors();
         if (contender != null && !contender.Equals(this))
         {
-            SetCombatant(contender);
-            return true;
+            return contender;
         } 
         else
         {
-            return false;
+            return null;
         }
     }
 
     public float GetHealthPercent()
     {
-        if(maxHealth != 0)
+        if(maxHealth > 0)
         {
-            print(health + "/" + maxHealth + "=" + health / maxHealth + "% health");
+            //if you dont set it to float it will only return interger values
+            float health = this.health;
+            float maxHealth = this.maxHealth;
             return health / maxHealth;
         } 
         else
         {
-            Debug.LogWarning(name + "has no health max");
-            return .5f;
+            Debug.LogWarning(name + "has invalid health max");
+            return 0;
         }
     }
 
@@ -133,14 +138,25 @@ public class JRPGBattle : MonoBehaviour , IBattle
     {
         if(maxWill != 0)
         {
-            print(will + "/" + maxWill + "=" + will / maxWill + "% will");
+            //if you dont set it to float it will only return interger values
+            float will = this.will;
+            float maxWill = this.maxWill;
             return will / maxWill;
         }
         else
         {
-            Debug.LogWarning(name + "has no will max");
+            Debug.LogWarning(name + "has invlaid will max");
             return .5f;
         }
     }
 
+    public bool GetCanAttack()
+    {
+        JRPGBattle j = CheckAdjecent();
+        if(j != null)
+        {
+            return true;
+        }
+        return false;
+    }
 }

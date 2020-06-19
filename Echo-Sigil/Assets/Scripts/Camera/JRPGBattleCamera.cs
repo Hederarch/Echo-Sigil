@@ -19,11 +19,11 @@ public class JRPGBattleCamera : MonoBehaviour
         Vector3 forward = Vector3.left;
         if (units[0].leftSide)
         {
-            transform.forward = units[0].transform.forward;
+            transform.forward = -units[0].transform.forward;
         } 
         else
         {
-            transform.forward = -units[0].transform.forward;
+            transform.forward = units[0].transform.forward;
         }
 
         transform.rotation = Quaternion.LookRotation(forward, Vector3.back);
