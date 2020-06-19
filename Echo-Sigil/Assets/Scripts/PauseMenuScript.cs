@@ -1,12 +1,37 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PauseMenuScript : MonoBehaviour
 {
     public Animator animatior;
+    public Text text;
+
+    void Start()
+    {
+        TurnManager.GameWinEvent += GameWin;
+        TurnManager.GameLoseEvent += GameLose;
+    }
+
+    void GameWin()
+    {
+        Unsubscribe();
+        text.text = "You Won!";
+    }
+
+    void GameLose()
+    {
+        Unsubscribe();
+        text.text = "You Lost.";
+    }
+
+    void Unsubscribe()
+    {
+        TurnManager.GameWinEvent -= GameWin;
+        TurnManager.GameLoseEvent -= GameLose;
+        animatior.SetBool("Paused", true);
+        animatior.SetBool("UnPauseable", true);
+    }
     // Update is called once per frame
     void Update()
     {
@@ -19,5 +44,11 @@ public class PauseMenuScript : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void Reload()
+    {
+        TurnManager.Reset();
+        SceneManager.LoadScene(0);
     }
 }

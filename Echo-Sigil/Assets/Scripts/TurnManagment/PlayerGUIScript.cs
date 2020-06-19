@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class PlayerGUIScript : MonoBehaviour
 {
+    public static PlayerGUIScript staticThis;
+
     public static event Action MoveEvent;
     public static event Action AttackEvent;
 
@@ -20,6 +22,7 @@ public class PlayerGUIScript : MonoBehaviour
 
     private void Start()
     {
+        staticThis = this;
         Implement.IsTurnEvent += SetAsCurrentUnit;
     }
 
@@ -52,14 +55,20 @@ public class PlayerGUIScript : MonoBehaviour
         }
     }
 
-    void SetAsCurrentUnit(Implement unit)
+    public void SetAsCurrentUnit(Implement unit)
     {
-        guiCharacterImageRenderer.sprite = unit.unitSprite.sprite;
-        SetSliders(unit.battle);
-        if (TurnManager.isPlayerTurn)
+        if(unit != null)
         {
-            moveButton.interactable = unit.move.GetCanMove() && !unit.hasMoved;
-            attackButton.interactable = unit.battle.GetCanAttack() && !unit.hasAttacked;
+            guiCharacterImageRenderer.sprite = unit.unitSprite.sprite;
+            SetSliders(unit.battle);
+            if (TurnManager.isPlayerTurn)
+            {
+                moveButton.interactable = unit.move.GetCanMove() && !unit.hasMoved;
+                attackButton.interactable = unit.battle.GetCanAttack() && !unit.hasAttacked;
+            }
+        } else
+        {
+            Debug.LogError("The GUI was feed a null.");
         }
     }
 

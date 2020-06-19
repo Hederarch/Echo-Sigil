@@ -14,9 +14,20 @@ public class Ability : ScriptableObject
 
     public virtual void ActivateAbility()
     {
-        BattleData.combatant.will -= willDamage;
-        BattleData.combatant.health -= healthDameage;
+        if (BattleData.isLeftTurn)
+        {
+            BattleData.rightCombatants[0].will -= willDamage;
+            BattleData.rightCombatants[0].health -= healthDameage;
 
-        BattleData.instagator.will -= willCost;
+            BattleData.leftCombatants[0].will -= willCost;
+        } else
+        {
+            BattleData.leftCombatants[0].will -= willDamage;
+            BattleData.leftCombatants[0].health -= healthDameage;
+
+            BattleData.rightCombatants[0].will -= willCost;
+        }
+
+        BattleData.EndBattleTurn();
     }
 }

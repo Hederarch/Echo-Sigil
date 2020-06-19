@@ -10,7 +10,7 @@ public class JRPGBattleCamera : MonoBehaviour
     public float offsetFromFoucus = 2;
     public float offsetFromZ0 = 2;
 
-    private void LateUpdate()
+    private void SetCamera()
     {
         Vector3 centerPoint = GetCenterPoint();
         centerPoint.z += -offsetFromZ0;
@@ -43,16 +43,34 @@ public class JRPGBattleCamera : MonoBehaviour
         var bounds = new Bounds(BattleData.instagator.transform.position, Vector3.zero);
         bounds.Encapsulate(BattleData.combatant.transform.position);
 
-        foreach(JRPGBattle j in BattleData.leftCombatants)
-        {
-            j.transform.rotation = Quaternion.Euler(0, 90, -90);
-        }
-        foreach (JRPGBattle j in BattleData.rightCombatants)
-        {
-            j.transform.rotation = Quaternion.Euler(0, 90, -90);
-        }
-
         return bounds.center;
     }
 
+    public void SetCameraLookOreietaiton(Vector3 direction)
+    {
+        foreach (JRPGBattle j in BattleData.leftCombatants)
+        {
+            j.transform.rotation = Quaternion.Euler(direction);
+        }
+        foreach (JRPGBattle j in BattleData.rightCombatants)
+        {
+            j.transform.rotation = Quaternion.Euler(direction);
+        }
+    }
+
+    public void SwitchCamera(bool isBattle)
+    {
+        if (!isBattle)
+        {
+            enabled = false;
+            GetComponentInParent<TacticsMovementCamera>().enabled = true;
+            SetCameraLookOreietaiton(new Vector3(0,0,0));
+        } else
+        {
+            enabled = true;
+            GetComponentInParent<TacticsMovementCamera>().enabled = false;
+            SetCamera();
+            SetCameraLookOreietaiton(new Vector3(0, 90, -90));
+        }
+    }
 }

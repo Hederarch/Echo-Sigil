@@ -54,7 +54,6 @@ public class TacticsMovementCamera : MonoBehaviour
     private void PlayerInputs()
     {
         Vector3 desierdPosition = transform.position;
-        cam.orthographicSize += Input.mouseScrollDelta.y;
         if(Input.GetAxisRaw("Horizontal") != 0 && !cameraMoved)
         {
             desieredAngle -= Input.GetAxisRaw("Horizontal") * Mathf.PI/2;

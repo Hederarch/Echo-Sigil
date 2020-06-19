@@ -5,15 +5,9 @@ using UnityEngine;
 
 public class PlayerImplement : Implement
 {
-    protected override void Update()
-    {
-        base.Update();
-        QOLEndTurn();
-    }
-
     private void QOLEndTurn()
     {
-        if(hasMoved && hasAttacked)
+        if (TurnManager.currentUnit.Equals(this) && ((hasMoved || !move.GetCanMove()) && (hasAttacked || !battle.GetCanAttack())))
         {
             TurnManager.EndTurn();
         }
@@ -47,5 +41,26 @@ public class PlayerImplement : Implement
         PlayerGUIScript.MoveEvent -= Move;
         PlayerGUIScript.AttackEvent -= Attack;
         base.UnSubscribe();
+    }
+
+    public override void HasMoved()
+    {
+        base.HasMoved();
+        PlayerGUIScript.staticThis.SetAsCurrentUnit(this);
+        QOLEndTurn();
+
+    }
+
+    public override void HasAttacked()
+    {
+        base.HasAttacked();
+        PlayerGUIScript.staticThis.SetAsCurrentUnit(this);
+        QOLEndTurn();
+    }
+
+    public override void BeginTurn()
+    {
+        base.BeginTurn();
+        QOLEndTurn();
     }
 }

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 
 /// <summary>
 /// Character in the world
@@ -26,12 +22,14 @@ public class Implement : FacesCamera, ITurn
 
     public virtual void BeginTurn()
     {
+        TurnManager.CheckForWin();
         IsTurnEvent?.Invoke(this);
         Subscribe();
     }
 
     public virtual void EndTurn()
     {
+        TurnManager.CheckForWin();
         ResetUnit();
         UnSubscribe();
     }
@@ -46,12 +44,12 @@ public class Implement : FacesCamera, ITurn
         TurnManager.AddUnit(this);
     }
 
-    public void HasMoved()
+    public virtual void HasMoved()
     {
         hasMoved = true;
     }
 
-    public void HasAttacked()
+    public virtual void HasAttacked()
     {
         hasAttacked = true;
     }
@@ -73,4 +71,8 @@ public class Implement : FacesCamera, ITurn
         hasAttacked = false;
     }
 
+    private void OnDestroy()
+    {
+        TurnManager.RemoveUnit(this);
+    }
 }

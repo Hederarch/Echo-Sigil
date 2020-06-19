@@ -22,6 +22,18 @@ public class JRPGBattle : MonoBehaviour , IBattle
 
     public event Action EndEvent;
 
+    private void Update()
+    {
+        if (isTurn && !inBattle)
+        {
+            JRPGBattle j = CheckAdjecent();
+            if (j != null)
+            {
+                SetCombatant(j);
+            }
+        }
+    }
+
     public void SetCombatant(JRPGBattle combatant)
     {
         if(combatant != null && !inBattle && isTurn)
@@ -34,38 +46,43 @@ public class JRPGBattle : MonoBehaviour , IBattle
 
     IEnumerator SetCombatantCoroutine(JRPGBattle combatant)
     {
+        //wait for black
         FightGUIScript.SetBattleAnimations();
         yield return new WaitForSeconds(.3f);
-        Camera.main.GetComponent<TacticsMovementCamera>().enabled = false;
-        Camera.main.GetComponent<JRPGBattleCamera>().enabled = true;
+
+        BattleData.Reset();
+
+        //who is punching who here?
         BattleData.instagator = this;
         BattleData.combatant = combatant;
+        combatant.inBattle = true;
+
+        //later, there will be an ability to pull firends into the mess
         JRPGBattle[] j = new JRPGBattle[2];
         j[0] = this;
         j[1] = combatant;
         BattleData.SortIntoLists(j);
-        FightGUIScript.SetMenu(this);
+
+        Camera.main.GetComponent<JRPGBattleCamera>().SwitchCamera(true);
+
+        //set all the guis off
+        BattleData.isLeftTurn = leftSide;
+        FightGUIScript.SetMenu();
         FightGUIScript.SetStats();
+        BattleData.CheckForDead();
     }
 
     public void EndCombat()
     {
         inBattle = false;
         isTurn = false;
-        StartCoroutine(EndCombatCorutine());
+        FightGUIScript.UnSetBattleAnimations();
+        FightGUIScript.ResetMenuAndStats();
+        Camera.main.GetComponent<JRPGBattleCamera>().SwitchCamera(false);
+        EndEvent?.Invoke();
+        TurnManager.CheckForWin();
     }
 
-    IEnumerator EndCombatCorutine()
-    {
-        FightGUIScript.StartUnSetBattleAnimations();
-        yield return new WaitForSeconds(.5f);
-        FightGUIScript.ResetMenuStats();
-        BattleData.Reset();
-        EndEvent?.Invoke();
-        FightGUIScript.EndUnSetBattleAnimations();
-        Camera.main.GetComponent<JRPGBattleCamera>().enabled = false;
-        Camera.main.GetComponent<TacticsMovementCamera>().enabled = true;
-    }
 
     protected JRPGBattle FindNeighbors()
     {
@@ -92,7 +109,7 @@ public class JRPGBattle : MonoBehaviour , IBattle
 
     JRPGBattle FindNeighbor(Vector3 direction)
     {
-        if(Physics.Raycast(transform.position, direction,out RaycastHit hit))
+        if(Physics.Raycast(transform.position, direction,out RaycastHit hit, reach))
         {
             return hit.collider.GetComponent<JRPGBattle>();
         }
@@ -158,5 +175,11 @@ public class JRPGBattle : MonoBehaviour , IBattle
             return true;
         }
         return false;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, reach);
     }
 }

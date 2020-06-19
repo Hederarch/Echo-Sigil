@@ -13,6 +13,9 @@ public class TurnManager : MonoBehaviour
     public static bool isPlayerTurn { get => turnKey.Peek() == "Player" ; }
     public static ITurn currentUnit { get => turnTeam.Peek() ; }
 
+    public static event Action GameWinEvent;
+    public static event Action GameLoseEvent;
+
     private void Update()
     {
         if (turnTeam.Count == 0)
@@ -36,7 +39,17 @@ public class TurnManager : MonoBehaviour
     {
         if (turnTeam.Count > 0)
         {
-            turnTeam.Peek().BeginTurn();
+            ITurn i = turnTeam.Peek();
+            if(i != null)
+            {
+                i.BeginTurn();
+            } 
+            else
+            {
+                turnTeam.Dequeue();
+                StartTurn();
+            }
+            
         }
     }
 
@@ -54,6 +67,19 @@ public class TurnManager : MonoBehaviour
             string team = turnKey.Dequeue();
             turnKey.Enqueue(team);
             InitTeamTurnQueue();
+        }
+        
+    }
+
+    public static void CheckForWin()
+    {
+        if (units["Player"].Count <= 0)
+        {
+            GameLoseEvent?.Invoke();
+        }
+        if (units["NPC"].Count <= 0)
+        {
+            GameWinEvent?.Invoke();
         }
     }
 
@@ -77,5 +103,28 @@ public class TurnManager : MonoBehaviour
         }
 
         list.Add(unit);
+    }
+
+    public static void RemoveUnit(ITurn unit)
+    {
+        string unitTag = unit.GetTag();
+        List<ITurn> dictonaryList = units[unitTag];
+        if (dictonaryList.Contains(unit))
+        {
+            dictonaryList.Remove(unit);
+        }
+        if (turnKey.Peek() == unitTag)
+        {
+            //Cant do the same thing for this. Bugger. Alright, I guess muder lets you move more, why not
+            turnTeam.Clear();
+            InitTeamTurnQueue();
+        }
+    }
+
+    public static void Reset()
+    {
+        units = new Dictionary<string, List<ITurn>>();
+        turnKey = new Queue<string>();
+        turnTeam = new Queue<ITurn>();
     }
 }

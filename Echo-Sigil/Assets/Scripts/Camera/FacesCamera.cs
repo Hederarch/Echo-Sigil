@@ -10,7 +10,6 @@ public class FacesCamera : MonoBehaviour
     protected virtual void Update()
     {
         unitSprite.transform.rotation = Quaternion.LookRotation(-Camera.main.transform.forward, Camera.main.transform.up);
-        transform.rotation = Quaternion.identity;
     }
 
     public Vector3 GetCenterPoint()

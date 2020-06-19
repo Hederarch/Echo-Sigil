@@ -36,33 +36,33 @@ public class FightGUIScript : MonoBehaviour
         staticAnimator.SetTrigger("Battle");
         staticPlayerGUIAnimator.SetBool("Battle",true);
     }
-    public static void StartUnSetBattleAnimations()
-    {
-        staticAnimator.SetTrigger("InBetween");
-    }
 
-    public static void EndUnSetBattleAnimations()
+    public static void UnSetBattleAnimations()
     {
+        staticAnimator.SetTrigger("Battle");
         staticPlayerGUIAnimator.SetBool("Battle", false);
     }
 
-    public static void SetMenu(JRPGBattle unit)
+    public static void SetMenu()
     {
-        foreach(Ability a in unit.abilites)
+        foreach (JRPGBattle j in BattleData.leftCombatants)
         {
-            GameObject m = Instantiate(staticMenuGUIItem,staticMenuGUI);
-            m.name = a.name;
-            m.GetComponentInChildren<Text>().text = a.name;
-            m.GetComponent<Button>().onClick.AddListener(() => a.ActivateAbility());
+            foreach (Ability a in j.abilites)
+            {
+                GameObject m = Instantiate(staticMenuGUIItem, staticMenuGUI);
+                m.name = a.name;
+                m.GetComponentInChildren<Text>().text = a.name;
+                m.GetComponent<Button>().onClick.AddListener(() => a.ActivateAbility());
+                m.GetComponent<Button>().onClick.AddListener(() => SetStats());
+            }
         }
     }
 
     public static void SetStats()
     {
-        
         if (staticStatsGUI.childCount == 0)
         {
-            foreach (JRPGBattle j in BattleData.leftCombatants)
+            for (int i = 0; i < BattleData.leftCombatants.Count; i++)
             {
                 Instantiate(staticStatsGUIItem, staticStatsGUI);
             }
@@ -78,7 +78,7 @@ public class FightGUIScript : MonoBehaviour
 
     }
 
-    public static void ResetMenuStats()
+    public static void ResetMenuAndStats()
     {
         for(int i= staticMenuGUI.childCount - 1; i  > -1 ; i--)
         {

@@ -9,16 +9,4 @@ public class PlayerBattle : JRPGBattle
     {
         leftSide = true;
     }
-
-    private void Update()
-    {
-        if (isTurn && !inBattle)
-        {
-            JRPGBattle j = CheckAdjecent();
-            if(j != null)
-            {
-                SetCombatant(j);
-            }
-        }
-    }
 }
