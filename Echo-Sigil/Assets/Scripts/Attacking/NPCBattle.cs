@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class NPCBattle : JRPGBattle
 {
-    public new readonly bool leftSide = false;
+    private void Start()
+    {
+        leftSide = false;
+    }
 }

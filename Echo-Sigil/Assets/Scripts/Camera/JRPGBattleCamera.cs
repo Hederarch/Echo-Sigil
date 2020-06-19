@@ -6,7 +6,6 @@ using UnityEngine;
 public class JRPGBattleCamera : MonoBehaviour
 {
     public Camera cam;
-    public List<JRPGBattle> units = new List<JRPGBattle>();
 
     public float offsetFromFoucus = 2;
     public float offsetFromZ0 = 2;
@@ -17,13 +16,13 @@ public class JRPGBattleCamera : MonoBehaviour
         centerPoint.z += -offsetFromZ0;
 
         Vector3 forward = Vector3.left;
-        if (units[0].leftSide)
+        if (BattleData.instagator.leftSide)
         {
-            transform.forward = -units[0].transform.forward;
+            transform.forward = -BattleData.instagator.transform.forward;
         } 
         else
         {
-            transform.forward = units[0].transform.forward;
+            transform.forward = BattleData.instagator.transform.forward;
         }
 
         transform.rotation = Quaternion.LookRotation(forward, Vector3.back);
@@ -35,18 +34,24 @@ public class JRPGBattleCamera : MonoBehaviour
 
     private Vector3 GetCenterPoint()
     {
-        if (!(units.Count >= 2))
+        if (BattleData.instagator == null || BattleData.combatant == null)
         {
-            Debug.LogError("Not enogh targets for battle!");
-            return units[0].transform.position;
+            Debug.LogError("Not enogh targets for battle! Sending Camera to center of map");
+            return Vector3.zero;
         }
 
-        var bounds = new Bounds(units[0].transform.position, Vector3.zero);
-        for(int i = 0; i <= 1; i++)
+        var bounds = new Bounds(BattleData.instagator.transform.position, Vector3.zero);
+        bounds.Encapsulate(BattleData.combatant.transform.position);
+
+        foreach(JRPGBattle j in BattleData.leftCombatants)
         {
-            bounds.Encapsulate(units[i].transform.position);
-            units[i].transform.rotation = Quaternion.Euler(0,90,-90);
+            j.transform.rotation = Quaternion.Euler(0, 90, -90);
         }
+        foreach (JRPGBattle j in BattleData.rightCombatants)
+        {
+            j.transform.rotation = Quaternion.Euler(0, 90, -90);
+        }
+
         return bounds.center;
     }
 

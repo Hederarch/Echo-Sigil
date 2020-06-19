@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class JRPGBattle : MonoBehaviour , IBattle
 {
-    public readonly bool leftSide;
+    public bool leftSide;
 
     public int health =5;
     public int maxHealth = 5;
@@ -24,7 +24,7 @@ public class JRPGBattle : MonoBehaviour , IBattle
 
     public void SetCombatant(JRPGBattle combatant)
     {
-        if(combatant != null && !inBattle)
+        if(combatant != null && !inBattle && isTurn)
         {
             inBattle = true;
             //needs to be a corutine for the animation to work
@@ -34,14 +34,16 @@ public class JRPGBattle : MonoBehaviour , IBattle
 
     IEnumerator SetCombatantCoroutine(JRPGBattle combatant)
     {
-        FightGUIScript.SetBattle();
+        FightGUIScript.SetBattleAnimations();
         yield return new WaitForSeconds(.3f);
         Camera.main.GetComponent<TacticsMovementCamera>().enabled = false;
-        JRPGBattleCamera battleCamera = Camera.main.GetComponent<JRPGBattleCamera>();
-        battleCamera.units.Clear();
-        battleCamera.units.Add(this);
-        battleCamera.units.Add(combatant);
-        battleCamera.enabled = true;
+        Camera.main.GetComponent<JRPGBattleCamera>().enabled = true;
+        BattleData.instagator = this;
+        BattleData.combatant = combatant;
+        JRPGBattle[] j = new JRPGBattle[2];
+        j[0] = this;
+        j[1] = combatant;
+        BattleData.SortIntoLists(j);
         FightGUIScript.SetMenu(this);
         FightGUIScript.SetStats();
     }
@@ -49,17 +51,20 @@ public class JRPGBattle : MonoBehaviour , IBattle
     public void EndCombat()
     {
         inBattle = false;
+        isTurn = false;
         StartCoroutine(EndCombatCorutine());
     }
 
     IEnumerator EndCombatCorutine()
     {
-        FightGUIScript.UnSetBattle();
-        yield return new WaitForSeconds(.1f);
-        ResetBattleCamera(Camera.main.GetComponent<JRPGBattleCamera>());
-        Camera.main.GetComponent<TacticsMovementCamera>().enabled = true;
+        FightGUIScript.StartUnSetBattleAnimations();
+        yield return new WaitForSeconds(.5f);
         FightGUIScript.ResetMenuStats();
+        BattleData.Reset();
         EndEvent?.Invoke();
+        FightGUIScript.EndUnSetBattleAnimations();
+        Camera.main.GetComponent<JRPGBattleCamera>().enabled = false;
+        Camera.main.GetComponent<TacticsMovementCamera>().enabled = true;
     }
 
     protected JRPGBattle FindNeighbors()
@@ -92,11 +97,6 @@ public class JRPGBattle : MonoBehaviour , IBattle
             return hit.collider.GetComponent<JRPGBattle>();
         }
         return null;
-    }
-
-    private void ResetBattleCamera(JRPGBattleCamera battleCamera)
-    {
-        throw new NotImplementedException();
     }
 
     public void SetIsTurn()

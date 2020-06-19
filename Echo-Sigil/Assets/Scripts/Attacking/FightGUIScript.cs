@@ -31,14 +31,18 @@ public class FightGUIScript : MonoBehaviour
         staticStatsGUI = statsGUI;
         staticStatsGUIItem = statsGUIItem;
     }
-    public static void SetBattle()
+    public static void SetBattleAnimations()
     {
-        staticAnimator.SetBool("Battle",true);
+        staticAnimator.SetTrigger("Battle");
         staticPlayerGUIAnimator.SetBool("Battle",true);
     }
-    public static void UnSetBattle()
+    public static void StartUnSetBattleAnimations()
     {
-        staticAnimator.SetBool("Battle", false);
+        staticAnimator.SetTrigger("InBetween");
+    }
+
+    public static void EndUnSetBattleAnimations()
+    {
         staticPlayerGUIAnimator.SetBool("Battle", false);
     }
 
@@ -49,15 +53,16 @@ public class FightGUIScript : MonoBehaviour
             GameObject m = Instantiate(staticMenuGUIItem,staticMenuGUI);
             m.name = a.name;
             m.GetComponentInChildren<Text>().text = a.name;
+            m.GetComponent<Button>().onClick.AddListener(() => a.ActivateAbility());
         }
     }
 
     public static void SetStats()
     {
-        List<JRPGBattle> units = Camera.main.GetComponent<JRPGBattleCamera>().units;
+        
         if (staticStatsGUI.childCount == 0)
         {
-            foreach (JRPGBattle j in units)
+            foreach (JRPGBattle j in BattleData.leftCombatants)
             {
                 Instantiate(staticStatsGUIItem, staticStatsGUI);
             }
@@ -65,10 +70,10 @@ public class FightGUIScript : MonoBehaviour
         for(int i=0; i < staticStatsGUI.childCount; i++)
         {
             Transform statItem = staticStatsGUI.GetChild(i);
-            statItem.GetComponentInChildren<Text>().text = units[i].name;
+            statItem.GetComponentInChildren<Text>().text = BattleData.leftCombatants[i].name;
             Transform sliderItem = statItem.GetChild(1);
-            sliderItem.GetChild(0).GetComponent<Slider>().value = units[i].GetHealthPercent();
-            sliderItem.GetChild(1).GetComponent<Slider>().value = units[i].GetWillPercent();
+            sliderItem.GetChild(0).GetComponent<Slider>().value = BattleData.leftCombatants[i].GetHealthPercent();
+            sliderItem.GetChild(1).GetComponent<Slider>().value = BattleData.leftCombatants[i].GetWillPercent();
         }
 
     }
@@ -77,7 +82,9 @@ public class FightGUIScript : MonoBehaviour
     {
         for(int i= staticMenuGUI.childCount - 1; i  > -1 ; i--)
         {
-            Destroy(staticMenuGUI.GetChild(i).gameObject);
+            GameObject m = staticMenuGUI.GetChild(i).gameObject;
+            m.GetComponent<Button>().onClick.RemoveAllListeners();
+            Destroy(m);
         }
         for (int i = staticStatsGUI.childCount -1 ; i > -1; i--)
         {

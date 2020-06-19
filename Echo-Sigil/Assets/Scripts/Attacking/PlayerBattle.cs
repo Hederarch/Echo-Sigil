@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class PlayerBattle : JRPGBattle
 {
-    public new readonly bool leftSide = true;
+    private void Start()
+    {
+        leftSide = true;
+    }
 
     private void Update()
     {

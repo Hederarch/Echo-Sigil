@@ -12,8 +12,8 @@ public class Implement : FacesCamera, ITurn
     public IMovement move;
     public IBattle battle;
 
-    protected bool hasMoved;
-    protected bool hasAttacked;
+    public bool hasMoved;
+    public bool hasAttacked;
 
     public static event Action<Implement> IsTurnEvent;
 

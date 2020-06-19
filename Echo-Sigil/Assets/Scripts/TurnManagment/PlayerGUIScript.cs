@@ -58,8 +58,8 @@ public class PlayerGUIScript : MonoBehaviour
         SetSliders(unit.battle);
         if (TurnManager.isPlayerTurn)
         {
-            moveButton.interactable = unit.move.GetCanMove();
-            attackButton.interactable = unit.battle.GetCanAttack();
+            moveButton.interactable = unit.move.GetCanMove() && !unit.hasMoved;
+            attackButton.interactable = unit.battle.GetCanAttack() && !unit.hasAttacked;
         }
     }
 
