@@ -48,7 +48,6 @@ public class PauseMenuScript : MonoBehaviour
 
     public void Reload()
     {
-        TurnManager.Reset();
         SceneManager.LoadScene(0);
     }
 }

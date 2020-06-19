@@ -120,11 +120,4 @@ public class TurnManager : MonoBehaviour
             InitTeamTurnQueue();
         }
     }
-
-    public static void Reset()
-    {
-        units = new Dictionary<string, List<ITurn>>();
-        turnKey = new Queue<string>();
-        turnTeam = new Queue<ITurn>();
-    }
 }
