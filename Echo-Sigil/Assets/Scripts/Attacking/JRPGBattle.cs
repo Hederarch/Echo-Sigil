@@ -51,7 +51,7 @@ public class JRPGBattle : MonoBehaviour , IBattle
 
     IEnumerator EndCombatCorutine()
     {
-        FightGUIScript.SetBattle();
+        FightGUIScript.UnSetBattle();
         yield return new WaitForSeconds(.1f);
         ResetBattleCamera(Camera.main.GetComponent<JRPGBattleCamera>());
         Camera.main.GetComponent<TacticsMovementCamera>().enabled = true;
