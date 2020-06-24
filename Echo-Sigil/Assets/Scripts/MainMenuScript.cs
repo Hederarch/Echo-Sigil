@@ -18,7 +18,7 @@ public class MainMenuScript : MonoBehaviour
 
     public void MapEditor()
     {
-        throw new NotImplementedException();
+        SceneManager.LoadScene(2);
     }
 
     public void QuitGame()
