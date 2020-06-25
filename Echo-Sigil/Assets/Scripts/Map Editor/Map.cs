@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class Map 
 {
     //map data
-    public Vector2Int size;
+    public int sizeX;
+    public int sizeY;
     public float[,] heightmap;
     public int[,] spriteIndex;
     public bool[,] walkable;
@@ -15,13 +17,14 @@ public class Map
 
     public Map(Vector2Int vectorSize)
     {
-        size = vectorSize;
-        heightmap = new float[size.x, size.y];
-        walkable = new bool[size.x, size.y];
+        sizeX = vectorSize.x;
+        sizeY = vectorSize.y;
+        heightmap = new float[sizeX, sizeY];
+        walkable = new bool[sizeX, sizeY];
 
-        for (int x = 0; x < size.x; x++)
+        for (int x = 0; x < sizeX; x++)
         {
-            for (int y = 0; y < size.y; y++)
+            for (int y = 0; y < sizeY; y++)
             {
                 heightmap[x, y] = 0f;
                 walkable[x, y] = true;
@@ -31,7 +34,8 @@ public class Map
 
     public Map(Tile[,] tiles)
     {
-        size = new Vector2Int(tiles.GetLength(0), tiles.GetLength(1));
+        sizeX = tiles.GetLength(0); 
+        sizeY = tiles.GetLength(1);
         heightmap = new float[tiles.GetLength(0), tiles.GetLength(1)];
 
         for (int x = 0; x < heightmap.GetLength(0); x++)

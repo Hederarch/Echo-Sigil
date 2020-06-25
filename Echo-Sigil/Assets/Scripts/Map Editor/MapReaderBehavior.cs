@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class MapReaderBehavior : MonoBehaviour
 {
@@ -19,22 +20,34 @@ public static class MapReader
         {
             map = new Map(backupMapSize.x, backupMapSize.y);
         }
-        Tile[,] tiles = new Tile[map.size.x,map.size.y];
-        Vector2 mapHalfHeight = new Vector2(backupMapSize.x / 1.5f, backupMapSize.y / 1.5f);
-        tileParent = UnityEngine.Object.Instantiate(new GameObject("Tile Parent")).transform;
-        for (int x = 0; x < map.size.x; x++)
+        tileParent = new GameObject("Tile Parent").transform;
+        tiles = new Tile[map.sizeX,map.sizeY];
+        Vector2 mapHalfHeight = new Vector2(map.sizeX / 2.5f, map.sizeY / 2.5f);
+        for (int x = 0; x < map.sizeX; x++)
         {
-            for (int y = 0; y < map.size.y; y++)
+            for (int y = 0; y < map.sizeY; y++)
             {
                 Tile tile = map.SetTileProperties(x, y);
-                GameObject gameObjectTile = UnityEngine.Object.Instantiate(new GameObject(tile.PosInGrid.x + "," + tile.PosInGrid.y + " tile"), new Vector3(mapHalfHeight.x - x, mapHalfHeight.y - y), Quaternion.identity, tileParent);
-                tile.PosInWorld = new Vector2(mapHalfHeight.x - x, mapHalfHeight.y - y);
-                gameObjectTile.AddComponent<TileBehaviour>().tile = tile;
 
+                GameObject gameObjectTile = new GameObject(tile.PosInGrid.x + "," + tile.PosInGrid.y + " tile");
+                gameObjectTile.transform.position = new Vector3(mapHalfHeight.x - x, mapHalfHeight.y - y);
+                gameObjectTile.transform.rotation = Quaternion.identity;
+                gameObjectTile.transform.parent = tileParent;
+
+                gameObjectTile.AddComponent<TileBehaviour>().tile = tile;
+                tiles[x, y] = tile;
+
+                gameObjectTile.AddComponent<BoxCollider>().size = new Vector3(1, 1, .2f);
             }
         }
-        MapReader.tiles = tiles;
         return tiles;
+    }
+
+    internal static Vector2 GetTilesPhyisicalLocation(Vector2Int posInGrid)
+    {
+        Vector2 mapHalfHeight = new Vector2(map.sizeX / 1.5f, map.sizeY / 1.5f);
+        Vector2 realitivePosition = new Vector2(mapHalfHeight.x - posInGrid.x, mapHalfHeight.y - posInGrid.y);
+        return new Vector2(tileParent.transform.position.x, tileParent.transform.position.y) + realitivePosition;
     }
 
     public static Tile GetTile(Vector2Int pos)
@@ -51,7 +64,7 @@ public static class MapReader
     {
         if(tileParent != null)
         {
-            Object.DestroyImmediate(tileParent);
+            UnityEngine.Object.DestroyImmediate(tileParent.gameObject);
         }
     }
 

@@ -35,7 +35,7 @@ public class MapEditor : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
         {
-            selectedTile = hit.collider.GetComponent<EditableTileBehavior>().tile;
+            selectedTile = hit.collider.GetComponent<TileBehaviour>().tile;
             NewSelectedTile?.Invoke(selectedTile);
         }
     }

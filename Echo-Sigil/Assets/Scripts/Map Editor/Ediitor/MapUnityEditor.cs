@@ -7,7 +7,7 @@ public class MapUnityEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        EditorGUILayout.Vector2IntField("Backup Map Size",MapReader.backupMapSize);
+        MapReader.backupMapSize = EditorGUILayout.Vector2IntField("Backup Map Size",MapReader.backupMapSize);
         if (GUILayout.Button("GenerateMap"))
         {
             MapReader.GeneratePhysicalMap(new Map(MapReader.backupMapSize));

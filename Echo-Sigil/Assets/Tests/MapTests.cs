@@ -8,37 +8,57 @@ namespace Map_Tests
 {
     class map_reader
     {
-        [Test]
-        public void height_map_is_map_sizex_1x1()
+       [Test]
+       public void genarates_map_with_tile_with_hieght()
         {
-            HeightMapIsSize(1, 1, true);
+            Tile[,] tiles = new Tile[1, 1];
+            Tile tile = new Tile();
+            tile.height = 2;
+            tiles[0, 0] = tile;
+            Tile[,] outTiles = MapReader.GeneratePhysicalMap(new Map(tiles));
+            Assert.AreEqual(2, outTiles[0,0].height);
         }
         [Test]
-        public void height_map_is_map_sizey_1x1()
+        public void genarates_map_with_tile()
         {
-            HeightMapIsSize(1, 1, false);
+            Tile[,] tiles = new Tile[1, 1];
+            Tile tile = new Tile();
+            tile.height = 2;
+            tiles[0, 0] = tile;
+            Tile[,] outTiles = MapReader.GeneratePhysicalMap(new Map(tiles));
+            Assert.IsNotNull(outTiles[0, 0]);
         }
         [Test]
-        public void height_map_is_map_sizex_3x5()
+        public void genarates_blank_map_with_nonNull_tiles()
         {
-            HeightMapIsSize(3, 5, true);
+            Tile[,] outTiles = MapReader.GeneratePhysicalMap(new Map(1,1));
+            Assert.IsNotNull(outTiles[0, 0]);
         }
         [Test]
-        public void height_map_is_map_sizey_3x5()
+        public void genarates_tile_array()
         {
-            HeightMapIsSize(3, 5, false);
+            Assert.IsNotNull(MapReader.GeneratePhysicalMap(new Map(1, 1)));
         }
-        public void HeightMapIsSize(int x,int y,bool isXAxis)
+        [Test]
+        public void tile_parent_has_child()
         {
-            Map map = new Map(x,y);
-            if (isXAxis)
-            {
-                Assert.AreEqual(map.size.x, map.heightmap.GetLength(0));
-            } else
-            {
-                Assert.AreEqual(map.size.y, map.heightmap.GetLength(1));
-            }
+            MapReader.GeneratePhysicalMap(new Map(1, 1));
+            Assert.AreEqual(1, MapReader.tileParent.childCount);
         }
+        [Test]
+        public void generates_tile_array_of_map_size()
+        {
+            Vector2Int size = new Vector2Int(3, 5);
+            Tile[,] tiles = MapReader.GeneratePhysicalMap(new Map(size));
+            Assert.AreEqual(size, new Vector2Int(tiles.GetLength(0), tiles.GetLength(1)));
+        }
+        [Test]
+        public void returns_mapReader_tiles()
+        {
+            Tile[,] tiles = MapReader.GeneratePhysicalMap(new Map(1,1));
+            Assert.AreEqual(MapReader.tiles, tiles);
+        }
+
     }
     class mapeditor
     {
@@ -87,14 +107,71 @@ namespace Map_Tests
         public void new_map_sets_size()
         {
             Map map = new Map(3, 5);
-            Assert.AreEqual(new Vector2Int(3, 5), map.size);
+            Assert.AreEqual(new Vector2Int(3, 5), new Vector2Int(map.sizeX,map.sizeY));
         }
         [Test]
         public void new_map_overloads_equivalant()
         {
             Map intmap = new Map(3, 5);
             Map vecmap = new Map(new Vector2Int(3, 5));
-            Assert.AreEqual(vecmap.size, intmap.size);
+            Assert.AreEqual(new Vector2Int(vecmap.sizeX,vecmap.sizeY), new Vector2Int(intmap.sizeX, intmap.sizeY));
+        }
+        [Test]
+        public void height_map_is_map_sizex_1x1()
+        {
+            HeightMapIsSize(1, 1, true);
+        }
+        [Test]
+        public void height_map_is_map_sizey_1x1()
+        {
+            HeightMapIsSize(1, 1, false);
+        }
+        [Test]
+        public void height_map_is_map_sizex_3x5()
+        {
+            HeightMapIsSize(3, 5, true);
+        }
+        [Test]
+        public void height_map_is_map_sizey_3x5()
+        {
+            HeightMapIsSize(3, 5, false);
+        }
+        public void HeightMapIsSize(int x, int y, bool isXAxis)
+        {
+            Map map = new Map(x, y);
+            if (isXAxis)
+            {
+                Assert.AreEqual(map.sizeX, map.heightmap.GetLength(0));
+            }
+            else
+            {
+                Assert.AreEqual(map.sizeY, map.heightmap.GetLength(1));
+            }
+        }
+    }
+    class save_system
+    {
+        [Test]
+        public void get_map_from_file_with_consistant_size()
+        {
+            Map savedMap = new Map(1, 1);
+            SaveSystem.SaveMap("UnitTest_get_map_from_file", savedMap);
+            Map loadMap = SaveSystem.LoadMap("UnitTest_get_map_from_file");
+            Assert.AreEqual(new Vector2Int(savedMap.sizeX,savedMap.sizeY), new Vector2Int(loadMap.sizeX, loadMap.sizeY));
+            SaveSystem.DeleteMap("UnitTest_get_map_from_file");
+        }
+        [Test]
+        public void get_map_from_file_with_tile()
+        {
+            Tile[,] tiles = new Tile[1, 1];
+            Tile tile = new Tile();
+            tile.height = 2;
+            tiles[0, 0] = tile;
+            Map savedMap = new Map(tiles);
+            SaveSystem.SaveMap("UnitTest_get_map_from_file", savedMap);
+            Map loadMap = SaveSystem.LoadMap("UnitTest_get_map_from_file");
+            Assert.AreEqual(2, loadMap.SetTileProperties(0,0).height);
+            SaveSystem.DeleteMap("UnitTest_get_map_from_file");
         }
     }
 }
