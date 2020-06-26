@@ -29,18 +29,34 @@ public static class MapReader
             {
                 Tile tile = map.SetTileProperties(x, y);
 
-                GameObject gameObjectTile = new GameObject(tile.PosInGrid.x + "," + tile.PosInGrid.y + " tile");
-                gameObjectTile.transform.position = new Vector3(mapHalfHeight.x - x, mapHalfHeight.y - y);
-                gameObjectTile.transform.rotation = Quaternion.identity;
-                gameObjectTile.transform.parent = tileParent;
+                GameObject gameObjectTile = InstantateTileGameObject(mapHalfHeight, tile);
 
                 gameObjectTile.AddComponent<TileBehaviour>().tile = tile;
                 tiles[x, y] = tile;
 
                 gameObjectTile.AddComponent<BoxCollider>().size = new Vector3(1, 1, .2f);
+
+                gameObjectTile.AddComponent<SpriteRenderer>();//.sprite = GetSpriteFromIndexAndPallete(tile.spriteIndex,/*ERROR*/);
+
+
             }
         }
         return tiles;
+    }
+
+    public static Sprite GetSpriteFromIndexAndPallete(int spriteIndex, SpritePallate spritePallate)
+    {
+        return spritePallate.sprites[spriteIndex];
+    }
+
+    private static GameObject InstantateTileGameObject(Vector2 mapHalfHeight, Tile tile)
+    {
+        GameObject gameObjectTile = new GameObject(tile.PosInGrid.x + "," + tile.PosInGrid.y + " tile");
+        gameObjectTile.transform.position = new Vector3(mapHalfHeight.x - tile.PosInGrid.x, mapHalfHeight.y - tile.PosInGrid.y);
+        gameObjectTile.transform.rotation = Quaternion.identity;
+        gameObjectTile.transform.parent = tileParent;
+        gameObjectTile.tag = "Tile";
+        return gameObjectTile;
     }
 
     internal static Vector2 GetTilesPhyisicalLocation(Vector2Int posInGrid)

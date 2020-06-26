@@ -101,7 +101,7 @@ namespace Map_Tests
         public void new_map_has_heigtmap_data()
         {
             Map map = new Map(1, 1);
-            Assert.IsNotNull(map.heightmap[0,0]);
+            Assert.IsNotNull(map.heightMap[0,0]);
         }
         [Test]
         public void new_map_sets_size()
@@ -141,11 +141,11 @@ namespace Map_Tests
             Map map = new Map(x, y);
             if (isXAxis)
             {
-                Assert.AreEqual(map.sizeX, map.heightmap.GetLength(0));
+                Assert.AreEqual(map.sizeX, map.heightMap.GetLength(0));
             }
             else
             {
-                Assert.AreEqual(map.sizeY, map.heightmap.GetLength(1));
+                Assert.AreEqual(map.sizeY, map.heightMap.GetLength(1));
             }
         }
     }

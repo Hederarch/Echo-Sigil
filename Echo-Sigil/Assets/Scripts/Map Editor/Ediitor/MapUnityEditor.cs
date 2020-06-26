@@ -8,18 +8,22 @@ public class MapUnityEditor : Editor
     public override void OnInspectorGUI()
     {
         MapReader.backupMapSize = EditorGUILayout.Vector2IntField("Backup Map Size",MapReader.backupMapSize);
-        if (GUILayout.Button("GenerateMap"))
+        if (GUILayout.Button("Generate Blank Map"))
         {
             MapReader.GeneratePhysicalMap(new Map(MapReader.backupMapSize));
         }
-        if (GUILayout.Button("SaveMap"))
+        GUILayout.BeginHorizontal();
+        string mapName = "Test";
+        mapName = EditorGUILayout.TextField(new GUIContent("Map Name"), mapName);
+        if (GUILayout.Button("Save"))
         {
-            MapReader.SaveMap("test");
+            MapReader.SaveMap(mapName);
         }
-        if (GUILayout.Button("LoadMap"))
+        if (GUILayout.Button("Load"))
         {
-            MapReader.LoadMap("test");
+            MapReader.LoadMap(mapName);
         }
+        GUILayout.EndHorizontal();
 
     }
 }

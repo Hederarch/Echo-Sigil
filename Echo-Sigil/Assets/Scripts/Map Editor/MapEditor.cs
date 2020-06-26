@@ -26,7 +26,7 @@ public class MapEditor : MonoBehaviour
         if (Input.GetMouseButton(0) && Math.Abs(delta) > .5f && selectedTile != null)
         {
             selectedTile.height += delta;
-            MapReader.map.heightmap[selectedTile.PosInGrid.x, selectedTile.PosInGrid.x] = selectedTile.height;
+            MapReader.map.heightMap[selectedTile.PosInGrid.x, selectedTile.PosInGrid.x] = selectedTile.height;
         }
         prevMousePos = Input.mousePosition;
     }

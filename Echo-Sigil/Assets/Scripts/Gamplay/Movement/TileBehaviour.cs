@@ -21,6 +21,8 @@ public class TileBehaviour : MonoBehaviour
     public Vector2 PosInWorld { get => MapReader.GetTilesPhyisicalLocation(PosInGrid); }
     public float height;
 
+    public int spriteIndex;
+
     public bool walkable = true;
     public bool current;
     public bool target;
