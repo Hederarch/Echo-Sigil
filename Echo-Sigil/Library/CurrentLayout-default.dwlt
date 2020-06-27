@@ -112,10 +112,10 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 709, y: 492}
-  m_MaxSize: {x: 18004, y: 14042}
+  m_MinSize: {x: 533, y: 492}
+  m_MaxSize: {x: 18003, y: 14042}
   vertical: 0
-  controlID: 106
+  controlID: 98
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -137,10 +137,10 @@ MonoBehaviour:
     y: 0
     width: 1270
     height: 947
-  m_MinSize: {x: 433, y: 492}
-  m_MaxSize: {x: 14003, y: 14042}
+  m_MinSize: {x: 432, y: 492}
+  m_MaxSize: {x: 14002, y: 14042}
   vertical: 1
-  controlID: 133
+  controlID: 65
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_MinSize: {x: 303, y: 221}
   m_MaxSize: {x: 8003, y: 4021}
   vertical: 0
-  controlID: 134
+  controlID: 126
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -241,8 +241,8 @@ MonoBehaviour:
     y: 399
     width: 1270
     height: 548
-  m_MinSize: {x: 433, y: 271}
-  m_MaxSize: {x: 14003, y: 10021}
+  m_MinSize: {x: 432, y: 271}
+  m_MaxSize: {x: 14002, y: 10021}
   vertical: 0
   controlID: 66
 --- !u!114 &11
@@ -308,7 +308,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: InspectorWindow
+  m_Name: TestRunnerWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -317,16 +317,16 @@ MonoBehaviour:
     y: 0
     width: 650
     height: 947
-  m_MinSize: {x: 275, y: 50}
+  m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 4000, y: 4000}
-  m_ActualView: {fileID: 23}
+  m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 23}
   - {fileID: 24}
   - {fileID: 17}
   - {fileID: 14}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 3
+  m_LastSelected: 0
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -347,13 +347,13 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 652
+    x: 1270
     y: 73
-    width: 1267
+    width: 649
     height: 926
   m_ViewDataDictionary: {fileID: 0}
   m_Spl:
-    ID: 365
+    ID: 165
     splitterInitialOffset: 0
     currentActiveSplitter: -1
     realSizes: 82020000d6000000
@@ -425,7 +425,7 @@ MonoBehaviour:
       name: Tales From The Metahedron
       fullName: Tales From The Metahedron
       resultStatus: 1
-      duration: 0.2129532
+      duration: 0.1565187
       messages: 
       output: 
       stacktrace: 
@@ -441,7 +441,7 @@ MonoBehaviour:
       name: Tests.dll
       fullName: C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Library/ScriptAssemblies/Tests.dll
       resultStatus: 1
-      duration: 0.1214651
+      duration: 0.0791981
       messages: 
       output: 
       stacktrace: 
@@ -457,7 +457,7 @@ MonoBehaviour:
       name: Implement_Tests
       fullName: Implement_Tests
       resultStatus: 1
-      duration: 0.0708258
+      duration: 0.0771861
       messages: 
       output: 
       stacktrace: 
@@ -473,7 +473,7 @@ MonoBehaviour:
       name: battle
       fullName: Implement_Tests.battle
       resultStatus: 1
-      duration: 0.0661908
+      duration: 0.0628982
       messages: 
       output: 
       stacktrace: 
@@ -489,7 +489,7 @@ MonoBehaviour:
       name: health_percent_returns_correctly
       fullName: Implement_Tests.battle.health_percent_returns_correctly
       resultStatus: 1
-      duration: 0.029179
+      duration: 0.0264913
       messages: 
       output: 
       stacktrace: 
@@ -506,7 +506,7 @@ MonoBehaviour:
       name: will_percent_returns_correctly
       fullName: Implement_Tests.battle.will_percent_returns_correctly
       resultStatus: 1
-      duration: 0.001389
+      duration: 0.0014007
       messages: 
       output: 
       stacktrace: 
@@ -523,7 +523,7 @@ MonoBehaviour:
       name: Map_Tests
       fullName: Map_Tests
       resultStatus: 1
-      duration: 0.11302
+      duration: 0.0762914
       messages: 
       output: 
       stacktrace: 
@@ -534,12 +534,96 @@ MonoBehaviour:
       categories: []
       parentId: 1009
       parentUniqueId: '[Tests.dll][suite]'
+    - id: 1034
+      uniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.conversions][suite]
+      name: conversions
+      fullName: Map_Tests.conversions
+      resultStatus: 1
+      duration: 0.07013
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1041
+      parentUniqueId: Tests.dll/[Tests][Map_Tests][suite]
+    - id: 1035
+      uniqueId: Tests.dll/Map_Tests/conversions/[Tests][Map_Tests.conversions.center_tile_is_at_0x0_1x1]
+      name: center_tile_is_at_0x0_1x1
+      fullName: Map_Tests.conversions.center_tile_is_at_0x0_1x1
+      resultStatus: 1
+      duration: 0.0091643
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1034
+      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.conversions][suite]
+    - id: 1036
+      uniqueId: Tests.dll/Map_Tests/conversions/[Tests][Map_Tests.conversions.center_tile_is_at_0x0_3x3]
+      name: center_tile_is_at_0x0_3x3
+      fullName: Map_Tests.conversions.center_tile_is_at_0x0_3x3
+      resultStatus: 1
+      duration: 0.0028828
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1034
+      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.conversions][suite]
+    - id: 1037
+      uniqueId: Tests.dll/Map_Tests/conversions/[Tests][Map_Tests.conversions.grid_to_world_space_3x3]
+      name: grid_to_world_space_3x3
+      fullName: Map_Tests.conversions.grid_to_world_space_3x3
+      resultStatus: 1
+      duration: 0.0031428
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1034
+      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.conversions][suite]
+    - id: 1038
+      uniqueId: Tests.dll/Map_Tests/conversions/[Tests][Map_Tests.conversions.world_to_grid_space_3x3]
+      name: world_to_grid_space_3x3
+      fullName: Map_Tests.conversions.world_to_grid_space_3x3
+      resultStatus: 1
+      duration: 0.0355477
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1034
+      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.conversions][suite]
     - id: 1006
       uniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map][suite]
       name: map
       fullName: Map_Tests.map
       resultStatus: 1
-      duration: 0.0586242
+      duration: 0.0596482
       messages: 
       output: 
       stacktrace: 
@@ -555,7 +639,7 @@ MonoBehaviour:
       name: height_map_is_map_sizex_1x1
       fullName: Map_Tests.map.height_map_is_map_sizex_1x1
       resultStatus: 1
-      duration: 0.0023999
+      duration: 0.0018015
       messages: 
       output: 
       stacktrace: 
@@ -572,7 +656,7 @@ MonoBehaviour:
       name: height_map_is_map_sizex_3x5
       fullName: Map_Tests.map.height_map_is_map_sizex_3x5
       resultStatus: 1
-      duration: 0.000723
+      duration: 0.0006181
       messages: 
       output: 
       stacktrace: 
@@ -589,7 +673,7 @@ MonoBehaviour:
       name: height_map_is_map_sizey_1x1
       fullName: Map_Tests.map.height_map_is_map_sizey_1x1
       resultStatus: 1
-      duration: 0.0005509
+      duration: 0.0009511
       messages: 
       output: 
       stacktrace: 
@@ -606,7 +690,7 @@ MonoBehaviour:
       name: height_map_is_map_sizey_3x5
       fullName: Map_Tests.map.height_map_is_map_sizey_3x5
       resultStatus: 1
-      duration: 0.0005173
+      duration: 0.0008009
       messages: 
       output: 
       stacktrace: 
@@ -623,7 +707,7 @@ MonoBehaviour:
       name: map_can_not_return_null_1x1
       fullName: Map_Tests.map.map_can_not_return_null_1x1
       resultStatus: 1
-      duration: 0.0044639
+      duration: 0.0045868
       messages: 
       output: 
       stacktrace: 
@@ -640,7 +724,7 @@ MonoBehaviour:
       name: map_can_not_return_null_3x5
       fullName: Map_Tests.map.map_can_not_return_null_3x5
       resultStatus: 1
-      duration: 0.0007856
+      duration: 0.0007997
       messages: 
       output: 
       stacktrace: 
@@ -657,7 +741,7 @@ MonoBehaviour:
       name: new_map_has_heigtmap_data
       fullName: Map_Tests.map.new_map_has_heigtmap_data
       resultStatus: 1
-      duration: 0.0007177
+      duration: 0.0005403
       messages: 
       output: 
       stacktrace: 
@@ -674,7 +758,7 @@ MonoBehaviour:
       name: new_map_overloads_equivalant
       fullName: Map_Tests.map.new_map_overloads_equivalant
       resultStatus: 1
-      duration: 0.0034246
+      duration: 0.0011624
       messages: 
       output: 
       stacktrace: 
@@ -691,7 +775,7 @@ MonoBehaviour:
       name: new_map_sets_size
       fullName: Map_Tests.map.new_map_sets_size
       resultStatus: 1
-      duration: 0.0008283
+      duration: 0.0008029
       messages: 
       output: 
       stacktrace: 
@@ -708,7 +792,7 @@ MonoBehaviour:
       name: new_map_units_is_nonNull
       fullName: Map_Tests.map.new_map_units_is_nonNull
       resultStatus: 1
-      duration: 0.0231038
+      duration: 0.002098
       messages: 
       output: 
       stacktrace: 
@@ -725,7 +809,7 @@ MonoBehaviour:
       name: new_maps_is_walkable
       fullName: Map_Tests.map.new_maps_is_walkable
       resultStatus: 1
-      duration: 0.0015971
+      duration: 0.0013164
       messages: 
       output: 
       stacktrace: 
@@ -742,7 +826,7 @@ MonoBehaviour:
       name: set_tile_properties_does_not_return_null_at_0x0
       fullName: Map_Tests.map.set_tile_properties_does_not_return_null_at_0x0
       resultStatus: 1
-      duration: 0.0006358
+      duration: 0.0006612
       messages: 
       output: 
       stacktrace: 
@@ -759,7 +843,7 @@ MonoBehaviour:
       name: set_tile_properties_does_not_return_null_at_1x1
       fullName: Map_Tests.map.set_tile_properties_does_not_return_null_at_1x1
       resultStatus: 1
-      duration: 0.0004817
+      duration: 0.0005178
       messages: 
       output: 
       stacktrace: 
@@ -776,7 +860,7 @@ MonoBehaviour:
       name: map_reader
       fullName: Map_Tests.map_reader
       resultStatus: 1
-      duration: 0.1027797
+      duration: 0.052699
       messages: 
       output: 
       stacktrace: 
@@ -792,7 +876,7 @@ MonoBehaviour:
       name: genarates_map_with_nonNull_tile_array
       fullName: Map_Tests.map_reader.genarates_map_with_nonNull_tile_array
       resultStatus: 1
-      duration: 0.0267825
+      duration: 0.001244
       messages: 
       output: 
       stacktrace: 
@@ -809,7 +893,7 @@ MonoBehaviour:
       name: genarates_map_with_nonNull_unit_array
       fullName: Map_Tests.map_reader.genarates_map_with_nonNull_unit_array
       resultStatus: 1
-      duration: 0.0055621
+      duration: 0.0046807
       messages: 
       output: 
       stacktrace: 
@@ -826,7 +910,7 @@ MonoBehaviour:
       name: genarates_map_with_tile
       fullName: Map_Tests.map_reader.genarates_map_with_tile
       resultStatus: 1
-      duration: 0.0018451
+      duration: 0.0022478
       messages: 
       output: 
       stacktrace: 
@@ -843,7 +927,7 @@ MonoBehaviour:
       name: genarates_map_with_tile_with_hieght
       fullName: Map_Tests.map_reader.genarates_map_with_tile_with_hieght
       resultStatus: 1
-      duration: 0.008674
+      duration: 0.0014903
       messages: 
       output: 
       stacktrace: 
@@ -860,7 +944,7 @@ MonoBehaviour:
       name: genarates_map_with_unit
       fullName: Map_Tests.map_reader.genarates_map_with_unit
       resultStatus: 1
-      duration: 0.0019315
+      duration: 0.0018968
       messages: 
       output: 
       stacktrace: 
@@ -872,29 +956,12 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1007
       parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map_reader][suite]
-    - id: 1009
-      uniqueId: Tests.dll/Map_Tests/map_reader/[Tests][Map_Tests.map_reader.genarates_tile_array]
-      name: genarates_tile_array
-      fullName: Map_Tests.map_reader.genarates_tile_array
-      resultStatus: 1
-      duration: 0.0010183
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1005
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map_reader][suite]
     - id: 1011
       uniqueId: Tests.dll/Map_Tests/map_reader/[Tests][Map_Tests.map_reader.generates_tile_array_of_map_size]
       name: generates_tile_array_of_map_size
       fullName: Map_Tests.map_reader.generates_tile_array_of_map_size
       resultStatus: 1
-      duration: 0.0064786
+      duration: 0.0038311
       messages: 
       output: 
       stacktrace: 
@@ -911,7 +978,7 @@ MonoBehaviour:
       name: returns_mapReader_tiles
       fullName: Map_Tests.map_reader.returns_mapReader_tiles
       resultStatus: 1
-      duration: 0.0013707
+      duration: 0.001225
       messages: 
       output: 
       stacktrace: 
@@ -928,7 +995,7 @@ MonoBehaviour:
       name: tile_parent_has_child
       fullName: Map_Tests.map_reader.tile_parent_has_child
       resultStatus: 1
-      duration: 0.001758
+      duration: 0.0012327
       messages: 
       output: 
       stacktrace: 
@@ -944,9 +1011,9 @@ MonoBehaviour:
       uniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.save_system][suite]
       name: save_system
       fullName: Map_Tests.save_system
-      resultStatus: 1
-      duration: 0.1093382
-      messages: 
+      resultStatus: 2
+      duration: 0.1033474
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -956,12 +1023,12 @@ MonoBehaviour:
       categories: []
       parentId: 1023
       parentUniqueId: Tests.dll/[Tests][Map_Tests][suite]
-    - id: 1020
-      uniqueId: Tests.dll/Map_Tests/save_system/[Tests][Map_Tests.save_system.get_map_from_file_with_consistant_size]
-      name: get_map_from_file_with_consistant_size
-      fullName: Map_Tests.save_system.get_map_from_file_with_consistant_size
+    - id: 1032
+      uniqueId: Tests.dll/Map_Tests/save_system/[Tests][Map_Tests.save_system.get_map_from_file_with_size]
+      name: get_map_from_file_with_size
+      fullName: Map_Tests.save_system.get_map_from_file_with_size
       resultStatus: 1
-      duration: 0.0668347
+      duration: 0.0640472
       messages: 
       output: 
       stacktrace: 
@@ -971,14 +1038,14 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1019
+      parentId: 1031
       parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.save_system][suite]
-    - id: 1021
-      uniqueId: Tests.dll/Map_Tests/save_system/[Tests][Map_Tests.save_system.get_map_from_file_with_tile]
-      name: get_map_from_file_with_tile
-      fullName: Map_Tests.save_system.get_map_from_file_with_tile
+    - id: 1033
+      uniqueId: Tests.dll/Map_Tests/save_system/[Tests][Map_Tests.save_system.get_map_from_file_with_tile_with_height]
+      name: get_map_from_file_with_tile_with_height
+      fullName: Map_Tests.save_system.get_map_from_file_with_tile_with_height
       resultStatus: 1
-      duration: 0.0126676
+      duration: 0.0058829
       messages: 
       output: 
       stacktrace: 
@@ -988,14 +1055,39 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1019
+      parentId: 1031
+      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.save_system][suite]
+    - id: 1034
+      uniqueId: Tests.dll/Map_Tests/save_system/[Tests][Map_Tests.save_system.get_map_from_file_with_unit_with_name]
+      name: get_map_from_file_with_unit_with_name
+      fullName: Map_Tests.save_system.get_map_from_file_with_unit_with_name
+      resultStatus: 2
+      duration: 0.0026618
+      messages: 'System.NullReferenceException : Object reference not set to an instance
+        of an object'
+      output: 
+      stacktrace: "  at Map..ctor (Tile[,] tiles, Implement[] units) [0x00121] in
+        C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Map
+        Editor\\Map.cs:67 \r\n  at Map_Tests.save_system.get_map_from_file_with_unit_with_name
+        () [0x00026] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Tests\\MapTests.cs:193
+        \r\n  at (wrapper managed-to-native) System.Reflection.MonoMethod.InternalInvoke(System.Reflection.MonoMethod,object,object[],System.Exception&)\r\n 
+        at System.Reflection.MonoMethod.Invoke (System.Object obj, System.Reflection.BindingFlags
+        invokeAttr, System.Reflection.Binder binder, System.Object[] parameters,
+        System.Globalization.CultureInfo culture) [0x00032] in <fb001e01371b4adca20013e0ac763896>:0 "
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1031
       parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.save_system][suite]
     - id: 1013
       uniqueId: Tests.dll/[Tests][Tile_Tests][suite]
       name: Tile_Tests
       fullName: Tile_Tests
       resultStatus: 1
-      duration: 0.0462277
+      duration: 0.0522761
       messages: 
       output: 
       stacktrace: 
@@ -1011,7 +1103,7 @@ MonoBehaviour:
       name: tile
       fullName: Tile_Tests.tile
       resultStatus: 1
-      duration: 0.0195394
+      duration: 0.0257131
       messages: 
       output: 
       stacktrace: 
@@ -1027,7 +1119,7 @@ MonoBehaviour:
       name: new_tile_can_hold_height_value
       fullName: Tile_Tests.tile.new_tile_can_hold_height_value
       resultStatus: 1
-      duration: 0.0008272
+      duration: 0.0008513
       messages: 
       output: 
       stacktrace: 
@@ -1044,7 +1136,7 @@ MonoBehaviour:
       name: new_tile_can_hold_walkable
       fullName: Tile_Tests.tile.new_tile_can_hold_walkable
       resultStatus: 1
-      duration: 0.0007162
+      duration: 0.0006103
       messages: 
       output: 
       stacktrace: 
@@ -1061,7 +1153,7 @@ MonoBehaviour:
       name: new_tile_can_not_return_null
       fullName: Tile_Tests.tile.new_tile_can_not_return_null
       resultStatus: 1
-      duration: 0.0009435
+      duration: 0.0005697
       messages: 
       output: 
       stacktrace: 
@@ -1078,7 +1170,7 @@ MonoBehaviour:
       name: pos_in_grid_is_acurate_0x0
       fullName: Tile_Tests.tile.pos_in_grid_is_acurate_0x0
       resultStatus: 1
-      duration: 0.0013406
+      duration: 0.0012743
       messages: 
       output: 
       stacktrace: 
@@ -1095,7 +1187,7 @@ MonoBehaviour:
       name: pos_in_grid_is_acurate_3x5
       fullName: Tile_Tests.tile.pos_in_grid_is_acurate_3x5
       resultStatus: 1
-      duration: 0.0035206
+      duration: 0.0037582
       messages: 
       output: 
       stacktrace: 
@@ -1107,13 +1199,13 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1001
       parentUniqueId: Tests.dll/Tile_Tests/[Tests][Tile_Tests.tile][suite]
-    m_ResultText: generates_tile_array_of_map_size (0.006s)
+    m_ResultText: world_to_grid_space_3x3 (0.036s)
     m_ResultStacktrace: 
     m_TestListState:
-      scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 5f45dd64
-      m_LastClickedID: 1692222815
-      m_ExpandedIDs: 38760496b8706f9c18181da4713421a5f58144dfe557abf7d8026429f6b374348359db4126d30e4fc76f405d88f96571ffffff7f
+      scrollPos: {x: 0, y: 2}
+      m_SelectedIDs: 5663a62b
+      m_LastClickedID: 732324694
+      m_ExpandedIDs: 38760496b8706f9c18181da4713421a5f58144df0b2469dfe557abf7d8026429f6b374348359db4126d30e4fc76f405d371e5f6888f96571ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1167,7 +1259,7 @@ MonoBehaviour:
   m_ViewDataDictionary: {fileID: 0}
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 15568
+  m_LastSelectedObjectID: -4710
 --- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1424,9 +1516,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0.38754743, y: -0.46769297, z: -231.1739}
+    m_Target: {x: -1.4905005, y: -0.25811586, z: -232.53711}
     speed: 2
-    m_Value: {x: 0.38754743, y: -0.46769297, z: -231.1739}
+    m_Value: {x: -1.4905005, y: -0.25811586, z: -232.53711}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1476,9 +1568,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 4.8204594
+    m_Target: 2.3367057
     speed: 2
-    m_Value: 4.8204594
+    m_Value: 2.3367057
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1532,9 +1624,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: 86cdffff56cfffffb0d0ffff74d2ffff9ed2ffff66d4fffff2d5ffffd0d7ffff24daffff0edbffff4eddfffface2ffff76e5ffff02e6ffff18e6ffff5ce7fffface7ffff2cf0ffff5af2ffffe2f7ffff28fbffff
+      m_SelectedIDs: 9aedffff
+      m_LastClickedID: -4710
+      m_ExpandedIDs: e2e2ffff12e7ffffece7ffffc6e8ffff9ce9ffff22ebffff9eedffffd2edffffeeedffffa2eeffffbeefffffe2efffff6ef0ffffd0f2fffffaf2fffff0f3ffff58f5ffff88f5ffffb0f5ffff66f6ffffb8f8fffff8f8ffff5efbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1623,7 +1715,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/Map Editor
+    - Assets/Scripts/Gamplay/Camera
   m_ViewMode: 0
   m_StartGridSize: 64
   m_LastFolders: []
@@ -1635,7 +1727,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 564e0000
     m_LastClickedID: 20054
-    m_ExpandedIDs: 00000000b8390000ba390000bc390000be390000c0390000c2390000c4390000c6390000c8390000ca390000cc390000ce390000
+    m_ExpandedIDs: 00000000ac390000ae390000b0390000b2390000b4390000b6390000b8390000ba390000bc390000be390000c0390000c2390000c4390000c6390000c8390000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1660,24 +1752,24 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-    scrollPos: {x: 0, y: 240}
+    scrollPos: {x: 0, y: 324}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff00000000b8390000ba390000bc390000c0390000c2390000c4390000c6390000ca390000cc390000ce390000fa390000043a0000063a0000083a00000e3a0000
+    m_ExpandedIDs: ffffffff00000000ac390000ae390000b0390000b2390000b4390000b6390000b8390000ba390000bc390000be390000c0390000c2390000c4390000c6390000c8390000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Map
-      m_OriginalName: Map
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 11806
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 12}
     m_SearchString: 
@@ -1778,8 +1870,8 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 652
+    x: 1270
     y: 73
-    width: 1267
+    width: 649
     height: 926
   m_ViewDataDictionary: {fileID: 0}

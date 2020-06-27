@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class MapReaderBehavior : MonoBehaviour
 {
-
+    public SpritePallate pallate = null;
+    public bool addUnit = false;
+    public string mapName = "Test";
 }
 
 public static class MapReader
@@ -26,7 +28,7 @@ public static class MapReader
         MapReader.map = map;
         tileParent = new GameObject("Tile Parent").transform;
         tiles = new Tile[map.sizeX,map.sizeY];
-        Vector2 mapHalfHeight = new Vector2(map.sizeX / 2.5f, map.sizeY / 2.5f);
+        Vector2 mapHalfHeight = new Vector2(map.sizeX / 2, map.sizeY /2);
         for (int x = 0; x < map.sizeX; x++)
         {
             for (int y = 0; y < map.sizeY; y++)
@@ -131,9 +133,26 @@ public static class MapReader
 
     public static Vector2 GridToWorldSpace(Vector2Int posInGrid)
     {
-        Vector2 mapHalfHeight = new Vector2(map.sizeX / 1.5f, map.sizeY / 1.5f);
-        Vector2 realitivePosition = new Vector2(mapHalfHeight.x - posInGrid.x, mapHalfHeight.y - posInGrid.y);
-        return new Vector2(tileParent.transform.position.x, tileParent.transform.position.y) + realitivePosition;
+        Vector2 mapHalfHeight = new Vector2(map.sizeX / 2, map.sizeY / 2);
+        Vector2 realitivePosition = new Vector2(posInGrid.x - mapHalfHeight.x, posInGrid.y - mapHalfHeight.y);
+        return new Vector2(tileParent.transform.position.x, tileParent.transform.position.y) - realitivePosition;
+    }
+
+    public static Vector2 GridToWorldSpace(int x,int y)
+    {
+        return GridToWorldSpace(new Vector2Int(x, y));
+    }
+
+    public static Vector2Int WorldToGridSpace(Vector2 posInGrid)
+    {
+        Vector2 mapHalfHeight = new Vector2(map.sizeX / 2, map.sizeY / 2);
+        Vector2 realitivePosition = posInGrid - new Vector2(tileParent.position.x,tileParent.position.y);
+        return new Vector2Int((int)(realitivePosition.x - mapHalfHeight.x), (int)(realitivePosition.y - mapHalfHeight.y)); 
+    }
+
+    public static Vector2Int WorldToGridSpace(float x, float y)
+    {
+        return WorldToGridSpace(new Vector2(x, y));
     }
 
     public static Tile GetTile(Vector2Int pos)

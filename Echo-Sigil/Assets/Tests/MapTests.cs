@@ -44,12 +44,7 @@ namespace Map_Tests
         public void genarates_map_with_nonNull_tile_array()
         {
             Tile[,] outTiles = MapReader.GeneratePhysicalMap(new Map(1,1));
-            Assert.IsNotNull(outTiles[0, 0]);
-        }
-        [Test]
-        public void genarates_tile_array()
-        {
-            Assert.IsNotNull(MapReader.GeneratePhysicalMap(new Map(1, 1)));
+            Assert.IsNotNull(outTiles);
         }
         [Test]
         public void tile_parent_has_child()
@@ -70,7 +65,6 @@ namespace Map_Tests
             Tile[,] tiles = MapReader.GeneratePhysicalMap(new Map(1,1));
             Assert.AreEqual(MapReader.tiles, tiles);
         }
-
     }
     class mapeditor
     {
@@ -170,7 +164,7 @@ namespace Map_Tests
     class save_system
     {
         [Test]
-        public void get_map_from_file_with_consistant_size()
+        public void get_map_from_file_with_size()
         {
             Map savedMap = new Map(1, 1);
             SaveSystem.SaveMap("UnitTest_get_map_from_file", savedMap);
@@ -179,7 +173,7 @@ namespace Map_Tests
             SaveSystem.DeleteMap("UnitTest_get_map_from_file");
         }
         [Test]
-        public void get_map_from_file_with_tile()
+        public void get_map_from_file_with_tile_with_height()
         {
             Tile[,] tiles = new Tile[1, 1];
             Tile tile = new Tile();
@@ -190,6 +184,46 @@ namespace Map_Tests
             Map loadMap = SaveSystem.LoadMap("UnitTest_get_map_from_file");
             Assert.AreEqual(2, loadMap.SetTileProperties(0,0).height);
             SaveSystem.DeleteMap("UnitTest_get_map_from_file");
+        }
+        [Test]
+        public void get_map_from_file_with_unit_with_name()
+        {
+            MapReader.GeneratePhysicalMap(new Map(1, 1, true));
+            MapReader.implements[0].name = "Jhon";
+            Map savedMap = new Map(MapReader.tiles, MapReader.implements.ToArray());
+            SaveSystem.SaveMap("UnitTest_get_map_from_file", savedMap);
+            Map loadMap = SaveSystem.LoadMap("UnitTest_get_map_from_file");
+            Assert.AreEqual("Jhon", loadMap.units[0].name);
+            SaveSystem.DeleteMap("UnitTest_get_map_from_file");
+        }
+    }
+    class conversions
+    {
+        [Test]
+        public void center_tile_is_at_0x0_1x1()
+        {
+            MapReader.GeneratePhysicalMap(new Map(1, 1));
+            Transform tileTransform = MapReader.tileParent.GetChild(0);
+            Assert.AreEqual(Vector3.zero, tileTransform.position);
+        }
+        [Test]
+        public void center_tile_is_at_0x0_3x3()
+        {
+            MapReader.GeneratePhysicalMap(new Map(3, 3));
+            Transform tileTransform = MapReader.tileParent.Find("1,1 tile");
+            Assert.AreEqual(Vector3.zero, tileTransform.position);
+        }
+        [Test]
+        public void grid_to_world_space_3x3()
+        {
+            MapReader.GeneratePhysicalMap(new Map(3, 3));
+            Assert.AreEqual(Vector2.one, MapReader.GridToWorldSpace(Vector2Int.zero));
+        }
+        [Test]
+        public void world_to_grid_space_3x3()
+        {
+            MapReader.GeneratePhysicalMap(new Map(3, 3));
+            Assert.AreEqual(Vector2Int.zero, MapReader.WorldToGridSpace(Vector2.one));
         }
     }
 }
