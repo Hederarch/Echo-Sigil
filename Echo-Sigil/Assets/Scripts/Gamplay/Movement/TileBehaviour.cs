@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +17,7 @@ public class TileBehaviour : MonoBehaviour
  public class Tile
 {
     public Vector2Int PosInGrid;
-    public Vector2 PosInWorld { get => MapReader.GetTilesPhyisicalLocation(PosInGrid); }
+    public Vector2 PosInWorld { get => MapReader.GridToWorldSpace(PosInGrid); }
     public float height;
 
     public int spriteIndex;

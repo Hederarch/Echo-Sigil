@@ -29,7 +29,19 @@ namespace Map_Tests
             Assert.IsNotNull(outTiles[0, 0]);
         }
         [Test]
-        public void genarates_blank_map_with_nonNull_tiles()
+        public void genarates_map_with_unit()
+        {
+            MapReader.GeneratePhysicalMap(new Map(1,1,true));
+            Assert.IsNotNull(MapReader.implements[0]);
+        }
+        [Test]
+        public void genarates_map_with_nonNull_unit_array()
+        {
+            MapReader.GeneratePhysicalMap(new Map(1, 1, true));
+            Assert.IsNotNull(MapReader.implements);
+        }
+        [Test]
+        public void genarates_map_with_nonNull_tile_array()
         {
             Tile[,] outTiles = MapReader.GeneratePhysicalMap(new Map(1,1));
             Assert.IsNotNull(outTiles[0, 0]);
@@ -147,6 +159,12 @@ namespace Map_Tests
             {
                 Assert.AreEqual(map.sizeY, map.heightMap.GetLength(1));
             }
+        }
+        [Test]
+        public void new_map_units_is_nonNull()
+        {
+            Map map = new Map(1, 1, true);
+            Assert.IsNotNull(map.units);
         }
     }
     class save_system

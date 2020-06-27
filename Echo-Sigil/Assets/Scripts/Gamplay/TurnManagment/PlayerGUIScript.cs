@@ -63,8 +63,8 @@ public class PlayerGUIScript : MonoBehaviour
             SetSliders(unit.battle);
             if (TurnManager.IsPlayerTurn)
             {
-                moveButton.interactable = unit.move.GetCanMove() && !unit.hasMoved;
-                attackButton.interactable = unit.battle.GetCanAttack() && !unit.hasAttacked;
+                moveButton.interactable = unit.move.CanMove && !unit.hasMoved;
+                attackButton.interactable = unit.battle.CanAttack && !unit.hasAttacked;
             }
         } else
         {
@@ -74,8 +74,8 @@ public class PlayerGUIScript : MonoBehaviour
 
     void SetSliders(IBattle unit)
     {
-        healthSlider.value = unit.GetHealthPercent();
-        willSlider.value = unit.GetWillPercent();
+        healthSlider.value = unit.HealthPercent;
+        willSlider.value = unit.WillPercent;
     }
 
 }

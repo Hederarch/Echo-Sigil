@@ -8,7 +8,7 @@ public interface ITurn
     /// Should be called somewhere in Start()
     /// </summary>
     void Init();
-    string GetTag();
+    string Tag { get; }
     void BeginTurn();
     void EndTurn();
 }

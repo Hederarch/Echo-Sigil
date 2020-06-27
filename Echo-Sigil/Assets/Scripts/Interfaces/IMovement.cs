@@ -2,7 +2,8 @@
 
 public interface IMovement
 {
-    void SetIsTurn();
+    bool IsTurn { get; set; }
+    bool CanMove { get; }
     event Action EndEvent;
-    bool GetCanMove();
+
 }

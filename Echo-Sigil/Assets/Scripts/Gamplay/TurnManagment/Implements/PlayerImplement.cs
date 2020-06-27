@@ -7,7 +7,7 @@ public class PlayerImplement : Implement
 {
     private void QOLEndTurn()
     {
-        if (TurnManager.CurrentUnit.Equals(this) && ((hasMoved || !move.GetCanMove()) && (hasAttacked || !battle.GetCanAttack())))
+        if (TurnManager.CurrentUnit.Equals(this) && ((hasMoved || !move.CanMove) && (hasAttacked || !battle.CanAttack)))
         {
             TurnManager.EndTurn();
         }
@@ -17,7 +17,7 @@ public class PlayerImplement : Implement
     {
         if (!hasMoved)
         {
-            move.SetIsTurn();
+            move.IsTurn = true;
         }
     }
 
@@ -25,7 +25,7 @@ public class PlayerImplement : Implement
     {
         if (!hasAttacked)
         {
-            battle.SetIsTurn();
+            battle.IsTurn = true;
         }
     }
 

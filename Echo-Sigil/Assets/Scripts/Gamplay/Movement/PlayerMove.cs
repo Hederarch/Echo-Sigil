@@ -8,7 +8,7 @@ public class PlayerMove : TacticsMove
     void Update()
     {
         //Tactitics movement
-        if (isTurn)
+        if (IsTurn)
         {
             if (!moveing)
             {

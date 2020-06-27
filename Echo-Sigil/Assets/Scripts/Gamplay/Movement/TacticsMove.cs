@@ -7,13 +7,12 @@ public class TacticsMove : MonoBehaviour , IMovement
 {
     public bool moveing;
 
-
     List<Tile> selectableTiles = new List<Tile>();
     GameObject[] tiles;
 
     Stack<Tile> path = new Stack<Tile>();
 
-    public bool isTurn;
+    public bool IsTurn { get; set; }
     public int moveDistance = 3;
     public float moveSpeed = 4;
     public float jumpHeight = 2;
@@ -32,6 +31,8 @@ public class TacticsMove : MonoBehaviour , IMovement
     public float jumpVelocity = 4.5f;
 
     Tile actualTargetTile;
+
+    public bool CanMove => GetCanMove();
 
     public event Action EndEvent;
 
@@ -155,7 +156,7 @@ public class TacticsMove : MonoBehaviour , IMovement
             RemoveSelectableTiles();
             moveing = false;
 
-            isTurn = false;
+            IsTurn = false;
             EndEvent?.Invoke();
         }
     }
@@ -387,11 +388,6 @@ public class TacticsMove : MonoBehaviour , IMovement
         openList.Remove(lowest);
 
         return lowest;
-    }
-
-    public void SetIsTurn()
-    {
-        isTurn = true;
     }
 
     public bool GetCanMove()

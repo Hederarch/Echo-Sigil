@@ -11,6 +11,8 @@ public class Implement : FacesCamera, ITurn
     public bool hasMoved;
     public bool hasAttacked;
 
+    public string Tag { get => gameObject.tag; }
+
     public static event Action<Implement> IsTurnEvent;
 
     private void Start()
@@ -32,11 +34,6 @@ public class Implement : FacesCamera, ITurn
         TurnManager.CheckForWin();
         ResetUnit();
         UnSubscribe();
-    }
-
-    public string GetTag()
-    {
-       return gameObject.tag;
     }
 
     public virtual void Init()

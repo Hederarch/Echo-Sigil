@@ -83,26 +83,26 @@ public class TurnManager : MonoBehaviour
     {
         List<ITurn> list;
 
-        if (!units.ContainsKey(unit.GetTag()))
+        if (!units.ContainsKey(unit.Tag))
         {
             list = new List<ITurn>();
-            units[unit.GetTag()] = list;
+            units[unit.Tag] = list;
 
-            if (!turnKey.Contains(unit.GetTag()))
+            if (!turnKey.Contains(unit.Tag))
             {
-                turnKey.Enqueue(unit.GetTag());
+                turnKey.Enqueue(unit.Tag);
             }
         } 
         else
         {
-            list = units[unit.GetTag()];
+            list = units[unit.Tag];
         }
 
         list.Add(unit);
     }
     public static void RemoveUnit(ITurn unit)
     {
-        string unitTag = unit.GetTag();
+        string unitTag = unit.Tag;
         List<ITurn> dictonaryList = units[unitTag];
         if (dictonaryList.Contains(unit))
         {

@@ -7,20 +7,19 @@ public class NPCImplement : Implement
     public override void BeginTurn()
     {
         base.BeginTurn();
-        if (!hasMoved && move.GetCanMove())
+        if (!hasMoved && move.CanMove)
         {
-            move.SetIsTurn();
+            move.IsTurn = true;
         } 
-        if(!hasAttacked && battle.GetCanAttack())
+        if(!hasAttacked && battle.CanAttack)
         {
-            battle.SetIsTurn();
+            battle.IsTurn = true;
         } 
-        else
+        else if ((hasMoved || !move.CanMove) && (hasAttacked || !battle.CanAttack))
         {
             TurnManager.EndTurn();
         }
     }
-
 
     protected override void Subscribe()
     {

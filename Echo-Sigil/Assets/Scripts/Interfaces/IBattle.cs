@@ -2,9 +2,9 @@
 
 public interface IBattle
 {
-    void SetIsTurn();
+    bool IsTurn { get; set; }
+    float HealthPercent { get; }
+    float WillPercent { get; }
+    bool CanAttack { get; }
     event Action EndEvent;
-    float GetHealthPercent();
-    float GetWillPercent();
-    bool GetCanAttack();
 }

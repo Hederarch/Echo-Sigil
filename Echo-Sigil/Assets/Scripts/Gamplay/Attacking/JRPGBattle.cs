@@ -14,16 +14,23 @@ public class JRPGBattle : MonoBehaviour , IBattle
     public int maxWill = 5;
 
     public List<Ability> abilites = new List<Ability>();
-    public float reach;
+    public int reach;
 
-    public bool isTurn;
+    public bool IsTurn { get; set; }
+
+    public float HealthPercent => (float)health / (float)maxHealth;
+
+    public float WillPercent => (float)will / (float)maxWill;
+
+    public bool CanAttack => CheckAdjecent() != null;
+
     public bool inBattle;
 
     public event Action EndEvent;
 
     private void Update()
     {
-        if (isTurn && !inBattle)
+        if (IsTurn && !inBattle)
         {
             JRPGBattle j = CheckAdjecent();
             if (j != null)
@@ -35,7 +42,7 @@ public class JRPGBattle : MonoBehaviour , IBattle
 
     public void SetCombatant(JRPGBattle combatant)
     {
-        if(combatant != null && !inBattle && isTurn)
+        if(combatant != null && !inBattle && IsTurn)
         {
             inBattle = true;
             //needs to be a corutine for the animation to work
@@ -74,7 +81,7 @@ public class JRPGBattle : MonoBehaviour , IBattle
     public void EndCombat()
     {
         inBattle = false;
-        isTurn = false;
+        IsTurn = false;
         FightGUIScript.UnSetBattleAnimations();
         FightGUIScript.ResetMenuAndStats();
         Camera.main.GetComponent<JRPGBattleCamera>().SwitchCamera(false);
@@ -115,11 +122,6 @@ public class JRPGBattle : MonoBehaviour , IBattle
         return null;
     }
 
-    public void SetIsTurn()
-    {
-        isTurn = true;
-        
-    }
 
     protected JRPGBattle CheckAdjecent()
     {
@@ -164,16 +166,6 @@ public class JRPGBattle : MonoBehaviour , IBattle
             Debug.LogWarning(name + "has invlaid will max");
             return .5f;
         }
-    }
-
-    public bool GetCanAttack()
-    {
-        JRPGBattle j = CheckAdjecent();
-        if(j != null)
-        {
-            return true;
-        }
-        return false;
     }
 
     private void OnDrawGizmosSelected()
