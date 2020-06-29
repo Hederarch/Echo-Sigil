@@ -6,9 +6,10 @@ using UnityEngine;
 public class MapEditor : MonoBehaviour
 {
     public Tile selectedTile;
+    public Transform selectedTransform;
     Vector2 prevMousePos;
 
-    public event Action<Tile> NewSelectedTile;
+    public event Action<Tile,Transform> NewSelectedTile;
 
     // Update is called once per frame
     void Update()
@@ -22,11 +23,11 @@ public class MapEditor : MonoBehaviour
 
     private void ChangeTileHeight()
     {
-        float delta = prevMousePos.y - Input.mousePosition.y;
-        if (Input.GetMouseButton(0) && Math.Abs(delta) > .5f && selectedTile != null)
+        float delta = (prevMousePos.y - Input.mousePosition.y) * .1f;
+        if (Input.GetMouseButton(0) && selectedTile != null)
         {
-            selectedTile.height += delta;
-            MapReader.map.heightMap[selectedTile.PosInGrid.x, selectedTile.PosInGrid.x] = selectedTile.height;
+            selectedTile.height -= delta;
+            selectedTransform.position -= new Vector3(0, 0, delta);
         }
         prevMousePos = Input.mousePosition;
     }
@@ -35,8 +36,10 @@ public class MapEditor : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
         {
-            selectedTile = hit.collider.GetComponent<TileBehaviour>().tile;
-            NewSelectedTile?.Invoke(selectedTile);
+            selectedTransform = hit.collider.transform;
+            selectedTile = selectedTransform.GetComponent<TileBehaviour>().tile;
+            prevMousePos = Input.mousePosition;
+            NewSelectedTile?.Invoke(selectedTile,selectedTransform);
         }
     }
 }

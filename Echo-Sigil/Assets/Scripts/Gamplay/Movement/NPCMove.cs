@@ -47,7 +47,6 @@ public class NPCMove : TacticsMove
                 }
             }
         }
-
         target = nearest.transform.position;
     }
 

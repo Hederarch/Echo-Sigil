@@ -40,6 +40,8 @@ public static class MapReader
                 gameObjectTile.AddComponent<TileBehaviour>().tile = tile;
                 tiles[x, y] = tile;
 
+                gameObjectTile.transform.position += new Vector3(0, 0, tile.height);
+
                 gameObjectTile.AddComponent<BoxCollider>().size = new Vector3(1, 1, .2f);
 
                 gameObjectTile.AddComponent<SpriteRenderer>().sprite = GetSpriteFromIndexAndPallete(tile.spriteIndex,pallate);
@@ -63,8 +65,8 @@ public static class MapReader
     {
         GameObject unit = new GameObject(mi.name);
         Vector2 pos = GridToWorldSpace(mi.PosInGrid());
-        unit.transform.position = new Vector3(pos.x, pos.y, GetTile(mi.PosInGrid()).height + .2f);
         unit.transform.parent = tileParent;
+        unit.transform.position = new Vector3(pos.x, pos.y, GetTile(mi.PosInGrid()).height + .2f);
         JRPGBattle j;
         TacticsMove t;
         Implement i;

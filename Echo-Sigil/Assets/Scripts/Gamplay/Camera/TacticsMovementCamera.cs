@@ -7,6 +7,7 @@ using UnityEngine;
 public class TacticsMovementCamera : MonoBehaviour
 {
     public FacesCamera foucus;
+    public Vector3 foucusPoint;
     public float speed = .5f;
     public Camera cam;
     public float offsetFromFoucus = 4;
@@ -43,12 +44,9 @@ public class TacticsMovementCamera : MonoBehaviour
         {
             lerpAngle = desieredAngle;
         }
-        if (!Input.GetMouseButtonDown(1) && foucus != null)
-        {
-            transform.position = CalcPostion(lerpAngle);
-            transform.rotation = CalcRotation(transform.position,lerpAngle);
-            angle = lerpAngle;
-        }
+        transform.position = CalcPostion(lerpAngle);
+        transform.rotation = CalcRotation(transform.position,lerpAngle);
+        angle = lerpAngle;
     }
 
     private void PlayerInputs()
@@ -84,14 +82,23 @@ public class TacticsMovementCamera : MonoBehaviour
         Vector3 offset = new Vector3((float)Math.Sin(angle), (float)Math.Cos(angle));
         offset *= offsetFromFoucus;
         offset.z = -offsetFromZ0;
-        return foucus.transform.position + offset;
+        if (foucus != null)
+        {
+            if (Vector3.Distance(foucusPoint,foucus.transform.position)> .5f)
+            {
+                foucusPoint = Vector3.Lerp(foucusPoint, foucus.transform.position, .1f);
+            } else
+            {
+                foucusPoint = foucus.transform.position;
+            }
+        }
+        return foucusPoint + offset;
     }
 
     private Quaternion CalcRotation(Vector3 position, float angle)
     {
-        Vector3 rotation = Quaternion.LookRotation(foucus.transform.position - position).eulerAngles;
+        Vector3 rotation = Quaternion.LookRotation(foucusPoint - position).eulerAngles;
         rotation.z = -angle * Mathf.Rad2Deg;
-        Debug.DrawRay(transform.position, transform.right);
         return Quaternion.Euler(rotation);
     }
 
