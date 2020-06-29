@@ -65,6 +65,13 @@ namespace Map_Tests
             Tile[,] tiles = MapReader.GeneratePhysicalMap(new Map(1,1));
             Assert.AreEqual(MapReader.tiles, tiles);
         }
+        [Test]
+        public void tile_sprites_1x1()
+        {
+            MapReader.GeneratePhysicalMap(new Map(1, 1));
+            Assert.AreEqual(Vector3.one, MapReader.tileParent.GetChild(0).lossyScale);
+        }
+
     }
     class mapeditor
     {
@@ -220,10 +227,36 @@ namespace Map_Tests
             Assert.AreEqual(Vector2.one, MapReader.GridToWorldSpace(Vector2Int.zero));
         }
         [Test]
-        public void world_to_grid_space_3x3()
+        public void world_to_grid_space_3x3_center()
         {
             MapReader.GeneratePhysicalMap(new Map(3, 3));
             Assert.AreEqual(Vector2Int.zero, MapReader.WorldToGridSpace(Vector2.one));
+        }
+        [Test]
+        public void world_to_grid_space_3x3_1x1()
+        {
+            MapReader.GeneratePhysicalMap(new Map(3, 3));
+            Assert.AreEqual(Vector2Int.zero, MapReader.WorldToGridSpace(Vector2.one + (Vector2.one * .4f)));
+        }
+        [Test]
+        public void world_to_grid_space_3x3_0x0()
+        {
+            MapReader.GeneratePhysicalMap(new Map(3, 3));
+            Assert.AreEqual(Vector2Int.zero, MapReader.WorldToGridSpace(Vector2.one - (Vector2.one * .4f)));
+        }
+        [Test]
+        public void grid_to_world_space_with_tile_parent_move()
+        {
+
+            MapReader.GeneratePhysicalMap(new Map(3, 3));
+            MapReader.tileParent.position += Vector3.one;
+            Assert.AreEqual(Vector2.one * 2, MapReader.GridToWorldSpace(Vector2Int.zero));
+        }
+        [Test]
+        public void world_to_grid_space_to_tile_0x0()
+        {
+            Tile[,] tiles = MapReader.GeneratePhysicalMap(new Map(1, 1));
+            Assert.AreEqual(tiles[0,0],MapReader.GetTile(MapReader.WorldToGridSpace(0,0)));
         }
     }
 }

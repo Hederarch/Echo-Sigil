@@ -58,13 +58,14 @@ public class Map
                 spriteIndexMap[x, y] = tiles[x, y].spriteIndex;
             }
         }
-        if (units != null)
+        if (units != null && units.Length > 0)
         {
+            this.units = new List<MapImplement>();
             foreach (Implement i in units)
             {
                 TacticsMove t = i.move as TacticsMove;
                 JRPGBattle j = i.battle as JRPGBattle;
-                this.units.Add(new MapImplement(
+                MapImplement mapImplement = new MapImplement(
                     t.currentTile.PosInGrid,
                     i is PlayerImplement,
                     i.name,
@@ -76,7 +77,8 @@ public class Map
                     j.will,
                     j.maxHealth,
                     j.maxWill,
-                    j.abilites));
+                    j.abilites);
+                this.units.Add(mapImplement);
             }
         }
     }
@@ -94,12 +96,13 @@ public class Map
     }
 
 }
-
-public struct MapImplement
+[Serializable]
+public class MapImplement
 {
     public string name;
 
-    public Vector2Int posInGrid;
+    public int posX;
+    public int posY;
     public bool player;
 
     //movement
@@ -131,7 +134,8 @@ public struct MapImplement
                         List<Ability> abilities = null
                         )
     {
-        posInGrid = new Vector2Int(x, y);
+        posX = x;
+        posY = y;
 
         this.player = player;
         this.name = name;
@@ -180,4 +184,9 @@ public struct MapImplement
              maxWill,
              abilities)
     { }
+
+    public Vector2Int PosInGrid()
+    {
+        return new Vector2Int(posX, posY);
+    }
 }

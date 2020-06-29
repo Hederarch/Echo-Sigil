@@ -276,6 +276,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd048980fe615b747b62465aa2b7412c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pallate: {fileID: 11400000, guid: 6855adba9e60ea340b9621680c58b8b5, type: 2}
+  addUnit: 1
+  mapName: Test
 --- !u!4 &1575695997
 Transform:
   m_ObjectHideFlags: 0

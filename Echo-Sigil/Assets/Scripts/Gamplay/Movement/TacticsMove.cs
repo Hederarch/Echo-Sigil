@@ -17,13 +17,12 @@ public class TacticsMove : MonoBehaviour , IMovement
     public float moveSpeed = 4;
     public float jumpHeight = 2;
 
-    public Tile currentTile;
+    public Tile currentTile { get => MapReader.GetTile(MapReader.WorldToGridSpace(transform.position.x,transform.position.y)); }
 
     Vector3 velocity = new Vector3();
     Vector3 heading = new Vector3();
 
-    float halfHeight;
-
+    //Jumping
     private bool movingEdge;
     private Vector3 jumpTarget;
     private bool jummpingUp;
@@ -36,15 +35,9 @@ public class TacticsMove : MonoBehaviour , IMovement
 
     public event Action EndEvent;
 
-    void Start()
-    {
-        halfHeight = GetComponent<Collider>().bounds.extents.z;
-    }
-
     public void FindSelectableTiles()
     {
         ComputeAdjacencyList(jumpHeight, null);
-        GetCurrentTile();
 
         Queue<Tile> process = new Queue<Tile>();
 
@@ -83,27 +76,6 @@ public class TacticsMove : MonoBehaviour , IMovement
         }
     }
 
-    public Tile GetCurrentTile()
-    {
-        currentTile = GetTargetTile(transform.position);
-        if (currentTile != null)
-        {
-            currentTile.current = true;
-        }
-        return currentTile;
-    }
-
-    public Tile GetTargetTile(Vector3 targetPosition)
-    {
-        Tile output = null;
-        if(Physics.Raycast(targetPosition,Vector3.forward,out RaycastHit hit) && hit.collider.GetComponent<TileBehaviour>())
-        {
-            Debug.DrawLine(targetPosition, hit.point);
-            output = hit.collider.GetComponent<TileBehaviour>().tile;
-        }
-        return output;
-    }
-
     public void MoveToTile(Tile targetTile)
     {
         path.Clear();
@@ -125,7 +97,7 @@ public class TacticsMove : MonoBehaviour , IMovement
             Tile t = path.Peek();
             Vector3 target = t.PosInWorld;
 
-            target.z -= halfHeight + t.height + .1f;
+            target.z -= t.height + .1f;
 
             if (Vector2.Distance(transform.position, target) >= .05f)
             {
@@ -177,7 +149,6 @@ public class TacticsMove : MonoBehaviour , IMovement
         if(currentTile != null)
         {
             currentTile.current = false;
-            currentTile = null;
         }
         foreach(Tile tile in selectableTiles)
         {
@@ -315,7 +286,6 @@ public class TacticsMove : MonoBehaviour , IMovement
     protected void FindPath(Tile target)
     {
         ComputeAdjacencyList(jumpHeight, target);
-        GetCurrentTile();
 
         List<Tile> openList = new List<Tile>();
         List<Tile> closedList = new List<Tile>();
@@ -392,7 +362,6 @@ public class TacticsMove : MonoBehaviour , IMovement
 
     public bool GetCanMove()
     {
-        GetCurrentTile();
         if (currentTile != null)
         {
             currentTile.FindNeighbors(jumpHeight, null);

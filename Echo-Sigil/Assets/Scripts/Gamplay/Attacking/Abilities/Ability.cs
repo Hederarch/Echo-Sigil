@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "punch",menuName = "Battle Element/Ability",order = 0)]
-public class Ability : ScriptableObject
+[Serializable]
+public class Ability
 {
+    public string name;
+
     public int willDamage;
     public int healthDameage;
 

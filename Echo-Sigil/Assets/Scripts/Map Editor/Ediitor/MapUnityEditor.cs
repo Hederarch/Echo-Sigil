@@ -28,7 +28,7 @@ public class MapUnityEditor : Editor
         }
         if (GUILayout.Button("Load"))
         {
-            MapReader.LoadMap(mapReaderBehavior.mapName);
+            MapReader.LoadMap(mapReaderBehavior.mapName, mapReaderBehavior.pallate);
         }
         GUILayout.EndHorizontal();
 

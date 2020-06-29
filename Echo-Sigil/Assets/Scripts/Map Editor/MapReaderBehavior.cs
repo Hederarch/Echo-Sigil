@@ -62,8 +62,8 @@ public static class MapReader
     public static Implement MapImplementToImplement(MapImplement mi)
     {
         GameObject unit = new GameObject(mi.name);
-        Vector2 pos = GridToWorldSpace(mi.posInGrid);
-        unit.transform.position = new Vector3(pos.x, pos.y, GetTile(mi.posInGrid).height + .2f);
+        Vector2 pos = GridToWorldSpace(mi.PosInGrid());
+        unit.transform.position = new Vector3(pos.x, pos.y, GetTile(mi.PosInGrid()).height + .2f);
         unit.transform.parent = tileParent;
         JRPGBattle j;
         TacticsMove t;
@@ -147,7 +147,7 @@ public static class MapReader
     {
         Vector2 mapHalfHeight = new Vector2(map.sizeX / 2, map.sizeY / 2);
         Vector2 realitivePosition = posInGrid - new Vector2(tileParent.position.x,tileParent.position.y);
-        return new Vector2Int((int)(realitivePosition.x - mapHalfHeight.x), (int)(realitivePosition.y - mapHalfHeight.y)); 
+        return new Vector2Int(Math.Abs((int)(realitivePosition.x - mapHalfHeight.x - .5f)), Math.Abs((int)(realitivePosition.y - mapHalfHeight.y - .5f))); 
     }
 
     public static Vector2Int WorldToGridSpace(float x, float y)
@@ -175,11 +175,12 @@ public static class MapReader
 
     public static void SaveMap(string name)
     {
-        
+        SaveSystem.SaveMap(name,new Map(tiles,implements.ToArray()));
     }
 
-    public static void LoadMap(string name)
+    public static void LoadMap(string name, SpritePallate spritePallate)
     {
-
+        Map map = SaveSystem.LoadMap(name, true);
+        GeneratePhysicalMap(map, spritePallate);
     }
 }
