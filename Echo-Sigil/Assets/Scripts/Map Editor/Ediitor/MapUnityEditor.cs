@@ -16,7 +16,7 @@ public class MapUnityEditor : Editor
         mapReaderBehavior.pallate = EditorGUILayout.ObjectField(mapReaderBehavior.pallate, System.Type.GetType("SpritePallate"), false) as SpritePallate;
         if (GUILayout.Button("Generate Blank Map"))
         {
-            MapReader.GeneratePhysicalMap(new Map(MapReader.backupMapSize, mapReaderBehavior.addUnit), mapReaderBehavior.pallate);
+            MapReader.GeneratePhysicalMap(mapReaderBehavior.pallate, new Map(MapReader.backupMapSize, mapReaderBehavior.addUnit));
         }
         GUILayout.EndHorizontal();
 

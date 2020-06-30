@@ -15,7 +15,7 @@ namespace Map_Tests
             Tile tile = new Tile();
             tile.height = 2;
             tiles[0, 0] = tile;
-            Tile[,] outTiles = MapReader.GeneratePhysicalMap(new Map(tiles));
+            Tile[,] outTiles = MapReader.GeneratePhysicalMap(map: new Map(tiles));
             Assert.AreEqual(2, outTiles[0,0].height);
         }
         [Test]
@@ -25,50 +25,50 @@ namespace Map_Tests
             Tile tile = new Tile();
             tile.height = 2;
             tiles[0, 0] = tile;
-            Tile[,] outTiles = MapReader.GeneratePhysicalMap(new Map(tiles));
+            Tile[,] outTiles = MapReader.GeneratePhysicalMap(map: new Map(tiles));
             Assert.IsNotNull(outTiles[0, 0]);
         }
         [Test]
         public void genarates_map_with_unit()
         {
-            MapReader.GeneratePhysicalMap(new Map(1,1,true));
+            MapReader.GeneratePhysicalMap(map: new Map(1, 1, true));
             Assert.IsNotNull(MapReader.implements[0]);
         }
         [Test]
         public void genarates_map_with_nonNull_unit_array()
         {
-            MapReader.GeneratePhysicalMap(new Map(1, 1, true));
+            MapReader.GeneratePhysicalMap(map: new Map(1, 1, true));
             Assert.IsNotNull(MapReader.implements);
         }
         [Test]
         public void genarates_map_with_nonNull_tile_array()
         {
-            Tile[,] outTiles = MapReader.GeneratePhysicalMap(new Map(1,1));
+            Tile[,] outTiles = MapReader.GeneratePhysicalMap(map: new Map(1, 1));
             Assert.IsNotNull(outTiles);
         }
         [Test]
         public void tile_parent_has_child()
         {
-            MapReader.GeneratePhysicalMap(new Map(1, 1));
+            MapReader.GeneratePhysicalMap(map: new Map(1, 1));
             Assert.AreEqual(1, MapReader.tileParent.childCount);
         }
         [Test]
         public void generates_tile_array_of_map_size()
         {
             Vector2Int size = new Vector2Int(3, 5);
-            Tile[,] tiles = MapReader.GeneratePhysicalMap(new Map(size));
+            Tile[,] tiles = MapReader.GeneratePhysicalMap(map: new Map(size));
             Assert.AreEqual(size, new Vector2Int(tiles.GetLength(0), tiles.GetLength(1)));
         }
         [Test]
         public void returns_mapReader_tiles()
         {
-            Tile[,] tiles = MapReader.GeneratePhysicalMap(new Map(1,1));
+            Tile[,] tiles = MapReader.GeneratePhysicalMap(map: new Map(1, 1));
             Assert.AreEqual(MapReader.tiles, tiles);
         }
         [Test]
         public void tile_sprites_1x1()
         {
-            MapReader.GeneratePhysicalMap(new Map(1, 1));
+            MapReader.GeneratePhysicalMap(map: new Map(1, 1));
             Assert.AreEqual(Vector3.one, MapReader.tileParent.GetChild(0).lossyScale);
         }
 
@@ -195,7 +195,7 @@ namespace Map_Tests
         [Test]
         public void get_map_from_file_with_unit_with_name()
         {
-            MapReader.GeneratePhysicalMap(new Map(1, 1, true));
+            MapReader.GeneratePhysicalMap(map: new Map(1, 1, true));
             MapReader.implements[0].name = "Jhon";
             Map savedMap = new Map(MapReader.tiles, MapReader.implements.ToArray());
             SaveSystem.SaveMap("UnitTest_get_map_from_file", savedMap);
@@ -209,53 +209,53 @@ namespace Map_Tests
         [Test]
         public void center_tile_is_at_0x0_1x1()
         {
-            MapReader.GeneratePhysicalMap(new Map(1, 1));
+            MapReader.GeneratePhysicalMap(map: new Map(1, 1));
             Transform tileTransform = MapReader.tileParent.GetChild(0);
             Assert.AreEqual(Vector3.zero, tileTransform.position);
         }
         [Test]
         public void center_tile_is_at_0x0_3x3()
         {
-            MapReader.GeneratePhysicalMap(new Map(3, 3));
+            MapReader.GeneratePhysicalMap(map: new Map(3, 3));
             Transform tileTransform = MapReader.tileParent.Find("1,1 tile");
             Assert.AreEqual(Vector3.zero, tileTransform.position);
         }
         [Test]
         public void grid_to_world_space_3x3()
         {
-            MapReader.GeneratePhysicalMap(new Map(3, 3));
+            MapReader.GeneratePhysicalMap(map: new Map(3, 3));
             Assert.AreEqual(Vector2.one, MapReader.GridToWorldSpace(Vector2Int.zero));
         }
         [Test]
         public void world_to_grid_space_3x3_center()
         {
-            MapReader.GeneratePhysicalMap(new Map(3, 3));
+            MapReader.GeneratePhysicalMap(map: new Map(3, 3));
             Assert.AreEqual(Vector2Int.zero, MapReader.WorldToGridSpace(Vector2.one));
         }
         [Test]
         public void world_to_grid_space_3x3_1x1()
         {
-            MapReader.GeneratePhysicalMap(new Map(3, 3));
+            MapReader.GeneratePhysicalMap(map: new Map(3, 3));
             Assert.AreEqual(Vector2Int.zero, MapReader.WorldToGridSpace(Vector2.one + (Vector2.one * .4f)));
         }
         [Test]
         public void world_to_grid_space_3x3_0x0()
         {
-            MapReader.GeneratePhysicalMap(new Map(3, 3));
+            MapReader.GeneratePhysicalMap(map: new Map(3, 3));
             Assert.AreEqual(Vector2Int.zero, MapReader.WorldToGridSpace(Vector2.one - (Vector2.one * .4f)));
         }
         [Test]
         public void grid_to_world_space_with_tile_parent_move()
         {
 
-            MapReader.GeneratePhysicalMap(new Map(3, 3));
+            MapReader.GeneratePhysicalMap(map: new Map(3, 3));
             MapReader.tileParent.position += Vector3.one;
             Assert.AreEqual(Vector2.one * 2, MapReader.GridToWorldSpace(Vector2Int.zero));
         }
         [Test]
         public void world_to_grid_space_to_tile_0x0()
         {
-            Tile[,] tiles = MapReader.GeneratePhysicalMap(new Map(1, 1));
+            Tile[,] tiles = MapReader.GeneratePhysicalMap(map: new Map(1, 1));
             Assert.AreEqual(tiles[0,0],MapReader.GetTile(MapReader.WorldToGridSpace(0,0)));
         }
     }

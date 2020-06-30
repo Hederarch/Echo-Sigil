@@ -18,7 +18,7 @@ public static class MapReader
     public static Tile[,] tiles;
     public static List<Implement> implements;
 
-    public static Tile[,] GeneratePhysicalMap(Map map = null, SpritePallate pallate = null)
+    public static Tile[,] GeneratePhysicalMap(SpritePallate pallate = null, Map map = null, bool editor = false)
     {
         DestroyPhysicalMapTiles();
         if (map == null)
@@ -58,7 +58,17 @@ public static class MapReader
             }
         }
 
+        if (editor)
+        {
+            GenerateGrowthTiles();
+        }
+
         return tiles;
+    }
+
+    private static void GenerateGrowthTiles()
+    {
+        Vector2 mapHalfHeight = new Vector2(map.sizeX / 2, map.sizeY / 2);
     }
 
     public static Implement MapImplementToImplement(MapImplement mi)
@@ -106,6 +116,7 @@ public static class MapReader
         GameObject spriteRender = new GameObject("Sprite Render");
         spriteRender.transform.parent = unit.transform;
         i.unitSprite = spriteRender.AddComponent<SpriteRenderer>();
+        spriteRender.AddComponent<BoxCollider>();
 
         return i;
     }
@@ -157,15 +168,9 @@ public static class MapReader
         return WorldToGridSpace(new Vector2(x, y));
     }
 
-    public static Tile GetTile(Vector2Int pos)
-    {
-        return GetTile(pos.x, pos.y);
-    }
+    public static Tile GetTile(Vector2Int pos) => GetTile(pos.x, pos.y);
 
-    public static Tile GetTile(int x, int y)
-    {
-        return tiles[x, y];
-    }
+    public static Tile GetTile(int x, int y) => x > 0 && x < map.sizeX && y > 0 && y < map.sizeY ? tiles[x, y] : null;
 
     public static void DestroyPhysicalMapTiles()
     {
@@ -183,6 +188,6 @@ public static class MapReader
     public static void LoadMap(string name, SpritePallate spritePallate)
     {
         Map map = SaveSystem.LoadMap(name, true);
-        GeneratePhysicalMap(map, spritePallate);
+        GeneratePhysicalMap(spritePallate, map);
     }
 }

@@ -60,8 +60,12 @@ public class TileBehaviour : MonoBehaviour
         }
         return output;
     }
-
-    public void FindNeighbors(float jumpHeight, Tile target)
+    /// <summary>
+    /// Reset tile and then add neighbors to adjaceny list
+    /// </summary>
+    /// <param name="jumpHeight">Distance up and down before tiles stop being neighbors</param>
+    /// <param name="target">Tile discounted for direction check.</param>
+    public void FindNeighbors(float jumpHeight, Tile target = null)
     {
         ResetTile();
         adjacencyList.Clear();
