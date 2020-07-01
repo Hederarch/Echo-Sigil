@@ -9,9 +9,8 @@ public class MapEditor : MonoBehaviour
     public SpritePallate pallate;
 
     Tile selectedTile;
+    Implement selectedImplement;
     Transform selectedTransform;
-
-    Tile prevTile;
     
     Vector2 prevMousePos;
     private bool locked;
@@ -34,41 +33,52 @@ public class MapEditor : MonoBehaviour
 
     private void UnitEdits()
     {
-
+        if (Input.GetMouseButton(1) && selectedImplement != null)
+        {
+            Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit);
+            ChangeUnitPos(hit.point);
+        }
     }
 
     private void TileEdits()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(1) && selectedTile != null)
         {
             ChangeTileHeight((Input.mousePosition.y - prevMousePos.y) * .1f);
         }
     }
 
-    public bool ChangeTileHeight(float delta)
+    public bool ChangeTileHeight(float delta , bool snap = true)
     {
-        float desierdHeight = 0;
-        if (selectedTile != null)
+        if (selectedTile == null)
         {
-            desierdHeight = selectedTile.height + delta;
+            return false;
+        }
+        else
+        {
+            float desierdHeight = selectedTile.height + delta;
 
-            //Snap to adjacent tiles
-            selectedTile.FindNeighbors(float.PositiveInfinity);
-            foreach (Tile t in selectedTile.adjacencyList)
+            if (snap)
             {
-                if (Math.Abs(desierdHeight - t.height) < snappingDistance)
+                //Snap to adjacent tiles
+                selectedTile.FindNeighbors(float.PositiveInfinity);
+                Tile closest = null;
+                foreach (Tile t in selectedTile.adjacencyList)
                 {
-                    desierdHeight = t.height;
-                    break;
+                    if ((closest == null && Math.Abs(desierdHeight - t.height) < snappingDistance) || (closest != null && Math.Abs(desierdHeight - closest.height) > Math.Abs(desierdHeight - t.height)))
+                    {
+                        closest = t;
+                    }
+                }
+                if (closest != null)
+                {
+                    desierdHeight = closest.height;
                 }
             }
             selectedTile.height = desierdHeight;
             selectedTransform.position = new Vector3(selectedTransform.position.x, selectedTransform.position.y, desierdHeight);
+            NewSelected?.Invoke(selectedTransform);
             return true;
-        } 
-        else
-        {
-            return false;
         }
 
     }
@@ -80,57 +90,88 @@ public class MapEditor : MonoBehaviour
     
     public void ChangeTileHeight(string delta)
     {
-        ChangeTileHeight(float.Parse(delta) - selectedTile.height);
+        ChangeTileHeight(float.Parse(delta) - selectedTile.height,false);
+    }
+
+    public bool ChangeUnitPos(Vector3 point)
+    {
+        return ChangeUnitPos(MapReader.WorldToGridSpace(point));
+    }
+
+    public bool ChangeUnitPos(Vector2 point)
+    {
+        return ChangeUnitPos(MapReader.WorldToGridSpace(point));
+    }
+
+    public bool ChangeUnitPos(int x, int y)
+    {
+        return ChangeUnitPos(new Vector2Int(x,y));
+    }
+
+    public bool ChangeUnitPos(Vector2Int pointOnGrid)
+    {
+        if(selectedImplement == null)
+        {
+            return false;
+        } 
+        else
+        {
+            Vector2 worldSpace = MapReader.GridToWorldSpace(pointOnGrid);
+            Tile tile = MapReader.GetTile(pointOnGrid);
+            selectedImplement.transform.position = new Vector3(worldSpace.x, worldSpace.y, tile.height + .1f);
+            NewSelected?.Invoke(selectedTransform);
+            return true;
+        }
     }
 
     void Select()
     {
-        if (EventSystem.current.IsPointerOverGameObject())
+        if (!EventSystem.current.IsPointerOverGameObject())
         {
-            return;
-        }
-
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit) )
-        {
-            if ((!locked && hit.transform != selectedTransform) || Input.GetMouseButtonDown(0))
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit) && !locked && hit.transform != selectedTransform)
             {
                 selectedTransform = hit.transform;
+                NewSelected?.Invoke(selectedTransform);
 
-                if(prevTile != null)
-                {
-                    prevTile.current = false;
-                    prevTile = null;
-                }
+                //tiles
                 if (selectedTransform.GetComponent<TileBehaviour>() != null)
                 {
                     selectedTile = selectedTransform.GetComponent<TileBehaviour>().tile;
-                    selectedTile.current = true;
-                    prevTile = selectedTile;
+   
+                } else
+                {
+                    selectedTile = null;
                 }
-                prevMousePos = Input.mousePosition;
-                NewSelected?.Invoke(selectedTransform);
-            }
-            if (Input.GetMouseButtonDown(0))
+
+                //Units
+                if (selectedTransform.GetComponentInParent<Implement>() != null)
+                {
+                    selectedImplement = selectedTransform.GetComponentInParent<Implement>();
+                } else
+                {
+                    selectedImplement = null;
+                }
+            } 
+            else if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition)) && Input.GetMouseButtonDown(0))
             {
                 locked = true;
             }
-        } 
-        else
-        {
-            if (Input.GetMouseButtonDown(0))
+            else if (!Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition)))
             {
-                locked = false;
-                selectedTransform = null;
-                selectedTile = null;
-                if (prevTile != null)
+                if (Input.GetMouseButtonDown(0))
                 {
-                    prevTile.current = false;
+                    locked = false;
                 }
-                prevTile = null;
+                if (!locked)
+                { 
+                    selectedTransform = null;
+                    selectedTile = null;
+                    NewSelected?.Invoke(selectedTransform);
+                }
             }
+            prevMousePos = Input.mousePosition;
         }
-        NewSelected?.Invoke(selectedTransform);
+        
     }
-
 
 }
