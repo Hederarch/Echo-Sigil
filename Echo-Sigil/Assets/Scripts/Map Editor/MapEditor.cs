@@ -2,17 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class MapEditor : MonoBehaviour
 {
     public SpritePallate pallate;
 
-    Tile selectedTile;
-    Implement selectedImplement;
     Transform selectedTransform;
-    
-    Vector2 prevMousePos;
+
     private bool locked;
 
     public float snappingDistance = .1f;
@@ -22,105 +20,147 @@ public class MapEditor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(MapReader.map != null)
+        if (MapReader.map != null)
         {
             Select();
-            TileEdits();
-            UnitEdits();
-            prevMousePos = Input.mousePosition;
         }
     }
 
-    private void UnitEdits()
+    public void ChangeIsPlayer(bool player, Implement selectedImplement)
     {
-        if (Input.GetMouseButton(1) && selectedImplement != null)
+        if (selectedImplement != null)
         {
-            Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit);
-            ChangeUnitPos(hit.point);
-        }
-    }
 
-    private void TileEdits()
-    {
-        if (Input.GetMouseButton(1) && selectedTile != null)
-        {
-            ChangeTileHeight((Input.mousePosition.y - prevMousePos.y) * .1f);
-        }
-    }
+            Transform transform = selectedImplement.transform;
+            SpriteRenderer sprite = selectedImplement.unitSprite;
 
-    public bool ChangeTileHeight(float delta , bool snap = true)
-    {
-        if (selectedTile == null)
-        {
-            return false;
-        }
-        else
-        {
-            float desierdHeight = selectedTile.height + delta;
+            TacticsMove t = selectedImplement.move as TacticsMove;
+            int moveDistance = t.moveDistance;
+            float moveSpeed = t.moveSpeed;
+            float jumpHeight = t.jumpHeight;
+            Destroy(t);
 
-            if (snap)
+            JRPGBattle j = selectedImplement.battle as JRPGBattle;
+            int maxHeath = j.maxHealth;
+            int health = j.health;
+            int maxWill = j.maxWill;
+            int will = j.will;
+            int reach = j.reach;
+            Destroy(j);
+
+            Destroy(selectedImplement);
+
+            if (player)
             {
-                //Snap to adjacent tiles
-                selectedTile.FindNeighbors(float.PositiveInfinity);
-                Tile closest = null;
-                foreach (Tile t in selectedTile.adjacencyList)
+                selectedImplement = transform.gameObject.AddComponent<PlayerImplement>();
+                selectedImplement.move = transform.gameObject.AddComponent<PlayerMove>();
+                selectedImplement.battle = transform.gameObject.AddComponent<PlayerBattle>();
+            }
+            else
+            {
+                selectedImplement = transform.gameObject.AddComponent<NPCImplement>();
+                selectedImplement.move = transform.gameObject.AddComponent<NPCMove>();
+                selectedImplement.battle = transform.gameObject.AddComponent<NPCBattle>();
+            }
+
+            selectedImplement.unitSprite = sprite;
+
+            t = selectedImplement.move as TacticsMove;
+            t.moveDistance = moveDistance;
+            t.moveSpeed = moveSpeed;
+            t.jumpHeight = jumpHeight;
+
+            j = selectedImplement.battle as JRPGBattle;
+            j.maxHealth = maxHeath;
+            j.health = health;
+            j.maxWill = maxWill;
+            j.will = will;
+            j.reach = reach;
+
+        }
+    }
+
+    public void ChangeTileHeight(float desierdHeight, Tile selectedTile, Transform tileTransform, bool snap = true)
+    {
+        if (snap)
+        {
+            //Snap to adjacent tiles
+            selectedTile.FindNeighbors(float.PositiveInfinity);
+            Tile closest = null;
+            foreach (Tile t in selectedTile.adjacencyList)
+            {
+                if ((closest == null && Math.Abs(desierdHeight - t.height) < snappingDistance) || (closest != null && Math.Abs(desierdHeight - closest.height) > Math.Abs(desierdHeight - t.height)))
                 {
-                    if ((closest == null && Math.Abs(desierdHeight - t.height) < snappingDistance) || (closest != null && Math.Abs(desierdHeight - closest.height) > Math.Abs(desierdHeight - t.height)))
-                    {
-                        closest = t;
-                    }
-                }
-                if (closest != null)
-                {
-                    desierdHeight = closest.height;
+                    closest = t;
                 }
             }
-            selectedTile.height = desierdHeight;
-            selectedTransform.position = new Vector3(selectedTransform.position.x, selectedTransform.position.y, desierdHeight);
-            NewSelected?.Invoke(selectedTransform);
-            return true;
+            if (closest != null)
+            {
+                desierdHeight = closest.height;
+            }
         }
-
+        selectedTile.height = desierdHeight;
+        selectedTransform.position = new Vector3(selectedTransform.position.x, selectedTransform.position.y, desierdHeight);
+        NewSelected?.Invoke(selectedTransform);
     }
 
-    public void ChangeTileWalkable(bool walkable)
+    public void ChangeTileWalkable(bool walkable, Tile selectedTile)
     {
         selectedTile.walkable = walkable;
     }
-    
-    public void ChangeTileHeight(string delta)
+
+    public void ChangeTileHeight(string delta, Tile selectedTile, Transform tileTransform)
     {
-        ChangeTileHeight(float.Parse(delta) - selectedTile.height,false);
+        ChangeTileHeight(float.Parse(delta) - selectedTile.height, selectedTile, tileTransform, false);
     }
 
-    public bool ChangeUnitPos(Vector3 point)
+    public void ChangeUnitPos(Vector3 point, Implement selectedImplement)
     {
-        return ChangeUnitPos(MapReader.WorldToGridSpace(point));
+        ChangeUnitPos(MapReader.WorldToGridSpace(point), selectedImplement);
     }
 
-    public bool ChangeUnitPos(Vector2 point)
+    public void ChangeUnitPos(Vector2 point, Implement selectedImplement)
     {
-        return ChangeUnitPos(MapReader.WorldToGridSpace(point));
+        ChangeUnitPos(MapReader.WorldToGridSpace(point), selectedImplement);
     }
 
-    public bool ChangeUnitPos(int x, int y)
+    public void ChangeUnitPos(int x, int y, Implement selectedImplement)
     {
-        return ChangeUnitPos(new Vector2Int(x,y));
+        ChangeUnitPos(new Vector2Int(x, y), selectedImplement);
     }
 
-    public bool ChangeUnitPos(Vector2Int pointOnGrid)
+    public void ChangeUnitPos(Vector2Int pointOnGrid, Implement selectedImplement)
     {
-        if(selectedImplement == null)
+        Vector2 worldSpace = MapReader.GridToWorldSpace(pointOnGrid);
+        Tile tile = MapReader.GetTile(pointOnGrid);
+        selectedImplement.transform.position = new Vector3(worldSpace.x, worldSpace.y, tile.height + .1f);
+        NewSelected?.Invoke(selectedTransform);
+    }
+
+    public void ChangeNumVariable(string value, string variable, Implement selectedImplement)
+    {
+        TacticsMove t = selectedImplement.move as TacticsMove;
+        JRPGBattle j = selectedImplement.battle as JRPGBattle;
+        switch (variable)
         {
-            return false;
-        } 
-        else
-        {
-            Vector2 worldSpace = MapReader.GridToWorldSpace(pointOnGrid);
-            Tile tile = MapReader.GetTile(pointOnGrid);
-            selectedImplement.transform.position = new Vector3(worldSpace.x, worldSpace.y, tile.height + .1f);
-            NewSelected?.Invoke(selectedTransform);
-            return true;
+            case "Move Distance":
+                t.moveDistance = int.Parse(value);
+                break;
+            case "Move Speed":
+                t.moveSpeed = float.Parse(value);
+                break;
+            case "Jump Height":
+                t.jumpHeight = float.Parse(value);
+                break;
+            case "Max Health":
+                j.maxHealth = int.Parse(value);
+                break;
+            case "Max Will":
+                j.maxWill = int.Parse(value);
+                break;
+            case "Reach":
+                j.reach = int.Parse(value);
+                break;
         }
     }
 
@@ -128,33 +168,15 @@ public class MapEditor : MonoBehaviour
     {
         if (!EventSystem.current.IsPointerOverGameObject())
         {
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit) && !locked && hit.transform != selectedTransform)
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit) && ((!locked && hit.transform != selectedTransform) || Input.GetMouseButtonDown(0)))
             {
                 selectedTransform = hit.transform;
                 NewSelected?.Invoke(selectedTransform);
 
-                //tiles
-                if (selectedTransform.GetComponent<TileBehaviour>() != null)
+                if (Input.GetMouseButtonDown(0))
                 {
-                    selectedTile = selectedTransform.GetComponent<TileBehaviour>().tile;
-   
-                } else
-                {
-                    selectedTile = null;
+                    locked = true;
                 }
-
-                //Units
-                if (selectedTransform.GetComponentInParent<Implement>() != null)
-                {
-                    selectedImplement = selectedTransform.GetComponentInParent<Implement>();
-                } else
-                {
-                    selectedImplement = null;
-                }
-            } 
-            else if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition)) && Input.GetMouseButtonDown(0))
-            {
-                locked = true;
             }
             else if (!Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition)))
             {
@@ -163,15 +185,13 @@ public class MapEditor : MonoBehaviour
                     locked = false;
                 }
                 if (!locked)
-                { 
+                {
                     selectedTransform = null;
-                    selectedTile = null;
                     NewSelected?.Invoke(selectedTransform);
                 }
             }
-            prevMousePos = Input.mousePosition;
         }
-        
+
     }
 
 }

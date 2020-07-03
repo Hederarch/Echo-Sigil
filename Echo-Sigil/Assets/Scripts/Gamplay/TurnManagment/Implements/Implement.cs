@@ -19,7 +19,6 @@ public class Implement : FacesCamera, ITurn
     {
         move = GetComponent<TacticsMove>();
         battle = GetComponent<JRPGBattle>();
-        Init();
     }
 
     public virtual void BeginTurn()
@@ -68,7 +67,7 @@ public class Implement : FacesCamera, ITurn
         hasAttacked = false;
     }
 
-    private void OnDestroy()
+    public virtual void DeInit()
     {
         TurnManager.RemoveUnit(this);
     }

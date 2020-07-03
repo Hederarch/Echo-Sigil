@@ -256,7 +256,7 @@ namespace Map_Tests
         public void world_to_grid_space_to_tile_0x0()
         {
             Tile[,] tiles = MapReader.GeneratePhysicalMap(map: new Map(1, 1));
-            Assert.AreEqual(tiles[0,0],MapReader.GetTile(MapReader.WorldToGridSpace(0,0)));
+            Assert.AreEqual(tiles[0, 0], MapReader.GetTile(MapReader.WorldToGridSpace(0, 0)));
         }
     }
 }
