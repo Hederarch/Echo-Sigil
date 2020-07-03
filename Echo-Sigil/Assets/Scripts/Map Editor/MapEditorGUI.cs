@@ -19,14 +19,14 @@ public class MapEditorGUI : MonoBehaviour
 
     //unit
     public GameObject unitGUI;
-    public InputField unitName;
+    public Text unitName;
     public Toggle player;
     public InputField unitPosX;
     public InputField unitPosY;
     public InputField moveDistance;
     public InputField moveSpeed;
     public InputField jumpHeight;
-    public InputField maxHeath;
+    public InputField maxHealth;
     public Slider health;
     public InputField maxWill;
     public Slider will;
@@ -94,7 +94,7 @@ public class MapEditorGUI : MonoBehaviour
     private void SubscribeTile(Transform selected, Tile selectedTile)
     {
         walkable.onValueChanged.AddListener(delegate { editor.ChangeTileWalkable(walkable.isOn, selectedTile); });
-        height.onValueChanged.AddListener(delegate { editor.ChangeTileHeight(float.Parse(height.text), selectedTile, selected, false); });
+        height.onEndEdit.AddListener(delegate { editor.ChangeTileHeight(float.Parse(height.text), selectedTile, selected, false); });
     }
 
     private void SetTileProperties(Transform selected, Tile tile)
@@ -111,12 +111,22 @@ public class MapEditorGUI : MonoBehaviour
     private void UnSubscribeTile()
     {
         walkable.onValueChanged.RemoveAllListeners();
-        height.onValueChanged.RemoveAllListeners();
+        height.onEndEdit.RemoveAllListeners();
     }
 
     private void SubscribeUnit(Implement implement)
     {
-        
+        player.onValueChanged.AddListener(delegate { editor.ChangeIsPlayer(player.isOn, implement);  });
+        unitPosX.onEndEdit.AddListener(delegate { editor.ChangeUnitPos(int.Parse(unitPosX.text), int.Parse(unitPosY.text), implement); });
+        unitPosY.onEndEdit.AddListener(delegate { editor.ChangeUnitPos(int.Parse(unitPosX.text), int.Parse(unitPosY.text), implement); });
+        moveDistance.onEndEdit.AddListener(delegate { editor.ChangeNumVariable(moveDistance.text, "Move Distance", implement); });
+        moveSpeed.onEndEdit.AddListener(delegate { editor.ChangeNumVariable(moveSpeed.text, "Move Speed", implement); });
+        jumpHeight.onEndEdit.AddListener(delegate { editor.ChangeNumVariable(jumpHeight.text, "Jump Height", implement); });
+        maxHealth.onEndEdit.AddListener(delegate { editor.ChangeNumVariable(maxHealth.text, "Max Health", implement); });
+        health.onValueChanged.AddListener(delegate { editor.ChangeHealthWill(true, (int)health.value, implement); });
+        maxWill.onEndEdit.AddListener(delegate { editor.ChangeNumVariable(maxWill.text, "Max Will", implement); });
+        will.onValueChanged.AddListener(delegate { editor.ChangeHealthWill(false, (int)will.value, implement); });
+        reach.onEndEdit.AddListener(delegate { editor.ChangeNumVariable(reach.text, "Reach", implement); });
     }
 
     private void SetUnitPanelProperties(Implement implement)
@@ -152,7 +162,7 @@ public class MapEditorGUI : MonoBehaviour
         moveSpeed.text = tacticsMove.moveSpeed.ToString();
         jumpHeight.text = tacticsMove.jumpHeight.ToString();
 
-        maxHeath.text = jRPGBattle.maxHealth.ToString();
+        maxHealth.text = jRPGBattle.maxHealth.ToString();
         health.maxValue = jRPGBattle.maxHealth;
         health.value = jRPGBattle.health;
 
@@ -167,12 +177,17 @@ public class MapEditorGUI : MonoBehaviour
 
     private void UnSubscribeUnit()
     {
-        
-    }
-
-    public void ChangeUnitPos(Implement selectedImplement)
-    {
-        editor.ChangeUnitPos(int.Parse(unitPosX.text),int.Parse(unitPosY.text),selectedImplement);
+        player.onValueChanged.RemoveAllListeners();
+        unitPosX.onEndEdit.RemoveAllListeners();
+        unitPosY.onEndEdit.RemoveAllListeners();
+        moveDistance.onEndEdit.RemoveAllListeners();
+        moveSpeed.onEndEdit.RemoveAllListeners();
+        jumpHeight.onEndEdit.RemoveAllListeners();
+        maxHealth.onEndEdit.RemoveAllListeners();
+        health.onValueChanged.RemoveAllListeners();
+        maxWill.onEndEdit.RemoveAllListeners();
+        will.onValueChanged.RemoveAllListeners();
+        reach.onEndEdit.RemoveAllListeners();
     }
 
     public void SaveMap()

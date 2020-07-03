@@ -137,6 +137,19 @@ public class MapEditor : MonoBehaviour
         NewSelected?.Invoke(selectedTransform);
     }
 
+    internal void ChangeHealthWill(bool health, int value, Implement implement)
+    {
+        JRPGBattle j = implement.battle as JRPGBattle;
+        if (health)
+        {
+            j.health = value;
+        }
+        else
+        {
+            j.will = value;
+        }
+    }
+
     public void ChangeNumVariable(string value, string variable, Implement selectedImplement)
     {
         TacticsMove t = selectedImplement.move as TacticsMove;
