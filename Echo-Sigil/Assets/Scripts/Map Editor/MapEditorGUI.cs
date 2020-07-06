@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +16,7 @@ public class MapEditorGUI : MonoBehaviour
     public Text tileName;
     public Toggle walkable;
     public InputField height;
-    Tile prevTile;
+    List<Tile> prevTile;
 
     //unit
     public GameObject unitGUI;
@@ -40,22 +41,40 @@ public class MapEditorGUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        editor.NewSelected += UpdatePanel;
-        editor.NewSelected += ResetPrevTile;
+        editor.SelectedEvent += UpdatePanel;
+        editor.MultiSelectedEvent += UpdatePanel;
+        editor.SelectedEvent += ResetPrevTile;
+        editor.MultiSelectedEvent += ResetPrevTile;
     }
 
     private void ResetPrevTile(Transform selected)
     {
-        if (prevTile != null)
+        Transform[] selectedArray = new Transform[1] { selected };
+        ResetPrevTile(selectedArray);
+    }
+
+    private void ResetPrevTile(Transform[] selected)
+    {
+        if (prevTile != null && prevTile.Count > 0)
         {
-            prevTile.current = false;
+            foreach (Tile t in prevTile)
+            {
+                t.current = false;
+            }
         }
-        if (selected != null && selected.GetComponent<TileBehaviour>() != null)
+        if (selected != null && selected.Length > 0)
         {
-            Tile selTile = selected.GetComponent<TileBehaviour>();
-            selTile.current = true;
-            prevTile = selTile;
-        } 
+            prevTile = new List<Tile>();
+            foreach (Transform t in selected)
+            {
+                if (t != null && t.GetComponent<TileBehaviour>() != null)
+                {
+                    Tile selTile = t.GetComponent<TileBehaviour>();
+                    selTile.current = true;
+                    prevTile.Add(selTile);
+                }
+            }
+        }
         else
         {
             prevTile = null;
@@ -68,43 +87,154 @@ public class MapEditorGUI : MonoBehaviour
         UnSubscribeUnit();
         if (selected != null)
         {
+            Transform transform = selected;
             SelectedImage.color = Color.white;
-            SelectedImage.sprite = selected.GetComponent<SpriteRenderer>().sprite;
-            if (selected.GetComponent<TileBehaviour>() != null)
+            SelectedImage.sprite = transform.GetComponent<SpriteRenderer>().sprite;
+            if (transform.GetComponent<TileBehaviour>() != null)
             {
-                Tile tile = selected.GetComponent<TileBehaviour>();
-                SetTileProperties(selected,tile);
-                SubscribeTile(selected,tile);
+                Tile tile = transform.GetComponent<TileBehaviour>();
+                SetTileProperties(selected, tile);
+                SubscribeTile(selected, tile);
             }
-            else if (selected.parent.GetComponent<Implement>() != null)
+            else if (transform.parent.GetComponent<Implement>() != null)
             {
-                Implement implement = selected.parent.GetComponent<Implement>();
+                Implement implement = transform.parent.GetComponent<Implement>();
                 SetUnitPanelProperties(implement);
                 SubscribeUnit(implement);
             }
-        } 
+        }
         else
         {
+            SelectedImage.color = Color.clear;
             tileGUI.SetActive(false);
             unitGUI.SetActive(false);
+        }
+    }
+
+    private void UpdatePanel(Transform[] selected)
+    {
+        UnSubscribeTile();
+        UnSubscribeUnit();
+        if (selected != null && selected.Length > 1)
+        {
             SelectedImage.color = Color.clear;
+            List<Tile> tiles = new List<Tile>();
+            List<Transform> transforms = new List<Transform>();
+            foreach (Transform transform in selected)
+            {
+                Tile tile = transform.GetComponent<TileBehaviour>();
+                if (tile != null)
+                {
+                    tiles.Add(tile);
+                    transforms.Add(transform);
+                }
+            }
+            if (selected != null && tiles.Count > 1)
+            {
+                SelectedImage.color = Color.clear;
+                SetTileProperties(transforms.ToArray(), tiles.ToArray());
+                SubscribeTile(transforms.ToArray(), tiles.ToArray());
+            }
+            else
+            {
+                tileGUI.SetActive(false);
+                unitGUI.SetActive(false);
+            }
+        }
+        else if (selected != null && selected.Length == 1)
+        {
+            UpdatePanel(selected[0]);
+        }
+        else
+        {
+            SelectedImage.color = Color.clear;
+            tileGUI.SetActive(false);
+            unitGUI.SetActive(false);
+        }
+    }
+
+    private void SubscribeTile(Transform[] selected, Tile[] selectedTile)
+    {
+        for (int i = 0; i < selected.Length && i < selectedTile.Length; i++)
+        {
+            SubscribeTile(selected[i], selectedTile[i]);
         }
     }
 
     private void SubscribeTile(Transform selected, Tile selectedTile)
     {
         walkable.onValueChanged.AddListener(delegate { editor.ChangeTileWalkable(walkable.isOn, selectedTile); });
-        height.onEndEdit.AddListener(delegate { editor.ChangeTileHeight(float.Parse(height.text), selectedTile, selected, false); });
+        height.onEndEdit.AddListener(delegate { editor.ChangeTileHeight(float.Parse(height.text), selected, false); });
+    }
+
+    private void SetTileProperties(Transform[] selected, Tile[] tile)
+    {
+        unitGUI.SetActive(false);
+        if (selected.Length == 1 && tile.Length == 1)
+        {
+            SetTileProperties(selected[0], tile[0]);
+        }
+        else
+        {
+            int walkableYes = 0;
+            int walkableNo = 0;
+            Vector2Int upperTilePos = new Vector2Int(int.MinValue, int.MinValue);
+            Vector2Int lowerTilePos = new Vector2Int(int.MaxValue, int.MaxValue);
+            float heightAverage = tile[0].height;
+
+            for (int i = 0; i < selected.Length && i < tile.Length; i++)
+            {
+                Vector2Int pos = MapReader.WorldToGridSpace(selected[i].position);
+                if (upperTilePos.x < pos.x)
+                {
+                    upperTilePos.x = pos.x;
+                }
+                if (upperTilePos.y < pos.y)
+                {
+                    upperTilePos.y = pos.y;
+                }
+                if (lowerTilePos.x > pos.x)
+                {
+                    lowerTilePos.x = pos.x;
+                }
+                if (lowerTilePos.y > pos.y)
+                {
+                    lowerTilePos.y = pos.y;
+                }
+
+                if (tile[i].walkable)
+                {
+                    walkableYes++;
+                }
+                else
+                {
+                    walkableNo++;
+                }
+
+                heightAverage = (heightAverage + tile[i].height) / 2f;
+            }
+
+            tileName.text = upperTilePos.ToString() + " / " + lowerTilePos.ToString();
+            if (walkableYes >= walkableNo)
+            {
+                walkable.isOn = true;
+            }
+            else
+            {
+                walkable.isOn = false;
+            }
+            height.text = heightAverage.ToString();
+
+        }
+        tileGUI.SetActive(true);
     }
 
     private void SetTileProperties(Transform selected, Tile tile)
     {
         unitGUI.SetActive(false);
-
         tileName.text = selected.name;
         walkable.isOn = tile.walkable;
         height.text = tile.height.ToString();
-
         tileGUI.SetActive(true);
     }
 
@@ -116,7 +246,7 @@ public class MapEditorGUI : MonoBehaviour
 
     private void SubscribeUnit(Implement implement)
     {
-        player.onValueChanged.AddListener(delegate { editor.ChangeIsPlayer(player.isOn, implement);  });
+        player.onValueChanged.AddListener(delegate { editor.ChangeIsPlayer(player.isOn, implement); });
         unitPosX.onEndEdit.AddListener(delegate { editor.ChangeUnitPos(int.Parse(unitPosX.text), int.Parse(unitPosY.text), implement); });
         unitPosY.onEndEdit.AddListener(delegate { editor.ChangeUnitPos(int.Parse(unitPosX.text), int.Parse(unitPosY.text), implement); });
         moveDistance.onEndEdit.AddListener(delegate { editor.ChangeNumVariable(moveDistance.text, "Move Distance", implement); });

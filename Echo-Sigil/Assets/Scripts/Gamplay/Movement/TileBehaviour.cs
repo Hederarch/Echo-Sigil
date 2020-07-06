@@ -56,7 +56,8 @@ public class TileBehaviour : MonoBehaviour
         }
         if (!walkable)
         {
-            output = Color.black;
+            output -= Color.white/2f;
+            output.a = 1;
         }
         return output;
     }
@@ -67,7 +68,6 @@ public class TileBehaviour : MonoBehaviour
     /// <param name="target">Tile discounted for direction check.</param>
     public void FindNeighbors(float jumpHeight, Tile target = null)
     {
-        ResetTile();
         adjacencyList.Clear();
         FindNeighbor(Vector2Int.up, jumpHeight, target);
         FindNeighbor(Vector2Int.down, jumpHeight, target);

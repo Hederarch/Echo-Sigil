@@ -151,7 +151,7 @@ public static class MapReader
     {
         Vector2 mapHalfHeight = new Vector2(map.sizeX / 2, map.sizeY / 2);
         Vector2 realitivePosition = posInGrid - new Vector2(tileParent.position.x,tileParent.position.y);
-        return new Vector2Int(Math.Abs((int)(realitivePosition.x - mapHalfHeight.x - .5f)), Math.Abs((int)(realitivePosition.y - mapHalfHeight.y - .5f))); 
+        return new Vector2Int((int)(realitivePosition.x - mapHalfHeight.x - .5f), (int)(realitivePosition.y - mapHalfHeight.y - .5f)); 
     }
 
     public static Vector2Int WorldToGridSpace(float x, float y)
