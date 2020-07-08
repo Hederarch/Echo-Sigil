@@ -13,10 +13,14 @@ public class MapReaderBehavior : MonoBehaviour
 public static class MapReader
 {
     public static Transform tileParent;
-    public static Map map;
     public static Vector2Int backupMapSize;
     public static Tile[,] tiles;
     public static List<Implement> implements;
+
+    public static SpritePallate spritePallate;
+    public static Map Map => new Map(tiles, implements.ToArray());
+
+    public static Action<Sprite> MapGeneratedEvent;
 
     public static Tile[,] GeneratePhysicalMap(SpritePallate pallate = null, Map map = null)
     {
@@ -25,39 +29,43 @@ public static class MapReader
         {
             map = new Map(backupMapSize.x, backupMapSize.y);
         }
-        MapReader.map = map;
         tileParent = new GameObject("Tile Parent").transform;
-        tiles = new Tile[map.sizeX,map.sizeY];
-        Vector2 mapHalfHeight = new Vector2(map.sizeX / 2, map.sizeY /2);
+        tiles = new Tile[map.sizeX, map.sizeY];
+        Vector2 mapHalfHeight = new Vector2(map.sizeX / 2, map.sizeY / 2);
         for (int x = 0; x < map.sizeX; x++)
         {
             for (int y = 0; y < map.sizeY; y++)
             {
                 Tile tile = map.SetTileProperties(x, y);
 
-                GameObject gameObjectTile = InstantateTileGameObject(mapHalfHeight, tile);
+                if (tile.height >= 0)
+                {
+                    GameObject gameObjectTile = InstantateTileGameObject(mapHalfHeight, tile);
 
-                gameObjectTile.AddComponent<TileBehaviour>().tile = tile;
-                tiles[x, y] = tile;
+                    gameObjectTile.AddComponent<TileBehaviour>().tile = tile;
+                    tiles[x, y] = tile;
 
-                gameObjectTile.transform.position += new Vector3(0, 0, tile.height);
+                    gameObjectTile.transform.position += new Vector3(0, 0, tile.height);
 
-                gameObjectTile.AddComponent<BoxCollider>().size = new Vector3(1, 1, .2f);
+                    gameObjectTile.AddComponent<BoxCollider>().size = new Vector3(1, 1, .2f);
 
-                gameObjectTile.AddComponent<SpriteRenderer>().sprite = GetSpriteFromIndexAndPallete(tile.spriteIndex,pallate);
-
+                    gameObjectTile.AddComponent<SpriteRenderer>().sprite = GetSpriteFromIndexAndPallete(tile.spriteIndex, pallate);
+                }
             }
         }
 
-        if(map.units != null)
+        if (map.units != null)
         {
             implements = new List<Implement>();
-            foreach(MapImplement mi in map.units)
+            foreach (MapImplement mi in map.units)
             {
-               implements.Add(MapImplementToImplement(mi));
+                implements.Add(MapImplementToImplement(mi));
             }
         }
 
+        spritePallate = pallate;
+
+        MapGeneratedEvent?.Invoke(GetSpriteFromIndexAndPallete(0, pallate));
         return tiles;
     }
 
@@ -107,18 +115,19 @@ public static class MapReader
         GameObject spriteRender = new GameObject("Sprite Render");
         spriteRender.transform.parent = unit.transform;
         i.unitSprite = spriteRender.AddComponent<SpriteRenderer>();
-        spriteRender.AddComponent<BoxCollider>().size = spriteRender.transform.localScale;
+        spriteRender.AddComponent<BoxCollider>().size = new Vector3(1, 1, .2f);
 
         return i;
     }
 
     public static Sprite GetSpriteFromIndexAndPallete(int spriteIndex, SpritePallate spritePallate)
     {
-        if(spritePallate != null && spriteIndex < spritePallate.sprites.Count())
+        if (spritePallate != null && spriteIndex < spritePallate.sprites.Count())
         {
             Sprite sprite = spritePallate.sprites[spriteIndex];
             return sprite;
-        } else
+        }
+        else
         {
             return null;
         }
@@ -137,21 +146,21 @@ public static class MapReader
 
     public static Vector2 GridToWorldSpace(Vector2Int posInGrid)
     {
-        Vector2 mapHalfHeight = new Vector2(map.sizeX / 2, map.sizeY / 2);
+        Vector2 mapHalfHeight = new Vector2(tiles.GetLength(0) / 2, tiles.GetLength(1) / 2);
         Vector2 realitivePosition = new Vector2(posInGrid.x - mapHalfHeight.x, posInGrid.y - mapHalfHeight.y);
         return new Vector2(tileParent.transform.position.x, tileParent.transform.position.y) - realitivePosition;
     }
 
-    public static Vector2 GridToWorldSpace(int x,int y)
+    public static Vector2 GridToWorldSpace(int x, int y)
     {
         return GridToWorldSpace(new Vector2Int(x, y));
     }
 
     public static Vector2Int WorldToGridSpace(Vector2 posInGrid)
     {
-        Vector2 mapHalfHeight = new Vector2(map.sizeX / 2, map.sizeY / 2);
-        Vector2 realitivePosition = posInGrid - new Vector2(tileParent.position.x,tileParent.position.y);
-        return new Vector2Int((int)(realitivePosition.x - mapHalfHeight.x - .5f), (int)(realitivePosition.y - mapHalfHeight.y - .5f)); 
+        Vector2 mapHalfHeight = new Vector2(tiles.GetLength(0) / 2, tiles.GetLength(1) / 2);
+        Vector2 realitivePosition = posInGrid - new Vector2(tileParent.position.x, tileParent.position.y);
+        return new Vector2Int((int)Math.Abs(realitivePosition.x - mapHalfHeight.x - .5f), (int)Math.Abs(realitivePosition.y - mapHalfHeight.y - .5f));
     }
 
     public static Vector2Int WorldToGridSpace(float x, float y)
@@ -161,11 +170,11 @@ public static class MapReader
 
     public static Tile GetTile(Vector2Int pos) => GetTile(pos.x, pos.y);
 
-    public static Tile GetTile(int x, int y) => x >= 0 && x < map.sizeX && y >= 0 && y < map.sizeY ? tiles[x, y] : null;
+    public static Tile GetTile(int x, int y) => x >= 0 && x < tiles.GetLength(0) && y >= 0 && y < tiles.GetLength(1) ? tiles[x, y] : null;
 
     public static void DestroyPhysicalMapTiles()
     {
-        if(tileParent != null)
+        if (tileParent != null)
         {
             UnityEngine.Object.DestroyImmediate(tileParent.gameObject);
         }
@@ -173,7 +182,7 @@ public static class MapReader
 
     public static void SaveMap(string name)
     {
-        SaveSystem.SaveMap(name,new Map(tiles,implements.ToArray()));
+        SaveSystem.SaveMap(name, new Map(tiles, implements.ToArray()));
     }
 
     public static void LoadMap(string name, SpritePallate spritePallate)

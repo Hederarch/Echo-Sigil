@@ -15,7 +15,7 @@ namespace Tile_Tests
         public void new_tile_can_not_return_null()
 #pragma warning restore IDE1006 // Naming Styles
         {
-            Tile tile = new Tile();
+            Tile tile = new Tile(0,0);
             Assert.IsNotNull(tile);
         }
         [Test]
@@ -23,7 +23,7 @@ namespace Tile_Tests
         public void new_tile_can_hold_height_value()
 #pragma warning restore IDE1006 // Naming Styles
         {
-            Tile tile = new Tile
+            Tile tile = new Tile(0,0)
             {
                 height = 1
             };
@@ -34,7 +34,7 @@ namespace Tile_Tests
         public void new_tile_can_hold_walkable()
 #pragma warning restore IDE1006 // Naming Styles
         {
-            Tile tile = new Tile
+            Tile tile = new Tile(0,0)
             {
                 walkable = true
             };

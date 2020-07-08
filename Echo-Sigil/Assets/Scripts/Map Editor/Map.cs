@@ -36,8 +36,10 @@ public class Map
 
         if (addUnit)
         {
-            units = new List<MapImplement>();
-            units.Add(new MapImplement(sizeX/2,sizeY/2));
+            units = new List<MapImplement>
+            {
+                new MapImplement(sizeX / 2, sizeY / 2)
+            };
         }
     }
 
@@ -53,9 +55,17 @@ public class Map
         {
             for (int y = 0; y < sizeY; y++)
             {
-                heightMap[x, y] = tiles[x,y].height;
-                walkableMap[x, y] = tiles[x,y].walkable;
+                if (tiles[x, y] != null) { 
+                heightMap[x, y] = tiles[x, y].height;
+                walkableMap[x, y] = tiles[x, y].walkable;
                 spriteIndexMap[x, y] = tiles[x, y].spriteIndex;
+                }
+                else
+                {
+                    heightMap[x, y] = -1;
+                    walkableMap[x, y] = true;
+                    spriteIndexMap[x, y] = 0;
+                }
             }
         }
         if (units != null && units.Length > 0)
@@ -85,9 +95,8 @@ public class Map
 
     public Tile SetTileProperties(int x, int y)
     {
-        Tile tile = new Tile
+        Tile tile = new Tile(x,y)
         {
-            PosInGrid = new Vector2Int(x, y),
             height = heightMap[x, y],
             walkable = walkableMap[x,y],
             spriteIndex = spriteIndexMap[x,y]

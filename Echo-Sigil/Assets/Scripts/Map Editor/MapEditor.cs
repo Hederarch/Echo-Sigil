@@ -9,6 +9,8 @@ public class MapEditor : MonoBehaviour
 {
     public SpritePallate pallate;
 
+    static Transform editorTileParent;
+
     Transform selectedTransform;
     List<Transform> selectedTransforms = new List<Transform>();
 
@@ -24,10 +26,67 @@ public class MapEditor : MonoBehaviour
     public event Action<Transform> SelectedEvent;
     public event Action<Transform[]> MultiSelectedEvent;
 
+    private void Start()
+    {
+        Init();
+    }
+
+    private void Init()
+    {
+        MapReader.MapGeneratedEvent += GenerateExpationTiles;
+    }
+
+    public static void GenerateExpationTiles(Sprite sprite)
+    {
+        if (editorTileParent == null)
+        {
+            editorTileParent = new GameObject("Editor Tiles").transform;
+            editorTileParent.parent = MapReader.tileParent;
+        }
+        else
+        {
+            foreach (Transform transform in editorTileParent)
+            {
+                Destroy(transform.gameObject);
+            }
+        }
+        for (int x = -1; x <= MapReader.tiles.GetLength(0); x++)
+        {
+            for (int y = -1; y <= MapReader.tiles.GetLength(0); y++)
+            {
+                if (MapReader.GetTile(x, y) == null)
+                {
+                    CreateEditorTile(x, y, sprite);
+                }
+            }
+        }
+    }
+
+    private static void CreateEditorTile(int x, int y, Sprite sprite) => CreateEditorTile(new Vector2Int(x, y), sprite);
+
+    private static void CreateEditorTile(Vector2Int posInGrid, Sprite pallate)
+    {
+        GameObject editorTileObject = new GameObject(posInGrid.x + "," + posInGrid.y + " editor tile");
+        editorTileObject.transform.parent = editorTileParent;
+        editorTileObject.transform.position = MapReader.GridToWorldSpace(posInGrid);
+        editorTileObject.tag = "Tile";
+
+        SpriteRenderer sprite = editorTileObject.AddComponent<SpriteRenderer>();
+        sprite.sprite = pallate;
+        Color color = Color.cyan;
+        color.a = .3f;
+        sprite.color = color;
+
+        editorTileObject.AddComponent<EditorTile>().posInGrid = posInGrid;
+        editorTileObject.AddComponent<TileBehaviour>().enabled = false;
+
+        editorTileObject.AddComponent<BoxCollider>();
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (MapReader.map != null)
+        if (MapReader.tiles != null && MapReader.tiles.Length > 0)
         {
             if (!EventSystem.current.IsPointerOverGameObject())
             {
@@ -131,8 +190,16 @@ public class MapEditor : MonoBehaviour
                     desierdHeight = closest.height;
                 }
             }
-            selectedTile.height = desierdHeight;
-            tileTransform.position = new Vector3(tileTransform.position.x, tileTransform.position.y, desierdHeight);
+            if (desierdHeight >= 0)
+            {
+                selectedTile.height = desierdHeight;
+                tileTransform.position = new Vector3(tileTransform.position.x, tileTransform.position.y, desierdHeight);
+                //GenerateExpationTile(tileTransform.GetComponent<SpriteRenderer>().sprite,selectedTile);
+            }
+            else
+            {
+                RemoveTile(tileTransform, selectedTile);
+            }
             return true;
         }
         else
@@ -161,7 +228,7 @@ public class MapEditor : MonoBehaviour
             {
                 //Snap to adjacent tiles
                 tiles[t].FindNeighbors(float.PositiveInfinity);
-                
+
                 foreach (Tile tile in tiles[t].adjacencyList)
                 {
                     if ((closestNonSelected == null && Math.Abs(tiles[t].height + delta - tile.height) < snappingDistance) || (closestNonSelected != null && Math.Abs(tiles[t].height + delta - closestNonSelected.height) > Math.Abs(tiles[t].height + delta - tile.height) && !tile.current))
@@ -181,7 +248,17 @@ public class MapEditor : MonoBehaviour
         {
             tiles[t].height += delta;
             t.position += new Vector3(0, 0, delta);
+            if (tiles[t].height < 0)
+            {
+                RemoveTile(t, tiles[t]);
+            }
         }
+    }
+    private void RemoveTile(Transform tileTransform, Tile selectedTile)
+    {
+        MapReader.tiles[selectedTile.PosInGrid.x, selectedTile.PosInGrid.y] = null;
+        Destroy(tileTransform.gameObject);
+        CreateEditorTile(selectedTile.PosInGrid.x,selectedTile.PosInGrid.y,MapReader.GetSpriteFromIndexAndPallete(0,MapReader.spritePallate));
     }
 
     public void ChangeTileWalkable(bool walkable, Tile selectedTile)
@@ -261,18 +338,30 @@ public class MapEditor : MonoBehaviour
     {
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit) && (!locked && hit.transform != selectedTransform || Input.GetMouseButtonDown(0)))
         {
-            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) && selectedTransform.TryGetComponent(out TileBehaviour t))
+
+            if (hit.transform.TryGetComponent(out EditorTile et))
             {
-                if (!selectedTransforms.Contains(hit.transform))
+                if (Input.GetMouseButtonDown(0))
                 {
-                    selectedTransforms.Add(hit.transform);
+                    et.AddTileToMapReader();
                 }
-                else
+                if (selectedTransforms.Count <= 0)
+                {
+                    SelectedEvent(null);
+                }
+            }
+            else if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) && hit.transform.TryGetComponent(out TileBehaviour _))
+            {
+                if (selectedTransforms.Contains(hit.transform))
                 {
                     selectedTransforms.Remove(hit.transform);
                 }
+                else
+                {
+                    selectedTransforms.Add(hit.transform);
+                }
 
-                if (selectedTransform != null)
+                if (selectedTransform != null && selectedTransform.TryGetComponent(out TileBehaviour _))
                 {
                     selectedTransforms.Add(selectedTransform);
                     selectedTransform = null;
@@ -347,7 +436,7 @@ public class MapEditor : MonoBehaviour
                     selectedTransforms.Add(t);
                 }
             }
-            
+
             if(selectedTransforms.Count > 1)
             {
                 BoxSelectedEvent?.Invoke(selectedTransforms.ToArray());
@@ -361,4 +450,13 @@ public class MapEditor : MonoBehaviour
         }
     }*/
 
+    private void OnDrawGizmos()
+    {
+        if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
+        {
+            Gizmos.DrawLine(Camera.main.transform.position, hit.point);
+            Gizmos.DrawSphere(hit.point, .1f);
+        }
+
+    }
 }

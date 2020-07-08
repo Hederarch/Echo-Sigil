@@ -39,6 +39,13 @@ public class TileBehaviour : MonoBehaviour
     public float g;
     public float h;
 
+    public Tile(int x, int y) : this(new Vector2Int(x, y)) { }
+
+    public Tile(Vector2Int posInGrid)
+    {
+        PosInGrid = posInGrid;
+    }
+
     public Color CheckColor()
     {
         Color output = Color.white;
@@ -66,25 +73,29 @@ public class TileBehaviour : MonoBehaviour
     /// </summary>
     /// <param name="jumpHeight">Distance up and down before tiles stop being neighbors</param>
     /// <param name="target">Tile discounted for direction check.</param>
-    public void FindNeighbors(float jumpHeight, Tile target = null)
+    public Tile[] FindNeighbors(float jumpHeight, Tile target = null)
     {
         adjacencyList.Clear();
-        FindNeighbor(Vector2Int.up, jumpHeight, target);
-        FindNeighbor(Vector2Int.down, jumpHeight, target);
-        FindNeighbor(Vector2Int.left, jumpHeight, target);
-        FindNeighbor(Vector2Int.right, jumpHeight, target);
+        return new Tile[4] {
+        FindNeighbor(Vector2Int.up, jumpHeight, target),
+        FindNeighbor(Vector2Int.down, jumpHeight, target),
+        FindNeighbor(Vector2Int.left, jumpHeight, target),
+        FindNeighbor(Vector2Int.right, jumpHeight, target)
+        };
     }
 
-    public void FindNeighbor(Vector2Int direction, float jumpHeight, Tile target)
+    public Tile FindNeighbor(Vector2Int direction, float jumpHeight, Tile target)
     {
         Tile tile = MapReader.GetTile(PosInGrid + direction);
-        if (tile != null && tile.walkable && Math.Abs(tile.height - height) < jumpHeight)
+        if (tile != null)
         {
-            if (tile.DirectionCheck() || tile == target)
+            if ((tile.DirectionCheck() || tile == target) && tile.walkable && Math.Abs(tile.height - height) < jumpHeight)
             {
                 adjacencyList.Add(tile);
             }
+            return tile;
         }
+        return null;
     }
 
     public bool DirectionCheck()
@@ -100,8 +111,6 @@ public class TileBehaviour : MonoBehaviour
 
     public void ResetTile()
     {
-        adjacencyList.Clear();
-
         current = false;
         target = false;
         selectable = false;

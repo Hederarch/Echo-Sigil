@@ -12,7 +12,7 @@ namespace Map_Tests
        public void genarates_map_with_tile_with_hieght()
         {
             Tile[,] tiles = new Tile[1, 1];
-            Tile tile = new Tile();
+            Tile tile = new Tile(0,0);
             tile.height = 2;
             tiles[0, 0] = tile;
             Tile[,] outTiles = MapReader.GeneratePhysicalMap(map: new Map(tiles));
@@ -22,7 +22,7 @@ namespace Map_Tests
         public void genarates_map_with_tile()
         {
             Tile[,] tiles = new Tile[1, 1];
-            Tile tile = new Tile();
+            Tile tile = new Tile(0,0);
             tile.height = 2;
             tiles[0, 0] = tile;
             Tile[,] outTiles = MapReader.GeneratePhysicalMap(map: new Map(tiles));
@@ -50,7 +50,7 @@ namespace Map_Tests
         public void tile_parent_has_child()
         {
             MapReader.GeneratePhysicalMap(map: new Map(1, 1));
-            Assert.AreEqual(1, MapReader.tileParent.childCount);
+            Assert.Greater(MapReader.tileParent.childCount,0);
         }
         [Test]
         public void generates_tile_array_of_map_size()
@@ -183,7 +183,7 @@ namespace Map_Tests
         public void get_map_from_file_with_tile_with_height()
         {
             Tile[,] tiles = new Tile[1, 1];
-            Tile tile = new Tile();
+            Tile tile = new Tile(0,0);
             tile.height = 2;
             tiles[0, 0] = tile;
             Map savedMap = new Map(tiles);
