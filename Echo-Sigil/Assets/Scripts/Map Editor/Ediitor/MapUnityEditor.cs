@@ -13,22 +13,20 @@ public class MapUnityEditor : Editor
 
         GUILayout.BeginHorizontal();
         mapReaderBehavior.addUnit = EditorGUILayout.Toggle("With Unit:",mapReaderBehavior.addUnit);
-        mapReaderBehavior.pallate = EditorGUILayout.ObjectField(mapReaderBehavior.pallate, System.Type.GetType("SpritePallate"), false) as SpritePallate;
         if (GUILayout.Button("Generate Blank Map"))
         {
-            MapReader.GeneratePhysicalMap(mapReaderBehavior.pallate, new Map(MapReader.backupMapSize, mapReaderBehavior.addUnit));
+            MapReader.GeneratePhysicalMap(SaveSystem.LoadPallate(Application.dataPath + "/Quests/Tests"), new Map(MapReader.backupMapSize, mapReaderBehavior.addUnit));
         }
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
-        mapReaderBehavior.mapName = EditorGUILayout.TextField(new GUIContent("Map Name"), mapReaderBehavior.mapName);
         if (GUILayout.Button("Save"))
         {
-            MapReader.SaveMap(mapReaderBehavior.mapName);
+            MapReader.SaveMap(EditorUtility.SaveFilePanel("Save Map", Application.dataPath, "NewMap", "hedrap"));
         }
         if (GUILayout.Button("Load"))
         {
-            MapReader.LoadMap(mapReaderBehavior.mapName, mapReaderBehavior.pallate);
+            MapReader.LoadMap(EditorUtility.OpenFilePanel("Load Map", Application.dataPath, "hedrap"), SaveSystem.LoadPallate(Application.dataPath + "/Quests/Tests"));
         }
         GUILayout.EndHorizontal();
 

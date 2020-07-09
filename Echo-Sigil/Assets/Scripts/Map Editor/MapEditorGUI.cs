@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -322,12 +323,12 @@ public class MapEditorGUI : MonoBehaviour
 
     public void SaveMap()
     {
-        MapReader.SaveMap(mapName.text);
+        MapReader.SaveMap(EditorUtility.SaveFilePanel("Save Map", Application.dataPath + "/Quests", "NewMap", "hedrap"));
     }
 
     public void LoadMap()
     {
-        MapReader.LoadMap(mapName.text, editor.pallate);
+        MapReader.LoadMap(EditorUtility.OpenFilePanel("Load Map", Application.dataPath + "/Quests", "hedrap"),editor.pallate);
     }
 
     public void NewMap()

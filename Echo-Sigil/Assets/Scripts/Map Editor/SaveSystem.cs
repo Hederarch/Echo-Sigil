@@ -2,29 +2,26 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.InteropServices;
+using UnityEditor;
+using System.Collections.Generic;
 
 public static class SaveSystem
 {
-   public static void SaveMap(string name, Map map)
+    public static void SaveMap(string path, Map map)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/Maps/"+ name + ".hedrap";
         FileStream stream = new FileStream(path, FileMode.Create);
-
         formatter.Serialize(stream, map);
         stream.Close();
     }
-    public static Map LoadMap(string name, bool logError = false)
+    public static Map LoadMap(string path,bool logError = false)
     {
-        string path = Application.persistentDataPath + "/Maps/" + name + ".hedrap";
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
-
             Map map = formatter.Deserialize(stream) as Map;
             stream.Close();
-
             return map;
         }
         else if(logError)
@@ -33,12 +30,15 @@ public static class SaveSystem
         }
         return null;
     }
-    public static void DeleteMap(string name, bool logError = false)
+    public static Sprite[] LoadPallate(string path,bool logError = false)
     {
-        string path = Application.persistentDataPath + "/Maps/" + name + ".hedrap";
+        List<Sprite> spritePallate = new List<Sprite>();
+        return spritePallate.ToArray();
+    }
+    public static void DeleteMap(string path, bool logError = false)
+    {
         if (File.Exists(path))
         {
-            BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Truncate);
             stream.Close();
         }

@@ -5,9 +5,7 @@ using UnityEngine;
 
 public class MapReaderBehavior : MonoBehaviour
 {
-    public SpritePallate pallate = null;
     public bool addUnit = false;
-    public string mapName = "Test";
 }
 
 public static class MapReader
@@ -15,14 +13,14 @@ public static class MapReader
     public static Transform tileParent;
     public static Vector2Int backupMapSize;
     public static Tile[,] tiles;
-    public static List<Implement> implements;
+    public static List<Implement> implements = new List<Implement>();
 
-    public static SpritePallate spritePallate;
+    public static Sprite[] spritePallate;
     public static Map Map => new Map(tiles, implements.ToArray());
 
     public static Action<Sprite> MapGeneratedEvent;
 
-    public static Tile[,] GeneratePhysicalMap(SpritePallate pallate = null, Map map = null)
+    public static Tile[,] GeneratePhysicalMap(Sprite[] pallate, Map map = null)
     {
         DestroyPhysicalMapTiles();
         if (map == null)
@@ -49,14 +47,14 @@ public static class MapReader
 
                     gameObjectTile.AddComponent<BoxCollider>().size = new Vector3(1, 1, .2f);
 
-                    gameObjectTile.AddComponent<SpriteRenderer>().sprite = GetSpriteFromIndexAndPallete(tile.spriteIndex, pallate);
+                    gameObjectTile.AddComponent<SpriteRenderer>().sprite = GetSpriteFromIndexAndPallete(tile.spriteIndex, SaveSystem.LoadPallate(Application.dataPath + "/Quests/Tests"));
                 }
             }
         }
 
         if (map.units != null)
         {
-            implements = new List<Implement>();
+            implements.Clear();
             foreach (MapImplement mi in map.units)
             {
                 implements.Add(MapImplementToImplement(mi));
@@ -65,7 +63,7 @@ public static class MapReader
 
         spritePallate = pallate;
 
-        MapGeneratedEvent?.Invoke(GetSpriteFromIndexAndPallete(0, pallate));
+        MapGeneratedEvent?.Invoke(GetSpriteFromIndexAndPallete(0, SaveSystem.LoadPallate(Application.dataPath + "/Quests/Tests")));
         return tiles;
     }
 
@@ -120,11 +118,11 @@ public static class MapReader
         return i;
     }
 
-    public static Sprite GetSpriteFromIndexAndPallete(int spriteIndex, SpritePallate spritePallate)
+    public static Sprite GetSpriteFromIndexAndPallete(int spriteIndex, Sprite[] spritePallate)
     {
-        if (spritePallate != null && spriteIndex < spritePallate.sprites.Count())
+        if (spritePallate != null && spriteIndex < spritePallate.Count())
         {
-            Sprite sprite = spritePallate.sprites[spriteIndex];
+            Sprite sprite = spritePallate[spriteIndex];
             return sprite;
         }
         else
@@ -180,14 +178,14 @@ public static class MapReader
         }
     }
 
-    public static void SaveMap(string name)
+    public static void SaveMap(string path)
     {
-        SaveSystem.SaveMap(name, new Map(tiles, implements.ToArray()));
+        SaveSystem.SaveMap(path,new Map(tiles, implements.ToArray()));
     }
 
-    public static void LoadMap(string name, SpritePallate spritePallate)
+    public static void LoadMap(string path,Sprite[] spritePallate)
     {
-        Map map = SaveSystem.LoadMap(name, true);
+        Map map = SaveSystem.LoadMap(path, true);
         GeneratePhysicalMap(spritePallate, map);
     }
 }

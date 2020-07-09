@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class MapEditor : MonoBehaviour
 {
-    public SpritePallate pallate;
+    public Sprite[] pallate;
 
     static Transform editorTileParent;
 
