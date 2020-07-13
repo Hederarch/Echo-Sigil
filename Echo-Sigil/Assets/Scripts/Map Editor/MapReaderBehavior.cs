@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 
@@ -30,6 +31,7 @@ public static class MapReader
         tileParent = new GameObject("Tile Parent").transform;
         tiles = new Tile[map.sizeX, map.sizeY];
         Vector2 mapHalfHeight = new Vector2(map.sizeX / 2, map.sizeY / 2);
+        spritePallate = pallate;
         for (int x = 0; x < map.sizeX; x++)
         {
             for (int y = 0; y < map.sizeY; y++)
@@ -47,7 +49,7 @@ public static class MapReader
 
                     gameObjectTile.AddComponent<BoxCollider>().size = new Vector3(1, 1, .2f);
 
-                    gameObjectTile.AddComponent<SpriteRenderer>().sprite = GetSpriteFromIndexAndPallete(tile.spriteIndex, SaveSystem.LoadPallate(Application.dataPath + "/Quests/Tests"));
+                    gameObjectTile.AddComponent<SpriteRenderer>().sprite = GetSpriteFromIndexAndPallete(tile.spriteIndex, pallate);
                 }
             }
         }
@@ -61,9 +63,7 @@ public static class MapReader
             }
         }
 
-        spritePallate = pallate;
-
-        MapGeneratedEvent?.Invoke(GetSpriteFromIndexAndPallete(0, SaveSystem.LoadPallate(Application.dataPath + "/Quests/Tests")));
+        MapGeneratedEvent?.Invoke(GetSpriteFromIndexAndPallete(0, pallate));
         return tiles;
     }
 
@@ -180,12 +180,16 @@ public static class MapReader
 
     public static void SaveMap(string path)
     {
-        SaveSystem.SaveMap(path,new Map(tiles, implements.ToArray()));
+        SaveSystem.SaveMap(path,Map);
     }
 
-    public static void LoadMap(string path,Sprite[] spritePallate)
+    public static void LoadMap(string path,Sprite[] spritePallate = null)
     {
         Map map = SaveSystem.LoadMap(path, true);
+        if(spritePallate == null)
+        {
+            spritePallate = SaveSystem.LoadPallate(Directory.GetParent(path).FullName);
+        }
         GeneratePhysicalMap(spritePallate, map);
     }
 }

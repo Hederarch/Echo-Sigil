@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class TacticsMovementCamera : MonoBehaviour
@@ -17,8 +14,6 @@ public class TacticsMovementCamera : MonoBehaviour
 
     private static float desieredAngle = (float)Math.PI;
     public static float angle = 0;
-
-    public static bool IsPi { get => Math.Abs(angle - Math.PI) < .5f; }
 
     private void Start()
     {
@@ -36,14 +31,7 @@ public class TacticsMovementCamera : MonoBehaviour
 
     private void FoucusInputs()
     {
-        float lerpAngle;
-        if(Mathf.Abs(desieredAngle - angle) > .5f)
-        {
-            lerpAngle = Mathf.Lerp(angle, desieredAngle, .1f);
-        } else
-        {
-            lerpAngle = desieredAngle;
-        }
+        float lerpAngle = Mathf.Abs(desieredAngle - angle) > .5f ? Mathf.Lerp(angle, desieredAngle, .1f) : desieredAngle;
         transform.position = CalcPostion(lerpAngle);
         transform.rotation = CalcRotation(transform.position,lerpAngle);
         angle = lerpAngle;
@@ -84,13 +72,9 @@ public class TacticsMovementCamera : MonoBehaviour
         offset.z = -offsetFromZ0;
         if (foucus != null)
         {
-            if (Vector3.Distance(foucusPoint,foucus.transform.position)> .5f)
-            {
-                foucusPoint = Vector3.Lerp(foucusPoint, foucus.transform.position, .1f);
-            } else
-            {
-                foucusPoint = foucus.transform.position;
-            }
+            foucusPoint = Vector3.Distance(foucusPoint, foucus.transform.position) > .5f
+                ? Vector3.Lerp(foucusPoint, foucus.transform.position, .1f)
+                : foucus.transform.position;
         }
         return foucusPoint + offset;
     }
@@ -105,7 +89,7 @@ public class TacticsMovementCamera : MonoBehaviour
     private void SetSortMode()
     {
         cam.transparencySortMode = TransparencySortMode.CustomAxis;
-        cam.transparencySortAxis = transform.up;
+        cam.transparencySortAxis = transform.up - transform.forward;
     }
 
     void SetAsFoucus(Implement unit)

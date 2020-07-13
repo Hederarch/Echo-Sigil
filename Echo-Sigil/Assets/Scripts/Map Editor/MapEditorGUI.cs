@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -321,19 +322,10 @@ public class MapEditorGUI : MonoBehaviour
         reach.onEndEdit.RemoveAllListeners();
     }
 
-    public void SaveMap()
-    {
-        MapReader.SaveMap(EditorUtility.SaveFilePanel("Save Map", Application.dataPath + "/Quests", "NewMap", "hedrap"));
-    }
+    public void SaveMap() => MapReader.SaveMap(EditorUtility.SaveFilePanel("Save Map", Application.dataPath + "/Quests", "NewMap", "hedrap"));
 
-    public void LoadMap()
-    {
-        MapReader.LoadMap(EditorUtility.OpenFilePanel("Load Map", Application.dataPath + "/Quests", "hedrap"),editor.pallate);
-    }
+    public void LoadMap() => MapReader.LoadMap(EditorUtility.OpenFilePanel("Load Map", Application.dataPath + "/Quests", "hedrap"));
 
-    public void NewMap()
-    {
-        MapReader.GeneratePhysicalMap(editor.pallate, new Map(int.Parse(sizeX.text), int.Parse(sizeY.text)));
-    }
+    public void NewMap() => MapReader.GeneratePhysicalMap(editor.pallate, new Map(int.Parse(sizeX.text), int.Parse(sizeY.text)));
 
 }
