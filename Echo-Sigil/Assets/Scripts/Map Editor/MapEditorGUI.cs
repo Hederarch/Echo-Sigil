@@ -392,6 +392,6 @@ public class MapEditorGUI : MonoBehaviour
 
     public void LoadMap() => MapReader.LoadMap(EditorUtility.OpenFilePanel("Load Map", Application.dataPath + "/Quests", "hedrap"));
 
-    public void NewMap() => MapReader.GeneratePhysicalMap(MapEditor.pallate, new Map(int.Parse(sizeX.text), int.Parse(sizeY.text)));
+    public void NewMap() => MapReader.GeneratePhysicalMap(SaveSystem.LoadPallate(Application.dataPath + "/Quests/Tests"), new Map(int.Parse(sizeX.text), int.Parse(sizeY.text)));
 
 }
