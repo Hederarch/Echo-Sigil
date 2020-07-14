@@ -19,7 +19,7 @@ public static class MapReader
     public static Sprite[] spritePallate;
     public static Map Map => new Map(tiles, implements.ToArray());
 
-    public static Action<Sprite> MapGeneratedEvent;
+    public static Action<Sprite[]> MapGeneratedEvent;
 
     public static Tile[,] GeneratePhysicalMap(Sprite[] pallate, Map map = null)
     {
@@ -49,7 +49,7 @@ public static class MapReader
 
                     gameObjectTile.AddComponent<BoxCollider>().size = new Vector3(1, 1, .2f);
 
-                    gameObjectTile.AddComponent<SpriteRenderer>().sprite = GetSpriteFromIndexAndPallete(tile.spriteIndex, pallate);
+                    gameObjectTile.AddComponent<SpriteRenderer>().sprite = pallate[tile.spriteIndex];
                 }
             }
         }
@@ -63,7 +63,7 @@ public static class MapReader
             }
         }
 
-        MapGeneratedEvent?.Invoke(GetSpriteFromIndexAndPallete(0, pallate));
+        MapGeneratedEvent?.Invoke(pallate);
         return tiles;
     }
 
@@ -118,20 +118,6 @@ public static class MapReader
         return i;
     }
 
-    public static Sprite GetSpriteFromIndexAndPallete(int spriteIndex, Sprite[] spritePallate)
-    {
-        if (spritePallate != null && spriteIndex < spritePallate.Count())
-        {
-            Sprite sprite = spritePallate[spriteIndex];
-            return sprite;
-        }
-        else
-        {
-            return null;
-        }
-
-    }
-
     private static GameObject InstantateTileGameObject(Vector2 mapHalfHeight, Tile tile)
     {
         GameObject gameObjectTile = new GameObject(tile.PosInGrid.x + "," + tile.PosInGrid.y + " tile");
@@ -178,9 +164,10 @@ public static class MapReader
         }
     }
 
-    public static void SaveMap(string path)
+    public static void SaveMap(string path, Sprite[] pallate)
     {
-        SaveSystem.SaveMap(path,Map);
+        SaveSystem.SaveMap(path, Map);
+        SaveSystem.SavePallate(Directory.GetParent(path).FullName, pallate);
     }
 
     public static void LoadMap(string path,Sprite[] spritePallate = null)

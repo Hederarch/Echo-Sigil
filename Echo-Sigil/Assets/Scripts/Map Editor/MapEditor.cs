@@ -7,36 +7,40 @@ using UnityEngine.EventSystems;
 
 public class MapEditor : MonoBehaviour
 {
-    public Sprite[] pallate;
+    public static Sprite[] pallate;
 
     static Transform editorTileParent;
 
-    Transform selectedTransform;
-    List<Transform> selectedTransforms = new List<Transform>();
+    static Transform selectedTransform;
+    static List<Transform> selectedTransforms = new List<Transform>();
 
-    private bool locked;
-
-    public float snappingDistance = .1f;
+    private static bool locked;
 
     //public Image selectBox;
     //Vector2 boxSelectStartPos;
     //[Range(0, 1)]
     //public float selectBoxTransparency = .2f;
 
-    public event Action<Transform> SelectedEvent;
-    public event Action<Transform[]> MultiSelectedEvent;
+    public static event Action<Transform> SelectedEvent;
+    public static event Action<Transform[]> MultiSelectedEvent;
 
     private void Start()
     {
         Init();
     }
 
-    private void Init()
+    private static void Init()
     {
         MapReader.MapGeneratedEvent += GenerateExpationTiles;
+        MapReader.MapGeneratedEvent += SetPallate;
     }
 
-    public static void GenerateExpationTiles(Sprite sprite)
+    private static void SetPallate(Sprite[] obj)
+    {
+        pallate = obj;
+    }
+
+    public static void GenerateExpationTiles(Sprite[] sprite)
     {
         if (editorTileParent == null)
         {
@@ -56,7 +60,7 @@ public class MapEditor : MonoBehaviour
             {
                 if (MapReader.GetTile(x, y) == null)
                 {
-                    CreateEditorTile(x, y, sprite);
+                    CreateEditorTile(x, y, sprite[0]);
                 }
             }
         }
@@ -97,7 +101,7 @@ public class MapEditor : MonoBehaviour
         }
     }
 
-    private void TileEdits()
+    private static void TileEdits()
     {
         if (Input.GetAxisRaw("Mouse ScrollWheel") != 0)
         {
@@ -114,7 +118,7 @@ public class MapEditor : MonoBehaviour
         }
     }
 
-    public void ChangeIsPlayer(bool player, Implement selectedImplement)
+    public static void ChangeIsPlayer(bool player, Implement selectedImplement)
     {
         if (selectedImplement != null)
         {
@@ -168,28 +172,11 @@ public class MapEditor : MonoBehaviour
         }
     }
 
-    public bool ChangeTileHeight(float desierdHeight, Transform tileTransform, bool snap = false)
+    public static bool ChangeTileHeight(float desierdHeight, Transform tileTransform)
     {
         if (tileTransform.TryGetComponent(out TileBehaviour tile))
         {
             Tile selectedTile = tile;
-            if (snap)
-            {
-                //Snap to adjacent tiles
-                selectedTile.FindNeighbors(float.PositiveInfinity);
-                Tile closest = null;
-                foreach (Tile t in selectedTile.adjacencyList)
-                {
-                    if ((closest == null && Math.Abs(desierdHeight - t.height) < snappingDistance) || (closest != null && Math.Abs(desierdHeight - closest.height) > Math.Abs(desierdHeight - t.height)))
-                    {
-                        closest = t;
-                    }
-                }
-                if (closest != null)
-                {
-                    desierdHeight = closest.height;
-                }
-            }
             if (desierdHeight >= 0)
             {
                 selectedTile.height = desierdHeight;
@@ -208,7 +195,7 @@ public class MapEditor : MonoBehaviour
         }
     }
 
-    public void ChangeTileHeight(float delta, Transform[] tileTransform, bool snap = true)
+    public static void ChangeTileHeight(float delta, Transform[] tileTransform)
     {
         Dictionary<Transform, Tile> tiles = new Dictionary<Transform, Tile>();
         List<Transform> tileTransforms = new List<Transform>();
@@ -218,30 +205,6 @@ public class MapEditor : MonoBehaviour
             {
                 tiles.Add(t, tile);
                 tileTransforms.Add(t);
-            }
-        }
-        if (snap)
-        {
-            Tile closestNonSelected = null;
-            Tile closestSelected = null;
-            foreach (Transform t in tileTransform)
-            {
-                //Snap to adjacent tiles
-                tiles[t].FindNeighbors(float.PositiveInfinity);
-
-                foreach (Tile tile in tiles[t].adjacencyList)
-                {
-                    if ((closestNonSelected == null && Math.Abs(tiles[t].height + delta - tile.height) < snappingDistance) || (closestNonSelected != null && Math.Abs(tiles[t].height + delta - closestNonSelected.height) > Math.Abs(tiles[t].height + delta - tile.height) && !tile.current))
-                    {
-                        closestNonSelected = tile;
-                        closestSelected = tiles[t];
-                    }
-                }
-            }
-            if (closestNonSelected != null)
-            {
-                delta = closestNonSelected.height - closestSelected.height;
-                Debug.DrawLine(closestNonSelected.PosInWorld, closestSelected.PosInWorld);
             }
         }
         foreach (Transform t in tileTransforms)
@@ -254,39 +217,40 @@ public class MapEditor : MonoBehaviour
             }
         }
     }
-    private void RemoveTile(Transform tileTransform, Tile selectedTile)
+
+    private static void RemoveTile(Transform tileTransform, Tile selectedTile)
     {
         MapReader.tiles[selectedTile.PosInGrid.x, selectedTile.PosInGrid.y] = null;
         Destroy(tileTransform.gameObject);
-        CreateEditorTile(selectedTile.PosInGrid.x,selectedTile.PosInGrid.y,MapReader.GetSpriteFromIndexAndPallete(0,MapReader.spritePallate));
+        CreateEditorTile(selectedTile.PosInGrid.x, selectedTile.PosInGrid.y, MapReader.spritePallate[0]);
     }
 
-    public void ChangeTileWalkable(bool walkable, Tile selectedTile)
+    public static void ChangeTileWalkable(bool walkable, Tile selectedTile)
     {
         selectedTile.walkable = walkable;
     }
 
-    public void ChangeTileHeight(string delta, Tile selectedTile, Transform tileTransform)
+    public static void ChangeTileHeight(string delta, Tile selectedTile, Transform tileTransform)
     {
-        ChangeTileHeight(float.Parse(delta) - selectedTile.height, tileTransform, false);
+        ChangeTileHeight(float.Parse(delta) - selectedTile.height, tileTransform);
     }
 
-    public void ChangeUnitPos(Vector3 point, Implement selectedImplement)
-    {
-        ChangeUnitPos(MapReader.WorldToGridSpace(point), selectedImplement);
-    }
-
-    public void ChangeUnitPos(Vector2 point, Implement selectedImplement)
+    public static void ChangeUnitPos(Vector3 point, Implement selectedImplement)
     {
         ChangeUnitPos(MapReader.WorldToGridSpace(point), selectedImplement);
     }
 
-    public void ChangeUnitPos(int x, int y, Implement selectedImplement)
+    public static void ChangeUnitPos(Vector2 point, Implement selectedImplement)
+    {
+        ChangeUnitPos(MapReader.WorldToGridSpace(point), selectedImplement);
+    }
+
+    public static void ChangeUnitPos(int x, int y, Implement selectedImplement)
     {
         ChangeUnitPos(new Vector2Int(x, y), selectedImplement);
     }
 
-    public void ChangeUnitPos(Vector2Int pointOnGrid, Implement selectedImplement)
+    public static void ChangeUnitPos(Vector2Int pointOnGrid, Implement selectedImplement)
     {
         Vector2 worldSpace = MapReader.GridToWorldSpace(pointOnGrid);
         Tile tile = MapReader.GetTile(pointOnGrid);
@@ -294,7 +258,7 @@ public class MapEditor : MonoBehaviour
         SelectedEvent?.Invoke(selectedTransform);
     }
 
-    internal void ChangeHealthWill(bool health, int value, Implement implement)
+    public static void ChangeHealthWill(bool health, int value, Implement implement)
     {
         JRPGBattle j = implement.battle as JRPGBattle;
         if (health)
@@ -307,7 +271,7 @@ public class MapEditor : MonoBehaviour
         }
     }
 
-    public void ChangeNumVariable(string value, string variable, Implement selectedImplement)
+    public static void ChangeNumVariable(string value, string variable, Implement selectedImplement)
     {
         TacticsMove t = selectedImplement.move as TacticsMove;
         JRPGBattle j = selectedImplement.battle as JRPGBattle;
@@ -334,7 +298,22 @@ public class MapEditor : MonoBehaviour
         }
     }
 
-    void Select()
+    public static Sprite ChangeTileTexture(int index, Tile selectedTile, SpriteRenderer spriteRenderer)
+    {
+        if (index > pallate.Length) 
+        {
+            index = 0;
+        }
+        else if (index < -1)
+        {
+            index = pallate.Length - 1;
+        }
+        selectedTile.spriteIndex = index;
+        spriteRenderer.sprite = pallate[index];
+        return pallate[index];
+    }
+
+    private static void Select()
     {
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit) && (!locked && hit.transform != selectedTransform || Input.GetMouseButtonDown(0)))
         {
@@ -452,7 +431,7 @@ public class MapEditor : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
         {
             Gizmos.DrawLine(Camera.main.transform.position, hit.point);
             Gizmos.DrawSphere(hit.point, .1f);

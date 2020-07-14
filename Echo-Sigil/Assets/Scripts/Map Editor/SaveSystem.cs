@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using UnityEditor;
 using System.Collections.Generic;
 using UnityEngine.WSA;
+using System;
 
 public static class SaveSystem
 {
@@ -15,6 +16,7 @@ public static class SaveSystem
         formatter.Serialize(stream, map);
         stream.Close();
     }
+
     public static Map LoadMap(string path, bool logError = false)
     {
         if (File.Exists(path))
@@ -31,6 +33,7 @@ public static class SaveSystem
         }
         return null;
     }
+
     public static Sprite[] LoadPallate(string path)
     {
         List<Sprite> spritePallate = new List<Sprite>();
@@ -45,6 +48,22 @@ public static class SaveSystem
         }
         return spritePallate.ToArray();
     }
+
+    internal static void SavePallate(string fullName, Sprite[] pallate)
+    {
+        if (!Directory.Exists(fullName + "/Pallate"))
+        {
+            Directory.CreateDirectory(fullName + "/Pallate");
+        }
+        for(int i = 0; i < pallate.Length; i++)
+        {
+            if(!File.Exists(fullName + "/Pallate/" + i + ".png"))
+            {
+                SavePNG(fullName + "/Pallate/" + i + ".png", pallate[i].texture);
+            }
+        }
+    }
+
     public static Sprite LoadPNG(string filePath)
     {
         if (File.Exists(filePath))
@@ -83,4 +102,5 @@ public static class SaveSystem
             Debug.LogError("Map File not found in " + path + ". So... um, I guess its been sucsessfuly gotten rid of then.");
         }
     }
+
 }
