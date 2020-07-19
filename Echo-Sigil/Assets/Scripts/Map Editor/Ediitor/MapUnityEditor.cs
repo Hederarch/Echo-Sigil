@@ -22,7 +22,7 @@ public class MapUnityEditor : Editor
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Save"))
         {
-            MapReader.SaveMap(EditorUtility.SaveFilePanel("Save Map", Application.dataPath, "NewMap", "hedrap"),MapEditor.pallate);
+            MapReader.SaveMap(EditorUtility.SaveFilePanel("Save Map", Application.dataPath, "NewMap", "hedrap"), MapEditor.pallate);
         }
         if (GUILayout.Button("Load"))
         {

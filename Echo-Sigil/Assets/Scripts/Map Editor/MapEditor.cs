@@ -16,11 +16,6 @@ public class MapEditor : MonoBehaviour
 
     private static bool locked;
 
-    //public Image selectBox;
-    //Vector2 boxSelectStartPos;
-    //[Range(0, 1)]
-    //public float selectBoxTransparency = .2f;
-
     public static event Action<Transform> SelectedEvent;
     public static event Action<Transform[]> MultiSelectedEvent;
 
@@ -35,12 +30,12 @@ public class MapEditor : MonoBehaviour
         MapReader.MapGeneratedEvent += SetPallate;
     }
 
-    private static void SetPallate(Sprite[] obj)
+    private static void SetPallate(Sprite[] sprites)
     {
-        pallate = obj;
+        pallate = sprites;
     }
 
-    public static void GenerateExpationTiles(Sprite[] sprite)
+    public static void GenerateExpationTiles(Sprite[] sprites)
     {
         if (editorTileParent == null)
         {
@@ -60,7 +55,7 @@ public class MapEditor : MonoBehaviour
             {
                 if (MapReader.GetTile(x, y) == null)
                 {
-                    CreateEditorTile(x, y, sprite[0]);
+                    CreateEditorTile(x, y, sprites[0]);
                 }
             }
         }
@@ -87,7 +82,6 @@ public class MapEditor : MonoBehaviour
         editorTileObject.AddComponent<BoxCollider>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (MapReader.tiles != null && MapReader.tiles.Length > 0)
@@ -96,25 +90,8 @@ public class MapEditor : MonoBehaviour
             {
                 Select();
             }
-            //SelectBox();
             TileEdits();
-        }
-    }
-
-    private static void TileEdits()
-    {
-        if (Input.GetAxisRaw("Mouse ScrollWheel") != 0)
-        {
-            if (selectedTransforms.Count > 1)
-            {
-                ChangeTileHeight(Input.GetAxisRaw("Mouse ScrollWheel"), selectedTransforms.ToArray());
-                MultiSelectedEvent?.Invoke(selectedTransforms.ToArray());
-            }
-            if (selectedTransform != null)
-            {
-                ChangeTileHeight(selectedTransform.position.z + Input.GetAxisRaw("Mouse ScrollWheel"), selectedTransform);
-                SelectedEvent?.Invoke(selectedTransform);
-            }
+            UnitEdits();
         }
     }
 
@@ -254,7 +231,15 @@ public class MapEditor : MonoBehaviour
     {
         Vector2 worldSpace = MapReader.GridToWorldSpace(pointOnGrid);
         Tile tile = MapReader.GetTile(pointOnGrid);
-        selectedImplement.transform.position = new Vector3(worldSpace.x, worldSpace.y, tile.height + .1f);
+        if (tile != null)
+        {
+            selectedImplement.transform.position = new Vector3(worldSpace.x, worldSpace.y, tile.height - .1f);
+        }
+        else
+        {
+            RemoveUnit(selectedImplement);
+        }
+
         SelectedEvent?.Invoke(selectedTransform);
     }
 
@@ -300,7 +285,7 @@ public class MapEditor : MonoBehaviour
 
     public static Sprite ChangeTileTexture(int index, Tile selectedTile, SpriteRenderer spriteRenderer)
     {
-        if (index > pallate.Length) 
+        if (index > pallate.Length)
         {
             index = 0;
         }
@@ -313,11 +298,29 @@ public class MapEditor : MonoBehaviour
         return pallate[index];
     }
 
+    public static void AddUnit()
+    {
+        MapReader.MapImplementToImplement(new MapImplement(MapReader.WorldToGridSpace(Vector2.zero)));
+    }
+
+    public static void RemoveUnit(Implement selectedImplement)
+    {
+        if (MapReader.implements.Contains(selectedImplement))
+        {
+            MapReader.implements.Remove(selectedImplement);
+        }
+        Destroy(selectedImplement.gameObject);
+        selectedTransform = null;
+        SelectedEvent?.Invoke(null);
+    }
+
     private static void Select()
     {
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit) && (!locked && hit.transform != selectedTransform || Input.GetMouseButtonDown(0)))
+        RaycastHit2D hit = Physics2D.Raycast(GetScreenPoint(), Vector2.one, .1f);
+        Physics2D.queriesStartInColliders = true;
+        if (hit.collider != null && ((!locked && hit.transform != selectedTransform) || Input.GetMouseButtonDown(0)))
         {
-
+            //Add to the map size
             if (hit.transform.TryGetComponent(out EditorTile et))
             {
                 if (Input.GetMouseButtonDown(0))
@@ -328,7 +331,7 @@ public class MapEditor : MonoBehaviour
                 {
                     SelectedEvent(null);
                 }
-            }
+            } //Add to/subtract from a multiselection
             else if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) && hit.transform.TryGetComponent(out TileBehaviour _))
             {
                 if (selectedTransforms.Contains(hit.transform))
@@ -340,16 +343,17 @@ public class MapEditor : MonoBehaviour
                     selectedTransforms.Add(hit.transform);
                 }
 
+                //Add currently selected tile to multiselection
                 if (selectedTransform != null && selectedTransform.TryGetComponent(out TileBehaviour _))
                 {
                     selectedTransforms.Add(selectedTransform);
                     selectedTransform = null;
                 }
                 MultiSelectedEvent?.Invoke(selectedTransforms.ToArray());
-            }
+            } //select a single thing
             else
             {
-                selectedTransform = hit.transform;
+                selectedTransform = hit.collider.transform;
                 SelectedEvent?.Invoke(selectedTransform);
             }
 
@@ -373,69 +377,53 @@ public class MapEditor : MonoBehaviour
         }
     }
 
-    //this was a box select option, scraped for time
-    /*private void SelectBox()
+    private static void UnitEdits()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (selectedTransform != null && selectedTransform.parent.TryGetComponent(out Implement implement))
         {
-            boxSelectStartPos = Input.mousePosition;
-            selectBox.enabled = true;
-        }
-        if (Input.GetMouseButton(0))
-        {
-
-            float width = Input.mousePosition.x - boxSelectStartPos.x;
-            float height = Input.mousePosition.y - boxSelectStartPos.y;
-
-            selectBox.rectTransform.sizeDelta = new Vector2(Mathf.Abs(width), Mathf.Abs(height));
-            selectBox.rectTransform.anchoredPosition = boxSelectStartPos + new Vector2(width / 2, height / 2);
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            selectBox.enabled = false;
-
-            Vector2 minBox = Camera.main.ScreenToWorldPoint(selectBox.rectTransform.anchoredPosition - (selectBox.rectTransform.sizeDelta / 2));
-            Vector2 maxBox = Camera.main.ScreenToWorldPoint(selectBox.rectTransform.anchoredPosition + (selectBox.rectTransform.sizeDelta / 2));
-
-            float xSize = maxBox.x - minBox.x;
-            float ySize = maxBox.y - minBox.y;
-
-
-            Bounds bounds = new Bounds(Camera.main.ScreenToWorldPoint(selectBox.rectTransform.anchoredPosition),new Vector3(xSize,ySize,float.PositiveInfinity));
-
-            if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.RightShift))
+            Vector3 point = GetScreenPoint();
+            if (Input.GetMouseButtonUp(0))
             {
-                selectedTransforms.Clear();
+                ChangeUnitPos(point, implement);
+                SelectedEvent(selectedTransform);
             }
-
-            foreach (Transform t in MapReader.tileParent)
+            else if (Input.GetMouseButton(0))
             {
-                if (t.GetComponent<TileBehaviour>() && bounds.Contains(t.position))
-                {
-                    selectedTransforms.Add(t);
-                }
-            }
-
-            if(selectedTransforms.Count > 1)
-            {
-                BoxSelectedEvent?.Invoke(selectedTransforms.ToArray());
-                locked = true;
-            } 
-            else if (selectedTransforms.Count == 1)
-            {
-                SelectedEvent(selectedTransforms[0]);
-                locked = true;
+                selectedTransform.parent.position = point;
             }
         }
-    }*/
+    }
 
-    private void OnDrawGizmos()
+    private static void TileEdits()
     {
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
+        if (Input.GetAxisRaw("Mouse ScrollWheel") != 0)
         {
-            Gizmos.DrawLine(Camera.main.transform.position, hit.point);
-            Gizmos.DrawSphere(hit.point, .1f);
+            if (selectedTransforms.Count > 1)
+            {
+                ChangeTileHeight(Input.GetAxisRaw("Mouse ScrollWheel"), selectedTransforms.ToArray());
+                MultiSelectedEvent?.Invoke(selectedTransforms.ToArray());
+            }
+            if (selectedTransform != null)
+            {
+                ChangeTileHeight(selectedTransform.position.z + Input.GetAxisRaw("Mouse ScrollWheel"), selectedTransform);
+                SelectedEvent?.Invoke(selectedTransform);
+            }
         }
+    }
 
+    private static Vector3 GetScreenPoint()
+    {
+        Vector3 screenPoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
+        Vector3 screenPointZ = screenPoint;
+        screenPointZ.z = 0;
+        double distToZ0 = -screenPoint.z / Math.Cos(Vector3.Angle(Vector3.forward, Camera.main.transform.forward));
+        Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, (float)distToZ0));
+
+        Debug.DrawLine(point, new Vector3(point.x, point.y, 0), Color.red);
+        Debug.DrawLine(screenPoint, point, Color.cyan);
+        Debug.DrawLine(screenPoint, screenPointZ, Color.cyan);
+        Debug.DrawLine(screenPointZ, point, Color.cyan);
+
+        return point;
     }
 }

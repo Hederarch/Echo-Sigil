@@ -44,7 +44,7 @@ public static class SaveSystem
         }
         for (int i = 0; File.Exists(path + "/Pallate/" + i + ".png"); i++)
         {
-            spritePallate.Add(LoadPNG(path + "/Pallate/" + i + ".png"));
+            spritePallate.Add(LoadPNG(path + "/Pallate/" + i + ".png", Vector2.one / 2f));
         }
         return spritePallate.ToArray();
     }
@@ -64,7 +64,7 @@ public static class SaveSystem
         }
     }
 
-    public static Sprite LoadPNG(string filePath)
+    public static Sprite LoadPNG(string filePath, Vector2 pivot)
     {
         if (File.Exists(filePath))
         {
@@ -78,7 +78,7 @@ public static class SaveSystem
                 Debug.LogWarning("Texture " + filePath + "is not square. Texture hieght may be adversly affected");
             }
 
-            Sprite sprite = Sprite.Create(tex, new Rect(Vector2.zero, new Vector2(tex.width, tex.height)), Vector2.one / 2f, tex.width);
+            Sprite sprite = Sprite.Create(tex, new Rect(Vector2.zero, new Vector2(tex.width, tex.height)), pivot, tex.width);
             return sprite;
         }
         return null;

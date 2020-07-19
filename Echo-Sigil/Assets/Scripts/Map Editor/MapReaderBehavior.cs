@@ -47,8 +47,12 @@ public static class MapReader
 
                     gameObjectTile.transform.position += new Vector3(0, 0, tile.height);
 
-                    gameObjectTile.AddComponent<BoxCollider>().size = new Vector3(1, 1, .2f);
+                    gameObjectTile.AddComponent<BoxCollider2D>().size = new Vector3(1, 1, .2f);
 
+                    if (tile.spriteIndex >= pallate.Length || tile.spriteIndex < 0)
+                    {
+                        tile.spriteIndex = 0;
+                    }
                     gameObjectTile.AddComponent<SpriteRenderer>().sprite = pallate[tile.spriteIndex];
                 }
             }
@@ -73,7 +77,7 @@ public static class MapReader
         Vector2 pos = GridToWorldSpace(mi.PosInGrid());
         unit.transform.parent = tileParent;
         Tile tile = GetTile(mi.PosInGrid());
-        unit.transform.position = new Vector3(pos.x, pos.y, tile.height + .2f);
+        unit.transform.position = new Vector3(pos.x, pos.y, tile.height - .1f);
         JRPGBattle j;
         TacticsMove t;
         Implement i;
@@ -112,8 +116,13 @@ public static class MapReader
 
         GameObject spriteRender = new GameObject("Sprite Render");
         spriteRender.transform.parent = unit.transform;
-        i.unitSprite = spriteRender.AddComponent<SpriteRenderer>();
-        spriteRender.AddComponent<BoxCollider>().size = new Vector3(1, 1, .2f);
+        SpriteRenderer spriteRenderer = spriteRender.AddComponent<SpriteRenderer>();
+        i.unitSprite = spriteRenderer;
+        spriteRenderer.sprite = SaveSystem.LoadPNG(Application.dataPath + "/Implements/" + mi.name + "/Base.png",new Vector2(.5f,0));
+        spriteRenderer.spriteSortPoint = SpriteSortPoint.Pivot;
+        spriteRender.AddComponent<BoxCollider2D>().size = new Vector3(1, 1, .2f);
+
+        implements.Add(i);
 
         return i;
     }
@@ -170,7 +179,7 @@ public static class MapReader
         SaveSystem.SavePallate(Directory.GetParent(path).FullName, pallate);
     }
 
-    public static void LoadMap(string path,Sprite[] spritePallate = null)
+    public static void LoadMap(string path, Sprite[] spritePallate = null)
     {
         Map map = SaveSystem.LoadMap(path, true);
         if(spritePallate == null)

@@ -23,6 +23,7 @@ public class MapEditorGUI : MonoBehaviour
     List<Tile> prevTile;
 
     //unit
+    public Button addUnit;
     public GameObject unitGUI;
     public Text unitName;
     public Button leftUnitButton;
@@ -95,15 +96,13 @@ public class MapEditorGUI : MonoBehaviour
             Transform transform = selected;
             SelectedImage.color = Color.white;
             SelectedImage.sprite = transform.GetComponent<SpriteRenderer>().sprite;
-            if (transform.GetComponent<TileBehaviour>() != null)
+            if (transform.TryGetComponent(out TileBehaviour tile))
             {
-                Tile tile = transform.GetComponent<TileBehaviour>();
                 SetTileProperties(selected, tile);
                 SubscribeTile(selected, tile);
             }
-            else if (transform.parent.GetComponent<Implement>() != null)
+            else if (transform.parent.TryGetComponent(out Implement implement))
             {
-                Implement implement = transform.parent.GetComponent<Implement>();
                 SetUnitPanelProperties(implement);
                 SubscribeUnit(implement);
             }
@@ -361,7 +360,7 @@ public class MapEditorGUI : MonoBehaviour
 
     public void LoadSprite(Tile[] selectedTile, SpriteRenderer[] spriteRenderer)
     {
-        int initLength = addSpriteToEditorPallate();
+        int initLength = AddSpriteToEditorPallate();
         for (int i = 0; i < selectedTile.Length; i++)
         {
             ChangeTileTexture(initLength, selectedTile[i], spriteRenderer[i]);
@@ -370,13 +369,13 @@ public class MapEditorGUI : MonoBehaviour
 
     public void LoadSprite(Tile selectedTile, SpriteRenderer spriteRenderer)
     {
-        int initLength = addSpriteToEditorPallate();
+        int initLength = AddSpriteToEditorPallate();
         ChangeTileTexture(initLength, selectedTile, spriteRenderer);
     }
 
-    private int addSpriteToEditorPallate()
+    private int AddSpriteToEditorPallate()
     {
-        Sprite addable = SaveSystem.LoadPNG(EditorUtility.OpenFilePanel("Load Texture", Application.dataPath + "/Sprites", "png"));
+        Sprite addable = SaveSystem.LoadPNG(EditorUtility.OpenFilePanel("Load Texture", Application.dataPath + "/Sprites", "png"),Vector2.one/2f);
         int initLength = MapEditor.pallate.Length;
         Sprite[] pallate = new Sprite[initLength + 1];
         for (int i = 0; i < initLength; i++)
@@ -388,10 +387,22 @@ public class MapEditorGUI : MonoBehaviour
         return initLength;
     }
 
+    public void AddUnit()
+    {
+        MapEditor.AddUnit();
+    }
+
     public void SaveMap() => MapReader.SaveMap(EditorUtility.SaveFilePanel("Save Map", Application.dataPath + "/Quests", "New Map", "hedrap"),MapEditor.pallate);
 
-    public void LoadMap() => MapReader.LoadMap(EditorUtility.OpenFilePanel("Load Map", Application.dataPath + "/Quests", "hedrap"));
+    public void LoadMap()
+    {
+        MapReader.LoadMap(EditorUtility.OpenFilePanel("Load Map", Application.dataPath + "/Quests", "hedrap"));
+        addUnit.gameObject.SetActive(true);
+    }
 
-    public void NewMap() => MapReader.GeneratePhysicalMap(SaveSystem.LoadPallate(Application.dataPath + "/Quests/Tests"), new Map(int.Parse(sizeX.text), int.Parse(sizeY.text)));
-
+    public void NewMap()
+    {
+        MapReader.GeneratePhysicalMap(SaveSystem.LoadPallate(Application.dataPath + "/Quests/Tests"), new Map(int.Parse(sizeX.text), int.Parse(sizeY.text)));
+        addUnit.gameObject.SetActive(true);
+    }
 }
