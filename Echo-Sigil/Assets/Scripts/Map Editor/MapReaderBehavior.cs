@@ -49,10 +49,6 @@ public static class MapReader
 
                     gameObjectTile.AddComponent<BoxCollider2D>().size = new Vector3(1, 1, .2f);
 
-                    if (tile.spriteIndex >= pallate.Length || tile.spriteIndex < 0)
-                    {
-                        tile.spriteIndex = 0;
-                    }
                     gameObjectTile.AddComponent<SpriteRenderer>().sprite = pallate[tile.spriteIndex];
                 }
             }

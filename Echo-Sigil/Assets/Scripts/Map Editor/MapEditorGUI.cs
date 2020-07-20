@@ -18,6 +18,7 @@ public class MapEditorGUI : MonoBehaviour
     public Text tileName;
     public Button leftTileButton;
     public Button rightTileButton;
+    private bool tileTrueIndex = true;
     public Toggle walkable;
     public InputField height;
     List<Tile> prevTile;
@@ -43,14 +44,21 @@ public class MapEditorGUI : MonoBehaviour
     //File
     public InputField sizeX;
     public InputField sizeY;
+    
 
     // Start is called before the first frame update
     void Start()
+    {
+        InitSubscribe();
+    }
+
+    private void InitSubscribe()
     {
         MapEditor.SelectedEvent += UpdatePanel;
         MapEditor.MultiSelectedEvent += UpdatePanel;
         MapEditor.SelectedEvent += ResetPrevTile;
         MapEditor.MultiSelectedEvent += ResetPrevTile;
+        MapReader.MapGeneratedEvent += delegate { addUnit.gameObject.SetActive(true); };
     }
 
     private void ResetPrevTile(Transform selected)
@@ -180,23 +188,28 @@ public class MapEditorGUI : MonoBehaviour
     {
         SelectedButton.onClick.AddListener(delegate { LoadSprite(selectedTile, selected.GetComponent<SpriteRenderer>()); });
         leftTileButton.onClick.AddListener(delegate { ChangeTileTexture(selectedTile.spriteIndex - 1, selectedTile, selected.GetComponent<SpriteRenderer>()); });
-        rightTileButton.onClick.AddListener(delegate { ChangeTileTexture(selectedTile.spriteIndex - 1, selectedTile, selected.GetComponent<SpriteRenderer>()); });
+        rightTileButton.onClick.AddListener(delegate { ChangeTileTexture(selectedTile.spriteIndex + 1, selectedTile, selected.GetComponent<SpriteRenderer>()); });
         walkable.onValueChanged.AddListener(delegate { MapEditor.ChangeTileWalkable(walkable.isOn, selectedTile); });
         height.onEndEdit.AddListener(delegate { MapEditor.ChangeTileHeight(float.Parse(height.text), selected); });
     }
 
     private void ChangeTileTexture(int index, Tile selectedTile, SpriteRenderer spriteRenderer)
     {
-        if (index == MapEditor.pallate.Length || index == -1)
+        if ((index == MapEditor.pallate.Length || index == -1) && tileTrueIndex)
         {
             SelectedImage.sprite = plus;
             SelectedButton.enabled = true;
-            selectedTile.spriteIndex = index;
+            tileTrueIndex = false;
         }
         else
         {
+            if (!tileTrueIndex && index < MapEditor.pallate.Length && index >= 0)
+            {
+                index = selectedTile.spriteIndex;
+            }
             SelectedImage.sprite = MapEditor.ChangeTileTexture(index, selectedTile, spriteRenderer);
-            SelectedButton.enabled = true;
+            SelectedButton.enabled = false;
+            tileTrueIndex = true;
         }
         
     }
@@ -278,6 +291,7 @@ public class MapEditorGUI : MonoBehaviour
         SelectedButton.onClick.RemoveAllListeners();
         leftTileButton.onClick.RemoveAllListeners();
         rightTileButton.onClick.RemoveAllListeners();
+        tileTrueIndex = true;
         walkable.onValueChanged.RemoveAllListeners();
         height.onEndEdit.RemoveAllListeners();
     }
@@ -387,22 +401,17 @@ public class MapEditorGUI : MonoBehaviour
         return initLength;
     }
 
-    public void AddUnit()
-    {
-        MapEditor.AddUnit();
-    }
+    public void AddUnit() => MapEditor.AddUnit();
 
     public void SaveMap() => MapReader.SaveMap(EditorUtility.SaveFilePanel("Save Map", Application.dataPath + "/Quests", "New Map", "hedrap"),MapEditor.pallate);
 
     public void LoadMap()
     {
         MapReader.LoadMap(EditorUtility.OpenFilePanel("Load Map", Application.dataPath + "/Quests", "hedrap"));
-        addUnit.gameObject.SetActive(true);
     }
 
     public void NewMap()
     {
         MapReader.GeneratePhysicalMap(SaveSystem.LoadPallate(Application.dataPath + "/Quests/Tests"), new Map(int.Parse(sizeX.text), int.Parse(sizeY.text)));
-        addUnit.gameObject.SetActive(true);
     }
 }

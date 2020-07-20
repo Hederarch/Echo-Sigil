@@ -84,12 +84,9 @@ public class MapEditor : MonoBehaviour
 
     void Update()
     {
-        if (MapReader.tiles != null && MapReader.tiles.Length > 0)
+        if (MapReader.tiles != null && MapReader.tiles.Length > 0 && !EventSystem.current.IsPointerOverGameObject())
         {
-            if (!EventSystem.current.IsPointerOverGameObject())
-            {
-                Select();
-            }
+            Select();
             TileEdits();
             UnitEdits();
         }
@@ -202,30 +199,15 @@ public class MapEditor : MonoBehaviour
         CreateEditorTile(selectedTile.PosInGrid.x, selectedTile.PosInGrid.y, MapReader.spritePallate[0]);
     }
 
-    public static void ChangeTileWalkable(bool walkable, Tile selectedTile)
-    {
-        selectedTile.walkable = walkable;
-    }
+    public static void ChangeTileWalkable(bool walkable, Tile selectedTile) => selectedTile.walkable = walkable;
 
-    public static void ChangeTileHeight(string delta, Tile selectedTile, Transform tileTransform)
-    {
-        ChangeTileHeight(float.Parse(delta) - selectedTile.height, tileTransform);
-    }
+    public static void ChangeTileHeight(string delta, Tile selectedTile, Transform tileTransform) => ChangeTileHeight(float.Parse(delta) - selectedTile.height, tileTransform);
 
-    public static void ChangeUnitPos(Vector3 point, Implement selectedImplement)
-    {
-        ChangeUnitPos(MapReader.WorldToGridSpace(point), selectedImplement);
-    }
+    public static void ChangeUnitPos(Vector3 point, Implement selectedImplement) => ChangeUnitPos(MapReader.WorldToGridSpace(point), selectedImplement);
 
-    public static void ChangeUnitPos(Vector2 point, Implement selectedImplement)
-    {
-        ChangeUnitPos(MapReader.WorldToGridSpace(point), selectedImplement);
-    }
+    public static void ChangeUnitPos(Vector2 point, Implement selectedImplement) => ChangeUnitPos(MapReader.WorldToGridSpace(point), selectedImplement);
 
-    public static void ChangeUnitPos(int x, int y, Implement selectedImplement)
-    {
-        ChangeUnitPos(new Vector2Int(x, y), selectedImplement);
-    }
+    public static void ChangeUnitPos(int x, int y, Implement selectedImplement) => ChangeUnitPos(new Vector2Int(x, y), selectedImplement);
 
     public static void ChangeUnitPos(Vector2Int pointOnGrid, Implement selectedImplement)
     {
@@ -285,11 +267,11 @@ public class MapEditor : MonoBehaviour
 
     public static Sprite ChangeTileTexture(int index, Tile selectedTile, SpriteRenderer spriteRenderer)
     {
-        if (index > pallate.Length)
+        if (index >= pallate.Length)
         {
             index = 0;
         }
-        else if (index < -1)
+        else if (index < 0)
         {
             index = pallate.Length - 1;
         }
