@@ -25,6 +25,7 @@ public static class SaveSystem
             FileStream stream = new FileStream(path, FileMode.Open);
             Map map = formatter.Deserialize(stream) as Map;
             stream.Close();
+            map.path = path;
             return map;
         }
         else if (logError)

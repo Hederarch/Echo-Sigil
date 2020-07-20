@@ -13,6 +13,7 @@ public class Map
     public bool[,] walkableMap;
     public int[,] spriteIndexMap;
     public List<MapImplement> units;
+    internal string path = null;
 
     public Map(int sizeX, int sizeY, bool addUnit = false) : this(new Vector2Int(sizeX,sizeY),addUnit) { }
 
