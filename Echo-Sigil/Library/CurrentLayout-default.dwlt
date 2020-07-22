@@ -21,7 +21,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 4}
-  m_MinSize: {x: 875, y: 542}
+  m_MinSize: {x: 875, y: 392}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 --- !u!114 &2
@@ -41,7 +41,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 396
-    width: 531
+    width: 532
     height: 551
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 4000, y: 4000}
@@ -67,14 +67,14 @@ MonoBehaviour:
   - {fileID: 2}
   m_Position:
     serializedVersion: 2
-    x: 1389
+    x: 1388
     y: 0
-    width: 531
+    width: 532
     height: 947
-  m_MinSize: {x: 276, y: 292}
-  m_MaxSize: {x: 4001, y: 8042}
+  m_MinSize: {x: 200, y: 321}
+  m_MaxSize: {x: 4001, y: 8021}
   vertical: 1
-  controlID: 6927
+  controlID: 58
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -120,7 +120,7 @@ MonoBehaviour:
     height: 30
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
-  m_LastLoadedLayoutName: Defualt
+  m_LastLoadedLayoutName: 
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -143,10 +143,10 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 709, y: 492}
-  m_MaxSize: {x: 18004, y: 14042}
+  m_MinSize: {x: 603, y: 342}
+  m_MaxSize: {x: 12004, y: 8042}
   vertical: 0
-  controlID: 6830
+  controlID: 123
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -185,10 +185,10 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 762
+    width: 761
     height: 947
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 201, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 19}
@@ -211,14 +211,14 @@ MonoBehaviour:
   - {fileID: 12}
   m_Position:
     serializedVersion: 2
-    x: 762
+    x: 761
     y: 0
     width: 627
     height: 947
-  m_MinSize: {x: 232, y: 492}
-  m_MaxSize: {x: 10002, y: 14042}
+  m_MinSize: {x: 202, y: 342}
+  m_MaxSize: {x: 4002, y: 8042}
   vertical: 1
-  controlID: 6901
+  controlID: 124
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -229,25 +229,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: InspectorWindow
+  m_Name: TestRunnerWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 531
+    width: 532
     height: 396
-  m_MinSize: {x: 275, y: 50}
+  m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 4000, y: 4000}
-  m_ActualView: {fileID: 17}
+  m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 17}
   - {fileID: 16}
   - {fileID: 14}
   - {fileID: 13}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -267,8 +267,8 @@ MonoBehaviour:
     y: 0
     width: 627
     height: 417
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 21}
   m_Panes:
   - {fileID: 21}
@@ -284,7 +284,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ProjectBrowser
+  m_Name: ConsoleWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -293,14 +293,14 @@ MonoBehaviour:
     y: 417
     width: 627
     height: 530
-  m_MinSize: {x: 232, y: 271}
-  m_MaxSize: {x: 10002, y: 10021}
-  m_ActualView: {fileID: 18}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 18}
   - {fileID: 15}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -382,7 +382,7 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 762
+    x: 761
     y: 490
     width: 625
     height: 509
@@ -407,13 +407,13 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1490
+    x: 1388
     y: 73
-    width: 429
+    width: 531
     height: 375
   m_ViewDataDictionary: {fileID: 0}
   m_Spl:
-    ID: 993
+    ID: 2094
     splitterInitialOffset: 299
     currentActiveSplitter: -1
     realSizes: e50000004c000000
@@ -468,7 +468,7 @@ MonoBehaviour:
       name: Tales From The Metahedron
       fullName: Tales From The Metahedron
       resultStatus: 1
-      duration: 1.6439205
+      duration: 0.4550288
       messages: 
       output: 
       stacktrace: 
@@ -484,7 +484,7 @@ MonoBehaviour:
       name: Tests.dll
       fullName: C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Library/ScriptAssemblies/Tests.dll
       resultStatus: 1
-      duration: 1.5090902
+      duration: 0.3747856
       messages: 
       output: 
       stacktrace: 
@@ -495,12 +495,259 @@ MonoBehaviour:
       categories: []
       parentId: 1000
       parentUniqueId: '[Tales From The Metahedron][suite]'
+    - id: 1053
+      uniqueId: Tests.dll/[Tests][Camera_Tests][suite]
+      name: Camera_Tests
+      fullName: Camera_Tests
+      resultStatus: 2
+      duration: 0.0538641
+      messages: One or more child tests had errors
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1049
+      parentUniqueId: '[Tests.dll][suite]'
+    - id: 1050
+      uniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.rotation][suite]
+      name: rotation
+      fullName: Camera_Tests.rotation
+      resultStatus: 1
+      duration: 0.0641572
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1057
+      parentUniqueId: Tests.dll/[Tests][Camera_Tests][suite]
+    - id: 1051
+      uniqueId: Tests.dll/Camera_Tests/rotation/[Tests][Camera_Tests.rotation.camera_rotates_x]
+      name: camera_rotates_x
+      fullName: Camera_Tests.rotation.camera_rotates_x
+      resultStatus: 1
+      duration: 0.028744
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1050
+      parentUniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.rotation][suite]
+    - id: 1052
+      uniqueId: Tests.dll/Camera_Tests/rotation/[Tests][Camera_Tests.rotation.camera_rotates_y]
+      name: camera_rotates_y
+      fullName: Camera_Tests.rotation.camera_rotates_y
+      resultStatus: 1
+      duration: 0.0011699
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1050
+      parentUniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.rotation][suite]
+    - id: 1047
+      uniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.selection][suite]
+      name: selection
+      fullName: Camera_Tests.selection
+      resultStatus: 2
+      duration: 0.0307263
+      messages: One or more child tests had errors
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1053
+      parentUniqueId: Tests.dll/[Tests][Camera_Tests][suite]
+    - id: 1050
+      uniqueId: Tests.dll/Camera_Tests/selection/[Tests][Camera_Tests.selection.center_screen_starts_as_center_tile]
+      name: center_screen_starts_as_center_tile
+      fullName: Camera_Tests.selection.center_screen_starts_as_center_tile
+      resultStatus: 2
+      duration: 0.0025079
+      messages: 'UnityEngine.MissingReferenceException : The object of type ''Transform''
+        has been destroyed but you are still trying to access it.
+
+        Your script
+        should either check if it is null or you should not destroy the object.'
+      output: 
+      stacktrace: "  at (wrapper managed-to-native) UnityEngine.Transform.get_position_Injected(UnityEngine.Transform,UnityEngine.Vector3&)\r\n 
+        at UnityEngine.Transform.get_position () [0x00000] in <a979f18d51af41179d12b797e8c5be14>:0
+        \r\n  at MapReader.WorldToGridSpace (UnityEngine.Vector2 posInWorld) [0x00024]
+        in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Map
+        Editor\\MapReaderBehavior.cs:152 \r\n  at TacticsMovementCamera.GetScreenPointGizmos
+        (UnityEngine.Vector2 pointOnScreen, UnityEngine.Vector3 screenPoint, UnityEngine.Vector3
+        screenPointZ, UnityEngine.Vector3 point) [0x00001] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Gamplay\\Camera\\TacticsMovementCamera.cs:116
+        \r\n  at TacticsMovementCamera.GetScreenPoint (UnityEngine.Vector2 pointOnScreen)
+        [0x00061] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Gamplay\\Camera\\TacticsMovementCamera.cs:109
+        \r\n  at TacticsMovementCamera.GetScreenPoint (System.Single x, System.Single
+        y) [0x00000] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Gamplay\\Camera\\TacticsMovementCamera.cs:95
+        \r\n  at Camera_Tests.selection.center_screen_starts_as_center_tile () [0x00016]
+        in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Tests\\CameraTests.cs:42
+        \r\n  at (wrapper managed-to-native) System.Reflection.MonoMethod.InternalInvoke(System.Reflection.MonoMethod,object,object[],System.Exception&)\r\n 
+        at System.Reflection.MonoMethod.Invoke (System.Object obj, System.Reflection.BindingFlags
+        invokeAttr, System.Reflection.Binder binder, System.Object[] parameters,
+        System.Globalization.CultureInfo culture) [0x00032] in <fb001e01371b4adca20013e0ac763896>:0 "
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1047
+      parentUniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.selection][suite]
+    - id: 1048
+      uniqueId: Tests.dll/Camera_Tests/selection/[Tests][Camera_Tests.selection.get_Screen_point_returns_z0_bottom_left]
+      name: get_Screen_point_returns_z0_bottom_left
+      fullName: Camera_Tests.selection.get_Screen_point_returns_z0_bottom_left
+      resultStatus: 2
+      duration: 0.0014363
+      messages: 'UnityEngine.MissingReferenceException : The object of type ''Transform''
+        has been destroyed but you are still trying to access it.
+
+        Your script
+        should either check if it is null or you should not destroy the object.'
+      output: 
+      stacktrace: "  at (wrapper managed-to-native) UnityEngine.Transform.get_position_Injected(UnityEngine.Transform,UnityEngine.Vector3&)\r\n 
+        at UnityEngine.Transform.get_position () [0x00000] in <a979f18d51af41179d12b797e8c5be14>:0
+        \r\n  at MapReader.WorldToGridSpace (UnityEngine.Vector2 posInWorld) [0x00024]
+        in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Map
+        Editor\\MapReaderBehavior.cs:152 \r\n  at TacticsMovementCamera.GetScreenPointGizmos
+        (UnityEngine.Vector2 pointOnScreen, UnityEngine.Vector3 screenPoint, UnityEngine.Vector3
+        screenPointZ, UnityEngine.Vector3 point) [0x00001] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Gamplay\\Camera\\TacticsMovementCamera.cs:116
+        \r\n  at TacticsMovementCamera.GetScreenPoint (UnityEngine.Vector2 pointOnScreen)
+        [0x00061] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Gamplay\\Camera\\TacticsMovementCamera.cs:109
+        \r\n  at TacticsMovementCamera.GetScreenPoint (System.Single x, System.Single
+        y) [0x00000] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Gamplay\\Camera\\TacticsMovementCamera.cs:95
+        \r\n  at Camera_Tests.selection.get_Screen_point_returns_z0_bottom_left ()
+        [0x00016] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Tests\\CameraTests.cs:12
+        \r\n  at (wrapper managed-to-native) System.Reflection.MonoMethod.InternalInvoke(System.Reflection.MonoMethod,object,object[],System.Exception&)\r\n 
+        at System.Reflection.MonoMethod.Invoke (System.Object obj, System.Reflection.BindingFlags
+        invokeAttr, System.Reflection.Binder binder, System.Object[] parameters,
+        System.Globalization.CultureInfo culture) [0x00032] in <fb001e01371b4adca20013e0ac763896>:0 "
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1047
+      parentUniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.selection][suite]
+    - id: 1050
+      uniqueId: Tests.dll/Camera_Tests/selection/[Tests][Camera_Tests.selection.get_Screen_point_returns_z0_middle]
+      name: get_Screen_point_returns_z0_middle
+      fullName: Camera_Tests.selection.get_Screen_point_returns_z0_middle
+      resultStatus: 2
+      duration: 0.001452
+      messages: 'UnityEngine.MissingReferenceException : The object of type ''Transform''
+        has been destroyed but you are still trying to access it.
+
+        Your script
+        should either check if it is null or you should not destroy the object.'
+      output: 
+      stacktrace: "  at (wrapper managed-to-native) UnityEngine.Transform.get_position_Injected(UnityEngine.Transform,UnityEngine.Vector3&)\r\n 
+        at UnityEngine.Transform.get_position () [0x00000] in <a979f18d51af41179d12b797e8c5be14>:0
+        \r\n  at MapReader.WorldToGridSpace (UnityEngine.Vector2 posInWorld) [0x00024]
+        in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Map
+        Editor\\MapReaderBehavior.cs:152 \r\n  at TacticsMovementCamera.GetScreenPointGizmos
+        (UnityEngine.Vector2 pointOnScreen, UnityEngine.Vector3 screenPoint, UnityEngine.Vector3
+        screenPointZ, UnityEngine.Vector3 point) [0x00001] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Gamplay\\Camera\\TacticsMovementCamera.cs:116
+        \r\n  at TacticsMovementCamera.GetScreenPoint (UnityEngine.Vector2 pointOnScreen)
+        [0x00061] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Gamplay\\Camera\\TacticsMovementCamera.cs:109
+        \r\n  at TacticsMovementCamera.GetScreenPoint (System.Single x, System.Single
+        y) [0x00000] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Gamplay\\Camera\\TacticsMovementCamera.cs:95
+        \r\n  at Camera_Tests.selection.get_Screen_point_returns_z0_middle () [0x00016]
+        in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Tests\\CameraTests.cs:26
+        \r\n  at (wrapper managed-to-native) System.Reflection.MonoMethod.InternalInvoke(System.Reflection.MonoMethod,object,object[],System.Exception&)\r\n 
+        at System.Reflection.MonoMethod.Invoke (System.Object obj, System.Reflection.BindingFlags
+        invokeAttr, System.Reflection.Binder binder, System.Object[] parameters,
+        System.Globalization.CultureInfo culture) [0x00032] in <fb001e01371b4adca20013e0ac763896>:0 "
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1047
+      parentUniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.selection][suite]
+    - id: 1049
+      uniqueId: Tests.dll/Camera_Tests/selection/[Tests][Camera_Tests.selection.get_Screen_point_returns_z0_top_right]
+      name: get_Screen_point_returns_z0_top_right
+      fullName: Camera_Tests.selection.get_Screen_point_returns_z0_top_right
+      resultStatus: 2
+      duration: 0.0014696
+      messages: 'UnityEngine.MissingReferenceException : The object of type ''Transform''
+        has been destroyed but you are still trying to access it.
+
+        Your script
+        should either check if it is null or you should not destroy the object.'
+      output: 
+      stacktrace: "  at (wrapper managed-to-native) UnityEngine.Transform.get_position_Injected(UnityEngine.Transform,UnityEngine.Vector3&)\r\n 
+        at UnityEngine.Transform.get_position () [0x00000] in <a979f18d51af41179d12b797e8c5be14>:0
+        \r\n  at MapReader.WorldToGridSpace (UnityEngine.Vector2 posInWorld) [0x00024]
+        in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Map
+        Editor\\MapReaderBehavior.cs:152 \r\n  at TacticsMovementCamera.GetScreenPointGizmos
+        (UnityEngine.Vector2 pointOnScreen, UnityEngine.Vector3 screenPoint, UnityEngine.Vector3
+        screenPointZ, UnityEngine.Vector3 point) [0x00001] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Gamplay\\Camera\\TacticsMovementCamera.cs:116
+        \r\n  at TacticsMovementCamera.GetScreenPoint (UnityEngine.Vector2 pointOnScreen)
+        [0x00061] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Gamplay\\Camera\\TacticsMovementCamera.cs:109
+        \r\n  at TacticsMovementCamera.GetScreenPoint (System.Single x, System.Single
+        y) [0x00000] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Gamplay\\Camera\\TacticsMovementCamera.cs:95
+        \r\n  at Camera_Tests.selection.get_Screen_point_returns_z0_top_right ()
+        [0x00016] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Tests\\CameraTests.cs:19
+        \r\n  at (wrapper managed-to-native) System.Reflection.MonoMethod.InternalInvoke(System.Reflection.MonoMethod,object,object[],System.Exception&)\r\n 
+        at System.Reflection.MonoMethod.Invoke (System.Object obj, System.Reflection.BindingFlags
+        invokeAttr, System.Reflection.Binder binder, System.Object[] parameters,
+        System.Globalization.CultureInfo culture) [0x00032] in <fb001e01371b4adca20013e0ac763896>:0 "
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1047
+      parentUniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.selection][suite]
+    - id: 1050
+      uniqueId: Tests.dll/Camera_Tests/selection/[Tests][Camera_Tests.selection.unrotated_angle_is_0]
+      name: unrotated_angle_is_0
+      fullName: Camera_Tests.selection.unrotated_angle_is_0
+      resultStatus: 1
+      duration: 0.0007009
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1047
+      parentUniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.selection][suite]
     - id: 1050
       uniqueId: Tests.dll/[Tests][Implement_Tests][suite]
       name: Implement_Tests
       fullName: Implement_Tests
       resultStatus: 1
-      duration: 0.0936108
+      duration: 0.0457591
       messages: 
       output: 
       stacktrace: 
@@ -516,7 +763,7 @@ MonoBehaviour:
       name: battle
       fullName: Implement_Tests.battle
       resultStatus: 1
-      duration: 0.0886542
+      duration: 0.0193717
       messages: 
       output: 
       stacktrace: 
@@ -532,7 +779,7 @@ MonoBehaviour:
       name: health_percent_returns_correctly
       fullName: Implement_Tests.battle.health_percent_returns_correctly
       resultStatus: 1
-      duration: 0.0421183
+      duration: 0.0036924
       messages: 
       output: 
       stacktrace: 
@@ -549,7 +796,7 @@ MonoBehaviour:
       name: will_percent_returns_correctly
       fullName: Implement_Tests.battle.will_percent_returns_correctly
       resultStatus: 1
-      duration: 0.0014701
+      duration: 0.0012117
       messages: 
       output: 
       stacktrace: 
@@ -566,7 +813,7 @@ MonoBehaviour:
       name: Map_Tests
       fullName: Map_Tests
       resultStatus: 1
-      duration: 1.2217438
+      duration: 0.3673764
       messages: 
       output: 
       stacktrace: 
@@ -582,7 +829,7 @@ MonoBehaviour:
       name: conversions
       fullName: Map_Tests.conversions
       resultStatus: 1
-      duration: 0.3594419
+      duration: 0.3088616
       messages: 
       output: 
       stacktrace: 
@@ -598,7 +845,7 @@ MonoBehaviour:
       name: center_tile_is_at_0x0_1x1
       fullName: Map_Tests.conversions.center_tile_is_at_0x0_1x1
       resultStatus: 1
-      duration: 0.0435678
+      duration: 0.0487007
       messages: 
       output: 
       stacktrace: 
@@ -615,7 +862,7 @@ MonoBehaviour:
       name: center_tile_is_at_0x0_3x3
       fullName: Map_Tests.conversions.center_tile_is_at_0x0_3x3
       resultStatus: 1
-      duration: 0.0409737
+      duration: 0.0349227
       messages: 
       output: 
       stacktrace: 
@@ -632,7 +879,7 @@ MonoBehaviour:
       name: grid_to_world_space_3x3
       fullName: Map_Tests.conversions.grid_to_world_space_3x3
       resultStatus: 1
-      duration: 0.0432484
+      duration: 0.0358603
       messages: 
       output: 
       stacktrace: 
@@ -649,7 +896,7 @@ MonoBehaviour:
       name: grid_to_world_space_with_tile_parent_move
       fullName: Map_Tests.conversions.grid_to_world_space_with_tile_parent_move
       resultStatus: 1
-      duration: 0.0409232
+      duration: 0.0348666
       messages: 
       output: 
       stacktrace: 
@@ -666,7 +913,7 @@ MonoBehaviour:
       name: world_to_grid_space_3x3_0x0
       fullName: Map_Tests.conversions.world_to_grid_space_3x3_0x0
       resultStatus: 1
-      duration: 0.0436155
+      duration: 0.0361841
       messages: 
       output: 
       stacktrace: 
@@ -683,7 +930,7 @@ MonoBehaviour:
       name: world_to_grid_space_3x3_1x1
       fullName: Map_Tests.conversions.world_to_grid_space_3x3_1x1
       resultStatus: 1
-      duration: 0.0413046
+      duration: 0.0351677
       messages: 
       output: 
       stacktrace: 
@@ -700,7 +947,7 @@ MonoBehaviour:
       name: world_to_grid_space_3x3_center
       fullName: Map_Tests.conversions.world_to_grid_space_3x3_center
       resultStatus: 1
-      duration: 0.0408707
+      duration: 0.0361013
       messages: 
       output: 
       stacktrace: 
@@ -717,7 +964,7 @@ MonoBehaviour:
       name: world_to_grid_space_to_tile_0x0
       fullName: Map_Tests.conversions.world_to_grid_space_to_tile_0x0
       resultStatus: 1
-      duration: 0.0380472
+      duration: 0.0339094
       messages: 
       output: 
       stacktrace: 
@@ -734,7 +981,7 @@ MonoBehaviour:
       name: map
       fullName: Map_Tests.map
       resultStatus: 1
-      duration: 0.0601735
+      duration: 0.0524641
       messages: 
       output: 
       stacktrace: 
@@ -750,7 +997,7 @@ MonoBehaviour:
       name: height_map_is_map_sizex_1x1
       fullName: Map_Tests.map.height_map_is_map_sizex_1x1
       resultStatus: 1
-      duration: 0.0016758
+      duration: 0.0014721
       messages: 
       output: 
       stacktrace: 
@@ -767,7 +1014,7 @@ MonoBehaviour:
       name: height_map_is_map_sizex_3x5
       fullName: Map_Tests.map.height_map_is_map_sizex_3x5
       resultStatus: 1
-      duration: 0.0005836
+      duration: 0.0006492
       messages: 
       output: 
       stacktrace: 
@@ -784,7 +1031,7 @@ MonoBehaviour:
       name: height_map_is_map_sizey_1x1
       fullName: Map_Tests.map.height_map_is_map_sizey_1x1
       resultStatus: 1
-      duration: 0.0004411
+      duration: 0.0004531
       messages: 
       output: 
       stacktrace: 
@@ -801,7 +1048,7 @@ MonoBehaviour:
       name: height_map_is_map_sizey_3x5
       fullName: Map_Tests.map.height_map_is_map_sizey_3x5
       resultStatus: 1
-      duration: 0.0005268
+      duration: 0.0006755
       messages: 
       output: 
       stacktrace: 
@@ -818,7 +1065,7 @@ MonoBehaviour:
       name: map_can_not_return_null_1x1
       fullName: Map_Tests.map.map_can_not_return_null_1x1
       resultStatus: 1
-      duration: 0.0048443
+      duration: 0.0012883
       messages: 
       output: 
       stacktrace: 
@@ -835,7 +1082,7 @@ MonoBehaviour:
       name: map_can_not_return_null_3x5
       fullName: Map_Tests.map.map_can_not_return_null_3x5
       resultStatus: 1
-      duration: 0.0008243
+      duration: 0.0005927
       messages: 
       output: 
       stacktrace: 
@@ -852,7 +1099,7 @@ MonoBehaviour:
       name: new_map_has_heigtmap_data
       fullName: Map_Tests.map.new_map_has_heigtmap_data
       resultStatus: 1
-      duration: 0.000877
+      duration: 0.0005789
       messages: 
       output: 
       stacktrace: 
@@ -869,7 +1116,7 @@ MonoBehaviour:
       name: new_map_overloads_equivalant
       fullName: Map_Tests.map.new_map_overloads_equivalant
       resultStatus: 1
-      duration: 0.000851
+      duration: 0.0006913
       messages: 
       output: 
       stacktrace: 
@@ -886,7 +1133,7 @@ MonoBehaviour:
       name: new_map_sets_size
       fullName: Map_Tests.map.new_map_sets_size
       resultStatus: 1
-      duration: 0.0006863
+      duration: 0.0008162
       messages: 
       output: 
       stacktrace: 
@@ -903,7 +1150,7 @@ MonoBehaviour:
       name: new_map_units_is_nonNull
       fullName: Map_Tests.map.new_map_units_is_nonNull
       resultStatus: 1
-      duration: 0.0010128
+      duration: 0.0009832
       messages: 
       output: 
       stacktrace: 
@@ -920,7 +1167,7 @@ MonoBehaviour:
       name: new_maps_is_walkable
       fullName: Map_Tests.map.new_maps_is_walkable
       resultStatus: 1
-      duration: 0.0011429
+      duration: 0.001264
       messages: 
       output: 
       stacktrace: 
@@ -937,7 +1184,7 @@ MonoBehaviour:
       name: set_tile_properties_does_not_return_null_at_0x0
       fullName: Map_Tests.map.set_tile_properties_does_not_return_null_at_0x0
       resultStatus: 1
-      duration: 0.0005841
+      duration: 0.0007101
       messages: 
       output: 
       stacktrace: 
@@ -954,7 +1201,7 @@ MonoBehaviour:
       name: set_tile_properties_does_not_return_null_at_1x1
       fullName: Map_Tests.map.set_tile_properties_does_not_return_null_at_1x1
       resultStatus: 1
-      duration: 0.0005507
+      duration: 0.0004616
       messages: 
       output: 
       stacktrace: 
@@ -971,7 +1218,7 @@ MonoBehaviour:
       name: map_reader
       fullName: Map_Tests.map_reader
       resultStatus: 1
-      duration: 0.4538596
+      duration: 0.4168704
       messages: 
       output: 
       stacktrace: 
@@ -987,7 +1234,7 @@ MonoBehaviour:
       name: genarates_map_with_nonNull_tile_array
       fullName: Map_Tests.map_reader.genarates_map_with_nonNull_tile_array
       resultStatus: 1
-      duration: 0.0372351
+      duration: 0.0345839
       messages: 
       output: 
       stacktrace: 
@@ -1004,7 +1251,7 @@ MonoBehaviour:
       name: genarates_map_with_nonNull_unit_array
       fullName: Map_Tests.map_reader.genarates_map_with_nonNull_unit_array
       resultStatus: 1
-      duration: 0.0775467
+      duration: 0.0736935
       messages: 
       output: 
       stacktrace: 
@@ -1021,7 +1268,7 @@ MonoBehaviour:
       name: genarates_map_with_tile
       fullName: Map_Tests.map_reader.genarates_map_with_tile
       resultStatus: 1
-      duration: 0.0368433
+      duration: 0.0340082
       messages: 
       output: 
       stacktrace: 
@@ -1038,7 +1285,7 @@ MonoBehaviour:
       name: genarates_map_with_tile_with_hieght
       fullName: Map_Tests.map_reader.genarates_map_with_tile_with_hieght
       resultStatus: 1
-      duration: 0.0370251
+      duration: 0.0333344
       messages: 
       output: 
       stacktrace: 
@@ -1055,7 +1302,7 @@ MonoBehaviour:
       name: genarates_map_with_unit
       fullName: Map_Tests.map_reader.genarates_map_with_unit
       resultStatus: 1
-      duration: 0.0698602
+      duration: 0.0664031
       messages: 
       output: 
       stacktrace: 
@@ -1072,7 +1319,7 @@ MonoBehaviour:
       name: generates_tile_array_of_map_size
       fullName: Map_Tests.map_reader.generates_tile_array_of_map_size
       resultStatus: 1
-      duration: 0.0411975
+      duration: 0.0353567
       messages: 
       output: 
       stacktrace: 
@@ -1089,7 +1336,7 @@ MonoBehaviour:
       name: returns_mapReader_tiles
       fullName: Map_Tests.map_reader.returns_mapReader_tiles
       resultStatus: 1
-      duration: 0.0374857
+      duration: 0.0325905
       messages: 
       output: 
       stacktrace: 
@@ -1106,7 +1353,7 @@ MonoBehaviour:
       name: tile_parent_has_child
       fullName: Map_Tests.map_reader.tile_parent_has_child
       resultStatus: 1
-      duration: 0.0420293
+      duration: 0.0381855
       messages: 
       output: 
       stacktrace: 
@@ -1123,7 +1370,7 @@ MonoBehaviour:
       name: tile_sprites_1x1
       fullName: Map_Tests.map_reader.tile_sprites_1x1
       resultStatus: 1
-      duration: 0.0374219
+      duration: 0.0337614
       messages: 
       output: 
       stacktrace: 
@@ -1135,12 +1382,164 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1007
       parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map_reader][suite]
+    - id: 1017
+      uniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.mapeditor][suite]
+      name: mapeditor
+      fullName: Map_Tests.mapeditor
+      resultStatus: 1
+      duration: 0.3579887
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1063
+      parentUniqueId: Tests.dll/[Tests][Map_Tests][suite]
+    - id: 1023
+      uniqueId: Tests.dll/Map_Tests/mapeditor/[Tests][Map_Tests.mapeditor.editor_tile_convertions_contains_starting_tile_negitivex]
+      name: editor_tile_convertions_contains_starting_tile_negitivex
+      fullName: Map_Tests.mapeditor.editor_tile_convertions_contains_starting_tile_negitivex
+      resultStatus: 1
+      duration: 0.0630622
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1017
+      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.mapeditor][suite]
+    - id: 1022
+      uniqueId: Tests.dll/Map_Tests/mapeditor/[Tests][Map_Tests.mapeditor.editor_tile_convertions_contains_starting_tile_negitivey]
+      name: editor_tile_convertions_contains_starting_tile_negitivey
+      fullName: Map_Tests.mapeditor.editor_tile_convertions_contains_starting_tile_negitivey
+      resultStatus: 1
+      duration: 0.0337516
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1017
+      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.mapeditor][suite]
+    - id: 1025
+      uniqueId: Tests.dll/Map_Tests/mapeditor/[Tests][Map_Tests.mapeditor.editor_tile_convertions_contains_starting_tile_positivex]
+      name: editor_tile_convertions_contains_starting_tile_positivex
+      fullName: Map_Tests.mapeditor.editor_tile_convertions_contains_starting_tile_positivex
+      resultStatus: 1
+      duration: 0.0352555
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1017
+      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.mapeditor][suite]
+    - id: 1024
+      uniqueId: Tests.dll/Map_Tests/mapeditor/[Tests][Map_Tests.mapeditor.editor_tile_convertions_contains_starting_tile_positivey]
+      name: editor_tile_convertions_contains_starting_tile_positivey
+      fullName: Map_Tests.mapeditor.editor_tile_convertions_contains_starting_tile_positivey
+      resultStatus: 1
+      duration: 0.0348924
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1017
+      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.mapeditor][suite]
+    - id: 1019
+      uniqueId: Tests.dll/Map_Tests/mapeditor/[Tests][Map_Tests.mapeditor.editor_tile_convertions_correct_size_negitivex]
+      name: editor_tile_convertions_correct_size_negitivex
+      fullName: Map_Tests.mapeditor.editor_tile_convertions_correct_size_negitivex
+      resultStatus: 1
+      duration: 0.0432425
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1017
+      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.mapeditor][suite]
+    - id: 1018
+      uniqueId: Tests.dll/Map_Tests/mapeditor/[Tests][Map_Tests.mapeditor.editor_tile_convertions_correct_size_negitivey]
+      name: editor_tile_convertions_correct_size_negitivey
+      fullName: Map_Tests.mapeditor.editor_tile_convertions_correct_size_negitivey
+      resultStatus: 1
+      duration: 0.0347233
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1017
+      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.mapeditor][suite]
+    - id: 1021
+      uniqueId: Tests.dll/Map_Tests/mapeditor/[Tests][Map_Tests.mapeditor.editor_tile_convertions_correct_size_positivex]
+      name: editor_tile_convertions_correct_size_positivex
+      fullName: Map_Tests.mapeditor.editor_tile_convertions_correct_size_positivex
+      resultStatus: 1
+      duration: 0.034382
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1017
+      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.mapeditor][suite]
+    - id: 1020
+      uniqueId: Tests.dll/Map_Tests/mapeditor/[Tests][Map_Tests.mapeditor.editor_tile_convertions_correct_size_positivey]
+      name: editor_tile_convertions_correct_size_positivey
+      fullName: Map_Tests.mapeditor.editor_tile_convertions_correct_size_positivey
+      resultStatus: 1
+      duration: 0.0347341
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1017
+      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.mapeditor][suite]
     - id: 1031
       uniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.save_system][suite]
       name: save_system
       fullName: Map_Tests.save_system
       resultStatus: 1
-      duration: 0.2800704
+      duration: 0.2295558
       messages: 
       output: 
       stacktrace: 
@@ -1156,7 +1555,7 @@ MonoBehaviour:
       name: get_map_from_file_with_size
       fullName: Map_Tests.save_system.get_map_from_file_with_size
       resultStatus: 1
-      duration: 0.044801
+      duration: 0.0859318
       messages: 
       output: 
       stacktrace: 
@@ -1173,7 +1572,7 @@ MonoBehaviour:
       name: get_map_from_file_with_tile_with_height
       fullName: Map_Tests.save_system.get_map_from_file_with_tile_with_height
       resultStatus: 1
-      duration: 0.0404225
+      duration: 0.0152201
       messages: 
       output: 
       stacktrace: 
@@ -1190,7 +1589,7 @@ MonoBehaviour:
       name: get_map_from_file_with_unit_with_name
       fullName: Map_Tests.save_system.get_map_from_file_with_unit_with_name
       resultStatus: 1
-      duration: 0.1604173
+      duration: 0.0937929
       messages: 
       output: 
       stacktrace: 
@@ -1207,7 +1606,7 @@ MonoBehaviour:
       name: Tile_Tests
       fullName: Tile_Tests
       resultStatus: 1
-      duration: 0.1664549
+      duration: 0.184164
       messages: 
       output: 
       stacktrace: 
@@ -1223,7 +1622,7 @@ MonoBehaviour:
       name: tile
       fullName: Tile_Tests.tile
       resultStatus: 1
-      duration: 0.1046402
+      duration: 0.1079553
       messages: 
       output: 
       stacktrace: 
@@ -1239,7 +1638,7 @@ MonoBehaviour:
       name: new_tile_can_hold_height_value
       fullName: Tile_Tests.tile.new_tile_can_hold_height_value
       resultStatus: 1
-      duration: 0.0009294
+      duration: 0.0008075
       messages: 
       output: 
       stacktrace: 
@@ -1256,7 +1655,7 @@ MonoBehaviour:
       name: new_tile_can_hold_walkable
       fullName: Tile_Tests.tile.new_tile_can_hold_walkable
       resultStatus: 1
-      duration: 0.0007735
+      duration: 0.0009905
       messages: 
       output: 
       stacktrace: 
@@ -1273,7 +1672,7 @@ MonoBehaviour:
       name: new_tile_can_not_return_null
       fullName: Tile_Tests.tile.new_tile_can_not_return_null
       resultStatus: 1
-      duration: 0.0006407
+      duration: 0.0010126
       messages: 
       output: 
       stacktrace: 
@@ -1290,7 +1689,7 @@ MonoBehaviour:
       name: pos_in_grid_is_acurate_0x0
       fullName: Tile_Tests.tile.pos_in_grid_is_acurate_0x0
       resultStatus: 1
-      duration: 0.038644
+      duration: 0.0354852
       messages: 
       output: 
       stacktrace: 
@@ -1307,7 +1706,7 @@ MonoBehaviour:
       name: pos_in_grid_is_acurate_3x5
       fullName: Tile_Tests.tile.pos_in_grid_is_acurate_3x5
       resultStatus: 1
-      duration: 0.0429516
+      duration: 0.03654
       messages: 
       output: 
       stacktrace: 
@@ -1319,13 +1718,13 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1001
       parentUniqueId: Tests.dll/Tile_Tests/[Tests][Tile_Tests.tile][suite]
-    m_ResultText: Tales From The Metahedron (1.644s)
+    m_ResultText: mapeditor (0.358s)
     m_ResultStacktrace: 
     m_TestListState:
-      scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: f58144df
-      m_LastClickedID: -549158411
-      m_ExpandedIDs: f58144dfe557abf7c76f405dffffff7f
+      scrollPos: {x: 0, y: 111}
+      m_SelectedIDs: e915c301
+      m_LastClickedID: 29562345
+      m_ExpandedIDs: f58144dfe557abf7e915c3015e2fcc1cc76f405dffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1372,9 +1771,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1389
+    x: 1388
     y: 73
-    width: 530
+    width: 531
     height: 375
   m_ViewDataDictionary: {fileID: 0}
   m_OpenAddComponentMenu: 0
@@ -1410,7 +1809,7 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 762
+    x: 761
     y: 490
     width: 625
     height: 509
@@ -1428,20 +1827,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets
+    - Assets/Scenes
   m_ViewMode: 1
   m_StartGridSize: 63
   m_LastFolders:
-  - Assets
+  - Assets/Scenes
   m_LastFoldersGridSize: 63
   m_LastProjectPath: C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: a63c0000
-    m_LastClickedID: 15526
-    m_ExpandedIDs: ffffffff00000000a63c0000a83c0000aa3c0000ac3c0000ae3c0000b03c0000b23c0000b63c0000b83c0000ba3c0000bc3c0000c03c0000c63c00006e680000
+    m_SelectedIDs: 28400000
+    m_LastClickedID: 16424
+    m_ExpandedIDs: 00000000fa3f0000fc3f0000fe3f000000400000024000000440000006400000084000000a4000000c4000000e4000001040000012400000144000002a400000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1469,7 +1868,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff00000000a63c0000a83c0000aa3c0000ac3c0000ae3c0000b03c0000b23c0000b63c0000b83c0000ba3c0000bc3c0000c03c0000c63c00006e680000
+    m_ExpandedIDs: 00000000fa3f0000fc3f0000fe3f000000400000024000000440000006400000084000000a4000000c4000000e400000104000001240000014400000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1494,8 +1893,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
+    m_SelectedInstanceIDs: 7c420000
+    m_LastClickedInstanceID: 17020
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
@@ -1548,7 +1947,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 73
-    width: 761
+    width: 760
     height: 926
   m_ViewDataDictionary: {fileID: 0}
   m_SerializedViewNames: []
@@ -1559,7 +1958,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 761, y: 905}
+  m_TargetSize: {x: 760, y: 905}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -1574,8 +1973,8 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -380.5
-    m_HBaseRangeMax: 380.5
+    m_HBaseRangeMin: -380
+    m_HBaseRangeMax: 380
     m_VBaseRangeMin: -452.5
     m_VBaseRangeMax: 452.5
     m_HAllowExceedBaseRangeMin: 1
@@ -1595,23 +1994,23 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 761
+      width: 760
       height: 905
     m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 380.5, y: 452.5}
+    m_Translation: {x: 380, y: 452.5}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -380.5
+      x: -380
       y: -452.5
-      width: 761
+      width: 760
       height: 905
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 761, y: 926}
+  m_LastWindowPixelSize: {x: 760, y: 926}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -1638,9 +2037,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1389
+    x: 1388
     y: 469
-    width: 530
+    width: 531
     height: 530
   m_ViewDataDictionary: {fileID: 0}
   m_ShowContextualTools: 0
@@ -1653,9 +2052,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 330.60208, y: -184.95969, z: 247.38815}
+    m_Target: {x: 148.30078, y: 7.2226562, z: 62.271484}
     speed: 2
-    m_Value: {x: 330.60208, y: -184.95969, z: 247.38815}
+    m_Value: {x: 148.30078, y: 7.2226562, z: 62.271484}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1701,17 +2100,17 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.18518154, y: -0.43714148, z: 0.09248854, w: -0.8752537}
+    m_Target: {x: -0.01562848, y: 0.83584905, z: -0.023828154, w: -0.54821956}
     speed: 2
-    m_Value: {x: -0.18518081, y: -0.43713975, z: 0.09248818, w: -0.8752502}
+    m_Value: {x: -0.015628478, y: 0.8358489, z: -0.02382815, w: -0.5482195}
   m_Size:
-    m_Target: 231.07883
+    m_Target: 25.038336
     speed: 2
-    m_Value: 231.07883
+    m_Value: 25.038336
   m_Ortho:
-    m_Target: 0
+    m_Target: 1
     speed: 2
-    m_Value: 0
+    m_Value: 1
   m_CameraSettings:
     m_Speed: 1
     m_SpeedNormalized: 0.5
@@ -1753,7 +2152,7 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 762
+    x: 761
     y: 73
     width: 625
     height: 396
@@ -1761,9 +2160,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: b43c0000
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 1ae2ffffcae7ffffaee9ffff5cf2ffff68f2ffffbcf6ffffe2f6ffffa4faffff50fbffff7a470000ae610000e46100002262000028620000ee640000ea6600002067000066670000
+      m_ExpandedIDs: 1805ffff360dffff8a11ffffe830ffff1631ffff7a34ffff1640ffffde40ffffea44ffffca4afffff84affff064fffff8c54ffff645dffff9e60ffffac60ffffd266ffff1267ffff3e67ffff8267ffff68d2ffff28d4ffff08d5ffff5efbffffde4e0000e24f0000f0560000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

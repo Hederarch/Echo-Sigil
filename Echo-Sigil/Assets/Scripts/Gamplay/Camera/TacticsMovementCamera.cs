@@ -6,11 +6,11 @@ public class TacticsMovementCamera : MonoBehaviour
     public FacesCamera foucus;
     public Vector3 foucusPoint;
     public float speed = .5f;
-    public Camera cam;
     public float offsetFromFoucus = 4;
-    public float offsetFromZ0 = 4;
 
-    static bool cameraMoved;
+
+    public float offsetFromZ0 = 4;
+    private static bool cameraMoved;
 
     private static float desieredAngle = (float)Math.PI;
     public static float angle = 0;
@@ -26,10 +26,10 @@ public class TacticsMovementCamera : MonoBehaviour
         PlayerInputs();
         FoucusInputs();
         SetSortMode();
-        cam.orthographic = true;
+        Camera.main.orthographic = true;
     }
 
-    private void FoucusInputs()
+    public void FoucusInputs()
     {
         float lerpAngle = Mathf.Abs(desieredAngle - angle) > .5f ? Mathf.Lerp(angle, desieredAngle, .1f) : desieredAngle;
         transform.position = CalcPostion(lerpAngle);
@@ -88,11 +88,59 @@ public class TacticsMovementCamera : MonoBehaviour
 
     private void SetSortMode()
     {
-        cam.transparencySortMode = TransparencySortMode.CustomAxis;
-        cam.transparencySortAxis = transform.up - transform.forward;
+        Camera.main.transparencySortMode = TransparencySortMode.CustomAxis;
+        Camera.main.transparencySortAxis = transform.up - transform.forward;
     }
 
-    void SetAsFoucus(Implement unit)
+    public static Vector3 GetScreenPoint(float x, float y) => GetScreenPoint(new Vector2(x, y));
+    /// <summary>
+    /// Screen to world point, but corrected for camera rotation
+    /// </summary>
+    /// <param name="pointOnScreen"></param>
+    /// <returns></returns>
+    public static Vector3 GetScreenPoint(Vector2 pointOnScreen)
+    {
+        Vector3 screenPoint = Camera.main.ScreenToWorldPoint(new Vector3(pointOnScreen.x, pointOnScreen.y, 0));
+        Vector3 screenPointZ = screenPoint;
+        screenPointZ.z = 0;
+        float distToZ0 = -screenPoint.z / Mathf.Cos(GetAngleBetweenCameraForwardAndVectorForward());
+        Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(pointOnScreen.x, pointOnScreen.y, (float)distToZ0));
+
+        GetScreenPointGizmos(pointOnScreen, screenPoint, screenPointZ, point);
+
+        return point;
+    }
+
+    private static void GetScreenPointGizmos(Vector2 pointOnScreen, Vector3 screenPoint, Vector3 screenPointZ, Vector3 point)
+    {
+        Tile tile = MapReader.GetTile(MapReader.WorldToGridSpace(point));
+        if (tile != null)
+        {
+            Debug.DrawLine(point, new Vector3(point.x, point.y, tile.height), Color.green);
+        }
+
+        Debug.DrawLine(point, new Vector3(point.x, point.y, 0), Color.red);
+        Debug.DrawLine(screenPoint, point, Color.cyan);
+        Debug.DrawLine(screenPoint, screenPointZ, Color.cyan);
+        Debug.DrawLine(screenPointZ, point, Color.cyan);
+        Debug.DrawLine(Camera.main.ScreenToWorldPoint(new Vector3(pointOnScreen.x, 0, 0)), Camera.main.ScreenToWorldPoint(new Vector3(pointOnScreen.x, Camera.main.pixelHeight, 0)));
+        Debug.DrawLine(Camera.main.ScreenToWorldPoint(new Vector3(0, pointOnScreen.y, 0)), Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, pointOnScreen.y, 0)));
+
+        Debug.DrawLine(point, MapReader.GridToWorldSpace(MapReader.WorldToGridSpace(point)), Color.magenta);
+    }
+
+    /// <summary>
+    /// Get the angle between forward and the way the camera is faceing
+    /// </summary>
+    /// <returns>Angle in radians</returns>
+    public static float GetAngleBetweenCameraForwardAndVectorForward()
+    {
+        float angle = Vector3.Angle(Vector3.forward, Camera.main.transform.forward);
+        angle *= Mathf.Deg2Rad;
+        return angle;
+    }
+
+    public void SetAsFoucus(Implement unit)
     {
         foucus = unit;
     }

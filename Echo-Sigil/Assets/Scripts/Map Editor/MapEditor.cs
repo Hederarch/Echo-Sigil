@@ -28,6 +28,12 @@ public class MapEditor : MonoBehaviour
     {
         MapReader.MapGeneratedEvent += GenerateExpationTiles;
         MapReader.MapGeneratedEvent += SetPallate;
+        MapReader.MapGeneratedEvent += ResetSelection;
+    }
+
+    private static void ResetSelection(Sprite[] _)
+    {
+        SelectedEvent?.Invoke(null);
     }
 
     private static void SetPallate(Sprite[] sprites)
@@ -51,7 +57,7 @@ public class MapEditor : MonoBehaviour
         }
         for (int x = -1; x <= MapReader.tiles.GetLength(0); x++)
         {
-            for (int y = -1; y <= MapReader.tiles.GetLength(0); y++)
+            for (int y = -1; y <= MapReader.tiles.GetLength(1); y++)
             {
                 if (MapReader.GetTile(x, y) == null)
                 {
@@ -77,9 +83,8 @@ public class MapEditor : MonoBehaviour
         sprite.color = color;
 
         editorTileObject.AddComponent<EditorTile>().posInGrid = posInGrid;
-        editorTileObject.AddComponent<TileBehaviour>().enabled = false;
 
-        editorTileObject.AddComponent<BoxCollider>();
+        editorTileObject.AddComponent<BoxCollider2D>();
     }
 
     void Update()
@@ -298,12 +303,44 @@ public class MapEditor : MonoBehaviour
 
     private static void Select()
     {
-        RaycastHit2D hit = Physics2D.Raycast(GetScreenPoint(), Vector2.one, .1f);
         Physics2D.queriesStartInColliders = true;
+        RaycastHit2D hit = Physics2D.Raycast(TacticsMovementCamera.GetScreenPoint(Input.mousePosition), Vector2.one, .1f);
         if (hit.collider != null && ((!locked && hit.transform != selectedTransform) || Input.GetMouseButtonDown(0)))
         {
-            //Add to the map size
-            if (hit.transform.TryGetComponent(out EditorTile et))
+            if (hit.transform.TryGetComponent(out TileBehaviour _))
+            {
+                //Add to/subtract from a multiselection
+                if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+                {
+                    if (selectedTransforms.Contains(hit.transform))
+                    {
+                        selectedTransforms.Remove(hit.transform);
+                    }
+                    else
+                    {
+                        selectedTransforms.Add(hit.transform);
+                    }
+
+                    //Add currently selected tile to multiselection
+                    if (selectedTransform != null)
+                    {
+                        selectedTransforms.Add(selectedTransform);
+                        selectedTransform = null;
+                    }
+                    MultiSelectedEvent?.Invoke(selectedTransforms.ToArray());
+                } //select a single thing
+                else
+                {
+                    selectedTransform = hit.collider.transform;
+                    SelectedEvent?.Invoke(selectedTransform);
+                }
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    locked = true;
+                }
+            }
+            else if (hit.transform.TryGetComponent(out EditorTile et))
             {
                 if (Input.GetMouseButtonDown(0))
                 {
@@ -313,38 +350,25 @@ public class MapEditor : MonoBehaviour
                 {
                     SelectedEvent(null);
                 }
-            } //Add to/subtract from a multiselection
-            else if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) && hit.transform.TryGetComponent(out TileBehaviour _))
-            {
-                if (selectedTransforms.Contains(hit.transform))
+                if (!locked)
                 {
-                    selectedTransforms.Remove(hit.transform);
-                }
-                else
-                {
-                    selectedTransforms.Add(hit.transform);
-                }
-
-                //Add currently selected tile to multiselection
-                if (selectedTransform != null && selectedTransform.TryGetComponent(out TileBehaviour _))
-                {
-                    selectedTransforms.Add(selectedTransform);
                     selectedTransform = null;
+                    selectedTransforms.Clear();
+                    SelectedEvent?.Invoke(selectedTransform);
                 }
-                MultiSelectedEvent?.Invoke(selectedTransforms.ToArray());
-            } //select a single thing
-            else
+            }
+            else if (hit.transform.parent.TryGetComponent(out Implement implement))
             {
                 selectedTransform = hit.collider.transform;
                 SelectedEvent?.Invoke(selectedTransform);
-            }
 
-            if (Input.GetMouseButtonDown(0))
-            {
-                locked = true;
+                if (Input.GetMouseButtonDown(0))
+                {
+                    locked = true;
+                }
             }
         }
-        else if (!Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition)))
+        else if (hit.collider == null)
         {
             if (Input.GetMouseButtonDown(0) && !Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.RightShift))
             {
@@ -363,7 +387,8 @@ public class MapEditor : MonoBehaviour
     {
         if (selectedTransform != null && selectedTransform.parent.TryGetComponent(out Implement implement))
         {
-            Vector3 point = GetScreenPoint();
+            Vector3 point = TacticsMovementCamera.GetScreenPoint(Input.mousePosition);
+            point.z += .1f;
             if (Input.GetMouseButtonUp(0))
             {
                 ChangeUnitPos(point, implement);
@@ -391,21 +416,5 @@ public class MapEditor : MonoBehaviour
                 SelectedEvent?.Invoke(selectedTransform);
             }
         }
-    }
-
-    private static Vector3 GetScreenPoint()
-    {
-        Vector3 screenPoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
-        Vector3 screenPointZ = screenPoint;
-        screenPointZ.z = 0;
-        double distToZ0 = -screenPoint.z / Math.Cos(Vector3.Angle(Vector3.forward, Camera.main.transform.forward));
-        Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, (float)distToZ0));
-
-        Debug.DrawLine(point, new Vector3(point.x, point.y, 0), Color.red);
-        Debug.DrawLine(screenPoint, point, Color.cyan);
-        Debug.DrawLine(screenPoint, screenPointZ, Color.cyan);
-        Debug.DrawLine(screenPointZ, point, Color.cyan);
-
-        return point;
     }
 }

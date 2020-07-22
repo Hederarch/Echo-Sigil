@@ -24,8 +24,10 @@ namespace Map_Tests
         public void genarates_map_with_tile()
         {
             Tile[,] tiles = new Tile[1, 1];
-            Tile tile = new Tile(0,0);
-            tile.height = 2;
+            Tile tile = new Tile(0, 0)
+            {
+                height = 2
+            };
             tiles[0, 0] = tile;
             Tile[,] outTiles = MapReader.GeneratePhysicalMap(SaveSystem.LoadPallate(Application.dataPath + "/Quests/Tests"), new Map(tiles));
             Assert.IsNotNull(outTiles[0, 0]);
@@ -77,7 +79,62 @@ namespace Map_Tests
     }
     class mapeditor
     {
-
+        [Test]
+        public void editor_tile_convertions_correct_size_negitivey()
+        {
+            MapReader.GeneratePhysicalMap(SaveSystem.LoadPallate(Application.dataPath + "/Quests/Tests"), new Map(1, 1));
+            EditorTile.CorrectGridSize(Vector2Int.down);
+            Assert.AreEqual(2, MapReader.tiles.GetLength(1));
+        }
+        [Test]
+        public void editor_tile_convertions_correct_size_negitivex()
+        {
+            MapReader.GeneratePhysicalMap(SaveSystem.LoadPallate(Application.dataPath + "/Quests/Tests"), new Map(1, 1));
+            EditorTile.CorrectGridSize(Vector2Int.left);
+            Assert.AreEqual(2, MapReader.tiles.GetLength(0));
+        }
+        [Test]
+        public void editor_tile_convertions_correct_size_positivey()
+        {
+            MapReader.GeneratePhysicalMap(SaveSystem.LoadPallate(Application.dataPath + "/Quests/Tests"), new Map(1, 1));
+            EditorTile.CorrectGridSize(Vector2Int.up);
+            Assert.AreEqual(2, MapReader.tiles.GetLength(1));
+        }
+        [Test]
+        public void editor_tile_convertions_correct_size_positivex()
+        {
+            MapReader.GeneratePhysicalMap(SaveSystem.LoadPallate(Application.dataPath + "/Quests/Tests"), new Map(1, 1));
+            EditorTile.CorrectGridSize(Vector2Int.right);
+            Assert.AreEqual(2, MapReader.tiles.GetLength(0));
+        }
+        [Test]
+        public void editor_tile_convertions_contains_starting_tile_negitivey()
+        {
+            MapReader.GeneratePhysicalMap(SaveSystem.LoadPallate(Application.dataPath + "/Quests/Tests"), new Map(1, 1));
+            EditorTile.CorrectGridSize(Vector2Int.down);
+            Assert.IsNotNull(MapReader.GetTile(0,1));
+        }
+        [Test]
+        public void editor_tile_convertions_contains_starting_tile_negitivex()
+        {
+            MapReader.GeneratePhysicalMap(SaveSystem.LoadPallate(Application.dataPath + "/Quests/Tests"), new Map(1, 1));
+            EditorTile.CorrectGridSize(Vector2Int.left);
+            Assert.IsNotNull(MapReader.GetTile(1,0));
+        }
+        [Test]
+        public void editor_tile_convertions_contains_starting_tile_positivey()
+        {
+            MapReader.GeneratePhysicalMap(SaveSystem.LoadPallate(Application.dataPath + "/Quests/Tests"), new Map(1, 1));
+            EditorTile.CorrectGridSize(Vector2Int.up);
+            Assert.IsNotNull(MapReader.GetTile(0,0));
+        }
+        [Test]
+        public void editor_tile_convertions_contains_starting_tile_positivex()
+        {
+            MapReader.GeneratePhysicalMap(SaveSystem.LoadPallate(Application.dataPath + "/Quests/Tests"), new Map(1, 1));
+            EditorTile.CorrectGridSize(Vector2Int.right);
+            Assert.IsNotNull(MapReader.GetTile(0,0));
+        }
     }
     class map
     {
@@ -185,8 +242,10 @@ namespace Map_Tests
         public void get_map_from_file_with_tile_with_height()
         {
             Tile[,] tiles = new Tile[1, 1];
-            Tile tile = new Tile(0,0);
-            tile.height = 2;
+            Tile tile = new Tile(0, 0)
+            {
+                height = 2
+            };
             tiles[0, 0] = tile;
             Map savedMap = new Map(tiles);
             SaveSystem.SaveMap(Application.dataPath + "/Quests/Tests/unitTest.hedrap",savedMap);

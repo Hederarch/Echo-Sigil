@@ -59,7 +59,7 @@ public static class MapReader
             implements.Clear();
             foreach (MapImplement mi in map.units)
             {
-                implements.Add(MapImplementToImplement(mi));
+                MapImplementToImplement(mi);
             }
         }
 
@@ -112,6 +112,7 @@ public static class MapReader
 
         GameObject spriteRender = new GameObject("Sprite Render");
         spriteRender.transform.parent = unit.transform;
+        spriteRender.transform.localPosition = new Vector3(0, 0, .1f);
         SpriteRenderer spriteRenderer = spriteRender.AddComponent<SpriteRenderer>();
         i.unitSprite = spriteRenderer;
         spriteRenderer.sprite = SaveSystem.LoadPNG(Application.dataPath + "/Implements/" + mi.name + "/Base.png",new Vector2(.5f,0));
@@ -140,25 +141,25 @@ public static class MapReader
         return new Vector2(tileParent.transform.position.x, tileParent.transform.position.y) - realitivePosition;
     }
 
-    public static Vector2 GridToWorldSpace(int x, int y)
-    {
-        return GridToWorldSpace(new Vector2Int(x, y));
-    }
+    public static Vector2 GridToWorldSpace(int x, int y) => GridToWorldSpace(new Vector2Int(x, y));
 
-    public static Vector2Int WorldToGridSpace(Vector2 posInGrid)
+    public static Vector2Int WorldToGridSpace(Vector2 posInWorld)
     {
         Vector2 mapHalfHeight = new Vector2(tiles.GetLength(0) / 2, tiles.GetLength(1) / 2);
-        Vector2 realitivePosition = posInGrid - new Vector2(tileParent.position.x, tileParent.position.y);
+        Vector2 realitivePosition = posInWorld - new Vector2(tileParent.position.x, tileParent.position.y);
         return new Vector2Int((int)Math.Abs(realitivePosition.x - mapHalfHeight.x - .5f), (int)Math.Abs(realitivePosition.y - mapHalfHeight.y - .5f));
     }
 
-    public static Vector2Int WorldToGridSpace(float x, float y)
-    {
-        return WorldToGridSpace(new Vector2(x, y));
-    }
-
+    public static Vector2Int WorldToGridSpace(float x, float y) => WorldToGridSpace(new Vector2(x, y));
+    /// <summary>
+    /// Get a tile in the array of tiles
+    /// </summary>
+    /// <returns>Null if out of array bounds</returns>
     public static Tile GetTile(Vector2Int pos) => GetTile(pos.x, pos.y);
-
+    /// <summary>
+    /// Get a tile in the array of tiles
+    /// </summary>
+    /// <returns>Null if out of array bounds</returns>
     public static Tile GetTile(int x, int y) => x >= 0 && x < tiles.GetLength(0) && y >= 0 && y < tiles.GetLength(1) ? tiles[x, y] : null;
 
     public static void DestroyPhysicalMapTiles()
