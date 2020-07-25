@@ -4,13 +4,21 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenuScript : MonoBehaviour
 {
-    public Animator mainMenuAnimator;
     public Transform canvas;
     public GameObject mapEditor;
     public GameObject gameplayGUIElements;
+    public GameObject mainMenuElements;
+    public Toggle developerToggle;
+
+    public void Start()
+    {
+        developerToggle.isOn = SaveSystem.developerMode;
+        developerToggle.onValueChanged.AddListener(delegate { SaveSystem.developerMode = developerToggle.isOn; });
+    }
     public void NewGame()
     {
         StartGame();
@@ -25,7 +33,7 @@ public class MainMenuScript : MonoBehaviour
 
     private void StartGame(Map map = null)
     {
-        mainMenuAnimator.SetTrigger("Exit");
+        mainMenuElements.SetActive(false);
         Instantiate(gameplayGUIElements, canvas);
         if(map == null)
         {
@@ -41,12 +49,17 @@ public class MainMenuScript : MonoBehaviour
 
     public void MapEditor()
     {
-        mainMenuAnimator.SetTrigger("Exit");
+        mainMenuElements.SetActive(false);
         Instantiate(mapEditor, canvas);
     }
 
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    private void OnDestroy()
+    {
+        developerToggle.onValueChanged.RemoveAllListeners();
     }
 }

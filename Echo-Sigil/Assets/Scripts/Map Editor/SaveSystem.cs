@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.InteropServices;
-using UnityEditor;
 using System.Collections.Generic;
-using UnityEngine.WSA;
-using System;
 
 public static class SaveSystem
 {
+
+    public static bool developerMode = true;
+    public static string curModPath = null;
+
     public static void SaveMap(string path, Map map)
     {
         BinaryFormatter formatter = new BinaryFormatter();
@@ -33,6 +33,18 @@ public static class SaveSystem
             Debug.LogError("Map File not found in " + path);
         }
         return null;
+    }
+
+    public static void DeleteMap(string path, bool logError = false)
+    {
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }
+        else if (logError)
+        {
+            Debug.LogError("Map File not found in " + path + ". So... um, I guess its been sucsessfuly gotten rid of then.");
+        }
     }
 
     public static Sprite[] LoadPallate(string path)
@@ -92,15 +104,35 @@ public static class SaveSystem
         File.WriteAllBytes(filePath, fileData);
     }
 
-    public static void DeleteMap(string path, bool logError = false)
+    public static Implement SaveUnitJson(Implement unit)
     {
-        if (File.Exists(path))
+        if (unit.path != null && unit.name != null)
         {
-            File.Delete(path);
+            string prevName = Path.GetFileName(unit.path);
+            if (!Directory.Exists(unit.path))
+            {
+                Directory.CreateDirectory(unit.path);
+            }
+            if (prevName != unit.name)
+            {
+                string destFileName = Directory.GetParent(unit.path).FullName + "/" + unit.name;
+                File.Move(unit.path, destFileName);
+                unit.path = destFileName;
+            }
+            using (StreamWriter stream = new StreamWriter(unit.path + "/ImplentData.json"))
+            {
+                stream.Write(JsonUtility.ToJson(unit));
+            }
         }
-        else if (logError)
+        return unit;
+    }
+
+    public static Implement LoadUnitJson(string filePath)
+    {
+        using (StreamReader stream = new StreamReader(filePath + "/ImplentData.json"))
         {
-            Debug.LogError("Map File not found in " + path + ". So... um, I guess its been sucsessfuly gotten rid of then.");
+            string json = stream.ReadToEnd();
+            return JsonUtility.FromJson<Implement>(json);
         }
     }
 

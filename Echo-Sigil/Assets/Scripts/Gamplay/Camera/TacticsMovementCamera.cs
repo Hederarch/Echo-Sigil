@@ -17,7 +17,7 @@ public class TacticsMovementCamera : MonoBehaviour
 
     private void Start()
     {
-        Implement.IsTurnEvent += SetAsFoucus;
+        Unit.IsTurnEvent += SetAsFoucus;
     }
 
     // Update is called once per frame
@@ -140,7 +140,7 @@ public class TacticsMovementCamera : MonoBehaviour
         return angle;
     }
 
-    public void SetAsFoucus(Implement unit)
+    public void SetAsFoucus(Unit unit)
     {
         foucus = unit;
     }
