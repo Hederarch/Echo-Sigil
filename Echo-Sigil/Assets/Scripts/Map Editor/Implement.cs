@@ -5,7 +5,7 @@ using UnityEngine;
 public struct Implement
 {
     public string name;
-    public string path;
+    public int index;
     public string description;
     public float[] primaryColor;
     public float[] secondaryColor;
@@ -13,20 +13,14 @@ public struct Implement
 
     public Color PrimaryColor { get => new Color(primaryColor[0], primaryColor[1], primaryColor[2]); set => SetUnitColors(value, SecondaryColor); }
     public Color SecondaryColor { get => new Color(secondaryColor[0], secondaryColor[1], secondaryColor[2]); set => SetUnitColors(PrimaryColor, value); }
+    public Sprite BaseSprite(string modPath) => SaveSystem.LoadPNG(modPath + "/" + name + "/Base.png", Vector2.one / 2f);
 
-    public Implement(string name)
+    public Implement(string name,int index)
     {
         primaryColor = new float[3];
         secondaryColor = new float[3];
+        this.index = index;
         this.name = name;
-        if(SaveSystem.developerMode)
-        {
-            path = Application.dataPath + "/Implements/" + name;
-        } else
-        {
-            path = SaveSystem.curModPath + "/Implements/" + name;
-        }
-
         description = "";
         animations = new Animation[0];
     }
@@ -35,7 +29,11 @@ public struct Implement
     public struct Animation
     {
         public string name;
-        public string path;
+        public int index;
+        public int framerate;
+        public bool directional;
+        public bool variant;
+        public bool multitile;
     }
 
     public static Implement SetUnitColors(Implement unit, Color primaryColor, Color secondaryColor)
@@ -51,16 +49,40 @@ public struct Implement
 
     public Implement SetUnitColors(Color primaryColor, Color secondaryColor)
     {
-        primaryColor[0] = primaryColor.r;
-        primaryColor[1] = primaryColor.g;
-        primaryColor[2] = primaryColor.b;
-        secondaryColor[0] = secondaryColor.r;
-        secondaryColor[1] = secondaryColor.g;
-        secondaryColor[2] = secondaryColor.b;
+        this.primaryColor[0] = primaryColor.r;
+        this.primaryColor[1] = primaryColor.g;
+        this.primaryColor[2] = primaryColor.b;
+        this.secondaryColor[0] = secondaryColor.r;
+        this.secondaryColor[1] = secondaryColor.g;
+        this.secondaryColor[2] = secondaryColor.b;
         return this;
     }
 
     internal void SetPrimaryColor(Color obj) => PrimaryColor = obj;
 
     internal void SetSecondayColor(Color obj) => SecondaryColor = obj;
+}
+[Serializable]
+public class ImplementList
+{
+    public string modPath;
+    public string modName;
+    public Implement[] implements;
+    public Sprite BaseSprite(int index) => implements[index].BaseSprite(modPath);
+
+    public static implicit operator Implement[](ImplementList i) => i.implements;
+
+    public ImplementList(int Length, string modPath = null, string modName = "Defualt")
+    {
+        this.modPath = SaveSystem.SetDefualtModPath(modPath);
+        this.modName = modName;
+        implements = new Implement[Length];
+    }
+
+    public ImplementList(Implement[] implements, string modPath = null, string modName = "Defualt")
+    {
+        this.modPath = SaveSystem.SetDefualtModPath(modPath);
+        this.modName = modName;
+        this.implements = implements;
+    }
 }

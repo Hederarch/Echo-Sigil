@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Collections.Generic;
+using System;
 
 public static class SaveSystem
 {
@@ -68,16 +69,16 @@ public static class SaveSystem
         {
             Directory.CreateDirectory(fullName + "/Pallate");
         }
-        for(int i = 0; i < pallate.Length; i++)
+        for (int i = 0; i < pallate.Length; i++)
         {
-            if(!File.Exists(fullName + "/Pallate/" + i + ".png"))
+            if (!File.Exists(fullName + "/Pallate/" + i + ".png"))
             {
                 SavePNG(fullName + "/Pallate/" + i + ".png", pallate[i].texture);
             }
         }
     }
 
-    public static Sprite LoadPNG(string filePath, Vector2 pivot)
+    public static Sprite LoadPNG(string filePath, Vector2 pivot, int pixelPerUnit = 0)
     {
         if (File.Exists(filePath))
         {
@@ -91,7 +92,12 @@ public static class SaveSystem
                 Debug.LogWarning("Texture " + filePath + "is not square. Texture hieght may be adversly affected");
             }
 
-            Sprite sprite = Sprite.Create(tex, new Rect(Vector2.zero, new Vector2(tex.width, tex.height)), pivot, tex.width);
+            if(pixelPerUnit == 0)
+            {
+                pixelPerUnit = tex.width;
+            }
+
+            Sprite sprite = Sprite.Create(tex, new Rect(Vector2.zero, new Vector2(tex.width, tex.height)), pivot, pixelPerUnit);
             return sprite;
         }
         return null;
@@ -99,41 +105,46 @@ public static class SaveSystem
 
     public static void SavePNG(string filePath, Texture2D texture)
     {
+        string fullName = Directory.GetParent(filePath).FullName;
+        if (!Directory.Exists(fullName))
+        {
+            Directory.CreateDirectory(fullName);
+        }
         byte[] fileData;
         fileData = texture.EncodeToJPG();
         File.WriteAllBytes(filePath, fileData);
     }
 
-    public static Implement SaveUnitJson(Implement unit)
+    public static ImplementList SaveImplmentList(ImplementList implements)
     {
-        if (unit.path != null && unit.name != null)
+        using (StreamWriter stream = new StreamWriter(implements.modPath + "/" + Path.GetFileName(implements.modPath) + ".json"))
         {
-            string prevName = Path.GetFileName(unit.path);
-            if (!Directory.Exists(unit.path))
-            {
-                Directory.CreateDirectory(unit.path);
-            }
-            if (prevName != unit.name)
-            {
-                string destFileName = Directory.GetParent(unit.path).FullName + "/" + unit.name;
-                File.Move(unit.path, destFileName);
-                unit.path = destFileName;
-            }
-            using (StreamWriter stream = new StreamWriter(unit.path + "/ImplentData.json"))
-            {
-                stream.Write(JsonUtility.ToJson(unit));
-            }
+            stream.Write(JsonUtility.ToJson(implements));
         }
-        return unit;
+        return implements;
     }
-
-    public static Implement LoadUnitJson(string filePath)
+    internal static ImplementList LoadImplementList(string modPath = null)
     {
-        using (StreamReader stream = new StreamReader(filePath + "/ImplentData.json"))
+        modPath = SetDefualtModPath(modPath);
+
+        using (StreamReader stream = new StreamReader(modPath + "/" + Path.GetFileName(modPath) + ".json"))
         {
             string json = stream.ReadToEnd();
-            return JsonUtility.FromJson<Implement>(json);
+            return JsonUtility.FromJson<ImplementList>(json);
         }
     }
 
+    public static string SetDefualtModPath(string modPath)
+    {
+        if (developerMode && modPath == null)
+        {
+            return Application.dataPath + "/Implements";
+        }
+        if (modPath == null)
+        {
+            Debug.LogError("No modpath for new implement. Putting changes in temp file");
+            return Application.temporaryCachePath + "/Implements";
+        }
+        return modPath;
+    }
 }

@@ -20,6 +20,11 @@ public class ColorSlider : MonoBehaviour
         blue.value = value.b;
     }
 
+    public void Unsubscribe()
+    {
+        ColorChangedEvent = null;
+    }
+
     private void Update()
     {
         Color color = Color;

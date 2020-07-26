@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
+using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ImplementEditor : MonoBehaviour
 {
-    private Implement selectedImplement;
+    private int selectedImplementIndex;
+    private ImplementList selectedImplementList;
     public Unit selectedUnit;
 
     //Windows
@@ -29,10 +29,20 @@ public class ImplementEditor : MonoBehaviour
     public Dropdown unitMenu;
 
     //Selection
-    public GameObject implementHolderObject;
+    /// <summary>
+    /// Holds all implements for selection
+    /// </summary>
+    public Transform implementHolderTransform;
+    /// <summary>
+    /// Holds all implments of a mod for selection
+    /// </summary>
+    public GameObject implementModHolderObject;
     public GameObject implementSelectionObject;
     public GameObject newImplementSelectionObject;
-    public event Action<Implement> SelectionEvent;
+    public Image splashScreenProfile;
+    public Button addProfileButton;
+    private List<Button> buttons = new List<Button>();
+    public event Action<ImplementList, int> SelectionEvent;
 
     //Splash
     public ColorSlider primaryColor;
@@ -78,9 +88,12 @@ public class ImplementEditor : MonoBehaviour
 
     private void UnsubscribeSelectionElements()
     {
-        foreach (Transform toDelete in implementHolderObject.transform)
+        foreach (Button toDelete in buttons)
         {
-            toDelete.GetComponent<Button>().onClick.RemoveAllListeners();
+            toDelete.onClick.RemoveAllListeners();
+        }
+        foreach (Transform toDelete in implementHolderTransform)
+        {
             Destroy(toDelete.gameObject);
         }
     }
@@ -101,15 +114,21 @@ public class ImplementEditor : MonoBehaviour
         }
     }
 
+    private void DeafualtSelectionEvent(ImplementList implementList, int index)
+    {
+        selectedImplementIndex = index;
+        selectedImplementList = implementList;
+        ChangeWindow(3);
+    }
+
     private void ChangeWindow(int arg0)
     {
-        UnsubscribeSplashElements();
         DisableAllWindows();
         switch (arg0)
         {
             case 1:
-                selectedImplement = SaveSystem.SaveUnitJson(selectedImplement);
                 PopulateSelection();
+                SelectionEvent += DeafualtSelectionEvent;
                 selectionObject.SetActive(true);
                 break;
             case 2:
@@ -124,8 +143,23 @@ public class ImplementEditor : MonoBehaviour
         }
     }
 
+    private void Save()
+    {
+        if (selectedImplementList != null)
+        {
+            selectedImplementList.implements[selectedImplementIndex].PrimaryColor = primaryColor.Color;
+            selectedImplementList.implements[selectedImplementIndex].SecondaryColor = secondaryColor.Color;
+            SaveSystem.SaveImplmentList(selectedImplementList);
+        }
+    }
+    /// <summary>
+    /// Turns off all windows and saves game
+    /// </summary>
     private void DisableAllWindows()
     {
+        UnsubscribeSelectionElements();
+        UnsubscribeSplashElements();
+        Save();
         unitMenu.value = 0;
         windowObject.SetActive(true);
         selectionObject.SetActive(false);
@@ -137,33 +171,54 @@ public class ImplementEditor : MonoBehaviour
     private void EnableSplashScreen()
     {
         //set
-        nameField.text = selectedImplement.name;
-        descriptionField.text = selectedImplement.description;
-        primaryColor.Color = selectedImplement.PrimaryColor;
-        secondaryColor.Color = selectedImplement.SecondaryColor;
+        nameField.text = selectedImplementList.implements[selectedImplementIndex].name;
+        descriptionField.text = selectedImplementList.implements[selectedImplementIndex].description;
+        primaryColor.Color = selectedImplementList.implements[selectedImplementIndex].PrimaryColor;
+        secondaryColor.Color = selectedImplementList.implements[selectedImplementIndex].SecondaryColor;
+        if (selectedImplementList.implements[selectedImplementIndex].BaseSprite(selectedImplementList.modPath) == null)
+        {
+            splashScreenProfile.color = Color.clear;
+        }
+        else
+        {
+            splashScreenProfile.color = Color.white;
+        }
+        splashScreenProfile.sprite = selectedImplementList.implements[selectedImplementIndex].BaseSprite(selectedImplementList.modPath);
+
         //subscribe
-        nameField.onEndEdit.AddListener(delegate { selectedImplement.name = nameField.text; });
-        descriptionField.onEndEdit.AddListener(delegate { selectedImplement.description = descriptionField.text; });
-        primaryColor.ColorChangedEvent += selectedImplement.SetPrimaryColor;
-        secondaryColor.ColorChangedEvent += selectedImplement.SetSecondayColor;
+        nameField.onEndEdit.AddListener(delegate { selectedImplementList.implements[selectedImplementIndex].name = nameField.text; SaveSystem.SaveImplmentList(selectedImplementList); });
+        descriptionField.onEndEdit.AddListener(delegate { selectedImplementList.implements[selectedImplementIndex].description = descriptionField.text; SaveSystem.SaveImplmentList(selectedImplementList); });
+        primaryColor.ColorChangedEvent += selectedImplementList.implements[selectedImplementIndex].SetPrimaryColor;
+        secondaryColor.ColorChangedEvent += selectedImplementList.implements[selectedImplementIndex].SetSecondayColor;
+        primaryColor.ColorChangedEvent += delegate { SaveSystem.SaveImplmentList(selectedImplementList); };
+        secondaryColor.ColorChangedEvent += delegate { SaveSystem.SaveImplmentList(selectedImplementList); };
+        addProfileButton.onClick.AddListener(call: AddProfile);
+
         //activate
         splashObject.SetActive(true);
+    }
+
+    private void AddProfile()
+    {
+        Sprite texture = SaveSystem.LoadPNG(EditorUtility.OpenFilePanel("Set Profile", Application.persistentDataPath, "png"), Vector2.one); 
+        SaveSystem.SavePNG(selectedImplementList.modPath + "/" + selectedImplementList.implements[selectedImplementIndex].name + "/Base.png", texture.texture); 
+        splashScreenProfile.color = Color.white; 
+        splashScreenProfile.sprite = texture;
     }
 
     private void UnsubscribeSplashElements()
     {
         nameField.onEndEdit.RemoveAllListeners();
         descriptionField.onEndEdit.RemoveAllListeners();
-        primaryColor.ColorChangedEvent -= selectedImplement.SetPrimaryColor;
-        secondaryColor.ColorChangedEvent -= selectedImplement.SetSecondayColor;
+        primaryColor.Unsubscribe();
+        secondaryColor.Unsubscribe();
+        addProfileButton.onClick.RemoveAllListeners();
     }
 
     public void CloseWindow()
     {
+        DisableAllWindows();
         windowObject.SetActive(false);
-        UnsubscribeSplashElements();
-        UnsubscribeSelectionElements();
-        selectedImplement = SaveSystem.SaveUnitJson(selectedImplement);
     }
 
     private void Update()
@@ -196,29 +251,68 @@ public class ImplementEditor : MonoBehaviour
 
     }
 
-    private void PopulateSelection()
+    private void PopulateSelection(string[] modPaths = null)
     {
-        UnsubscribeSelectionElements();
-        string[] unitFolders = Directory.GetDirectories(Application.dataPath + "/Implements");
-        foreach (string unitFolder in unitFolders)
+        if (modPaths == null)
         {
-            if (File.Exists(unitFolder + "/ImplentData.json"))
-            {
-                Implement unit = SaveSystem.LoadUnitJson(unitFolder);
-                GameObject unitObject = Instantiate(implementSelectionObject, implementHolderObject.transform);
-                Button unitButton = unitObject.GetComponent<Button>();
-                unitButton.onClick.AddListener(delegate { selectedImplement = SaveSystem.LoadUnitJson(unitFolder); ChangeWindow(3); });
-                unitObject.GetComponentInChildren<Text>().text = unit.name;
-                unitObject.GetComponentInChildren<Image>().sprite = SaveSystem.LoadPNG(unitFolder + "/Base.png", Vector2.one / 2f);
-            }
+            modPaths = new string[1];
+            modPaths[0] = SaveSystem.SetDefualtModPath(modPaths[0]);
         }
-        Instantiate(newImplementSelectionObject, implementHolderObject.transform).GetComponent<Button>().onClick.AddListener(delegate { CreateNewImplement(); });
+
+        UnsubscribeSelectionElements();
+        foreach (string modPath in modPaths)
+        {
+            Transform modHolder = Instantiate(implementModHolderObject, implementHolderTransform).transform;
+            ImplementList implementList = SaveSystem.LoadImplementList(modPath);
+            modHolder.GetChild(0).GetChild(0).GetComponent<Text>().text = implementList.modName;
+
+            if (implementList.implements != null)
+            {
+                for (int i = 0; i < implementList.implements.Length; i++)
+                {
+                    if (implementList.implements[i].index == i)
+                    {
+                        GameObject unitObject = Instantiate(implementSelectionObject, modHolder);
+                        Button unitButton = unitObject.GetComponent<Button>();
+                        int index = i;
+                        unitButton.onClick.AddListener(delegate { SelectionEvent?.Invoke(implementList, index); });
+                        buttons.Add(unitButton);
+                        unitObject.GetComponentInChildren<Text>().text = i.ToString() + ": " + implementList.implements[i].name;
+                        Sprite sprite = implementList.BaseSprite(i);
+                        Image image = unitObject.transform.GetChild(0).GetComponent<Image>();
+                        if (sprite == null)
+                        {
+
+                            image.color = Color.clear;
+                        }
+                        image.sprite = sprite;
+                    }
+                }
+            }
+            Button addButton = Instantiate(newImplementSelectionObject, modHolder).GetComponent<Button>();
+            addButton.onClick.AddListener(delegate { CreateNewImplement(modPath); });
+            buttons.Add(addButton);
+        }
+
     }
 
-    private Implement CreateNewImplement()
+    private void CreateNewImplement(string modPath = null)
     {
-        selectedImplement = new Implement("temp");
+        modPath = SaveSystem.SetDefualtModPath(modPath);
+        ImplementList implementList = SaveSystem.LoadImplementList();
+        int length = 0;
+        if (implementList.implements != null)
+        {
+            length = implementList.implements.Length;
+        }
+
+        Implement[] implements = new Implement[length + 1];
+        implementList.implements.CopyTo(implements, 0);
+        implements[length] = new Implement("temp", -1);
+        implementList = SaveSystem.SaveImplmentList(new ImplementList(implements, modPath));
+        selectedImplementList = implementList;
+        selectedImplementIndex = length;
         ChangeWindow(3);
-        return selectedImplement;
+        nameField.onEndEdit.AddListener(delegate { implements[length].index = length; SaveSystem.SaveImplmentList(new ImplementList(implements, modPath, implementList.modName)); });
     }
 }
