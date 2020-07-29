@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using UnityEngine;
+using mapEditor;
 
 namespace Camera_Tests
 {
@@ -60,4 +61,3 @@ namespace Camera_Tests
         }
     }
 }
-

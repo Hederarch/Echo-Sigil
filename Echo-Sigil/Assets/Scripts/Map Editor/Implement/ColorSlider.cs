@@ -8,10 +8,8 @@ public class ColorSlider : MonoBehaviour
     public Slider green;
     public Slider blue;
     public Image display;
-    private Color prevColor;
 
     public Color Color { get => new Color(red.value, green.value, blue.value); set => SetSliders(value); }
-    public event Action<Color> ColorChangedEvent;
 
     private void SetSliders(Color value)
     {
@@ -20,19 +18,8 @@ public class ColorSlider : MonoBehaviour
         blue.value = value.b;
     }
 
-    public void Unsubscribe()
-    {
-        ColorChangedEvent = null;
-    }
-
     private void Update()
     {
-        Color color = Color;
-        display.color = color;
-        if(color != prevColor)
-        {
-            ColorChangedEvent?.Invoke(color);
-        }
-        prevColor = color;
+        display.color = Color;
     }
 }

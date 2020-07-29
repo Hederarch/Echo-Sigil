@@ -5,314 +5,379 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ImplementEditor : MonoBehaviour
+
+namespace mapEditor
 {
-    private int selectedImplementIndex;
-    private ImplementList selectedImplementList;
-    public Unit selectedUnit;
-
-    //Windows
-    public GameObject windowObject;
-    public GameObject selectionObject;
-    public GameObject splashObject;
-    public GameObject animationsObject;
-    public GameObject abilityObject;
-
-    //Tabs
-    public Button selectionButton;
-    public Button splashButton;
-    public Button animationButton;
-    public Button abilityButton;
-
-    //toolbox
-    public Dropdown viewMenu;
-    public Dropdown unitMenu;
-
-    //Selection
-    /// <summary>
-    /// Holds all implements for selection
-    /// </summary>
-    public Transform implementHolderTransform;
-    /// <summary>
-    /// Holds all implments of a mod for selection
-    /// </summary>
-    public GameObject implementModHolderObject;
-    public GameObject implementSelectionObject;
-    public GameObject newImplementSelectionObject;
-    public Image splashScreenProfile;
-    public Button addProfileButton;
-    private List<Button> buttons = new List<Button>();
-    public event Action<ImplementList, int> SelectionEvent;
-
-    //Splash
-    public ColorSlider primaryColor;
-    public ColorSlider secondaryColor;
-    public Image primaryColorImage;
-    public Image secondayColorImage;
-    public InputField nameField;
-    public InputField descriptionField;
-
-    //Animation
-    public GameObject animationSelectionObject;
-
-    //Ability
-    public GameObject abilitySelectionObject;
-
-
-    private void Start()
+    public class ImplementEditor : MonoBehaviour
     {
-        viewMenu.onValueChanged.AddListener(HandleVeiw);
-        unitMenu.onValueChanged.AddListener(ChangeWindow);
-        selectionButton.onClick.AddListener(delegate { ChangeWindow(1); });
-        animationButton.onClick.AddListener(delegate { ChangeWindow(2); });
-        splashButton.onClick.AddListener(delegate { ChangeWindow(3); });
-        abilityButton.onClick.AddListener(delegate { ChangeWindow(4); });
-    }
+        private int selectedImplementIndex;
+        private ImplementList selectedImplementList;
+        public Unit selectedUnit;
 
-    private void OnDestroy()
-    {
-        UnsubscribeSelectionElements();
-        UnsubscribeTabToolbarElements();
-        UnsubscribeSplashElements();
-    }
+        //Windows
+        public GameObject windowObject;
+        public GameObject selectionObject;
+        public GameObject splashObject;
+        public GameObject animationsObject;
+        public GameObject abilityObject;
 
-    private void UnsubscribeTabToolbarElements()
-    {
-        viewMenu.onValueChanged.RemoveAllListeners();
-        unitMenu.onValueChanged.RemoveAllListeners();
-        selectionButton.onClick.RemoveAllListeners();
-        splashButton.onClick.RemoveAllListeners();
-        animationButton.onClick.RemoveAllListeners();
-        abilityButton.onClick.RemoveAllListeners();
-    }
-
-    private void UnsubscribeSelectionElements()
-    {
-        foreach (Button toDelete in buttons)
+        private void ChangeWindow(int arg0)
         {
-            toDelete.onClick.RemoveAllListeners();
-        }
-        foreach (Transform toDelete in implementHolderTransform)
-        {
-            Destroy(toDelete.gameObject);
-        }
-    }
-
-    private void HandleVeiw(int arg0)
-    {
-        viewMenu.value = 0;
-        switch (arg0)
-        {
-            case 1:
-                throw new NotImplementedException();
-            case 2:
-                CloseWindow();
-                break;
-            case 3:
-                ChangeWindow(1);
-                break;
-        }
-    }
-
-    private void DeafualtSelectionEvent(ImplementList implementList, int index)
-    {
-        selectedImplementIndex = index;
-        selectedImplementList = implementList;
-        ChangeWindow(3);
-    }
-
-    private void ChangeWindow(int arg0)
-    {
-        DisableAllWindows();
-        switch (arg0)
-        {
-            case 1:
-                PopulateSelection();
-                SelectionEvent += DeafualtSelectionEvent;
-                selectionObject.SetActive(true);
-                break;
-            case 2:
-                animationsObject.SetActive(true);
-                break;
-            case 3:
-                EnableSplashScreen();
-                break;
-            case 4:
-                abilityObject.SetActive(true);
-                break;
-        }
-    }
-
-    private void Save()
-    {
-        if (selectedImplementList != null)
-        {
-            selectedImplementList.implements[selectedImplementIndex].PrimaryColor = primaryColor.Color;
-            selectedImplementList.implements[selectedImplementIndex].SecondaryColor = secondaryColor.Color;
-            SaveSystem.SaveImplmentList(selectedImplementList);
-        }
-    }
-    /// <summary>
-    /// Turns off all windows and saves game
-    /// </summary>
-    private void DisableAllWindows()
-    {
-        UnsubscribeSelectionElements();
-        UnsubscribeSplashElements();
-        Save();
-        unitMenu.value = 0;
-        windowObject.SetActive(true);
-        selectionObject.SetActive(false);
-        animationsObject.SetActive(false);
-        splashObject.SetActive(false);
-        abilityObject.SetActive(false);
-    }
-
-    private void EnableSplashScreen()
-    {
-        //set
-        nameField.text = selectedImplementList.implements[selectedImplementIndex].name;
-        descriptionField.text = selectedImplementList.implements[selectedImplementIndex].description;
-        primaryColor.Color = selectedImplementList.implements[selectedImplementIndex].PrimaryColor;
-        secondaryColor.Color = selectedImplementList.implements[selectedImplementIndex].SecondaryColor;
-        if (selectedImplementList.implements[selectedImplementIndex].BaseSprite(selectedImplementList.modPath) == null)
-        {
-            splashScreenProfile.color = Color.clear;
-        }
-        else
-        {
-            splashScreenProfile.color = Color.white;
-        }
-        splashScreenProfile.sprite = selectedImplementList.implements[selectedImplementIndex].BaseSprite(selectedImplementList.modPath);
-
-        //subscribe
-        nameField.onEndEdit.AddListener(delegate { selectedImplementList.implements[selectedImplementIndex].name = nameField.text; SaveSystem.SaveImplmentList(selectedImplementList); });
-        descriptionField.onEndEdit.AddListener(delegate { selectedImplementList.implements[selectedImplementIndex].description = descriptionField.text; SaveSystem.SaveImplmentList(selectedImplementList); });
-        primaryColor.ColorChangedEvent += selectedImplementList.implements[selectedImplementIndex].SetPrimaryColor;
-        secondaryColor.ColorChangedEvent += selectedImplementList.implements[selectedImplementIndex].SetSecondayColor;
-        primaryColor.ColorChangedEvent += delegate { SaveSystem.SaveImplmentList(selectedImplementList); };
-        secondaryColor.ColorChangedEvent += delegate { SaveSystem.SaveImplmentList(selectedImplementList); };
-        addProfileButton.onClick.AddListener(call: AddProfile);
-
-        //activate
-        splashObject.SetActive(true);
-    }
-
-    private void AddProfile()
-    {
-        Sprite texture = SaveSystem.LoadPNG(EditorUtility.OpenFilePanel("Set Profile", Application.persistentDataPath, "png"), Vector2.one); 
-        SaveSystem.SavePNG(selectedImplementList.modPath + "/" + selectedImplementList.implements[selectedImplementIndex].name + "/Base.png", texture.texture); 
-        splashScreenProfile.color = Color.white; 
-        splashScreenProfile.sprite = texture;
-    }
-
-    private void UnsubscribeSplashElements()
-    {
-        nameField.onEndEdit.RemoveAllListeners();
-        descriptionField.onEndEdit.RemoveAllListeners();
-        primaryColor.Unsubscribe();
-        secondaryColor.Unsubscribe();
-        addProfileButton.onClick.RemoveAllListeners();
-    }
-
-    public void CloseWindow()
-    {
-        DisableAllWindows();
-        windowObject.SetActive(false);
-    }
-
-    private void Update()
-    {
-        if (windowObject.activeInHierarchy)
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            DisableAllWindows();
+            switch (arg0)
             {
-                CloseWindow();
-            }
-
-            if (selectionObject.activeInHierarchy)
-            {
-
-            }
-            else if (animationsObject.activeInHierarchy)
-            {
-
-            }
-            else if (splashObject.activeInHierarchy)
-            {
-                primaryColorImage.color = primaryColor.Color;
-                secondayColorImage.color = secondaryColor.Color;
-            }
-            else if (abilityObject.activeInHierarchy)
-            {
-
+                case 1:
+                    PopulateSelection();
+                    SelectionEvent += DefualtSelectionEvent;
+                    selectionObject.SetActive(true);
+                    break;
+                case 2:
+                    PopulateAnimation();
+                    break;
+                case 3:
+                    EnableSplashScreen();
+                    break;
+                case 4:
+                    abilityObject.SetActive(true);
+                    break;
             }
         }
-
-    }
-
-    private void PopulateSelection(string[] modPaths = null)
-    {
-        if (modPaths == null)
+        private void Save()
         {
-            modPaths = new string[1];
-            modPaths[0] = SaveSystem.SetDefualtModPath(modPaths[0]);
-        }
-
-        UnsubscribeSelectionElements();
-        foreach (string modPath in modPaths)
-        {
-            Transform modHolder = Instantiate(implementModHolderObject, implementHolderTransform).transform;
-            ImplementList implementList = SaveSystem.LoadImplementList(modPath);
-            modHolder.GetChild(0).GetChild(0).GetComponent<Text>().text = implementList.modName;
-
-            if (implementList.implements != null)
+            if (selectedImplementList != null && selectedImplementList.implements.Length > selectedImplementIndex)
             {
-                for (int i = 0; i < implementList.implements.Length; i++)
+                Implement implement = new Implement();
+                implement = selectedImplementList.implements[selectedImplementIndex];
+                if (selectionObject.activeInHierarchy)
                 {
-                    if (implementList.implements[i].index == i)
-                    {
-                        GameObject unitObject = Instantiate(implementSelectionObject, modHolder);
-                        Button unitButton = unitObject.GetComponent<Button>();
-                        int index = i;
-                        unitButton.onClick.AddListener(delegate { SelectionEvent?.Invoke(implementList, index); });
-                        buttons.Add(unitButton);
-                        unitObject.GetComponentInChildren<Text>().text = i.ToString() + ": " + implementList.implements[i].name;
-                        Sprite sprite = implementList.BaseSprite(i);
-                        Image image = unitObject.transform.GetChild(0).GetComponent<Image>();
-                        if (sprite == null)
-                        {
 
-                            image.color = Color.clear;
+                }
+                else if (animationsObject.activeInHierarchy)
+                {
+
+                }
+                else if (splashObject.activeInHierarchy)
+                {
+                    implement.name = splashNameField.text;
+                    implement.fragment = splashFragmentField.text;
+                    implement.power = splashPowerField.text;
+                    implement.type = splashType;
+                    implement.description = splashDescriptionField.text;
+                    implement.SetBaseSprite(selectedImplementList.modPath, splashScreenProfile.sprite);
+                    implement.PrimaryColor = primaryColor.Color;
+                    implement.SecondaryColor = secondaryColor.Color;
+                }
+                else if (abilityObject.activeInHierarchy)
+                {
+
+                }
+                selectedImplementList.implements[selectedImplementIndex] = implement;
+                SaveSystem.SaveImplmentList(selectedImplementList);
+            }
+        }
+
+        /// <summary>
+        /// Turns off all windows and saves game
+        /// </summary>
+        private void DisableAllWindows()
+        {
+            Save();
+            UnsubscribeSelectionElements();
+
+            unitMenu.value = 0;
+            windowObject.SetActive(true);
+            selectionObject.SetActive(false);
+            animationsObject.SetActive(false);
+            splashObject.SetActive(false);
+            abilityObject.SetActive(false);
+        }
+        public void CloseWindow()
+        {
+            DisableAllWindows();
+            windowObject.SetActive(false);
+        }
+
+        //Tabs
+        public Button selectionButton;
+        public Button splashButton;
+        public Button animationButton;
+        public Button abilityButton;
+
+        //toolbox
+        public Dropdown viewMenu;
+        public Dropdown unitMenu;
+
+        private void HandleVeiw(int arg0)
+        {
+            viewMenu.value = 0;
+            switch (arg0)
+            {
+                case 1:
+                    throw new NotImplementedException();
+                case 2:
+                    CloseWindow();
+                    break;
+                case 3:
+                    ChangeWindow(1);
+                    break;
+            }
+        }
+        private void UnsubscribeTabToolbarElements()
+        {
+            viewMenu.onValueChanged.RemoveAllListeners();
+            unitMenu.onValueChanged.RemoveAllListeners();
+            selectionButton.onClick.RemoveAllListeners();
+            splashButton.onClick.RemoveAllListeners();
+            animationButton.onClick.RemoveAllListeners();
+            abilityButton.onClick.RemoveAllListeners();
+        }
+
+
+        //Selection
+        /// <summary>
+        /// Holds all implements for selection
+        /// </summary>
+        public Transform implementHolderTransform;
+        /// <summary>
+        /// Holds all implments of a mod for selection
+        /// </summary>
+        public GameObject implementModHolderObject;
+        public GameObject implementSelectionObject;
+        public GameObject newImplementSelectionObject;
+        private List<Button> implementButtons = new List<Button>();
+        public event Action<ImplementList, int> SelectionEvent;
+
+        private void UnsubscribeSelectionElements()
+        {
+            foreach (Button toDelete in implementButtons)
+            {
+                toDelete.onClick.RemoveAllListeners();
+            }
+            foreach (Transform toDelete in implementHolderTransform)
+            {
+                Destroy(toDelete.gameObject);
+            }
+            if (implementHolderTransform.TryGetComponent(out ContentSizeFitter c))
+            {
+                Destroy(c);
+            }
+        }
+        private void DefualtSelectionEvent(ImplementList implementList, int index)
+        {
+            selectedImplementIndex = index;
+            selectedImplementList = implementList;
+            ChangeWindow(3);
+        }
+        private void PopulateSelection(string[] modPaths = null)
+        {
+            if (modPaths == null)
+            {
+                modPaths = new string[1];
+                modPaths[0] = SaveSystem.SetDefualtModPath(modPaths[0]);
+            }
+
+            UnsubscribeSelectionElements();
+            foreach (string modPath in modPaths)
+            {
+                Transform modHolder = Instantiate(implementModHolderObject, implementHolderTransform).transform;
+                ImplementList implementList = SaveSystem.LoadImplementList(modPath);
+                modHolder.GetChild(0).GetChild(0).GetComponent<Text>().text = implementList.modName;
+
+                if (implementList.implements != null)
+                {
+                    for (int i = 0; i < implementList.implements.Length; i++)
+                    {
+                        if (implementList.implements[i].index == i)
+                        {
+                            GameObject unitObject = Instantiate(implementSelectionObject, modHolder);
+                            Button unitButton = unitObject.GetComponent<Button>();
+                            int index = i;
+                            unitButton.onClick.AddListener(delegate { SelectionEvent?.Invoke(implementList, index); });
+                            implementButtons.Add(unitButton);
+                            unitObject.transform.GetChild(0).GetComponent<Text>().text = i.ToString();
+                            unitObject.transform.GetChild(2).GetChild(0).GetComponentInChildren<Text>().text = implementList.implements[i].name;
+                            Sprite sprite = implementList.BaseSprite(i);
+                            Image image = unitObject.transform.GetChild(1).GetComponent<Image>();
+                            if (sprite == null)
+                            {
+
+                                image.color = Color.clear;
+                            }
+                            image.sprite = sprite;
                         }
-                        image.sprite = sprite;
                     }
                 }
+                Button addButton = Instantiate(newImplementSelectionObject, modHolder).GetComponent<Button>();
+                addButton.onClick.AddListener(delegate { CreateNewImplement(modPath); });
+                implementButtons.Add(addButton);
             }
-            Button addButton = Instantiate(newImplementSelectionObject, modHolder).GetComponent<Button>();
-            addButton.onClick.AddListener(delegate { CreateNewImplement(modPath); });
-            buttons.Add(addButton);
         }
-
-    }
-
-    private void CreateNewImplement(string modPath = null)
-    {
-        modPath = SaveSystem.SetDefualtModPath(modPath);
-        ImplementList implementList = SaveSystem.LoadImplementList();
-        int length = 0;
-        if (implementList.implements != null)
+        private void CreateNewImplement(string modPath = null)
         {
-            length = implementList.implements.Length;
+            modPath = SaveSystem.SetDefualtModPath(modPath);
+            ImplementList implementList = SaveSystem.LoadImplementList();
+            int length = 0;
+            if (implementList.implements != null)
+            {
+                length = implementList.implements.Length;
+            }
+
+            Implement[] implements = new Implement[length + 1];
+            implementList.implements.CopyTo(implements, 0);
+            implements[length] = new Implement("temp", -1);
+            implementList.implements = implements;
+            implementList = SaveSystem.SaveImplmentList(implementList);
+            selectedImplementList = implementList;
+            selectedImplementIndex = length;
+            ChangeWindow(3);
         }
 
-        Implement[] implements = new Implement[length + 1];
-        implementList.implements.CopyTo(implements, 0);
-        implements[length] = new Implement("temp", -1);
-        implementList = SaveSystem.SaveImplmentList(new ImplementList(implements, modPath));
-        selectedImplementList = implementList;
-        selectedImplementIndex = length;
-        ChangeWindow(3);
-        nameField.onEndEdit.AddListener(delegate { implements[length].index = length; SaveSystem.SaveImplmentList(new ImplementList(implements, modPath, implementList.modName)); });
+
+        //Splash
+        public ColorSlider primaryColor;
+        public ColorSlider secondaryColor;
+        public Image primaryColorImage;
+        public Image secondayColorImage;
+        public Image splashScreenProfile;
+        public InputField splashNameField;
+        public InputField splashFragmentField;
+        public InputField splashPowerField;
+        public int splashType;
+        public Button[] splashButtons;
+        public InputField splashDescriptionField;
+
+        private void EnableSplashScreen()
+        {
+            //set
+            splashNameField.text = selectedImplementList.implements[selectedImplementIndex].name;
+            splashFragmentField.text = selectedImplementList.implements[selectedImplementIndex].fragment;
+            splashPowerField.text = selectedImplementList.implements[selectedImplementIndex].power;
+            ChangeType(selectedImplementList.implements[selectedImplementIndex].type);
+            splashDescriptionField.text = selectedImplementList.implements[selectedImplementIndex].description;
+            primaryColor.Color = selectedImplementList.implements[selectedImplementIndex].PrimaryColor;
+            secondaryColor.Color = selectedImplementList.implements[selectedImplementIndex].SecondaryColor;
+            if (selectedImplementList.implements[selectedImplementIndex].GetBaseSprite(selectedImplementList.modPath) == null)
+            {
+                splashScreenProfile.color = Color.clear;
+            }
+            else
+            {
+                splashScreenProfile.color = Color.white;
+            }
+            splashScreenProfile.sprite = selectedImplementList.implements[selectedImplementIndex].GetBaseSprite(selectedImplementList.modPath);
+
+            //activate
+            splashObject.SetActive(true);
+        }
+        public void AddProfile()
+        {
+            Sprite texture = SaveSystem.LoadPNG(EditorUtility.OpenFilePanel("Set Profile", Application.persistentDataPath, "png"), Vector2.one, 1);
+            SaveSystem.SavePNG(selectedImplementList.modPath + "/" + selectedImplementList.implements[selectedImplementIndex].name + "/Base.png", texture.texture);
+            splashScreenProfile.color = Color.white;
+            splashScreenProfile.sprite = texture;
+        }
+        public void SplashPreview()
+        {
+            throw new NotImplementedException();
+        }
+        public void ChangeType(int i)
+        {
+            foreach (Button butt in splashButtons)
+            {
+                ColorBlock colorBlock = butt.colors;
+                colorBlock.normalColor = Color.black;
+                butt.colors = colorBlock;
+            }
+            ColorBlock altcolorBlock = splashButtons[i].colors;
+            altcolorBlock.normalColor = Color.white;
+            splashButtons[i].colors = altcolorBlock;
+            splashType = i;
+        }
+
+        //Animation
+        public Transform animationHolderTransform;
+        public GameObject animationSelectionObject;
+        public GameObject animationAddObject;
+
+        private void PopulateAnimation()
+        {
+            UnsubsubscribeAnimation();
+            if (selectedImplementList != null && selectedImplementList.implements[selectedImplementIndex].animations != null)
+            {
+                Implement.Animation[] animations = selectedImplementList.implements[selectedImplementIndex].animations;
+
+                foreach (Implement.Animation animationFromArray in animations)
+                {
+                    Animation animation = Instantiate(animationSelectionObject, animationHolderTransform).GetComponent<Animation>();
+                    animation.nameField.text = animationFromArray.name;
+                }
+            }
+            Instantiate(animationAddObject, animationHolderTransform);
+            animationsObject.SetActive(true);
+        }
+        private void UnsubsubscribeAnimation()
+        {
+            foreach (Transform t in animationHolderTransform)
+            {
+                Destroy(t.gameObject);
+            }
+            if (animationHolderTransform.TryGetComponent(out ContentSizeFitter c))
+            {
+                Destroy(c);
+            }
+        }
+
+        //Ability
+        public GameObject abilitySelectionObject;
+
+
+        private void Start()
+        {
+            viewMenu.onValueChanged.AddListener(HandleVeiw);
+            unitMenu.onValueChanged.AddListener(ChangeWindow);
+            selectionButton.onClick.AddListener(delegate { ChangeWindow(1); });
+            animationButton.onClick.AddListener(delegate { ChangeWindow(2); });
+            splashButton.onClick.AddListener(delegate { ChangeWindow(3); });
+            abilityButton.onClick.AddListener(delegate { ChangeWindow(4); });
+        }
+
+        private void OnDestroy()
+        {
+            DisableAllWindows();
+            UnsubscribeTabToolbarElements();
+        }
+
+        private void Update()
+        {
+            if (windowObject.activeInHierarchy)
+            {
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    CloseWindow();
+                }
+
+                if (selectionObject.activeInHierarchy)
+                {
+
+                }
+                else if (animationsObject.activeInHierarchy)
+                {
+
+                }
+                else if (splashObject.activeInHierarchy)
+                {
+                    primaryColorImage.color = primaryColor.Color;
+                    secondayColorImage.color = secondaryColor.Color;
+                }
+                else if (abilityObject.activeInHierarchy)
+                {
+
+                }
+            }
+
+        }
+
+
     }
+
 }

@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using mapEditor;
 using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.TestTools;
 
 namespace Map_Tests
 {
@@ -321,4 +319,3 @@ namespace Map_Tests
         }
     }
 }
-

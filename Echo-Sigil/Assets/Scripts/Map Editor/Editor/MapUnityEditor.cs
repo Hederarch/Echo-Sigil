@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using mapEditor;
 
 [CustomEditor(typeof(MapReaderBehavior))]
 [CanEditMultipleObjects]

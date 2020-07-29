@@ -1,1 +1,26 @@
-{"modPath":"C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements","modName":"Tales from the Metaheadron: Main Story Pack","implements":[{"name":"Fread","index":0,"description":"","primaryColor":[0.8727272748947144,0.0,0.0],"secondaryColor":[0.0,0.8545454740524292,0.0],"animations":[]},{"name":"Freadalisioc","index":1,"description":"Nah","primaryColor":[0.8727272748947144,0.0,0.0],"secondaryColor":[0.0,0.8545454740524292,0.0],"animations":[]},{"name":"Gorgee","index":2,"description":"","primaryColor":[0.8727272748947144,0.0,0.0],"secondaryColor":[0.0,0.8545454740524292,0.0],"animations":[]}]}
+{
+    "modPath": "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements",
+    "modName": "Tales from the Metaheadron: Main Story Pack",
+    "implements": [
+        {
+            "name": "Jeanette Sekch",
+            "index": 0,
+            "fragment": "Pool Ball",
+            "power": "Bank Shot",
+            "type": 0,
+            "description": "Can create and propel fast and deadly pool balls",
+            "primaryColor": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "secondaryColor": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "animations": [
+            ]
+        }
+    ]
+}
