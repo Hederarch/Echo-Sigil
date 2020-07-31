@@ -1,41 +1,131 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace mapEditor
+namespace mapEditor.animations
 {
-    public class Animation : MonoBehaviour
+    [Serializable]
+    public class Animation : IEnumerable<Sprite>, IEnumerator<Sprite>
     {
-        public InputField nameField;
-        public InputField FPSField;
-        public Image previewImage;
-        bool Directional { get => directionalIcon.color == Color.white; set => directionalIcon.color = value ? Color.white : Color.black; }
-        public Image directionalIcon;
-        bool Variant { get => variantIcon.color == Color.white; set => variantIcon.color = value ? Color.white : Color.black; }
-        public Image variantIcon;
-        bool MultiTile { get => multiTileIcon.color == Color.white; set => multiTileIcon.color = value ? Color.white : Color.black; }
-        public Image multiTileIcon;
+        public string name;
+        public int framerate;
+        public string[] sprites;
+        internal int curIndex;
 
-        public Transform spritesHolderTrasnform;
-        public GameObject spriteHodlerObject;
-        public GameObject newSpriteObject;
-
-        public void Initalize(Implement.Animation animation)
+        public Animation()
         {
-            nameField.text = animation.name;
-            Directional = animation.GetType() == typeof(Implement.DirectionalAnimation);
-            Variant = animation.GetType() == typeof(Implement.VaraintAnimation);
-            MultiTile = animation.GetType() == typeof(Implement.MultiTileAnimation);
-            UnityEngine.Animation previewAnimator = previewImage.gameObject.AddComponent<UnityEngine.Animation>();
-            previewAnimator.clip = animation.GetAnimationClip();
-            PopulateSpriteHolder(animation);
+            name = "temp";
+            framerate = 12;
+            sprites = new string[1];
+            curIndex = -1;
         }
 
-        private void PopulateSpriteHolder(Implement.Animation animation)
+        public virtual Sprite Current
         {
-            
+            get
+            {
+                try
+                {
+                    return SaveSystem.LoadPNG(sprites[curIndex], Vector2.one / 2f);
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    throw new InvalidOperationException();
+                }
+            }
+        }
+
+        object IEnumerator.Current => Current;
+
+        public void Dispose()
+        {
+
+        }
+
+        public virtual AnimationClip GetAnimationClip()
+        {
+            AnimationClip clip = new AnimationClip
+            {
+                name = name,
+                frameRate = framerate,
+                legacy = true
+            };
+
+            EditorCurveBinding spriteBinding = new EditorCurveBinding
+            {
+                type = typeof(SpriteRenderer),
+                path = "",
+                propertyName = "m_Sprite"
+            };
+
+            ObjectReferenceKeyframe[] spriteKeyFrames = new ObjectReferenceKeyframe[sprites.Length];
+            for (int i = 0; i < sprites.Length; i++)
+            {
+                spriteKeyFrames[i] = new ObjectReferenceKeyframe
+                {
+                    time = i,
+                    value = SaveSystem.LoadPNG(sprites[i], new Vector2(.5f, 0), 1)
+                };
+            }
+            AnimationUtility.SetObjectReferenceCurve(clip, spriteBinding, spriteKeyFrames);
+
+            return clip;
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            return this;
+        }
+
+        public bool MoveNext()
+        {
+            curIndex++;
+            return curIndex < sprites.Length;
+        }
+
+        public void Reset()
+        {
+            curIndex = -1;
+        }
+
+        IEnumerator<Sprite> IEnumerable<Sprite>.GetEnumerator()
+        {
+            return this;
+        }
+    }
+
+    [Serializable]
+    public class DirectionalAnimation : Animation
+    {
+        public AnimationElement[] animations;
+
+        public override AnimationClip GetAnimationClip()
+        {
+            return base.GetAnimationClip();
+        }
+    }
+
+    [Serializable]
+    public class VaraintAnimation : Animation
+    {
+        public AnimationElement[] animations;
+
+        public override AnimationClip GetAnimationClip()
+        {
+            return base.GetAnimationClip();
+        }
+    }
+
+    [Serializable]
+    public class MultiTileAnimation : Animation
+    {
+        int numTileWidth = 1;
+        public override Sprite Current => SaveSystem.LoadPNG(sprites[curIndex], Vector2.one / 2f, numTileWidth);
+        public override AnimationClip GetAnimationClip()
+        {
+            return base.GetAnimationClip();
         }
     } 
 }

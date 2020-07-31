@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace mapEditor
@@ -14,7 +17,7 @@ namespace mapEditor
         public string description;
         public float[] primaryColor;
         public float[] secondaryColor;
-        public Animation[] animations;
+        public animations.Animation[] animations;
 
         public Color PrimaryColor { get => new Color(primaryColor[0], primaryColor[1], primaryColor[2]); set => SetUnitColors(value, SecondaryColor); }
         public Color SecondaryColor { get => new Color(secondaryColor[0], secondaryColor[1], secondaryColor[2]); set => SetUnitColors(PrimaryColor, value); }
@@ -37,50 +40,8 @@ namespace mapEditor
             power = "";
             type = -1;
             description = "";
-            animations = new Animation[0];
+            animations = new animations.Animation[0];
         }
-
-        [Serializable]
-        public class Animation
-        {
-            public string name;
-            public int framerate;
-            public string[] sprites;
-
-            public virtual AnimationClip GetAnimationClip()
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public class DirectionalAnimation : Animation
-        {
-            public Animation[] animations;
-
-            public override AnimationClip GetAnimationClip()
-            {
-                return base.GetAnimationClip();
-            }
-        }
-
-        public class VaraintAnimation : Animation
-        {
-            public Animation[] animations;
-
-            public override AnimationClip GetAnimationClip()
-            {
-                return base.GetAnimationClip();
-            }
-        }
-
-        public class MultiTileAnimation : Animation
-        {
-            public override AnimationClip GetAnimationClip()
-            {
-                return base.GetAnimationClip();
-            }
-        }
-
 
         public static Implement SetUnitColors(Implement unit, Color primaryColor, Color secondaryColor)
         {
@@ -131,5 +92,7 @@ namespace mapEditor
             this.modName = modName;
             this.implements = implements;
         }
+
+        public string ImplementPath(int index) => modPath + "/" + implements[index].name;
     }
 }

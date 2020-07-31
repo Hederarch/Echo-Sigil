@@ -1,4 +1,5 @@
-﻿using System;
+﻿using mapEditor.animations;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
@@ -46,15 +47,14 @@ namespace mapEditor
         {
             if (selectedImplementList != null && selectedImplementList.implements.Length > selectedImplementIndex)
             {
-                Implement implement = new Implement();
-                implement = selectedImplementList.implements[selectedImplementIndex];
+                Implement implement = selectedImplementList.implements[selectedImplementIndex];
                 if (selectionObject.activeInHierarchy)
                 {
 
                 }
                 else if (animationsObject.activeInHierarchy)
                 {
-
+                    implement.animations = SaveAnimations(selectedImplementList.ImplementPath(selectedImplementIndex));
                 }
                 else if (splashObject.activeInHierarchy)
                 {
@@ -166,6 +166,7 @@ namespace mapEditor
         {
             selectedImplementIndex = index;
             selectedImplementList = implementList;
+            AnimationElement.ImplementPath = implementList.ImplementPath(index);
             ChangeWindow(3);
         }
         private void PopulateSelection(string[] modPaths = null)
@@ -224,7 +225,7 @@ namespace mapEditor
 
             Implement[] implements = new Implement[length + 1];
             implementList.implements.CopyTo(implements, 0);
-            implements[length] = new Implement("temp", -1);
+            implements[length] = new Implement("temp", length);
             implementList.implements = implements;
             implementList = SaveSystem.SaveImplmentList(implementList);
             selectedImplementList = implementList;
@@ -272,7 +273,7 @@ namespace mapEditor
         public void AddProfile()
         {
             Sprite texture = SaveSystem.LoadPNG(EditorUtility.OpenFilePanel("Set Profile", Application.persistentDataPath, "png"), Vector2.one, 1);
-            SaveSystem.SavePNG(selectedImplementList.modPath + "/" + selectedImplementList.implements[selectedImplementIndex].name + "/Base.png", texture.texture);
+            SaveSystem.SavePNG(selectedImplementList.ImplementPath(selectedImplementIndex) + "/Base.png", texture.texture);
             splashScreenProfile.color = Color.white;
             splashScreenProfile.sprite = texture;
         }
@@ -298,32 +299,66 @@ namespace mapEditor
         public Transform animationHolderTransform;
         public GameObject animationSelectionObject;
         public GameObject animationAddObject;
+        private List<AnimationElement> animationList = new List<AnimationElement>();
 
         private void PopulateAnimation()
         {
             UnsubsubscribeAnimation();
             if (selectedImplementList != null && selectedImplementList.implements[selectedImplementIndex].animations != null)
             {
-                Implement.Animation[] animations = selectedImplementList.implements[selectedImplementIndex].animations;
+                animations.Animation[] animations = selectedImplementList.implements[selectedImplementIndex].animations;
 
-                foreach (Implement.Animation animationFromArray in animations)
+                for(int i = 0; i < animations.Length; i++)
                 {
-                    Animation animation = Instantiate(animationSelectionObject, animationHolderTransform).GetComponent<Animation>();
-                    animation.nameField.text = animationFromArray.name;
+                    AnimationElement animation = Instantiate(animationSelectionObject, animationHolderTransform).GetComponent<AnimationElement>();
+                    animationList.Add(animation);
+                    animation.index = i;
+                    animation.DestroyEvent += DestroyAnimation;
+                    animation.Initalize(animations[i]);
                 }
             }
-            Instantiate(animationAddObject, animationHolderTransform);
+            Instantiate(animationAddObject, animationHolderTransform).GetComponent<Button>().onClick.AddListener(call: AddAnimation);
             animationsObject.SetActive(true);
+        }
+        private void AddAnimation()
+        {
+            DisableAllWindows();
+            int length = selectedImplementList.implements[selectedImplementIndex].animations.Length;
+            animations.Animation[] animations = new animations.Animation[length + 1];
+            selectedImplementList.implements[selectedImplementIndex].animations.CopyTo(animations, 0);
+            animations[length] = new animations.Animation();
+            selectedImplementList.implements[selectedImplementIndex].animations = animations;
+            PopulateAnimation();
+        }
+        private void DestroyAnimation(int index)
+        {
+            animationList.Remove(animationList[index]);
+            ChangeWindow(2);
+        }
+        private animations.Animation[] SaveAnimations(string implmentPath)
+        {
+            List<animations.Animation> animations = new List<animations.Animation>();
+            foreach (AnimationElement a in animationList)
+            {
+                animations.Add(a.Save());
+            }
+            return animations.ToArray();
         }
         private void UnsubsubscribeAnimation()
         {
+            animationList.Clear();
             foreach (Transform t in animationHolderTransform)
             {
+                if (TryGetComponent(out AnimationElement a))
+                {
+                    a.DeInitalize();
+                }
+                else if (TryGetComponent(out Button b))
+                {
+                    b.onClick.RemoveAllListeners();
+                }
+
                 Destroy(t.gameObject);
-            }
-            if (animationHolderTransform.TryGetComponent(out ContentSizeFitter c))
-            {
-                Destroy(c);
             }
         }
 

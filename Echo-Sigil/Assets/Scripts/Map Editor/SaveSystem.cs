@@ -81,7 +81,7 @@ namespace mapEditor
             }
         }
 
-        public static Sprite LoadPNG(string filePath, Vector2 pivot, int pixelPerUnit = 0)
+        public static Sprite LoadPNG(string filePath, Vector2 pivot, int numTileWidth = 1)
         {
             if (File.Exists(filePath))
             {
@@ -90,16 +90,12 @@ namespace mapEditor
                 Texture2D tex = new Texture2D(2, 2, TextureFormat.RGBA32, true);
                 tex.LoadImage(fileData); //..this will auto-resize the texture dimensions.
 
-                if (pixelPerUnit == 0)
+                if (tex.width != tex.height)
                 {
-                    pixelPerUnit = tex.width;
-                    if (tex.width != tex.height)
-                    {
-                        Debug.LogWarning("Texture " + filePath + "is not square. Texture hieght may be adversly affected");
-                    }
+                    Debug.LogWarning("Texture " + filePath + " is not square. Texture hieght may be adversly affected");
                 }
 
-                Sprite sprite = Sprite.Create(tex, new Rect(Vector2.zero, new Vector2(tex.width, tex.height)), pivot, pixelPerUnit);
+                Sprite sprite = Sprite.Create(tex, new Rect(Vector2.zero, new Vector2(tex.width, tex.height)), pivot, tex.width / numTileWidth);
                 return sprite;
             }
             return null;
@@ -111,6 +107,11 @@ namespace mapEditor
             if (!Directory.Exists(fullName))
             {
                 Directory.CreateDirectory(fullName);
+            }
+            if (!texture.isReadable)
+            {
+                Debug.LogError(texture + " is unreadable");
+                return;
             }
             byte[] fileData;
             fileData = texture.EncodeToPNG();
@@ -149,5 +150,5 @@ namespace mapEditor
             }
             return modPath;
         }
-    } 
+    }
 }
