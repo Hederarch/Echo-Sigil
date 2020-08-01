@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace mapEditor.animations
 {
@@ -55,7 +56,7 @@ namespace mapEditor.animations
 
             EditorCurveBinding spriteBinding = new EditorCurveBinding
             {
-                type = typeof(SpriteRenderer),
+                type = typeof(Image),
                 path = "",
                 propertyName = "m_Sprite"
             };
