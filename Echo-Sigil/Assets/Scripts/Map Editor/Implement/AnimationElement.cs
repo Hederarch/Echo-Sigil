@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
+using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.UI;
 
 namespace mapEditor.animations
@@ -16,7 +18,7 @@ namespace mapEditor.animations
         public static string ImplementPath;
         public InputField nameField;
         public InputField FPSField;
-        public UnityEngine.Animation previewAnimatior;
+        public Animator previewAnimatior;
         bool Directional
         {
             get => directionalIcon.colors.normalColor == Color.white; set
@@ -68,7 +70,7 @@ namespace mapEditor.animations
             spriteHolders.Clear();
             PopulateSpriteHolder(animation);
 
-            previewAnimatior.clip = animation.GetAnimationClip();
+            ResetPreview();
         }
 
         public void InvokeDestroy()
@@ -97,18 +99,20 @@ namespace mapEditor.animations
             moveing.transform.SetSiblingIndex(newIndex);
             spriteHolders.Remove(moveing);
             spriteHolders.Insert(newIndex, moveing);
-            for(int i = 0; i < spriteHolders.Count; i++)
+            for (int i = 0; i < spriteHolders.Count; i++)
             {
                 spriteHolders[i].Index = i;
             }
             newSpriteButton.transform.SetAsLastSibling();
-            previewAnimatior.clip = Save().GetAnimationClip();
+            ResetPreview();
         }
+
+
 
         private void ChangeSprite(int index, Sprite sprite)
         {
             spriteHolders[index].image.sprite = sprite;
-            previewAnimatior.clip = Save().GetAnimationClip();
+            ResetPreview();
         }
 
         private void RemoveSprite(int index)
@@ -119,14 +123,14 @@ namespace mapEditor.animations
             spriteHolder.ChangeEvent -= ChangeSprite;
             spriteHolder.MoveEvent -= MoveSprite;
             Destroy(spriteHolder.gameObject);
-            previewAnimatior.clip = Save().GetAnimationClip();
+            ResetPreview();
         }
 
         private void AddSprite()
         {
-            IstantiateSprite(spriteHolders.Count, SaveSystem.LoadPNG(EditorUtility.OpenFilePanel("Add Sprite",Directory.GetCurrentDirectory(),"png"),Vector2.one/2f));
+            IstantiateSprite(spriteHolders.Count, SaveSystem.LoadPNG(EditorUtility.OpenFilePanel("Add Sprite", Directory.GetCurrentDirectory(), "png"), Vector2.one / 2f));
             newSpriteButton.transform.SetAsLastSibling();
-            previewAnimatior.clip = Save().GetAnimationClip();
+            ResetPreview();
         }
 
         private void IstantiateSprite(int index, Sprite sprite)
@@ -143,7 +147,7 @@ namespace mapEditor.animations
         internal void DeInitalize()
         {
             DestroyEvent = null;
-            foreach(SpriteHolder spriteHolder in spriteHolders)
+            foreach (SpriteHolder spriteHolder in spriteHolders)
             {
                 spriteHolder.RemoveEvent -= RemoveSprite;
                 spriteHolder.ChangeEvent -= ChangeSprite;
@@ -175,6 +179,18 @@ namespace mapEditor.animations
                 sprites.sprites[i] = filePath;
             }
             return sprites;
+        }
+
+
+        private void ResetPreview()
+        {
+            AnimatorController controller = new AnimatorController();
+            Animation animations = Save();
+            AnimationClip motion = animations.GetAnimationClip(typeof(Image));
+            controller.AddLayer("Base");
+            controller.AddMotion(motion);
+            controller.name = nameField.text + "controller";
+            previewAnimatior.runtimeAnimatorController = controller;
         }
     }
 }

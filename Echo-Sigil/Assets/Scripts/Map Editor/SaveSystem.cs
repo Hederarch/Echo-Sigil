@@ -122,7 +122,7 @@ namespace mapEditor
         {
             using (StreamWriter stream = new StreamWriter(implements.modPath + "/" + Path.GetFileName(implements.modPath) + ".json"))
             {
-                stream.Write(JsonUtility.ToJson(implements));
+                stream.Write(JsonUtility.ToJson(implements,true));
             }
             return implements;
         }

@@ -17,9 +17,9 @@ namespace mapEditor.animations
 
         public Animation()
         {
-            name = "temp";
+            name = "New";
             framerate = 12;
-            sprites = new string[1];
+            sprites = new string[0];
             curIndex = -1;
         }
 
@@ -45,18 +45,18 @@ namespace mapEditor.animations
 
         }
 
-        public virtual AnimationClip GetAnimationClip()
+        public virtual AnimationClip GetAnimationClip(Type type)
         {
             AnimationClip clip = new AnimationClip
             {
                 name = name,
                 frameRate = framerate,
-                legacy = true
+                wrapMode = WrapMode.Loop
             };
 
             EditorCurveBinding spriteBinding = new EditorCurveBinding
             {
-                type = typeof(Image),
+                type = type,
                 path = "",
                 propertyName = "m_Sprite"
             };
@@ -66,11 +66,16 @@ namespace mapEditor.animations
             {
                 spriteKeyFrames[i] = new ObjectReferenceKeyframe
                 {
-                    time = i,
+                    time = (float)i/(float)framerate,
                     value = SaveSystem.LoadPNG(sprites[i], new Vector2(.5f, 0), 1)
                 };
             }
             AnimationUtility.SetObjectReferenceCurve(clip, spriteBinding, spriteKeyFrames);
+
+            if (!clip.isLooping)
+            {
+                Debug.LogError("Animation " + name + " not set to loop");
+            }
 
             return clip;
         }
@@ -102,9 +107,9 @@ namespace mapEditor.animations
     {
         public AnimationElement[] animations;
 
-        public override AnimationClip GetAnimationClip()
+        public override AnimationClip GetAnimationClip(Type type)
         {
-            return base.GetAnimationClip();
+            return base.GetAnimationClip(type);
         }
     }
 
@@ -113,9 +118,9 @@ namespace mapEditor.animations
     {
         public AnimationElement[] animations;
 
-        public override AnimationClip GetAnimationClip()
+        public override AnimationClip GetAnimationClip(Type type)
         {
-            return base.GetAnimationClip();
+            return base.GetAnimationClip(type);
         }
     }
 
@@ -124,9 +129,9 @@ namespace mapEditor.animations
     {
         int numTileWidth = 1;
         public override Sprite Current => SaveSystem.LoadPNG(sprites[curIndex], Vector2.one / 2f, numTileWidth);
-        public override AnimationClip GetAnimationClip()
+        public override AnimationClip GetAnimationClip(Type type)
         {
-            return base.GetAnimationClip();
+            return base.GetAnimationClip(type);
         }
     } 
 }
