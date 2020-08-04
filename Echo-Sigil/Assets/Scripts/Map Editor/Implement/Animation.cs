@@ -23,6 +23,24 @@ namespace mapEditor.animations
             curIndex = -1;
         }
 
+        public Animation(Sprite[] sprites, string implementPath)
+        {
+            name = "New";
+            framerate = 12;
+            this.sprites = new string[sprites.Length];
+            for(int i = 0; i < sprites.Length; i++)
+            {
+                string filePath = implementPath + "/" + name + "/" + i + ".png";
+                if (sprites[i] != null)
+                {
+                    SaveSystem.SavePNG(filePath, sprites[i].texture);
+                }
+
+                this.sprites[i] = filePath;
+            }
+            curIndex = -1;
+        }
+
         public virtual Sprite Current
         {
             get
@@ -53,6 +71,10 @@ namespace mapEditor.animations
                 frameRate = framerate,
                 wrapMode = WrapMode.Loop
             };
+
+            AnimationClipSettings settings = AnimationUtility.GetAnimationClipSettings(clip);
+            settings.loopTime = true;
+            AnimationUtility.SetAnimationClipSettings(clip, settings);
 
             EditorCurveBinding spriteBinding = new EditorCurveBinding
             {

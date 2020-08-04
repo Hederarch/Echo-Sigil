@@ -2,8 +2,7 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Collections.Generic;
-using System;
-
+using System.Windows.Forms;
 
 namespace mapEditor
 {
@@ -39,29 +38,29 @@ namespace mapEditor
             return null;
         }
 
-        public static void DeleteMap(string path, bool logError = false)
+        public static void DeleteMap(string path, bool logWarning = false)
         {
             if (File.Exists(path))
             {
                 File.Delete(path);
             }
-            else if (logError)
+            else if (logWarning)
             {
-                Debug.LogError("Map File not found in " + path + ". So... um, I guess its been sucsessfuly gotten rid of then.");
+                Debug.LogWarning("Map File not found in " + path + ". So... um, I guess its been sucsessfuly gotten rid of then.");
             }
         }
 
-        public static Sprite[] LoadPallate(string path)
+        public static Sprite[] LoadPallate(string questPath)
         {
             List<Sprite> spritePallate = new List<Sprite>();
-            if (!Directory.Exists(path + "/Pallate"))
+            if (!Directory.Exists(questPath + "/Pallate"))
             {
-                Debug.LogError("Pallate folder does not exist in " + path + " directory. Are you sure this is a quest folder?");
+                Debug.LogError("Pallate folder does not exist in " + questPath + " directory. Are you sure this is a quest folder?");
                 return null;
             }
-            for (int i = 0; File.Exists(path + "/Pallate/" + i + ".png"); i++)
+            for (int i = 0; File.Exists(questPath + "/Pallate/" + i + ".png"); i++)
             {
-                spritePallate.Add(LoadPNG(path + "/Pallate/" + i + ".png", Vector2.one / 2f));
+                spritePallate.Add(LoadPNG(questPath + "/Pallate/" + i + ".png", Vector2.one / 2f));
             }
             return spritePallate.ToArray();
         }
@@ -99,6 +98,32 @@ namespace mapEditor
                 return sprite;
             }
             return null;
+        }
+
+        public static Sprite[] LoadPNG(Vector2 pivot, int numTileWidth = 1)
+        {
+            using(OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.Filter = "Image Files(*.PNG; *.JPG;)| *.PNG; *.JPG; | All files(*.*) | *.*";
+                openFileDialog.FilterIndex = 0;
+                openFileDialog.RestoreDirectory = true;
+                openFileDialog.Multiselect = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    Sprite[] sprites = new Sprite[openFileDialog.FileNames.Length];
+
+                    for(int i = 0; i< openFileDialog.FileNames.Length; i++)
+                    {
+                        sprites[i] = LoadPNG(openFileDialog.FileNames[i], pivot, numTileWidth);
+                    }
+
+                    return sprites;
+                }
+
+                return new Sprite[0];
+            }
         }
 
         public static void SavePNG(string filePath, Texture2D texture)
@@ -141,12 +166,12 @@ namespace mapEditor
         {
             if (developerMode && modPath == null)
             {
-                return Application.dataPath + "/Implements";
+                return UnityEngine.Application.dataPath + "/Implements";
             }
             if (modPath == null)
             {
                 Debug.LogError("No modpath for new implement. Putting changes in temp file");
-                return Application.temporaryCachePath + "/Implements";
+                return UnityEngine.Application.temporaryCachePath + "/Implements";
             }
             return modPath;
         }

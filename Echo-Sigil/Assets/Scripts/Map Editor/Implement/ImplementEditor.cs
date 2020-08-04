@@ -323,10 +323,11 @@ namespace mapEditor
         private void AddAnimation()
         {
             DisableAllWindows();
-            int length = selectedImplementList.implements[selectedImplementIndex].animations.Length;
+            animations.Animation[] selectedAnimations = selectedImplementList.implements[selectedImplementIndex].animations;
+            int length = selectedAnimations.Length;
             animations.Animation[] animations = new animations.Animation[length + 1];
-            selectedImplementList.implements[selectedImplementIndex].animations.CopyTo(animations, 0);
-            animations[length] = new animations.Animation();
+            selectedAnimations.CopyTo(animations, 0);
+            animations[length] = new animations.Animation(SaveSystem.LoadPNG(Vector2.one/2f),selectedImplementList.ImplementPath(selectedImplementIndex));
             selectedImplementList.implements[selectedImplementIndex].animations = animations;
             PopulateAnimation();
         }

@@ -128,7 +128,12 @@ namespace mapEditor.animations
 
         private void AddSprite()
         {
-            IstantiateSprite(spriteHolders.Count, SaveSystem.LoadPNG(EditorUtility.OpenFilePanel("Add Sprite", Directory.GetCurrentDirectory(), "png"), Vector2.one / 2f));
+            Sprite[] sprites = SaveSystem.LoadPNG(Vector2.one / 2f);
+            foreach (Sprite sprite in sprites)
+            {
+                IstantiateSprite(spriteHolders.Count, sprite);
+            }
+
             newSpriteButton.transform.SetAsLastSibling();
             ResetPreview();
         }

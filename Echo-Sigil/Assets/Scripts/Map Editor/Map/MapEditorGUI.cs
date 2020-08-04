@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -424,14 +425,11 @@ namespace mapEditor
 
         private int AddSpriteToEditorPallate()
         {
-            Sprite addable = SaveSystem.LoadPNG(EditorUtility.OpenFilePanel("Load Texture", Application.dataPath + "/Sprites", "png"), Vector2.one / 2f);
+            Sprite[] addable = SaveSystem.LoadPNG(Vector2.one / 2f);
             int initLength = MapEditor.pallate.Length;
-            Sprite[] pallate = new Sprite[initLength + 1];
-            for (int i = 0; i < initLength; i++)
-            {
-                pallate[i] = MapEditor.pallate[i];
-            }
-            pallate[initLength] = addable;
+            Sprite[] pallate = new Sprite[initLength + addable.Length];
+            MapEditor.pallate.CopyTo(pallate, 0);
+            addable.CopyTo(pallate, initLength);
             MapEditor.pallate = pallate;
             return initLength;
         }
