@@ -440,7 +440,7 @@ namespace mapEditor
 
         public void LoadMap() => MapReader.LoadMap(EditorUtility.OpenFilePanel("Load Map", Application.dataPath + "/Quests", "hedrap"));
 
-        public void NewMap() => MapReader.GeneratePhysicalMap(SaveSystem.LoadPallate(Application.dataPath + "/Quests/Tests"), new Map(1, 1));
+        public void NewMap() => MapReader.GeneratePhysicalMap(new Map(1, 1));
     }
 
 }

@@ -144,4 +144,35 @@ public class TacticsMovementCamera : MonoBehaviour
     {
         foucus = unit;
     }
+
+    public Direction GetRelativeDirection(Vector2 direction)
+    {
+        Vector2[] transformDirections = new Vector2[4]
+        {
+            transform.up,
+            -transform.right,
+            -transform.up,
+            transform.right
+        };
+
+        int i = 0;
+        float maxDistance = 0;
+        int maxIndex = 0;
+        for (; i < 4; i++)
+        {
+            float y = direction.y - transformDirections[i].y;
+            float x = direction.x - transformDirections[i].x;
+            float distance = x*x + y*y;
+
+            if(maxDistance < distance)
+            {
+                maxDistance = distance;
+                maxIndex = i;
+            }
+        }
+
+        return (Direction)maxIndex;
+    }
+
+    public enum Direction { up,left,down,right }
 }

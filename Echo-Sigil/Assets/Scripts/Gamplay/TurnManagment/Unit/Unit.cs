@@ -11,6 +11,8 @@ public class Unit : FacesCamera, ITurn
     public bool hasMoved;
     public bool hasAttacked;
 
+    public int implementListIndex = 0;
+
     public string Tag { get => gameObject.tag; }
 
     public static event Action<Unit> IsTurnEvent;

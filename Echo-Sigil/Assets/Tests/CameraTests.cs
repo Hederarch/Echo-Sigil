@@ -41,7 +41,7 @@ namespace Camera_Tests
         {
             Camera.main.gameObject.AddComponent<TacticsMovementCamera>().FoucusInputs();
             Vector3 point = TacticsMovementCamera.GetScreenPoint(Camera.main.pixelWidth/2, Camera.main.pixelHeight/2);
-            MapReader.GeneratePhysicalMap(SaveSystem.LoadPallate(Application.dataPath + "/Quests/Tests"), new Map(1, 1));
+            MapReader.GeneratePhysicalMap();
             Assert.IsNotNull(MapReader.GetTile(MapReader.WorldToGridSpace(point)));
         }
     }

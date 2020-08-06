@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -63,7 +64,7 @@ namespace mapEditor.animations
 
         }
 
-        public virtual AnimationClip GetAnimationClip(Type type)
+        public virtual AnimationClip GetAnimationClip(Type type,int tileWidth = 1)
         {
             AnimationClip clip = new AnimationClip
             {
@@ -89,7 +90,7 @@ namespace mapEditor.animations
                 spriteKeyFrames[i] = new ObjectReferenceKeyframe
                 {
                     time = (float)i/(float)framerate,
-                    value = SaveSystem.LoadPNG(sprites[i], new Vector2(.5f, 0), 1)
+                    value = SaveSystem.LoadPNG(sprites[i], new Vector2(.5f, 0), tileWidth)
                 };
             }
             AnimationUtility.SetObjectReferenceCurve(clip, spriteBinding, spriteKeyFrames);
@@ -100,6 +101,26 @@ namespace mapEditor.animations
             }
 
             return clip;
+        }
+
+        public virtual AnimatorStateMachine GetStateMachine(Type type,int tileWidth = 1)
+        {
+            AnimatorStateMachine animatorStateMachine = new AnimatorStateMachine();
+            AnimatorState state = GetState(type, tileWidth);
+            state.AddExitTransition();
+            animatorStateMachine.AddState(state, Vector3.one);
+            animatorStateMachine.name = name;
+
+            return animatorStateMachine;
+        }
+
+        public virtual AnimatorState GetState(Type type, int tileWidth = 1)
+        {
+            AnimatorState animatorState = new AnimatorState();
+            animatorState.motion = GetAnimationClip(type,tileWidth);
+            animatorState.name = name;
+
+            return animatorState;
         }
 
         public IEnumerator GetEnumerator()
@@ -127,22 +148,65 @@ namespace mapEditor.animations
     [Serializable]
     public class DirectionalAnimation : Animation
     {
-        public AnimationElement[] animations;
+        public Animation[] animations = new Animation[4];
 
-        public override AnimationClip GetAnimationClip(Type type)
+        public override AnimationClip GetAnimationClip(Type type,int tileWidth = 1)
         {
-            return base.GetAnimationClip(type);
+            return animations[0].GetAnimationClip(type);
+        }
+
+        public override AnimatorStateMachine GetStateMachine(Type type, int tileWidth = 1)
+        {
+            AnimatorStateMachine animatorStateMachine = new AnimatorStateMachine();
+            for(int i = 0; i<4; i++)
+            {
+                AnimatorState animatorState = new AnimatorState();
+                animatorState.motion = animations[i].GetAnimationClip(type);
+                animatorStateMachine.AddState(animatorState,new Vector3(1,i,0));
+                animatorState.AddExitTransition();
+            }
+            return animatorStateMachine;
+        }
+
+        public override AnimatorState GetState(Type type, int tileWidth = 1)
+        {
+            throw new Exception("Directional Animation is not collapable");
         }
     }
 
     [Serializable]
     public class VaraintAnimation : Animation
     {
-        public AnimationElement[] animations;
+        public Animation[] animations;
 
-        public override AnimationClip GetAnimationClip(Type type)
+        public override AnimationClip GetAnimationClip(Type type, int tileWidth)
         {
-            return base.GetAnimationClip(type);
+            return animations[0].GetAnimationClip(type,tileWidth);
+        }
+
+        public override AnimatorStateMachine GetStateMachine(Type type, int tileWidth = 1)
+        {
+            AnimatorStateMachine animatorStateMachine = new AnimatorStateMachine();
+            for (int i = 0; i < 4; i++)
+            {
+                AnimatorState animatorState = new AnimatorState();
+                animatorState.motion = animations[i].GetAnimationClip(type);
+                animatorStateMachine.AddState(animatorState, new Vector3(1, i, 0));
+                animatorState.AddExitTransition();
+            }
+            return animatorStateMachine;
+        }
+
+        public override AnimatorState GetState(Type type, int tileWidth = 1)
+        {
+            int randomInt = UnityEngine.Random.Range(0, animations.Length - 1);
+            Debug.LogError("Variant Animation is being collaped to index " + randomInt);
+
+            AnimatorState animatorState = new AnimatorState();
+            animatorState.motion = animations[randomInt].GetAnimationClip(type, tileWidth);
+            animatorState.name = name;
+
+            return animatorState;
         }
     }
 
@@ -151,9 +215,9 @@ namespace mapEditor.animations
     {
         int numTileWidth = 1;
         public override Sprite Current => SaveSystem.LoadPNG(sprites[curIndex], Vector2.one / 2f, numTileWidth);
-        public override AnimationClip GetAnimationClip(Type type)
+        public override AnimationClip GetAnimationClip(Type type, int tileWidth = 1)
         {
-            return base.GetAnimationClip(type);
+            return base.GetAnimationClip(type,numTileWidth);
         }
     } 
 }

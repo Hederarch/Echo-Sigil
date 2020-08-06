@@ -1,10 +1,12 @@
-﻿using System;
+﻿using mapEditor;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [Serializable]
-public class Map 
+public class Map
 {
     //map data
     public int sizeX;
@@ -15,15 +17,17 @@ public class Map
     public List<MapImplement> units;
     internal string path = null;
 
-    public Map(int sizeX, int sizeY, bool addUnit = false) : this(new Vector2Int(sizeX,sizeY),addUnit) { }
+    public Map(int sizeX, int sizeY, string path = null) : this(new Vector2Int(sizeX, sizeY), path) { }
 
-    public Map(Vector2Int vectorSize, bool addUnit = false)
+    public Map(Vector2Int vectorSize, string path = null)
     {
         sizeX = vectorSize.x;
         sizeY = vectorSize.y;
         heightMap = new float[sizeX, sizeY];
         walkableMap = new bool[sizeX, sizeY];
         spriteIndexMap = new int[sizeX, sizeY];
+
+        this.path = path == null ? Application.dataPath + "/Quests/Tests/Default.headrap" : path;
 
         for (int x = 0; x < sizeX; x++)
         {
@@ -34,32 +38,27 @@ public class Map
                 spriteIndexMap[x, y] = 0;
             }
         }
-
-        if (addUnit)
-        {
-            units = new List<MapImplement>
-            {
-                new MapImplement(sizeX / 2, sizeY / 2)
-            };
-        }
     }
 
-    public Map(Tile[,] tiles, Unit[] units = null)
+    public Map(Tile[,] tiles, Unit[] units = null, string path = null)
     {
-        sizeX = tiles.GetLength(0); 
+        sizeX = tiles.GetLength(0);
         sizeY = tiles.GetLength(1);
         heightMap = new float[sizeX, sizeY];
         walkableMap = new bool[sizeX, sizeY];
         spriteIndexMap = new int[sizeX, sizeY];
 
+        this.path = path == null ? Application.dataPath + "/Quests/Tests/Default.headrap" : path;
+
         for (int x = 0; x < sizeX; x++)
         {
             for (int y = 0; y < sizeY; y++)
             {
-                if (tiles[x, y] != null) { 
-                heightMap[x, y] = tiles[x, y].height;
-                walkableMap[x, y] = tiles[x, y].walkable;
-                spriteIndexMap[x, y] = tiles[x, y].spriteIndex;
+                if (tiles[x, y] != null)
+                {
+                    heightMap[x, y] = tiles[x, y].height;
+                    walkableMap[x, y] = tiles[x, y].walkable;
+                    spriteIndexMap[x, y] = tiles[x, y].spriteIndex;
                 }
                 else
                 {
@@ -76,19 +75,7 @@ public class Map
             {
                 TacticsMove t = i.move as TacticsMove;
                 JRPGBattle j = i.battle as JRPGBattle;
-                MapImplement mapImplement = new MapImplement(
-                    t.currentTile.PosInGrid,
-                    i is PlayerUnit,
-                    i.name,
-                    t.moveDistance,
-                    t.jumpHeight,
-                    j.reach,
-                    t.moveSpeed,
-                    j.health,
-                    j.will,
-                    j.maxHealth,
-                    j.maxWill,
-                    j.abilites);
+                MapImplement mapImplement = new MapImplement(t.currentTile.PosInGrid, t, j, i is PlayerUnit, i.implementListIndex);
                 this.units.Add(mapImplement);
             }
         }
@@ -96,107 +83,135 @@ public class Map
 
     public Tile SetTileProperties(int x, int y)
     {
-        Tile tile = new Tile(x,y)
+        Tile tile = new Tile(x, y)
         {
             height = heightMap[x, y],
-            walkable = walkableMap[x,y],
-            spriteIndex = spriteIndexMap[x,y]
+            walkable = walkableMap[x, y],
+            spriteIndex = spriteIndexMap[x, y]
         };
         return tile;
     }
 
 }
 [Serializable]
-public class MapImplement
+public struct MapImplement
 {
-    public string name;
+    public int implementListIndex;
+    public string GetName(ImplementList implementList) => implementList.implements[implementListIndex].name;
 
     public int posX;
     public int posY;
+    public Vector2Int PosInGrid { get => new Vector2Int(posX, posY); set => SetPos(value); }
+    private void SetPos(Vector2Int value)
+    {
+        posX = value.x;
+        posY = value.y;
+    }
+
     public bool player;
 
-    //movement
-    public int moveDistance;
-    public float moveSpeed;
-    public float jumpHeight;
+    public MovementSettings movementSettings;
+    public BattleSettings battleSettings;
 
-    //battle
-    public int health;
-    public int maxHealth;
-    public int will;
-    public int maxWill;
-    public int reach;
-    //should this really be here?
-    public Ability[] abilities;
+    public struct MovementSettings
+    {
+        public int distance;
+        public float speed;
+        public float jumpHeight;
 
-    public MapImplement(int x,
-                        int y,
-                        bool player = true,
-                        string name = "Unit",
-                        int moveDistance = 3,
-                        float jumpHeight = 2,
-                        int reach = 1,
-                        float moveSpeed = 4,
-                        int health = 3,
-                        int will = 5,
-                        int maxHealth = 5,
-                        int maxWill = 5,
-                        List<Ability> abilities = null
-                        )
+        public MovementSettings(int distance, float speed, float jumpHeight)
+        {
+            this.distance = distance;
+            this.speed = speed;
+            this.jumpHeight = jumpHeight;
+        }
+
+        public MovementSettings(TacticsMove tacticsMove)
+        {
+            distance = tacticsMove.moveDistance;
+            speed = tacticsMove.moveSpeed;
+            jumpHeight = tacticsMove.jumpHeight;
+        }
+
+        public static implicit operator MovementSettings(TacticsMove tacticsMove) => new MovementSettings(tacticsMove);
+
+    }
+
+    public struct BattleSettings
+    {
+        public int health;
+        public int maxHealth;
+        public int will;
+        public int maxWill;
+        public int reach;
+
+        public Ability[] abilities;
+        public int[] abilityAnimationIndex;
+
+        public BattleSettings(int maxHealth, int maxWill, int reach, Ability[] abilities = null, int[] indexes = null)
+        {
+            health = maxHealth;
+            this.maxHealth = maxHealth;
+            will = maxWill;
+            this.maxWill = maxWill;
+            this.reach = reach;
+            this.abilities = abilities;
+            abilityAnimationIndex = indexes;
+        }
+
+        public BattleSettings(int health, int maxHealth, int will, int maxWill, int reach, Ability[] abilities = null, int[] indexes = null)
+        {
+            this.health = health;
+            this.maxHealth = maxHealth;
+            this.will = will;
+            this.maxWill = maxWill;
+            this.reach = reach;
+            this.abilities = abilities;
+            abilityAnimationIndex = indexes;
+        }
+
+        public BattleSettings(JRPGBattle jRPGBattle)
+        {
+            health = jRPGBattle.health;
+            maxHealth = jRPGBattle.maxHealth;
+            will = jRPGBattle.will;
+            maxWill = jRPGBattle.maxWill;
+            reach = jRPGBattle.reach;
+
+            abilities = jRPGBattle.abilites != null ? jRPGBattle.abilites.Keys.ToArray() : null;
+            abilityAnimationIndex = jRPGBattle.abilites != null ? new int[jRPGBattle.abilites.Count] : null;
+
+        }
+
+        public static implicit operator BattleSettings(JRPGBattle jRPGBattle) => new BattleSettings(jRPGBattle);
+    }
+
+    public MapImplement(int x, int y, MovementSettings movementSettings, BattleSettings battleSettings, bool player = true, int index = 0)
     {
         posX = x;
         posY = y;
 
         this.player = player;
-        this.name = name;
-        this.moveDistance = moveDistance;
-        this.moveSpeed = moveSpeed;
-        this.jumpHeight = jumpHeight;
-        this.health = health;
-        this.maxHealth = maxHealth;
-        this.will = will;
-        this.maxWill = maxWill;
-        this.reach = reach;
-        if(abilities != null)
-        {
-            this.abilities = abilities.ToArray();
-        } else
-        {
-            this.abilities = null;
-        }
+        implementListIndex = index;
+
+        this.movementSettings = movementSettings;
+        this.battleSettings = battleSettings;
 
     }
 
-    public MapImplement(
-        Vector2Int posInGrid,
-        bool player = true,
-        string name = "Unit",
-        int moveDistance = 3,
-        float jumpHeight = 2,
-        int reach = 1,
-        float moveSpeed = 4,
-        int health = 3,
-        int will = 5,
-        int maxHealth = 5,
-        int maxWill = 5,
-        List<Ability> abilities = null) :
-        this(posInGrid.x,
-             posInGrid.y,
-             player,
-             name,
-             moveDistance,
-             jumpHeight,
-             reach,
-             moveSpeed,
-             health,
-             will,
-             maxHealth,
-             maxWill,
-             abilities)
+    public MapImplement(Vector2Int posInGrid, MovementSettings movementSettings, BattleSettings battleSettings, bool player = true, int index = 0) :
+        this(posInGrid.x, posInGrid.y, movementSettings, battleSettings, player, index)
     { }
 
-    public Vector2Int PosInGrid()
+    public MapImplement(Vector2Int posInGrid)
     {
-        return new Vector2Int(posX, posY);
+        posX = posInGrid.x;
+        posY = posInGrid.y;
+
+        player = false;
+        implementListIndex = 0;
+
+        movementSettings = new MovementSettings(5, 1, 2);
+        battleSettings = new BattleSettings(5, 5, 1);
     }
 }

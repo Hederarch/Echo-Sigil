@@ -13,7 +13,7 @@ public class EditorTile : MonoBehaviour
         posInGrid = CorrectGridSize(posInGrid);
         Tile tile = new Tile(posInGrid);
         MapReader.tiles[posInGrid.x, posInGrid.y] = tile;
-        MapReader.GeneratePhysicalMap(MapReader.spritePallate, MapReader.Map);
+        MapReader.GeneratePhysicalMap(MapReader.Map);
     }
     /// <summary>
     /// Changes the size of a tile array to allow a position to exist

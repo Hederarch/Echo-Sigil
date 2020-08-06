@@ -42,7 +42,7 @@ public class MainMenuScript : MonoBehaviour
 
     void LoadMap(Map map)
     {
-        MapReader.GeneratePhysicalMap(SaveSystem.LoadPallate(Directory.GetParent(map.path).FullName), map);
+        MapReader.GeneratePhysicalMap(map);
     }
 
     public void MapEditor()
