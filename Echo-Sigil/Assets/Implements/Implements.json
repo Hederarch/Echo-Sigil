@@ -44,7 +44,11 @@
                         "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Walk South/5.png"
                     ]
                 }
-            ]
+            ],
+            "walkIndex": 0,
+            "attackIndex": 0,
+            "idelIndex": 0,
+            "fidgetIndex": 0
         }
     ]
 }
