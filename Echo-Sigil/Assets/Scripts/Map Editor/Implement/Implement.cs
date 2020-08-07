@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
 
@@ -78,49 +79,96 @@ namespace mapEditor
 
         internal void SetSecondayColor(Color obj) => SecondaryColor = obj;
 
-        public AnimatorController GetAnimationController(Dictionary<Ability, int> abilityDictionary = null)
+        public AnimatorController GetAnimationController(string modPath, Dictionary<Ability, int> abilityDictionary = null)
         {
-            if (!CheckIfAllAnimationIndexInArray(abilityDictionary))
-            {
-                throw new IndexOutOfRangeException();
-            }
-
             AnimatorController animator = new AnimatorController();
             animator.AddLayer("Base");
             animator.AddParameter("Direction", AnimatorControllerParameterType.Int);
             AnimatorStateMachine stateMachine = animator.layers[0].stateMachine;
-            stateMachine.AddState(animations[idelIndex].GetState(typeof(SpriteRenderer)),new Vector3(1,0,0));
-            
-
+            if (!ClampAnimationIndex(abilityDictionary))
+            {
+                stateMachine.AddState(GetAnimatorStateOfBaseSprite(modPath),Vector3.zero);
+            }
+            else
+            {
+                stateMachine.AddState(animations[idelIndex].GetState(typeof(SpriteRenderer)), new Vector3(1, 0, 0));
+            }
             return animator;
         }
 
-        private bool CheckIfAllAnimationIndexInArray(Dictionary<Ability, int> abilityDictionary = null)
+        private bool ClampAnimationIndex(Dictionary<Ability, int> abilityDictionary = null)
         {
             int length = animations.Length;
-            bool upperRequired = length >= walkIndex ||
-                        length >= attackIndex ||
-                        length >= idelIndex ||
-                        length >= fidgetIndex;
-            bool lowerRequired = 0 > walkIndex ||
-                        0 > attackIndex ||
-                        0 > idelIndex ||
-                        0 > fidgetIndex;
-            bool abilityProblem = false;
-            if(abilityDictionary != null)
+            if (length > 0)
             {
-                foreach (KeyValuePair<Ability,int> iKey in abilityDictionary)
+                //Upper Bounds
+                walkIndex = length <= walkIndex ? length - 1 : walkIndex;
+                attackIndex = length <= attackIndex ? length - 1 : attackIndex;
+                idelIndex = length <= idelIndex ? length - 1 : idelIndex;
+                fidgetIndex = length <= fidgetIndex ? length - 1 : fidgetIndex;
+
+                //lowerbounds
+                walkIndex = 0 > walkIndex ? 0 : walkIndex;
+                attackIndex = 0 > attackIndex ? 0 : attackIndex;
+                idelIndex = 0 > idelIndex ? 0 : idelIndex;
+                fidgetIndex = 0 > fidgetIndex ? 0 : fidgetIndex;
+
+                if (abilityDictionary != null)
                 {
-                    int i = iKey.Value;
-                    if(length >= i || 0 > i)
+                    foreach (KeyValuePair<Ability, int> iKey in abilityDictionary)
                     {
-                        abilityProblem = true;
+                        int i = iKey.Value;
+                        if (length <= i)
+                        {
+                            abilityDictionary[iKey.Key] = length - 1;
+                        }
+                        else if (0 > i)
+                        {
+                            abilityDictionary[iKey.Key] = 0;
+                        }
                     }
                 }
+                return true;
             }
-            bool finalCheck = upperRequired || lowerRequired || abilityProblem;
-            return !finalCheck;
+            else
+            {
+                Debug.LogError("No amimations for " + name + " found on file");
+                return false;
+            }
+        }
 
+        private AnimatorState GetAnimatorStateOfBaseSprite(string modPath)
+        {
+            AnimationClip clip = new AnimationClip
+            {
+                name = "Base Sprite",
+            };
+
+            AnimationClipSettings settings = AnimationUtility.GetAnimationClipSettings(clip);
+            settings.loopTime = true;
+            AnimationUtility.SetAnimationClipSettings(clip, settings);
+
+            EditorCurveBinding spriteBinding = new EditorCurveBinding
+            {
+                type = typeof(SpriteRenderer),
+                path = "",
+                propertyName = "m_Sprite"
+            };
+
+            ObjectReferenceKeyframe[] spriteKeyFrames = new ObjectReferenceKeyframe[1];
+            spriteKeyFrames[0] = new ObjectReferenceKeyframe
+            {
+                time = 0,
+                value = GetBaseSprite(modPath)
+            };
+
+            AnimationUtility.SetObjectReferenceCurve(clip, spriteBinding, spriteKeyFrames);
+
+            AnimatorState animatorState = new AnimatorState();
+            animatorState.motion = clip;
+            animatorState.name = clip.name;
+
+            return animatorState;
         }
     }
     [Serializable]

@@ -299,6 +299,7 @@ namespace mapEditor
         public Transform animationHolderTransform;
         public GameObject animationSelectionObject;
         public GameObject animationAddObject;
+        public GameObject animationAttachmentObject;
         private List<AnimationElement> animationList = new List<AnimationElement>();
 
         private void PopulateAnimation()
@@ -315,11 +316,52 @@ namespace mapEditor
                     animation.index = i;
                     animation.DestroyEvent += DestroyAnimation;
                     animation.Initalize(animations[i]);
+                    PopulateAnimationAttachments(i, animation);
                 }
             }
             Instantiate(animationAddObject, animationHolderTransform).GetComponent<Button>().onClick.AddListener(call: AddAnimation);
             animationsObject.SetActive(true);
         }
+
+        private void PopulateAnimationAttachments(int index, AnimationElement animation)
+        {
+            if(selectedImplementList.implements[selectedImplementIndex].idelIndex == index)
+            {
+                InstantiateAnimationAttachment(animation, "Idel");
+            }
+            if (selectedImplementList.implements[selectedImplementIndex].attackIndex == index)
+            {
+                InstantiateAnimationAttachment(animation, "Attack");
+            }
+            if (selectedImplementList.implements[selectedImplementIndex].fidgetIndex == index)
+            {
+                InstantiateAnimationAttachment(animation, "Fidget");
+            }
+            if (selectedImplementList.implements[selectedImplementIndex].walkIndex == index)
+            {
+                InstantiateAnimationAttachment(animation, "Walk");
+            }
+            if (selectedUnit != null && false)
+            {
+                foreach (KeyValuePair<Ability,int> AKey in (selectedUnit.battle as JRPGBattle).abilites)
+                {
+                    if(AKey.Value == index)
+                    {
+                        InstantiateAnimationAttachment(animation, AKey.Key.name);
+                        return;
+                    }
+                } 
+            }
+        }
+
+        private Attachment InstantiateAnimationAttachment(AnimationElement animation, string name)
+        {
+            GameObject attachmentObject = Instantiate(animationAttachmentObject, animation.attachmentHolderTransform);
+            Attachment attachment = attachmentObject.GetComponent<Attachment>();
+            attachment.text.text = name;
+            return attachment;
+        }
+
         private void AddAnimation()
         {
             DisableAllWindows();

@@ -70,7 +70,6 @@ namespace mapEditor.animations
             {
                 name = name,
                 frameRate = framerate,
-                wrapMode = WrapMode.Loop
             };
 
             AnimationClipSettings settings = AnimationUtility.GetAnimationClipSettings(clip);

@@ -101,14 +101,11 @@ public static class MapReader
         spriteRender.transform.localPosition = new Vector3(0, 0, .1f);
         SpriteRenderer spriteRenderer = spriteRender.AddComponent<SpriteRenderer>();
         i.unitSprite = spriteRenderer;
-        
+        spriteRender.AddComponent<Animator>().runtimeAnimatorController = implementList.implements[mi.implementListIndex].GetAnimationController(implementList.modPath);
         spriteRenderer.spriteSortPoint = SpriteSortPoint.Pivot;
         spriteRender.AddComponent<BoxCollider2D>().size = new Vector3(1, 1, .2f);
 
         implements.Add(i);
-
-        //down here in case it fails
-        spriteRender.AddComponent<Animator>().runtimeAnimatorController = implementList.implements[mi.implementListIndex].GetAnimationController();
 
         return i;
     }

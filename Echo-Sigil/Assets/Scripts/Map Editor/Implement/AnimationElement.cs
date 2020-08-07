@@ -59,6 +59,8 @@ namespace mapEditor.animations
         public event Action<int> DestroyEvent;
         public int index;
 
+        public Transform attachmentHolderTransform;
+
         public void Initalize(Animation animation)
         {
             nameField.text = animation.name;
