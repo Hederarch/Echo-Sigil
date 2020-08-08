@@ -55,6 +55,7 @@ namespace mapEditor
                 else if (animationsObject.activeInHierarchy)
                 {
                     implement.animations = SaveAnimations(selectedImplementList.ImplementPath(selectedImplementIndex));
+                    implement = SetAnimationIdexes(implement);
                 }
                 else if (splashObject.activeInHierarchy)
                 {
@@ -75,6 +76,8 @@ namespace mapEditor
                 SaveSystem.SaveImplmentList(selectedImplementList);
             }
         }
+
+
 
         /// <summary>
         /// Turns off all windows and saves game
@@ -144,8 +147,8 @@ namespace mapEditor
         public GameObject implementModHolderObject;
         public GameObject implementSelectionObject;
         public GameObject newImplementSelectionObject;
-        private List<Button> implementButtons = new List<Button>();
-        public event Action<ImplementList, int> SelectionEvent;
+        private static List<Button> implementButtons = new List<Button>();
+        public static event Action<ImplementList, int> SelectionEvent;
 
         private void UnsubscribeSelectionElements()
         {
@@ -300,7 +303,9 @@ namespace mapEditor
         public GameObject animationSelectionObject;
         public GameObject animationAddObject;
         public GameObject animationAttachmentObject;
-        private List<AnimationElement> animationList = new List<AnimationElement>();
+        public static List<AnimationElement> AnimationElements => animationList;
+        private static List<AnimationElement> animationList = new List<AnimationElement>();
+        private static List<Attachment> attachments = new List<Attachment>();
 
         private void PopulateAnimation()
         {
@@ -309,7 +314,7 @@ namespace mapEditor
             {
                 animations.Animation[] animations = selectedImplementList.implements[selectedImplementIndex].animations;
 
-                for(int i = 0; i < animations.Length; i++)
+                for (int i = 0; i < animations.Length; i++)
                 {
                     AnimationElement animation = Instantiate(animationSelectionObject, animationHolderTransform).GetComponent<AnimationElement>();
                     animationList.Add(animation);
@@ -325,40 +330,42 @@ namespace mapEditor
 
         private void PopulateAnimationAttachments(int index, AnimationElement animation)
         {
-            if(selectedImplementList.implements[selectedImplementIndex].idelIndex == index)
+            if (selectedImplementList.implements[selectedImplementIndex].idelIndex == index)
             {
-                InstantiateAnimationAttachment(animation, "Idel");
+                InstantiateAnimationAttachment(animation, "Idel", index);
             }
             if (selectedImplementList.implements[selectedImplementIndex].attackIndex == index)
             {
-                InstantiateAnimationAttachment(animation, "Attack");
+                InstantiateAnimationAttachment(animation, "Attack", index);
             }
             if (selectedImplementList.implements[selectedImplementIndex].fidgetIndex == index)
             {
-                InstantiateAnimationAttachment(animation, "Fidget");
+                InstantiateAnimationAttachment(animation, "Fidget", index);
             }
             if (selectedImplementList.implements[selectedImplementIndex].walkIndex == index)
             {
-                InstantiateAnimationAttachment(animation, "Walk");
+                InstantiateAnimationAttachment(animation, "Walk", index);
             }
             if (selectedUnit != null && false)
             {
-                foreach (KeyValuePair<Ability,int> AKey in (selectedUnit.battle as JRPGBattle).abilites)
+                foreach (KeyValuePair<Ability, int> AKey in (selectedUnit.battle as JRPGBattle).abilites)
                 {
-                    if(AKey.Value == index)
+                    if (AKey.Value == index)
                     {
-                        InstantiateAnimationAttachment(animation, AKey.Key.name);
+                        InstantiateAnimationAttachment(animation, AKey.Key.name, index);
                         return;
                     }
-                } 
+                }
             }
         }
 
-        private Attachment InstantiateAnimationAttachment(AnimationElement animation, string name)
+        private Attachment InstantiateAnimationAttachment(AnimationElement animation, string name, int index)
         {
             GameObject attachmentObject = Instantiate(animationAttachmentObject, animation.attachmentHolderTransform);
             Attachment attachment = attachmentObject.GetComponent<Attachment>();
-            attachment.text.text = name;
+            attachment.Name = name;
+            attachment.index = index;
+            attachments.Add(attachment);
             return attachment;
         }
 
@@ -369,7 +376,7 @@ namespace mapEditor
             int length = selectedAnimations.Length;
             animations.Animation[] animations = new animations.Animation[length + 1];
             selectedAnimations.CopyTo(animations, 0);
-            animations[length] = new animations.Animation(SaveSystem.LoadPNG(Vector2.one/2f),selectedImplementList.ImplementPath(selectedImplementIndex));
+            animations[length] = new animations.Animation(SaveSystem.LoadPNG(Vector2.one / 2f), selectedImplementList.ImplementPath(selectedImplementIndex));
             selectedImplementList.implements[selectedImplementIndex].animations = animations;
             PopulateAnimation();
         }
@@ -390,6 +397,7 @@ namespace mapEditor
         private void UnsubsubscribeAnimation()
         {
             animationList.Clear();
+            attachments.Clear();
             foreach (Transform t in animationHolderTransform)
             {
                 if (TryGetComponent(out AnimationElement a))
@@ -403,6 +411,42 @@ namespace mapEditor
 
                 Destroy(t.gameObject);
             }
+        }
+        private Implement SetAnimationIdexes(Implement implement)
+        {
+            foreach(Attachment attachment in attachments)
+            {
+                if (attachment.Name == "Idel")
+                {
+                    implement.idelIndex = attachment.index;
+                }
+                else if (attachment.Name == "Attack")
+                {
+                    implement.attackIndex = attachment.index;
+                }
+                else if (attachment.Name == "Fidget")
+                {
+                    implement.fidgetIndex = attachment.index;
+                }
+                else if (attachment.Name == "Walk")
+                {
+                    implement.walkIndex = attachment.index;
+                }
+                else if (selectedUnit != null && false)
+                {
+                    Dictionary<Ability, int> abilites = (selectedUnit.battle as JRPGBattle).abilites;
+                    foreach (KeyValuePair<Ability, int> AKey in abilites)
+                    {
+                        if (attachment.Name == AKey.Key.name)
+                        {
+                            abilites[AKey.Key] = attachment.index;
+                            break;
+                        }
+                    }
+                }
+
+            }
+            return implement;
         }
 
         //Ability
@@ -429,7 +473,11 @@ namespace mapEditor
         {
             if (windowObject.activeInHierarchy)
             {
-                if (Input.GetKeyDown(KeyCode.Escape))
+                if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.S)) 
+                {
+                    Save();
+                }
+                else if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     CloseWindow();
                 }
