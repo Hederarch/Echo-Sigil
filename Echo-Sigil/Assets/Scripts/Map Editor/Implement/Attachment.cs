@@ -10,6 +10,11 @@ namespace mapEditor.animations
         public string Name { get => text.text; set => text.text = value; }
         private bool selected;
         public int index;
+        public bool Directional
+        {
+            get => directionalIcon.color == Color.white; set => directionalIcon.color = value ? Color.white : Color.black;
+        }
+        public Image directionalIcon;
 
         private void Update()
         {
@@ -43,12 +48,13 @@ namespace mapEditor.animations
             {
                 float distance = Vector3.Distance(transform.position, animationElement.attachmentHolderTransform.position);
                 Debug.DrawLine(transform.position, animationElement.attachmentHolderTransform.position);
-                if (minDistance > distance)
+                if (minDistance > distance && (!Directional || (Directional && animationElement.Directional)))
                 {
                     minDistance = distance;
                     minElement = animationElement;
                 }
             }
+            minElement = minElement == null ? ImplementEditor.AnimationElements[0] : minElement;
             return minElement;
         }
     }

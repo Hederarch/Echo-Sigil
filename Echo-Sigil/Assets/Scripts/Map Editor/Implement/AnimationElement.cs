@@ -19,7 +19,7 @@ namespace mapEditor.animations
         public InputField nameField;
         public InputField FPSField;
         public Animator previewAnimatior;
-        bool Directional
+        public bool Directional
         {
             get => directionalIcon.colors.normalColor == Color.white; set
             {
@@ -29,7 +29,7 @@ namespace mapEditor.animations
             }
         }
         public Button directionalIcon;
-        bool Variant
+        public bool Variant
         {
             get => variantIcon.colors.normalColor == Color.white; set
             {
@@ -39,7 +39,7 @@ namespace mapEditor.animations
             }
         }
         public Button variantIcon;
-        bool MultiTile
+        public bool MultiTile
         {
             get => multiTileIcon.colors.normalColor == Color.white; set
             {
@@ -108,8 +108,6 @@ namespace mapEditor.animations
             newSpriteButton.transform.SetAsLastSibling();
             ResetPreview();
         }
-
-
 
         private void ChangeSprite(int index, Sprite sprite)
         {
@@ -187,7 +185,6 @@ namespace mapEditor.animations
             }
             return sprites;
         }
-
 
         private void ResetPreview()
         {

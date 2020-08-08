@@ -24,6 +24,7 @@ namespace mapEditor
 
         private void ChangeWindow(int arg0)
         {
+            Save();
             DisableAllWindows();
             switch (arg0)
             {
@@ -344,7 +345,7 @@ namespace mapEditor
             }
             if (selectedImplementList.implements[selectedImplementIndex].walkIndex == index)
             {
-                InstantiateAnimationAttachment(animation, "Walk", index);
+                InstantiateAnimationAttachment(animation, "Walk", index).Directional = true;
             }
             if (selectedUnit != null && false)
             {

@@ -61,12 +61,19 @@
                         "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/10.png",
                         "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/11.png"
                     ]
+                },
+                {
+                    "name": "Idel",
+                    "framerate": 12,
+                    "sprites": [
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Idel/0.png"
+                    ]
                 }
             ],
             "walkIndex": 0,
             "attackIndex": 2,
-            "idelIndex": 0,
-            "fidgetIndex": 0
+            "idelIndex": 3,
+            "fidgetIndex": 1
         }
     ]
 }
