@@ -1,7 +1,6 @@
 ﻿using mapEditor.animations;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -313,16 +312,16 @@ namespace mapEditor
             UnsubsubscribeAnimation();
             if (selectedImplementList != null && selectedImplementList.implements[selectedImplementIndex].animations != null)
             {
-                animations.Animation[] animations = selectedImplementList.implements[selectedImplementIndex].animations;
+                IAnimation[] animations = selectedImplementList.implements[selectedImplementIndex].animations;
 
                 for (int i = 0; i < animations.Length; i++)
                 {
-                    AnimationElement animation = Instantiate(animationSelectionObject, animationHolderTransform).GetComponent<AnimationElement>();
-                    animationList.Add(animation);
-                    animation.index = i;
-                    animation.DestroyEvent += DestroyAnimation;
-                    animation.Initalize(animations[i]);
-                    PopulateAnimationAttachments(i, animation);
+                    AnimationElement animationElement = Instantiate(animationSelectionObject, animationHolderTransform).GetComponent<AnimationElement>();
+                    animationList.Add(animationElement);
+                    animationElement.index = i;
+                    animationElement.DestroyEvent += DestroyAnimation;
+                    animationElement.Initalize((animations.Animation)animations[i]);
+                    PopulateAnimationAttachments(i, animationElement);
                 }
             }
             Instantiate(animationAddObject, animationHolderTransform).GetComponent<Button>().onClick.AddListener(call: AddAnimation);
@@ -373,9 +372,9 @@ namespace mapEditor
         private void AddAnimation()
         {
             DisableAllWindows();
-            animations.Animation[] selectedAnimations = selectedImplementList.implements[selectedImplementIndex].animations;
+            IAnimation[] selectedAnimations = selectedImplementList.implements[selectedImplementIndex].animations;
             int length = selectedAnimations.Length;
-            animations.Animation[] animations = new animations.Animation[length + 1];
+            IAnimation[] animations = new IAnimation[length + 1];
             selectedAnimations.CopyTo(animations, 0);
             animations[length] = new animations.Animation(SaveSystem.LoadPNG(Vector2.one / 2f), selectedImplementList.ImplementPath(selectedImplementIndex));
             selectedImplementList.implements[selectedImplementIndex].animations = animations;
@@ -386,12 +385,12 @@ namespace mapEditor
             animationList.Remove(animationList[index]);
             ChangeWindow(2);
         }
-        private animations.Animation[] SaveAnimations(string implmentPath)
+        private IAnimation[] SaveAnimations(string implmentPath)
         {
-            List<animations.Animation> animations = new List<animations.Animation>();
+            List<IAnimation> animations = new List<IAnimation>();
             foreach (AnimationElement a in animationList)
             {
-                animations.Add(a.Save());
+                animations.Add(a.CurrentSpritesAsAnimation());
             }
             return animations.ToArray();
         }

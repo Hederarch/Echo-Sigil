@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Animations;
@@ -18,7 +17,7 @@ namespace mapEditor
         public string description;
         public float[] primaryColor;
         public float[] secondaryColor;
-        public animations.Animation[] animations;
+        public animations.IAnimation[] animations;
 
         public int walkIndex;
         public int attackIndex;
@@ -46,25 +45,14 @@ namespace mapEditor
             power = "";
             type = -1;
             description = "";
-            animations = new animations.Animation[0];
+            animations = new animations.IAnimation[0];
             walkIndex = 0;
             attackIndex = 0;
             idelIndex = 0;
             fidgetIndex = 0;
         }
 
-        public static Implement SetUnitColors(Implement unit, Color primaryColor, Color secondaryColor)
-        {
-            unit.primaryColor[0] = primaryColor.r;
-            unit.primaryColor[1] = primaryColor.g;
-            unit.primaryColor[2] = primaryColor.b;
-            unit.secondaryColor[0] = secondaryColor.r;
-            unit.secondaryColor[1] = secondaryColor.g;
-            unit.secondaryColor[2] = secondaryColor.b;
-            return unit;
-        }
-
-        public Implement SetUnitColors(Color primaryColor, Color secondaryColor)
+        public void SetUnitColors(Color primaryColor, Color secondaryColor)
         {
             this.primaryColor[0] = primaryColor.r;
             this.primaryColor[1] = primaryColor.g;
@@ -72,12 +60,7 @@ namespace mapEditor
             this.secondaryColor[0] = secondaryColor.r;
             this.secondaryColor[1] = secondaryColor.g;
             this.secondaryColor[2] = secondaryColor.b;
-            return this;
         }
-
-        internal void SetPrimaryColor(Color obj) => PrimaryColor = obj;
-
-        internal void SetSecondayColor(Color obj) => SecondaryColor = obj;
 
         public AnimatorController GetAnimationController(string modPath, Dictionary<Ability, int> abilityDictionary = null)
         {
@@ -91,7 +74,7 @@ namespace mapEditor
             }
             else
             {
-                stateMachine.AddState(animations[idelIndex].GetState(typeof(SpriteRenderer)), new Vector3(1, 0, 0));
+                stateMachine.AddState(animations[idelIndex].GetAnimatorState(typeof(SpriteRenderer)), new Vector3(1, 0, 0));
             }
             return animator;
         }
