@@ -120,6 +120,8 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 2167504179701178099}
+  attachmentSizeIncrese: 1.5
+  attachedSizeIncrese: 1.1
   text: {fileID: 7671842701431043065}
   index: 0
   directionalIcon: {fileID: 6212556647791648146}

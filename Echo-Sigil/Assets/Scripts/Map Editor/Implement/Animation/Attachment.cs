@@ -6,6 +6,8 @@ namespace mapEditor.animations
 {
     public class Attachment : Selectable
     {
+        public float attachmentSizeIncrese = 2f;
+        public float attachedSizeIncrese = 1.1f;
         public Text text;
         public string Name { get => text.text; set => text.text = value; }
         private bool selected;
@@ -15,18 +17,35 @@ namespace mapEditor.animations
             get => directionalIcon.color == Color.white; set => directionalIcon.color = value ? Color.white : Color.clear;
         }
         public Image directionalIcon;
+        Transform prevTransform;
 
         private void Update()
         {
             if (Input.GetMouseButton(0) && selected)
             {
-                transform.position = Input.mousePosition;
+                Drag(Input.mousePosition.y);
             }
+        }
+
+        private void Drag(float yPos)
+        {
+            Vector2 pos = transform.position;
+            pos.y = yPos;
+            transform.position = pos;
+            Transform elementTransform = FindClosestAnimationElement().transform;
+            if (prevTransform != null)
+            {
+                prevTransform.localScale = Vector3.one;
+            }
+            elementTransform.localScale = Vector3.one * attachedSizeIncrese;
+            prevTransform = elementTransform;
+
         }
 
         public override void OnPointerDown(PointerEventData eventData)
         {
             selected = true;
+            transform.localScale = Vector3.one * attachmentSizeIncrese;
             transform.SetParent(FindObjectOfType<Canvas>().transform);
             base.OnPointerDown(eventData);
         }
@@ -34,9 +53,11 @@ namespace mapEditor.animations
         public override void OnPointerUp(PointerEventData eventData)
         {
             selected = false;
+            transform.localScale = Vector3.one;
             AnimationElement animationElement = FindClosestAnimationElement();
             index = animationElement.index;
             transform.SetParent(animationElement.attachmentHolderTransform, false);
+            animationElement.transform.localScale = Vector3.one;
             base.OnPointerUp(eventData);
         }
 
@@ -46,9 +67,9 @@ namespace mapEditor.animations
             AnimationElement minElement = null;
             foreach (AnimationElement animationElement in ImplementEditor.AnimationElements)
             {
-                float distance = Vector3.Distance(transform.position, animationElement.attachmentHolderTransform.position);
-                Debug.DrawLine(transform.position, animationElement.attachmentHolderTransform.position);
-                if (minDistance > distance && (!Directional || (Directional && animationElement.Directional)))
+                float distance = animationElement.transform.position.y - transform.position.y;
+                
+                if (minDistance > Mathf.Abs(distance) && (!Directional || (Directional && animationElement.Directional)))
                 {
                     minDistance = distance;
                     minElement = animationElement;

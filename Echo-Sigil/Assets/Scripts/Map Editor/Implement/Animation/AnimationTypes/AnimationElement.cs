@@ -64,7 +64,6 @@ namespace mapEditor.animations
 
         public void Initalize(Animation animation)
         {
-            DeInitalize();
             GeneralInitialization(animation);
 
             ResetPreview();

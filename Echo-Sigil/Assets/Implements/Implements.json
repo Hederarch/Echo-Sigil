@@ -19,61 +19,10 @@
                 0.0,
                 0.0
             ],
-            "animations": [
-                {
-                    "name": "Walk",
-                    "framerate": 12,
-                    "sprites": [
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Walk/0.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Walk/1.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Walk/2.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Walk/3.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Walk/4.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Walk/5.png"
-                    ]
-                },
-                {
-                    "name": "Walk South",
-                    "framerate": 12,
-                    "sprites": [
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Walk South/0.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Walk South/1.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Walk South/2.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Walk South/3.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Walk South/4.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Walk South/5.png"
-                    ]
-                },
-                {
-                    "name": "Attack",
-                    "framerate": 12,
-                    "sprites": [
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/0.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/1.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/2.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/3.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/4.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/5.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/6.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/7.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/8.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/9.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/10.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/11.png"
-                    ]
-                },
-                {
-                    "name": "Idel",
-                    "framerate": 12,
-                    "sprites": [
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Idel/0.png"
-                    ]
-                }
-            ],
             "walkIndex": 0,
-            "attackIndex": 2,
-            "idelIndex": 3,
-            "fidgetIndex": 1
+            "attackIndex": 0,
+            "idelIndex": 0,
+            "fidgetIndex": 0
         }
     ]
 }
