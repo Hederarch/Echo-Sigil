@@ -21,6 +21,8 @@
             ],
             "saveAnimations": [
                 {
+                    "name": "Attack",
+                    "framerate": 12,
                     "sprites": [
                         "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/0.png",
                         "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/1.png",
@@ -32,9 +34,9 @@
                         "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/7.png",
                         "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/8.png",
                         "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/9.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/10.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/11.png"
-                    ]
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/10.png"
+                    ],
+                    "index": 0
                 }
             ],
             "saveDirectionalAnimations": [],

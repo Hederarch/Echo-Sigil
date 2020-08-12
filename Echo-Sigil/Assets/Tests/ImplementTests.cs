@@ -34,10 +34,5 @@ namespace Implement_Tests
     }
     class animations
     {
-        [Test]
-        public void animation_array_sorts_correctly()
-        {
-
-        }
     }
 }

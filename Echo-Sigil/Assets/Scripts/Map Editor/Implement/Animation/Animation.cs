@@ -25,9 +25,9 @@ namespace mapEditor.animations
     [Serializable]
     public struct Animation : IAnimation , IEnumerable<Sprite>, IEnumerator<Sprite>
     {
-        string name;
+        public string name;
         public string Name { get => name; set => name = value; }
-        int framerate;
+        public int framerate;
         public int Framerate { get => framerate; set => framerate = value; }
 
         public string[] sprites;
@@ -50,7 +50,7 @@ namespace mapEditor.animations
 
         object IEnumerator.Current => Current;
 
-        int index;
+        public int index;
         public int Index { get => index; set => index = value; }
 
         public Type Type => typeof(Animation);
@@ -169,12 +169,12 @@ namespace mapEditor.animations
     {
         public Animation[] animations;
 
-        string name;
+        public string name;
         public string Name { get => name; set => name = value; }
-        int framerate;
+        public int framerate;
         public int Framerate { get => framerate; set => framerate = value; }
 
-        int index;
+        public int index;
         public int Index { get => index; set => index = value; }
 
         public Type Type => typeof(DirectionalAnimation);
@@ -224,12 +224,12 @@ namespace mapEditor.animations
     {
         public Animation[] animations;
 
-        string name;
+        public string name;
         public string Name { get => name; set => name = value; }
-        int framerate;
+        public int framerate;
         public int Framerate { get => framerate; set => framerate = value; }
 
-        int index;
+        public int index;
         public int Index { get => index; set => index = value; }
 
         public Type Type => typeof(VaraintAnimation);
@@ -288,16 +288,16 @@ namespace mapEditor.animations
     [Serializable]
     public struct MultiTileAnimation : IAnimation, IEnumerable<Sprite>, IEnumerator<Sprite>
     {
-        int tileWidth;
+        public int tileWidth;
 
-        string name;
+        public string name;
         public string Name { get => name; set => name = value; }
-        int framerate;
+        public int framerate;
         public int Framerate { get => framerate; set => framerate = value; }
         public string[] sprites;
         int curIndex;
 
-        int index;
+        public int index;
         public int Index { get => index; set => index = value; }
 
         public Type Type => typeof(MultiTileAnimation);

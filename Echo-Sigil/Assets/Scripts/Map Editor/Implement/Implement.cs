@@ -159,9 +159,11 @@ namespace mapEditor
 
             AnimationUtility.SetObjectReferenceCurve(clip, spriteBinding, spriteKeyFrames);
 
-            AnimatorState animatorState = new AnimatorState();
-            animatorState.motion = clip;
-            animatorState.name = clip.name;
+            AnimatorState animatorState = new AnimatorState
+            {
+                motion = clip,
+                name = clip.name
+            };
 
             return animatorState;
         }

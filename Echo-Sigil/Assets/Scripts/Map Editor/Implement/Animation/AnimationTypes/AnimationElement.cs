@@ -13,7 +13,9 @@ namespace mapEditor.animations
         /// </summary>
         public static string ImplementPath;
         public InputField nameField;
+        public RectTransform nameFieldTransform;
         public InputField FPSField;
+        public RectTransform FPSFieldTransform;
         public Animator previewAnimatior;
 
         public bool Directional
@@ -26,7 +28,6 @@ namespace mapEditor.animations
             }
         }
         public Button directionalIcon;
-        public DirectionalButton directionalButton;
 
         public bool Variant
         {
@@ -50,6 +51,27 @@ namespace mapEditor.animations
         }
         public Button multiTileIcon;
         public InputField numTileField;
+        public RectTransform numTileFieldTransform;
+        public void ToggleMultiTile()
+        {
+            MultiTile = !MultiTile;
+            if (MultiTile)
+            {
+                numTileFieldTransform.gameObject.SetActive(true);
+                Vector2 offsetMax = nameFieldTransform.offsetMax;
+                offsetMax.x = -Math.Abs(FPSFieldTransform.rect.width + numTileFieldTransform.rect.width + 15);
+                nameFieldTransform.offsetMax = offsetMax;
+            }
+            else
+            {
+                numTileFieldTransform.gameObject.SetActive(false);
+                Vector2 offsetMax = nameFieldTransform.offsetMax;
+                offsetMax.x = -Math.Abs (FPSFieldTransform.rect.width + 10);
+                nameFieldTransform.offsetMax = offsetMax;
+            }
+        }
+
+        public bool Animation => !Directional && !Variant && !MultiTile;
 
         public Transform spritesHolderTransform;
         public GameObject spriteHodlerObject;
@@ -62,28 +84,59 @@ namespace mapEditor.animations
 
         public Transform attachmentHolderTransform;
 
-        public void Initalize(Animation animation)
+        public void Initalize(IAnimation animation)
         {
             GeneralInitialization(animation);
+            TypeSpesficInitialization(animation);
 
             ResetPreview();
         }
 
-        private void GeneralInitialization(Animation animation)
+        private void GeneralInitialization(IAnimation animation)
         {
             nameField.text = animation.Name;
             FPSField.text = animation.Framerate.ToString();
-            Directional = animation.GetType() == typeof(DirectionalAnimation);
-            Variant = animation.GetType() == typeof(VaraintAnimation);
-            MultiTile = animation.GetType() == typeof(MultiTileAnimation);
+            index = animation.Index;
+        }
 
-            if(!(Directional || Variant || MultiTile))
+        private void TypeSpesficInitialization(IAnimation animation)
+        {
+            //Falseify all bools
+            Directional = false;
+            Variant = false;
+            MultiTile = false;
+
+            //unset MultiTile
+            numTileFieldTransform.gameObject.SetActive(false);
+            Vector2 offsetMax = nameFieldTransform.offsetMax;
+            offsetMax.x = -Math.Abs(FPSFieldTransform.rect.width + 10);
+            nameFieldTransform.offsetMax = offsetMax;
+
+            if (animation.Type == typeof(Animation))
             {
-                PopulateSpriteHolder(animation);
+                PopulateSpriteHolder((Animation)animation);
+            }
+            else if (animation.Type == typeof(DirectionalAnimation))
+            {
+                Directional = true;
+            }
+            else if (animation.Type == typeof(VaraintAnimation))
+            {
+                Variant = true;
+            }
+            else if (animation.Type == typeof(MultiTileAnimation))
+            {
+                MultiTile = true;
+                MultiTileAnimation multiTileAnimation = (MultiTileAnimation)animation;
+                PopulateSpriteHolder(multiTileAnimation);
+                numTileFieldTransform.gameObject.SetActive(true);
+                offsetMax.x = -Math.Abs(numTileFieldTransform.rect.width + FPSFieldTransform.rect.width + 15);
+                nameFieldTransform.offsetMax = offsetMax;
+                numTileField.text = multiTileAnimation.tileWidth.ToString();
             }
             else
             {
-                throw new NotImplementedException();
+                Debug.LogError("Type was not assigned");
             }
         }
 
@@ -93,6 +146,20 @@ namespace mapEditor.animations
         }
 
         private void PopulateSpriteHolder(Animation animation)
+        {
+            spriteHolders.Clear();
+            int i = 0;
+            foreach (Sprite sprite in animation)
+            {
+                IstantiateSprite(i, sprite);
+                i++;
+            }
+
+            newSpriteButton = Instantiate(newSpriteObject, spritesHolderTransform).GetComponent<Button>();
+            newSpriteButton.onClick.AddListener(call: AddSprite);
+        }
+
+        private void PopulateSpriteHolder(MultiTileAnimation animation)
         {
             spriteHolders.Clear();
             int i = 0;
@@ -177,33 +244,59 @@ namespace mapEditor.animations
             Destroy(buttonTransform.gameObject);
         }
 
-        public Animation CurrentSpritesAsAnimation()
+        public IAnimation CurrentSpritesAsAnimation()
         {
-            Animation animation = new Animation
+            IAnimation animation = null;
+            if (Variant || Directional)
             {
-                Name = nameField.text,
-                Framerate = int.Parse(FPSField.text),
-                sprites = new string[spriteHolders.Count]
-            };
-            for (int i = 0; i < spriteHolders.Count; i++)
+                throw new NotImplementedException();
+            }
+            else if (Animation || MultiTile)
             {
-                Sprite sprite = spriteHolders[i].image.sprite;
-                string filePath = ImplementPath + "/" + animation.Name + "/" + i + ".png";
-                if (sprite != null)
+                string[] sprites = new string[spriteHolders.Count];
+                for (int i = 0; i < spriteHolders.Count; i++)
                 {
-                    SaveSystem.SavePNG(filePath, sprite.texture);
+                    Sprite sprite = spriteHolders[i].image.sprite;
+                    string filePath = ImplementPath + "/" + nameField.text + "/" + i + ".png";
+                    if (sprite != null)
+                    {
+                        SaveSystem.SavePNG(filePath, sprite.texture);
+                    }
+
+                    sprites[i] = filePath;
                 }
 
-                animation.sprites[i] = filePath;
-            }
+                if (Animation)
+                {
+                    animation = new Animation
+                    {
+                        Name = nameField.text,
+                        Framerate = int.Parse(FPSField.text),
+                        sprites = sprites
+                    };
+                }
+                else if (MultiTile)
+                {
+                    animation = new MultiTileAnimation
+                    {
+                        Name = nameField.text,
+                        Framerate = int.Parse(FPSField.text),
+                        sprites = sprites,
+                        tileWidth = int.Parse(numTileField.text)
+                        
+                    };
+                }
+                
+            } 
+
             return animation;
         }
 
         private void ResetPreview()
         {
             AnimatorController controller = new AnimatorController();
-            Animation animations = CurrentSpritesAsAnimation();
-            AnimationClip motion = animations.GetAnimationClip(typeof(Image));
+            IAnimation animation = CurrentSpritesAsAnimation();
+            AnimationClip motion = animation.GetAnimationClip(typeof(Image));
             controller.AddLayer("Base");
             controller.AddMotion(motion);
             controller.name = nameField.text + "controller";

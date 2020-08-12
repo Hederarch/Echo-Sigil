@@ -318,9 +318,9 @@ namespace mapEditor
                 {
                     AnimationElement animationElement = Instantiate(animationSelectionObject, animationHolderTransform).GetComponent<AnimationElement>();
                     animationList.Add(animationElement);
-                    animationElement.index = i;
+                    animations[i].Index = i;
                     animationElement.DestroyEvent += DestroyAnimation;
-                    animationElement.Initalize((animations.Animation)animations[i]);
+                    animationElement.Initalize(animations[i]);
                     PopulateAnimationAttachments(i, animationElement);
                 }
             }
