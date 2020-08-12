@@ -17,8 +17,10 @@ public class MapEditor : MonoBehaviour
     public static event Action<Transform> SelectedEvent;
     public static event Action<Transform[]> MultiSelectedEvent;
 
+    public static TacticsMovementCamera selectionCamera;
     private void Start()
     {
+        selectionCamera = Camera.main.GetComponent<TacticsMovementCamera>();
         Init();
     }
 
@@ -302,7 +304,7 @@ public class MapEditor : MonoBehaviour
     private static void Select()
     {
         Physics2D.queriesStartInColliders = true;
-        RaycastHit2D hit = Physics2D.Raycast(TacticsMovementCamera.GetScreenPoint(Input.mousePosition), Vector2.one, .1f);
+        RaycastHit2D hit = Physics2D.Raycast(selectionCamera.GetScreenPoint(Input.mousePosition), Vector2.one, .1f);
         if (hit.collider != null && ((!locked && hit.transform != selectedTransform) || Input.GetMouseButtonDown(0)))
         {
             if (hit.transform.TryGetComponent(out TileBehaviour _))
@@ -385,7 +387,7 @@ public class MapEditor : MonoBehaviour
     {
         if (selectedTransform != null && selectedTransform.parent.TryGetComponent(out Unit implement))
         {
-            Vector3 point = TacticsMovementCamera.GetScreenPoint(Input.mousePosition);
+            Vector3 point = selectionCamera.GetScreenPoint(Input.mousePosition);
             point.z += .1f;
             if (Input.GetMouseButtonUp(0))
             {

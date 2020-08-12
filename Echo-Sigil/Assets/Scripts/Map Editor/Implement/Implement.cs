@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
+using mapEditor.animations;
 
 namespace mapEditor
 {
     [Serializable]
-    public struct Implement
+    public struct Implement : ISerializationCallbackReceiver
     {
         public string name;
         public int index;
@@ -17,7 +19,13 @@ namespace mapEditor
         public string description;
         public float[] primaryColor;
         public float[] secondaryColor;
-        public animations.IAnimation[] animations;
+
+        public IAnimation[] animations;
+        //only to be used for saveing
+        public animations.Animation[] saveAnimations;
+        public DirectionalAnimation[] saveDirectionalAnimations;
+        public VaraintAnimation[] saveVaraintAnimations;
+        public MultiTileAnimation[] saveMultiTileAnimations;
 
         public int walkIndex;
         public int attackIndex;
@@ -50,6 +58,10 @@ namespace mapEditor
             attackIndex = 0;
             idelIndex = 0;
             fidgetIndex = 0;
+            saveAnimations = null;
+            saveDirectionalAnimations = null;
+            saveMultiTileAnimations = null;
+            saveVaraintAnimations = null;
         }
 
         public void SetUnitColors(Color primaryColor, Color secondaryColor)
@@ -70,7 +82,7 @@ namespace mapEditor
             AnimatorStateMachine stateMachine = animator.layers[0].stateMachine;
             if (!ClampAnimationIndex(abilityDictionary))
             {
-                stateMachine.AddState(GetAnimatorStateOfBaseSprite(modPath),Vector3.zero);
+                stateMachine.AddState(GetAnimatorStateOfBaseSprite(modPath), Vector3.zero);
             }
             else
             {
@@ -115,7 +127,7 @@ namespace mapEditor
             }
             else
             {
-                Debug.LogError("No amimations for " + name + " found on file");
+                Debug.LogWarning("No amimations for " + name + " found on file");
                 return false;
             }
         }
@@ -152,6 +164,88 @@ namespace mapEditor
             animatorState.name = clip.name;
 
             return animatorState;
+        }
+
+        public void OnBeforeSerialize()
+        {
+            saveAnimations = new animations.Animation[0];
+            saveDirectionalAnimations = new DirectionalAnimation[0];
+            saveVaraintAnimations = new VaraintAnimation[0];
+            saveMultiTileAnimations = new MultiTileAnimation[0];
+
+            for (int i = 0; i < animations.Length; i++)
+            {
+                IAnimation animation = animations[i];
+                animation.Index = i;
+
+                if (animation.Type == typeof(animations.Animation))
+                {
+                    animations.Animation[] animationArray = new animations.Animation[saveAnimations.Length + 1];
+                    saveAnimations.CopyTo(animationArray, 0);
+                    animationArray[saveAnimations.Length] = (animations.Animation)animation;
+                    saveAnimations = animationArray;
+                }
+                else if (animation.Type == typeof(DirectionalAnimation))
+                {
+                    DirectionalAnimation[] directionalAnimationArray = new DirectionalAnimation[saveDirectionalAnimations.Length + 1];
+                    saveDirectionalAnimations.CopyTo(directionalAnimationArray, 0);
+                    directionalAnimationArray[saveDirectionalAnimations.Length] = (DirectionalAnimation)animation;
+                    saveDirectionalAnimations = directionalAnimationArray;
+                }
+                else if (animation.Type == typeof(VaraintAnimation))
+                {
+                    VaraintAnimation[] variantAnimationArray = new VaraintAnimation[saveVaraintAnimations.Length + 1];
+                    saveAnimations.CopyTo(variantAnimationArray, 0);
+                    variantAnimationArray[saveVaraintAnimations.Length] = (VaraintAnimation)animation;
+                    saveVaraintAnimations = variantAnimationArray;
+                }
+                else if (animation.Type == typeof(MultiTileAnimation))
+                {
+                    MultiTileAnimation[] multiTileAnimationArray = new MultiTileAnimation[saveMultiTileAnimations.Length + 1];
+                    saveMultiTileAnimations.CopyTo(multiTileAnimationArray, 0);
+                    multiTileAnimationArray[saveMultiTileAnimations.Length] = (MultiTileAnimation)animation;
+                    saveMultiTileAnimations = multiTileAnimationArray;
+                }
+                else
+                {
+                    Debug.LogError("Type was not assigned");
+                }
+            }
+        }
+
+        public void OnAfterDeserialize()
+        {
+            List<IAnimation> listOfAnimations = new List<IAnimation>();
+            if (saveAnimations != null)
+            {
+                foreach (animations.Animation animation in saveAnimations)
+                {
+                    listOfAnimations.Add(animation);
+                }
+            }
+            if (saveDirectionalAnimations != null)
+            {
+                foreach (DirectionalAnimation animation in saveDirectionalAnimations)
+                {
+                    listOfAnimations.Add(animation);
+                }
+            }
+            if (saveVaraintAnimations != null)
+            {
+                foreach (VaraintAnimation animation in saveVaraintAnimations)
+                {
+                    listOfAnimations.Add(animation);
+                }
+            }
+            if (saveMultiTileAnimations != null)
+            {
+                foreach (MultiTileAnimation animation in saveMultiTileAnimations)
+                {
+                    listOfAnimations.Add(animation);
+                }
+            }
+            listOfAnimations.Sort();
+            animations = listOfAnimations.ToArray();
         }
     }
     [Serializable]

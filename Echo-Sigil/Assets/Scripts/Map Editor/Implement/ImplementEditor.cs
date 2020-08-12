@@ -376,7 +376,7 @@ namespace mapEditor
             int length = selectedAnimations.Length;
             IAnimation[] animations = new IAnimation[length + 1];
             selectedAnimations.CopyTo(animations, 0);
-            animations[length] = new animations.Animation(SaveSystem.LoadPNG(Vector2.one / 2f), selectedImplementList.ImplementPath(selectedImplementIndex));
+            animations[length] = new animations.Animation(SaveSystem.LoadPNG(Vector2.one / 2f), length, selectedImplementList.ImplementPath(selectedImplementIndex));
             selectedImplementList.implements[selectedImplementIndex].animations = animations;
             PopulateAnimation();
         }

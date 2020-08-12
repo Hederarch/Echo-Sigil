@@ -1227,6 +1227,8 @@ MonoBehaviour:
   speed: 0.5
   offsetFromFoucus: 4
   offsetFromZ0: 4
+  angle: 0
+  cam: {fileID: 879831159}
 --- !u!81 &879831158
 AudioListener:
   m_ObjectHideFlags: 0

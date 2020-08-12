@@ -33,7 +33,10 @@ namespace Map_Tests
         [Test]
         public void genarates_map_with_unit()
         {
-            MapReader.GeneratePhysicalMap(new Map(1, 1));
+            Map map = new Map(1, 1);
+            map.units = new System.Collections.Generic.List<MapImplement>();
+            map.units.Add(new MapImplement());
+            MapReader.GeneratePhysicalMap(map);
             Assert.IsNotNull(MapReader.implements[0]);
         }
         [Test]
@@ -217,12 +220,6 @@ namespace Map_Tests
             {
                 Assert.AreEqual(map.sizeY, map.heightMap.GetLength(1));
             }
-        }
-        [Test]
-        public void new_map_units_is_nonNull()
-        {
-            Map map = new Map(1, 1);
-            Assert.IsNotNull(map.units);
         }
     }
     class save_system

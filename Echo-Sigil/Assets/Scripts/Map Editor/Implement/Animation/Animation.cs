@@ -7,10 +7,13 @@ using UnityEngine;
 
 namespace mapEditor.animations
 {
-    public interface IAnimation
+    public interface IAnimation : IComparable<IAnimation>
     {
         string Name { get; set; }
         int Framerate { get; set; }
+
+        int Index { get; set; }
+        Type Type { get; }
 
         AnimationClip GetAnimationClip(Type type);
 
@@ -47,7 +50,12 @@ namespace mapEditor.animations
 
         object IEnumerator.Current => Current;
 
-        public Animation(Sprite[] sprites, string implementPath)
+        int index;
+        public int Index { get => index; set => index = value; }
+
+        public Type Type => typeof(Animation);
+
+        public Animation(Sprite[] sprites, int index, string implementPath)
         {
             name = "New";
             framerate = 12;
@@ -62,6 +70,7 @@ namespace mapEditor.animations
 
                 this.sprites[i] = filePath;
             }
+            this.index = index;
             curIndex = -1;
         }
 
@@ -148,6 +157,11 @@ namespace mapEditor.animations
         {
 
         }
+
+        public int CompareTo(IAnimation other)
+        {
+            return Index.CompareTo(other.Index);
+        }
     }
 
     [Serializable]
@@ -160,11 +174,17 @@ namespace mapEditor.animations
         int framerate;
         public int Framerate { get => framerate; set => framerate = value; }
 
-        public DirectionalAnimation(Animation[] animations)
+        int index;
+        public int Index { get => index; set => index = value; }
+
+        public Type Type => typeof(DirectionalAnimation);
+
+        public DirectionalAnimation(Animation[] animations, int index)
         {
             name = "New";
             framerate = 12;
             this.animations = animations;
+            this.index = index;
         }
 
         public AnimationClip GetAnimationClip(Type type)
@@ -192,6 +212,11 @@ namespace mapEditor.animations
         {
             throw new Exception("Directional Animation is not collapable");
         }
+
+        public int CompareTo(IAnimation other)
+        {
+            return Index.CompareTo(other.Index);
+        }
     }
 
     [Serializable]
@@ -204,11 +229,17 @@ namespace mapEditor.animations
         int framerate;
         public int Framerate { get => framerate; set => framerate = value; }
 
-        public VaraintAnimation(Animation[] animations)
+        int index;
+        public int Index { get => index; set => index = value; }
+
+        public Type Type => typeof(VaraintAnimation);
+
+        public VaraintAnimation(Animation[] animations,int index)
         {
             name = "New";
             framerate = 12;
             this.animations = animations;
+            this.index = index;
         }
 
         public AnimationClip GetAnimationClip(Type type)
@@ -247,6 +278,11 @@ namespace mapEditor.animations
             return animatorState;
         }
 
+        public int CompareTo(IAnimation other)
+        {
+            return Index.CompareTo(other.Index);
+        }
+
     }
 
     [Serializable]
@@ -261,6 +297,10 @@ namespace mapEditor.animations
         public string[] sprites;
         int curIndex;
 
+        int index;
+        public int Index { get => index; set => index = value; }
+
+        public Type Type => typeof(MultiTileAnimation);
         public Sprite Current
         {
             get
@@ -277,7 +317,7 @@ namespace mapEditor.animations
         }
         object IEnumerator.Current => Current;
 
-        public MultiTileAnimation(Sprite[] sprites, string implementPath, int tileWidth = 1)
+        public MultiTileAnimation(Sprite[] sprites, int index, string implementPath, int tileWidth = 1)
         {
             name = "New";
             framerate = 12;
@@ -292,6 +332,7 @@ namespace mapEditor.animations
 
                 this.sprites[i] = filePath;
             }
+            this.index = index;
             curIndex = -1;
             this.tileWidth = tileWidth;
         }
@@ -378,6 +419,11 @@ namespace mapEditor.animations
         public void Dispose()
         {
             
+        }
+
+        public int CompareTo(IAnimation other)
+        {
+            return Index.CompareTo(other.Index);
         }
     } 
 }
