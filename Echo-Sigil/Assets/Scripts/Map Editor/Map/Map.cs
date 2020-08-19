@@ -97,7 +97,7 @@ public class Map
 public struct MapImplement
 {
     public int implementListIndex;
-    public string GetName(ImplementList implementList) => implementList.implements[implementListIndex].name;
+    public string GetName(ImplementList implementList) => implementList.Implements[implementListIndex].name;
 
     public int posX;
     public int posY;

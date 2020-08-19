@@ -20,11 +20,62 @@ MonoBehaviour:
     height: 997
   m_ShowMode: 4
   m_Title: Game
-  m_RootView: {fileID: 2}
-  m_MinSize: {x: 875, y: 392}
+  m_RootView: {fileID: 4}
+  m_MinSize: {x: 875, y: 542}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 --- !u!114 &2
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: SceneView
+  m_EditorClassIdentifier: 
+  m_Children: []
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 396
+    width: 531
+    height: 551
+  m_MinSize: {x: 201, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 20}
+  m_Panes:
+  - {fileID: 20}
+  m_Selected: 0
+  m_LastSelected: 0
+--- !u!114 &3
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children:
+  - {fileID: 10}
+  - {fileID: 2}
+  m_Position:
+    serializedVersion: 2
+    x: 1389
+    y: 0
+    width: 531
+    height: 947
+  m_MinSize: {x: 276, y: 292}
+  m_MaxSize: {x: 4001, y: 8042}
+  vertical: 1
+  controlID: 62
+--- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -37,9 +88,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Children:
-  - {fileID: 3}
-  - {fileID: 4}
   - {fileID: 5}
+  - {fileID: 6}
+  - {fileID: 7}
   m_Position:
     serializedVersion: 2
     x: 0
@@ -52,7 +103,7 @@ MonoBehaviour:
   m_TopViewHeight: 30
   m_UseBottomView: 1
   m_BottomViewHeight: 20
---- !u!114 &3
+--- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -74,10 +125,10 @@ MonoBehaviour:
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
   m_LoadedToolbars:
-  - {fileID: 20}
-  m_MainToolbar: {fileID: 20}
+  - {fileID: 22}
+  m_MainToolbar: {fileID: 22}
   m_LastLoadedLayoutName: 
---- !u!114 &4
+--- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -90,20 +141,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Children:
-  - {fileID: 6}
-  - {fileID: 7}
   - {fileID: 8}
+  - {fileID: 9}
+  - {fileID: 3}
   m_Position:
     serializedVersion: 2
     x: 0
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 679, y: 342}
-  m_MaxSize: {x: 12004, y: 8042}
+  m_MinSize: {x: 709, y: 492}
+  m_MaxSize: {x: 18004, y: 14042}
   vertical: 0
-  controlID: 384
---- !u!114 &5
+  controlID: 61
+--- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,7 +175,7 @@ MonoBehaviour:
     height: 20
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
---- !u!114 &6
+--- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,17 +192,16 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 962
+    width: 891
     height: 947
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 17}
+  m_ActualView: {fileID: 19}
   m_Panes:
-  - {fileID: 17}
-  - {fileID: 18}
+  - {fileID: 19}
   m_Selected: 0
-  m_LastSelected: 1
---- !u!114 &7
+  m_LastSelected: 0
+--- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -164,19 +214,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Children:
-  - {fileID: 9}
-  - {fileID: 10}
+  - {fileID: 11}
+  - {fileID: 12}
   m_Position:
     serializedVersion: 2
-    x: 962
+    x: 891
     y: 0
-    width: 361
+    width: 498
     height: 947
-  m_MinSize: {x: 202, y: 342}
-  m_MaxSize: {x: 4002, y: 8042}
+  m_MinSize: {x: 232, y: 492}
+  m_MaxSize: {x: 10002, y: 14042}
   vertical: 1
-  controlID: 61
---- !u!114 &8
+  controlID: 41
+--- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -191,21 +241,21 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1323
+    x: 0
     y: 0
-    width: 597
-    height: 947
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 15}
+    width: 531
+    height: 396
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 17}
   m_Panes:
-  - {fileID: 15}
+  - {fileID: 17}
+  - {fileID: 16}
   - {fileID: 14}
-  - {fileID: 12}
-  - {fileID: 11}
+  - {fileID: 13}
   m_Selected: 0
-  m_LastSelected: 1
---- !u!114 &9
+  m_LastSelected: 3
+--- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -222,16 +272,16 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 361
+    width: 498
     height: 417
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 19}
+  m_ActualView: {fileID: 21}
   m_Panes:
-  - {fileID: 19}
+  - {fileID: 21}
   m_Selected: 0
   m_LastSelected: 0
---- !u!114 &10
+--- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -241,24 +291,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ConsoleWindow
+  m_Name: ProjectBrowser
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
     x: 0
     y: 417
-    width: 361
+    width: 498
     height: 530
-  m_MinSize: {x: 102, y: 121}
-  m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 13}
+  m_MinSize: {x: 232, y: 271}
+  m_MaxSize: {x: 10002, y: 10021}
+  m_ActualView: {fileID: 18}
   m_Panes:
-  - {fileID: 16}
-  - {fileID: 13}
-  m_Selected: 1
-  m_LastSelected: 0
---- !u!114 &11
+  - {fileID: 18}
+  - {fileID: 15}
+  m_Selected: 0
+  m_LastSelected: 1
+--- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -279,16 +329,16 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1401
+    x: 1390
     y: 73
-    width: 518
-    height: 926
+    width: 529
+    height: 375
   m_ViewDataDictionary: {fileID: 0}
   m_PosLeft: {x: 0, y: 0}
   m_PosRight: {x: 0, y: 0}
   m_Scope: 0
   m_SplitterFlex: 0.19178082
---- !u!114 &12
+--- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -309,16 +359,16 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1323
+    x: 1390
     y: 73
-    width: 596
-    height: 926
+    width: 529
+    height: 375
   m_ViewDataDictionary: {fileID: 0}
   m_PosLeft: {x: 0, y: 0}
   m_PosRight: {x: 0, y: 0}
   m_Scope: 1
   m_SplitterFlex: 0.19178082
---- !u!114 &13
+--- !u!114 &15
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -339,12 +389,12 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 962
+    x: 892
     y: 490
-    width: 359
+    width: 496
     height: 509
   m_ViewDataDictionary: {fileID: 0}
---- !u!114 &14
+--- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -364,18 +414,18 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1323
+    x: 1390
     y: 73
-    width: 596
-    height: 926
+    width: 529
+    height: 375
   m_ViewDataDictionary: {fileID: 0}
   m_Spl:
-    ID: 136
+    ID: 1600
     splitterInitialOffset: 299
     currentActiveSplitter: -1
     realSizes:
-    - 643
-    - 213
+    - 229
+    - 76
     relativeSizes:
     - 0.7508197
     - 0.24918032
@@ -385,7 +435,7 @@ MonoBehaviour:
     maxSizes:
     - 0
     - 0
-    lastTotalSize: 856
+    lastTotalSize: 305
     splitSize: 6
     xOffset: 0
     m_Version: 1
@@ -429,15 +479,15 @@ MonoBehaviour:
       selectedCategoryMask: 0
       availableCategories: []
   m_EditModeTestListGUI:
-    m_Window: {fileID: 14}
+    m_Window: {fileID: 16}
     newResultList:
     - id: 1000
-      uniqueId: '[Tales From The Metahedron][suite]'
-      name: Tales From The Metahedron
-      fullName: Tales From The Metahedron
-      resultStatus: 2
-      duration: 0.1195326
-      messages: One or more child tests had errors
+      uniqueId: '[GMTK Game Jam][suite]'
+      name: GMTK Game Jam
+      fullName: GMTK Game Jam
+      resultStatus: 0
+      duration: 0
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -447,1149 +497,13 @@ MonoBehaviour:
       categories: []
       parentId: 
       parentUniqueId: 
-    - id: 1064
-      uniqueId: '[Tests.dll][suite]'
-      name: Tests.dll
-      fullName: C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Library/ScriptAssemblies/Tests.dll
-      resultStatus: 2
-      duration: 0.0879466
-      messages: One or more child tests had errors
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1000
-      parentUniqueId: '[Tales From The Metahedron][suite]'
-    - id: 1068
-      uniqueId: Tests.dll/[Tests][Camera_Tests][suite]
-      name: Camera_Tests
-      fullName: Camera_Tests
-      resultStatus: 2
-      duration: 0.0815363
-      messages: One or more child tests had errors
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1064
-      parentUniqueId: '[Tests.dll][suite]'
-    - id: 1061
-      uniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.rotation][suite]
-      name: rotation
-      fullName: Camera_Tests.rotation
-      resultStatus: 1
-      duration: 0.1064725
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1068
-      parentUniqueId: Tests.dll/[Tests][Camera_Tests][suite]
-    - id: 1062
-      uniqueId: Tests.dll/Camera_Tests/rotation/[Tests][Camera_Tests.rotation.camera_rotates_x]
-      name: camera_rotates_x
-      fullName: Camera_Tests.rotation.camera_rotates_x
-      resultStatus: 1
-      duration: 0.0327058
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1061
-      parentUniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.rotation][suite]
-    - id: 1063
-      uniqueId: Tests.dll/Camera_Tests/rotation/[Tests][Camera_Tests.rotation.camera_rotates_y]
-      name: camera_rotates_y
-      fullName: Camera_Tests.rotation.camera_rotates_y
-      resultStatus: 1
-      duration: 0.0014022
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1061
-      parentUniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.rotation][suite]
-    - id: 1055
-      uniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.selection][suite]
-      name: selection
-      fullName: Camera_Tests.selection
-      resultStatus: 2
-      duration: 0.0727786
-      messages: One or more child tests had errors
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1068
-      parentUniqueId: Tests.dll/[Tests][Camera_Tests][suite]
-    - id: 1060
-      uniqueId: Tests.dll/Camera_Tests/selection/[Tests][Camera_Tests.selection.center_screen_starts_as_center_tile]
-      name: center_screen_starts_as_center_tile
-      fullName: Camera_Tests.selection.center_screen_starts_as_center_tile
-      resultStatus: 1
-      duration: 0.056727
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1055
-      parentUniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.selection][suite]
-    - id: 1056
-      uniqueId: Tests.dll/Camera_Tests/selection/[Tests][Camera_Tests.selection.get_Screen_point_returns_z0_bottom_left]
-      name: get_Screen_point_returns_z0_bottom_left
-      fullName: Camera_Tests.selection.get_Screen_point_returns_z0_bottom_left
-      resultStatus: 2
-      duration: 0.0016246
-      messages: "  Expected: 0\r\n  But was:  -2.30940294f\r\n"
-      output: 
-      stacktrace: 'at Camera_Tests.selection.get_Screen_point_returns_z0_bottom_left
-        () [0x00016] in C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil\Assets\Tests\CameraTests.cs:13
-
-'
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1055
-      parentUniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.selection][suite]
-    - id: 1058
-      uniqueId: Tests.dll/Camera_Tests/selection/[Tests][Camera_Tests.selection.get_Screen_point_returns_z0_middle]
-      name: get_Screen_point_returns_z0_middle
-      fullName: Camera_Tests.selection.get_Screen_point_returns_z0_middle
-      resultStatus: 2
-      duration: 0.0016685
-      messages: "  Expected: 0\r\n  But was:  -0.00255250931f\r\n"
-      output: 
-      stacktrace: 'at Camera_Tests.selection.get_Screen_point_returns_z0_middle ()
-        [0x00026] in C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil\Assets\Tests\CameraTests.cs:38
-
-'
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1055
-      parentUniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.selection][suite]
-    - id: 1057
-      uniqueId: Tests.dll/Camera_Tests/selection/[Tests][Camera_Tests.selection.get_Screen_point_returns_z0_top_right]
-      name: get_Screen_point_returns_z0_top_right
-      fullName: Camera_Tests.selection.get_Screen_point_returns_z0_top_right
-      resultStatus: 2
-      duration: 0.0013806
-      messages: "  Expected: 0\r\n  But was:  2.30940127f\r\n"
-      output: 
-      stacktrace: 'at Camera_Tests.selection.get_Screen_point_returns_z0_top_right
-        () [0x00022] in C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil\Assets\Tests\CameraTests.cs:32
-
-'
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1055
-      parentUniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.selection][suite]
-    - id: 1059
-      uniqueId: Tests.dll/Camera_Tests/selection/[Tests][Camera_Tests.selection.unrotated_angle_is_0]
-      name: unrotated_angle_is_0
-      fullName: Camera_Tests.selection.unrotated_angle_is_0
-      resultStatus: 1
-      duration: 0.0014876
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1055
-      parentUniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.selection][suite]
-    - id: 1067
-      uniqueId: Tests.dll/[Tests][Implement_Tests][suite]
-      name: Implement_Tests
-      fullName: Implement_Tests
-      resultStatus: 1
-      duration: 0.0300473
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1064
-      parentUniqueId: '[Tests.dll][suite]'
-    - id: 1052
-      uniqueId: Tests.dll/Implement_Tests/[Tests][Implement_Tests.battle][suite]
-      name: battle
-      fullName: Implement_Tests.battle
-      resultStatus: 1
-      duration: 0.0149232
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1067
-      parentUniqueId: Tests.dll/[Tests][Implement_Tests][suite]
-    - id: 1053
-      uniqueId: Tests.dll/Implement_Tests/battle/[Tests][Implement_Tests.battle.health_percent_returns_correctly]
-      name: health_percent_returns_correctly
-      fullName: Implement_Tests.battle.health_percent_returns_correctly
-      resultStatus: 1
-      duration: 0.0023418
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1052
-      parentUniqueId: Tests.dll/Implement_Tests/[Tests][Implement_Tests.battle][suite]
-    - id: 1054
-      uniqueId: Tests.dll/Implement_Tests/battle/[Tests][Implement_Tests.battle.will_percent_returns_correctly]
-      name: will_percent_returns_correctly
-      fullName: Implement_Tests.battle.will_percent_returns_correctly
-      resultStatus: 1
-      duration: 0.0010549
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1052
-      parentUniqueId: Tests.dll/Implement_Tests/[Tests][Implement_Tests.battle][suite]
-    - id: 1066
-      uniqueId: Tests.dll/[Tests][Map_Tests][suite]
-      name: Map_Tests
-      fullName: Map_Tests
-      resultStatus: 1
-      duration: 0.1358775
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1064
-      parentUniqueId: '[Tests.dll][suite]'
-    - id: 1043
-      uniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.conversions][suite]
-      name: conversions
-      fullName: Map_Tests.conversions
-      resultStatus: 1
-      duration: 0.3277442
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1066
-      parentUniqueId: Tests.dll/[Tests][Map_Tests][suite]
-    - id: 1044
-      uniqueId: Tests.dll/Map_Tests/conversions/[Tests][Map_Tests.conversions.center_tile_is_at_0x0_1x1]
-      name: center_tile_is_at_0x0_1x1
-      fullName: Map_Tests.conversions.center_tile_is_at_0x0_1x1
-      resultStatus: 1
-      duration: 0.0401507
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1043
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.conversions][suite]
-    - id: 1045
-      uniqueId: Tests.dll/Map_Tests/conversions/[Tests][Map_Tests.conversions.center_tile_is_at_0x0_3x3]
-      name: center_tile_is_at_0x0_3x3
-      fullName: Map_Tests.conversions.center_tile_is_at_0x0_3x3
-      resultStatus: 1
-      duration: 0.0394934
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1043
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.conversions][suite]
-    - id: 1046
-      uniqueId: Tests.dll/Map_Tests/conversions/[Tests][Map_Tests.conversions.grid_to_world_space_3x3]
-      name: grid_to_world_space_3x3
-      fullName: Map_Tests.conversions.grid_to_world_space_3x3
-      resultStatus: 1
-      duration: 0.0388322
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1043
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.conversions][suite]
-    - id: 1050
-      uniqueId: Tests.dll/Map_Tests/conversions/[Tests][Map_Tests.conversions.grid_to_world_space_with_tile_parent_move]
-      name: grid_to_world_space_with_tile_parent_move
-      fullName: Map_Tests.conversions.grid_to_world_space_with_tile_parent_move
-      resultStatus: 1
-      duration: 0.0413268
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1043
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.conversions][suite]
-    - id: 1049
-      uniqueId: Tests.dll/Map_Tests/conversions/[Tests][Map_Tests.conversions.world_to_grid_space_3x3_0x0]
-      name: world_to_grid_space_3x3_0x0
-      fullName: Map_Tests.conversions.world_to_grid_space_3x3_0x0
-      resultStatus: 1
-      duration: 0.0394524
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1043
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.conversions][suite]
-    - id: 1048
-      uniqueId: Tests.dll/Map_Tests/conversions/[Tests][Map_Tests.conversions.world_to_grid_space_3x3_1x1]
-      name: world_to_grid_space_3x3_1x1
-      fullName: Map_Tests.conversions.world_to_grid_space_3x3_1x1
-      resultStatus: 1
-      duration: 0.0397699
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1043
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.conversions][suite]
-    - id: 1047
-      uniqueId: Tests.dll/Map_Tests/conversions/[Tests][Map_Tests.conversions.world_to_grid_space_3x3_center]
-      name: world_to_grid_space_3x3_center
-      fullName: Map_Tests.conversions.world_to_grid_space_3x3_center
-      resultStatus: 1
-      duration: 0.0379895
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1043
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.conversions][suite]
-    - id: 1051
-      uniqueId: Tests.dll/Map_Tests/conversions/[Tests][Map_Tests.conversions.world_to_grid_space_to_tile_0x0]
-      name: world_to_grid_space_to_tile_0x0
-      fullName: Map_Tests.conversions.world_to_grid_space_to_tile_0x0
-      resultStatus: 1
-      duration: 0.0369097
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1043
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.conversions][suite]
-    - id: 1026
-      uniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map][suite]
-      name: map
-      fullName: Map_Tests.map
-      resultStatus: 1
-      duration: 0.0290512
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1066
-      parentUniqueId: Tests.dll/[Tests][Map_Tests][suite]
-    - id: 1035
-      uniqueId: Tests.dll/Map_Tests/map/[Tests][Map_Tests.map.height_map_is_map_sizex_1x1]
-      name: height_map_is_map_sizex_1x1
-      fullName: Map_Tests.map.height_map_is_map_sizex_1x1
-      resultStatus: 1
-      duration: 0.0043135
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1026
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map][suite]
-    - id: 1037
-      uniqueId: Tests.dll/Map_Tests/map/[Tests][Map_Tests.map.height_map_is_map_sizex_3x5]
-      name: height_map_is_map_sizex_3x5
-      fullName: Map_Tests.map.height_map_is_map_sizex_3x5
-      resultStatus: 1
-      duration: 0.0011954
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1026
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map][suite]
-    - id: 1036
-      uniqueId: Tests.dll/Map_Tests/map/[Tests][Map_Tests.map.height_map_is_map_sizey_1x1]
-      name: height_map_is_map_sizey_1x1
-      fullName: Map_Tests.map.height_map_is_map_sizey_1x1
-      resultStatus: 1
-      duration: 0.0008051
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1026
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map][suite]
-    - id: 1038
-      uniqueId: Tests.dll/Map_Tests/map/[Tests][Map_Tests.map.height_map_is_map_sizey_3x5]
-      name: height_map_is_map_sizey_3x5
-      fullName: Map_Tests.map.height_map_is_map_sizey_3x5
-      resultStatus: 1
-      duration: 0.0005231
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1026
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map][suite]
-    - id: 1027
-      uniqueId: Tests.dll/Map_Tests/map/[Tests][Map_Tests.map.map_can_not_return_null_1x1]
-      name: map_can_not_return_null_1x1
-      fullName: Map_Tests.map.map_can_not_return_null_1x1
-      resultStatus: 1
-      duration: 0.000778
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1026
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map][suite]
-    - id: 1028
-      uniqueId: Tests.dll/Map_Tests/map/[Tests][Map_Tests.map.map_can_not_return_null_3x5]
-      name: map_can_not_return_null_3x5
-      fullName: Map_Tests.map.map_can_not_return_null_3x5
-      resultStatus: 1
-      duration: 0.0006646
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1026
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map][suite]
-    - id: 1032
-      uniqueId: Tests.dll/Map_Tests/map/[Tests][Map_Tests.map.new_map_has_heigtmap_data]
-      name: new_map_has_heigtmap_data
-      fullName: Map_Tests.map.new_map_has_heigtmap_data
-      resultStatus: 1
-      duration: 0.0006923
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1026
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map][suite]
-    - id: 1034
-      uniqueId: Tests.dll/Map_Tests/map/[Tests][Map_Tests.map.new_map_overloads_equivalant]
-      name: new_map_overloads_equivalant
-      fullName: Map_Tests.map.new_map_overloads_equivalant
-      resultStatus: 1
-      duration: 0.0008771
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1026
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map][suite]
-    - id: 1033
-      uniqueId: Tests.dll/Map_Tests/map/[Tests][Map_Tests.map.new_map_sets_size]
-      name: new_map_sets_size
-      fullName: Map_Tests.map.new_map_sets_size
-      resultStatus: 1
-      duration: 0.0007106
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1026
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map][suite]
-    - id: 1029
-      uniqueId: Tests.dll/Map_Tests/map/[Tests][Map_Tests.map.new_maps_is_walkable]
-      name: new_maps_is_walkable
-      fullName: Map_Tests.map.new_maps_is_walkable
-      resultStatus: 1
-      duration: 0.0010536
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1026
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map][suite]
-    - id: 1030
-      uniqueId: Tests.dll/Map_Tests/map/[Tests][Map_Tests.map.set_tile_properties_does_not_return_null_at_0x0]
-      name: set_tile_properties_does_not_return_null_at_0x0
-      fullName: Map_Tests.map.set_tile_properties_does_not_return_null_at_0x0
-      resultStatus: 1
-      duration: 0.0005687
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1026
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map][suite]
-    - id: 1031
-      uniqueId: Tests.dll/Map_Tests/map/[Tests][Map_Tests.map.set_tile_properties_does_not_return_null_at_1x1]
-      name: set_tile_properties_does_not_return_null_at_1x1
-      fullName: Map_Tests.map.set_tile_properties_does_not_return_null_at_1x1
-      resultStatus: 1
-      duration: 0.0006152
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1026
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map][suite]
-    - id: 1007
-      uniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map_reader][suite]
-      name: map_reader
-      fullName: Map_Tests.map_reader
-      resultStatus: 1
-      duration: 0.1314662
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1066
-      parentUniqueId: Tests.dll/[Tests][Map_Tests][suite]
-    - id: 1012
-      uniqueId: Tests.dll/Map_Tests/map_reader/[Tests][Map_Tests.map_reader.genarates_map_with_nonNull_tile_array]
-      name: genarates_map_with_nonNull_tile_array
-      fullName: Map_Tests.map_reader.genarates_map_with_nonNull_tile_array
-      resultStatus: 1
-      duration: 0.0381211
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1007
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map_reader][suite]
-    - id: 1011
-      uniqueId: Tests.dll/Map_Tests/map_reader/[Tests][Map_Tests.map_reader.genarates_map_with_nonNull_unit_array]
-      name: genarates_map_with_nonNull_unit_array
-      fullName: Map_Tests.map_reader.genarates_map_with_nonNull_unit_array
-      resultStatus: 1
-      duration: 0.0362852
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1007
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map_reader][suite]
-    - id: 1009
-      uniqueId: Tests.dll/Map_Tests/map_reader/[Tests][Map_Tests.map_reader.genarates_map_with_tile]
-      name: genarates_map_with_tile
-      fullName: Map_Tests.map_reader.genarates_map_with_tile
-      resultStatus: 1
-      duration: 0.038215
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1007
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map_reader][suite]
-    - id: 1008
-      uniqueId: Tests.dll/Map_Tests/map_reader/[Tests][Map_Tests.map_reader.genarates_map_with_tile_with_hieght]
-      name: genarates_map_with_tile_with_hieght
-      fullName: Map_Tests.map_reader.genarates_map_with_tile_with_hieght
-      resultStatus: 1
-      duration: 0.0360591
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1007
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map_reader][suite]
-    - id: 1010
-      uniqueId: Tests.dll/Map_Tests/map_reader/[Tests][Map_Tests.map_reader.genarates_map_with_unit]
-      name: genarates_map_with_unit
-      fullName: Map_Tests.map_reader.genarates_map_with_unit
-      resultStatus: 1
-      duration: 0.0997517
-      messages: 
-      output: 'No amimations for Jeanette Sekch found on file
-
-'
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1007
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map_reader][suite]
-    - id: 1014
-      uniqueId: Tests.dll/Map_Tests/map_reader/[Tests][Map_Tests.map_reader.generates_tile_array_of_map_size]
-      name: generates_tile_array_of_map_size
-      fullName: Map_Tests.map_reader.generates_tile_array_of_map_size
-      resultStatus: 1
-      duration: 0.0392176
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1007
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map_reader][suite]
-    - id: 1015
-      uniqueId: Tests.dll/Map_Tests/map_reader/[Tests][Map_Tests.map_reader.returns_mapReader_tiles]
-      name: returns_mapReader_tiles
-      fullName: Map_Tests.map_reader.returns_mapReader_tiles
-      resultStatus: 1
-      duration: 0.0367418
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1007
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map_reader][suite]
-    - id: 1013
-      uniqueId: Tests.dll/Map_Tests/map_reader/[Tests][Map_Tests.map_reader.tile_parent_has_child]
-      name: tile_parent_has_child
-      fullName: Map_Tests.map_reader.tile_parent_has_child
-      resultStatus: 1
-      duration: 0.0390502
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1007
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map_reader][suite]
-    - id: 1016
-      uniqueId: Tests.dll/Map_Tests/map_reader/[Tests][Map_Tests.map_reader.tile_sprites_1x1]
-      name: tile_sprites_1x1
-      fullName: Map_Tests.map_reader.tile_sprites_1x1
-      resultStatus: 1
-      duration: 0.0366829
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1007
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map_reader][suite]
-    - id: 1017
-      uniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.mapeditor][suite]
-      name: mapeditor
-      fullName: Map_Tests.mapeditor
-      resultStatus: 1
-      duration: 0.3656071
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1066
-      parentUniqueId: Tests.dll/[Tests][Map_Tests][suite]
-    - id: 1023
-      uniqueId: Tests.dll/Map_Tests/mapeditor/[Tests][Map_Tests.mapeditor.editor_tile_convertions_contains_starting_tile_negitivex]
-      name: editor_tile_convertions_contains_starting_tile_negitivex
-      fullName: Map_Tests.mapeditor.editor_tile_convertions_contains_starting_tile_negitivex
-      resultStatus: 1
-      duration: 0.0416756
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1017
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.mapeditor][suite]
-    - id: 1022
-      uniqueId: Tests.dll/Map_Tests/mapeditor/[Tests][Map_Tests.mapeditor.editor_tile_convertions_contains_starting_tile_negitivey]
-      name: editor_tile_convertions_contains_starting_tile_negitivey
-      fullName: Map_Tests.mapeditor.editor_tile_convertions_contains_starting_tile_negitivey
-      resultStatus: 1
-      duration: 0.0361675
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1017
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.mapeditor][suite]
-    - id: 1025
-      uniqueId: Tests.dll/Map_Tests/mapeditor/[Tests][Map_Tests.mapeditor.editor_tile_convertions_contains_starting_tile_positivex]
-      name: editor_tile_convertions_contains_starting_tile_positivex
-      fullName: Map_Tests.mapeditor.editor_tile_convertions_contains_starting_tile_positivex
-      resultStatus: 1
-      duration: 0.0360528
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1017
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.mapeditor][suite]
-    - id: 1024
-      uniqueId: Tests.dll/Map_Tests/mapeditor/[Tests][Map_Tests.mapeditor.editor_tile_convertions_contains_starting_tile_positivey]
-      name: editor_tile_convertions_contains_starting_tile_positivey
-      fullName: Map_Tests.mapeditor.editor_tile_convertions_contains_starting_tile_positivey
-      resultStatus: 1
-      duration: 0.0360519
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1017
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.mapeditor][suite]
-    - id: 1019
-      uniqueId: Tests.dll/Map_Tests/mapeditor/[Tests][Map_Tests.mapeditor.editor_tile_convertions_correct_size_negitivex]
-      name: editor_tile_convertions_correct_size_negitivex
-      fullName: Map_Tests.mapeditor.editor_tile_convertions_correct_size_negitivex
-      resultStatus: 1
-      duration: 0.0368848
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1017
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.mapeditor][suite]
-    - id: 1018
-      uniqueId: Tests.dll/Map_Tests/mapeditor/[Tests][Map_Tests.mapeditor.editor_tile_convertions_correct_size_negitivey]
-      name: editor_tile_convertions_correct_size_negitivey
-      fullName: Map_Tests.mapeditor.editor_tile_convertions_correct_size_negitivey
-      resultStatus: 1
-      duration: 0.0364173
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1017
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.mapeditor][suite]
-    - id: 1021
-      uniqueId: Tests.dll/Map_Tests/mapeditor/[Tests][Map_Tests.mapeditor.editor_tile_convertions_correct_size_positivex]
-      name: editor_tile_convertions_correct_size_positivex
-      fullName: Map_Tests.mapeditor.editor_tile_convertions_correct_size_positivex
-      resultStatus: 1
-      duration: 0.0360525
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1017
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.mapeditor][suite]
-    - id: 1020
-      uniqueId: Tests.dll/Map_Tests/mapeditor/[Tests][Map_Tests.mapeditor.editor_tile_convertions_correct_size_positivey]
-      name: editor_tile_convertions_correct_size_positivey
-      fullName: Map_Tests.mapeditor.editor_tile_convertions_correct_size_positivey
-      resultStatus: 1
-      duration: 0.0364248
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1017
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.mapeditor][suite]
-    - id: 1040
-      uniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.save_system][suite]
-      name: save_system
-      fullName: Map_Tests.save_system
-      resultStatus: 1
-      duration: 0.1722129
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1066
-      parentUniqueId: Tests.dll/[Tests][Map_Tests][suite]
-    - id: 1041
-      uniqueId: Tests.dll/Map_Tests/save_system/[Tests][Map_Tests.save_system.get_map_from_file_with_size]
-      name: get_map_from_file_with_size
-      fullName: Map_Tests.save_system.get_map_from_file_with_size
-      resultStatus: 1
-      duration: 0.1258849
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1040
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.save_system][suite]
-    - id: 1042
-      uniqueId: Tests.dll/Map_Tests/save_system/[Tests][Map_Tests.save_system.get_map_from_file_with_tile_with_height]
-      name: get_map_from_file_with_tile_with_height
-      fullName: Map_Tests.save_system.get_map_from_file_with_tile_with_height
-      resultStatus: 1
-      duration: 0.0133759
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1040
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.save_system][suite]
-    - id: 1065
-      uniqueId: Tests.dll/[Tests][Tile_Tests][suite]
-      name: Tile_Tests
-      fullName: Tile_Tests
-      resultStatus: 1
-      duration: 0.0995879
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1064
-      parentUniqueId: '[Tests.dll][suite]'
-    - id: 1001
-      uniqueId: Tests.dll/Tile_Tests/[Tests][Tile_Tests.tile][suite]
-      name: tile
-      fullName: Tile_Tests.tile
-      resultStatus: 1
-      duration: 0.0826602
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1065
-      parentUniqueId: Tests.dll/[Tests][Tile_Tests][suite]
-    - id: 1003
-      uniqueId: Tests.dll/Tile_Tests/tile/[Tests][Tile_Tests.tile.new_tile_can_hold_height_value]
-      name: new_tile_can_hold_height_value
-      fullName: Tile_Tests.tile.new_tile_can_hold_height_value
-      resultStatus: 1
-      duration: 0.0029129
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: Tests.dll/Tile_Tests/[Tests][Tile_Tests.tile][suite]
-    - id: 1004
-      uniqueId: Tests.dll/Tile_Tests/tile/[Tests][Tile_Tests.tile.new_tile_can_hold_walkable]
-      name: new_tile_can_hold_walkable
-      fullName: Tile_Tests.tile.new_tile_can_hold_walkable
-      resultStatus: 1
-      duration: 0.0010682
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: Tests.dll/Tile_Tests/[Tests][Tile_Tests.tile][suite]
-    - id: 1002
-      uniqueId: Tests.dll/Tile_Tests/tile/[Tests][Tile_Tests.tile.new_tile_can_not_return_null]
-      name: new_tile_can_not_return_null
-      fullName: Tile_Tests.tile.new_tile_can_not_return_null
-      resultStatus: 1
-      duration: 0.0006604
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: Tests.dll/Tile_Tests/[Tests][Tile_Tests.tile][suite]
-    - id: 1005
-      uniqueId: Tests.dll/Tile_Tests/tile/[Tests][Tile_Tests.tile.pos_in_grid_is_acurate_0x0]
-      name: pos_in_grid_is_acurate_0x0
-      fullName: Tile_Tests.tile.pos_in_grid_is_acurate_0x0
-      resultStatus: 1
-      duration: 0.0370892
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: Tests.dll/Tile_Tests/[Tests][Tile_Tests.tile][suite]
-    - id: 1006
-      uniqueId: Tests.dll/Tile_Tests/tile/[Tests][Tile_Tests.tile.pos_in_grid_is_acurate_3x5]
-      name: pos_in_grid_is_acurate_3x5
-      fullName: Tile_Tests.tile.pos_in_grid_is_acurate_3x5
-      resultStatus: 1
-      duration: 0.0398556
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: Tests.dll/Tile_Tests/[Tests][Tile_Tests.tile][suite]
-    m_ResultText: unrotated_angle_is_0 (0.001s)
+    m_ResultText: save_system (0.194s)
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 4b3acd86
-      m_LastClickedID: -2033370549
-      m_ExpandedIDs: b8706f9c18181da4f58144df0b2469df28bd3ff4e557abf72b220e145e2fcc1c371e5f68ffffff7f
+      m_SelectedIDs: 371e5f68
+      m_LastClickedID: 1751064119
+      m_ExpandedIDs: f58144dfe557abf72b220e14c76f405d371e5f68ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1615,7 +529,7 @@ MonoBehaviour:
       selectedCategoryMask: 0
       availableCategories:
       - Uncategorized
---- !u!114 &15
+--- !u!114 &17
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1636,10 +550,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1323
+    x: 1389
     y: 73
-    width: 596
-    height: 926
+    width: 530
+    height: 375
   m_ViewDataDictionary: {fileID: 0}
   m_ObjectsLockedBeforeSerialization: []
   m_InstanceIDsLockedBeforeSerialization: 
@@ -1654,7 +568,7 @@ MonoBehaviour:
   m_LockTracker:
     m_IsLocked: 0
   m_PreviewWindow: {fileID: 0}
---- !u!114 &16
+--- !u!114 &18
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1675,9 +589,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 962
+    x: 891
     y: 490
-    width: 359
+    width: 496
     height: 509
   m_ViewDataDictionary: {fileID: 0}
   m_SearchFilter:
@@ -1693,21 +607,21 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefabs/MapEditor/Animation/Animation Types
+    - Assets/Prefabs/MapEditor/Animation
     m_Globs: []
   m_ViewMode: 1
-  m_StartGridSize: 16
+  m_StartGridSize: 63
   m_LastFolders:
-  - Assets/Prefabs/MapEditor/Animation/Animation Types
-  m_LastFoldersGridSize: 16
+  - Assets/Prefabs/MapEditor/Animation
+  m_LastFoldersGridSize: 63
   m_LastProjectPath: C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: ee550000
-    m_LastClickedID: 21998
-    m_ExpandedIDs: 00000000b8490000ba490000bc490000be490000c0490000c2490000c4490000c6490000c8490000ca490000cc490000ce490000d0490000d2490000d4490000d6490000d8490000da490000dc490000de490000e0490000e2490000184a00009e500000
+    m_SelectedIDs: 9a4a0000
+    m_LastClickedID: 19098
+    m_ExpandedIDs: 0000000056490000584900005a4900005c4900005e49000060490000624900006449000066490000684900006a4900006c4900006e490000704900007449000076490000784900007a4900007c4900007e49000080490000ae490000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1735,7 +649,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000b8490000ba490000bc490000be490000c0490000c2490000c4490000c6490000c8490000ca490000cc490000ce490000d0490000d2490000d4490000d6490000d8490000da490000dc490000de490000e0490000e2490000
+    m_ExpandedIDs: 0000000056490000584900005a4900005c4900005e49000060490000624900006449000066490000684900006a4900006c4900006e49000070490000724900007449000076490000784900007a4900007c4900007e49000080490000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1763,21 +677,21 @@ MonoBehaviour:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
-    m_ExpandedInstanceIDs: c6230000905e0000
+    m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: MapEditor
-      m_OriginalName: MapEditor
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 18968
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 10}
     m_CreateAssetUtility:
@@ -1788,10 +702,10 @@ MonoBehaviour:
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
     m_ScrollPosition: {x: 0, y: 0}
-    m_GridSize: 16
+    m_GridSize: 63
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 110
---- !u!114 &17
+--- !u!114 &19
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1814,7 +728,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 73
-    width: 961
+    width: 890
     height: 926
   m_ViewDataDictionary: {fileID: 0}
   m_SerializedViewNames: []
@@ -1823,7 +737,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 961, y: 905}
+  m_TargetSize: {x: 890, y: 905}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -1838,8 +752,8 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -480.5
-    m_HBaseRangeMax: 480.5
+    m_HBaseRangeMin: -445
+    m_HBaseRangeMax: 445
     m_VBaseRangeMin: -452.5
     m_VBaseRangeMax: 452.5
     m_HAllowExceedBaseRangeMin: 1
@@ -1859,29 +773,29 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 961
+      width: 890
       height: 905
     m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 480.5, y: 452.5}
+    m_Translation: {x: 445, y: 452.5}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -480.5
+      x: -445
       y: -452.5
-      width: 961
+      width: 890
       height: 905
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 961, y: 926}
+  m_LastWindowPixelSize: {x: 890, y: 926}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
   m_XRRenderMode: 0
   m_RenderTexture: {fileID: 0}
---- !u!114 &18
+--- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1902,10 +816,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 0
-    y: 73
-    width: 961
-    height: 926
+    x: 1389
+    y: 469
+    width: 530
+    height: 530
   m_ViewDataDictionary: {fileID: 0}
   m_ShowContextualTools: 0
   m_WindowGUID: 9bbdba7dddcf77147951abff5b4a4e52
@@ -1918,9 +832,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 521.3431, y: 530.3545, z: 2754.3882}
+    m_Target: {x: -321.46735, y: -836.8572, z: 2113.922}
     speed: 2
-    m_Value: {x: 521.3431, y: 530.3545, z: 2754.3882}
+    m_Value: {x: 385.35062, y: 686.36945, z: -1.0028687}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1959,7 +873,7 @@ MonoBehaviour:
       m_Fade:
         m_Target: 0
         speed: 2
-        m_Value: 0
+        m_Value: 1
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
       m_Pivot: {x: 0, y: 0, z: 0}
       m_Size: {x: 1, y: 1}
@@ -1967,13 +881,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.019185815, y: -0.018898213, z: -0.0003621609, w: -0.999642}
+    m_Target: {x: -0.24808107, y: 0.14952828, z: -0.038787663, w: -0.9563496}
     speed: 2
-    m_Value: {x: 0.019185724, y: -0.018898124, z: -0.0003621592, w: -0.99963725}
+    m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 1823.8872
+    m_Target: 2241.6626
     speed: 2
-    m_Value: 1823.8872
+    m_Value: 476.7258
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1991,14 +905,14 @@ MonoBehaviour:
     m_FarClip: 10000
     m_DynamicClip: 1
     m_OcclusionCulling: 0
-  m_LastSceneViewRotation: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
+  m_LastSceneViewRotation: {x: -0.24808107, y: 0.14952828, z: -0.038787663, w: -0.9563496}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
   m_SceneVisActive: 1
   m_LastLockedObject: {fileID: 0}
   m_ViewIsLockedToObject: 0
---- !u!114 &19
+--- !u!114 &21
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2019,17 +933,17 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 962
+    x: 891
     y: 73
-    width: 359
+    width: 496
     height: 396
   m_ViewDataDictionary: {fileID: 0}
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: fc85ffff
+      m_SelectedIDs: 9e3d0000
       m_LastClickedID: 0
-      m_ExpandedIDs: 0086ffff0486ffff2c86ffff688bffff748bffff0c8cffffba8effff1e95ffff2295ffff4a95ffff869affff929affff2a9bffffd89dffffb0faffffb03c0000
+      m_ExpandedIDs: d273ffff1a78ffff2678ffffbe78ffff6c7bffffb67fffff1684ffff2284ffffba84ffff6887ffff5cfbffff8e3c0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -2045,7 +959,7 @@ MonoBehaviour:
         m_IsRenaming: 0
         m_OriginalEventType: 11
         m_IsRenamingFilename: 0
-        m_ClientGUIView: {fileID: 9}
+        m_ClientGUIView: {fileID: 11}
       m_SearchString: 
     m_ExpandedScenes: []
     m_CurrenRootInstanceID: 0
@@ -2053,7 +967,7 @@ MonoBehaviour:
       m_IsLocked: 0
     m_CurrentSortingName: TransformSorting
   m_WindowGUID: fc39bf19ad558254e9d26f742ab1b36c
---- !u!114 &20
+--- !u!114 &22
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

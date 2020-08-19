@@ -167,7 +167,7 @@ namespace mapEditor.animations
     [Serializable]
     public struct DirectionalAnimation : IAnimation
     {
-        public Animation[] animations;
+        public IAnimation[] animations;
 
         public string name;
         public string Name { get => name; set => name = value; }
@@ -179,7 +179,7 @@ namespace mapEditor.animations
 
         public Type Type => typeof(DirectionalAnimation);
 
-        public DirectionalAnimation(Animation[] animations, int index)
+        public DirectionalAnimation(IAnimation[] animations, int index)
         {
             name = "New";
             framerate = 12;
@@ -222,7 +222,7 @@ namespace mapEditor.animations
     [Serializable]
     public struct VaraintAnimation : IAnimation
     {
-        public Animation[] animations;
+        public IAnimation[] animations;
 
         public string name;
         public string Name { get => name; set => name = value; }
@@ -234,7 +234,7 @@ namespace mapEditor.animations
 
         public Type Type => typeof(VaraintAnimation);
 
-        public VaraintAnimation(Animation[] animations,int index)
+        public VaraintAnimation(IAnimation[] animations,int index)
         {
             name = "New";
             framerate = 12;

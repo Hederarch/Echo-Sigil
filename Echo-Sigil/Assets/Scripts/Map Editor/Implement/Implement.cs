@@ -32,6 +32,10 @@ namespace mapEditor
         public int idelIndex;
         public int fidgetIndex;
 
+        [NonSerialized]
+        public ImplementList implementList;
+        public string ImplementPath => implementList.modPath + "/" + name;
+
         public Color PrimaryColor { get => new Color(primaryColor[0], primaryColor[1], primaryColor[2]); set => SetUnitColors(value, SecondaryColor); }
         public Color SecondaryColor { get => new Color(secondaryColor[0], secondaryColor[1], secondaryColor[2]); set => SetUnitColors(PrimaryColor, value); }
         public Sprite GetBaseSprite(string modPath) => SaveSystem.LoadPNG(modPath + "/" + name + "/Base.png", Vector2.one / 2f, 1);
@@ -53,7 +57,7 @@ namespace mapEditor
             power = "";
             type = -1;
             description = "";
-            animations = new animations.IAnimation[0];
+            animations = new IAnimation[0];
             walkIndex = 0;
             attackIndex = 0;
             idelIndex = 0;
@@ -62,6 +66,7 @@ namespace mapEditor
             saveDirectionalAnimations = null;
             saveMultiTileAnimations = null;
             saveVaraintAnimations = null;
+            implementList = null;
         }
 
         public void SetUnitColors(Color primaryColor, Color secondaryColor)
@@ -256,15 +261,26 @@ namespace mapEditor
         public string modPath;
         public string modName;
         public Implement[] implements;
+        public Implement[] Implements => linkImplents();
         public Sprite BaseSprite(int index) => implements[index].GetBaseSprite(modPath);
 
         public static implicit operator Implement[](ImplementList i) => i.implements;
+
+        public Implement[] linkImplents()
+        {
+            for(int i = 0; i < implements.Length; i++)
+            {
+                implements[i].implementList = this;
+            }
+            return implements;
+        }
 
         public ImplementList(int Length, string modPath = null, string modName = "Defualt")
         {
             this.modPath = SaveSystem.SetDefualtModPath(modPath);
             this.modName = modName;
             implements = new Implement[Length];
+            linkImplents();
         }
 
         public ImplementList(Implement[] implements, string modPath = null, string modName = "Defualt")
@@ -272,8 +288,9 @@ namespace mapEditor
             this.modPath = SaveSystem.SetDefualtModPath(modPath);
             this.modName = modName;
             this.implements = implements;
+            linkImplents();
         }
 
-        public string ImplementPath(int index) => modPath + "/" + implements[index].name;
+        public string ImplementPath(int index) => modPath + "/" + Implements[index].name;
     }
 }

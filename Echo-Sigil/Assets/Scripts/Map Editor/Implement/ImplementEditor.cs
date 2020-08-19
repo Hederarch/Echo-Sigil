@@ -33,7 +33,7 @@ namespace mapEditor
                     selectionObject.SetActive(true);
                     break;
                 case 2:
-                    PopulateAnimation();
+                    EnableAnimation();
                     break;
                 case 3:
                     EnableSplashScreen();
@@ -43,19 +43,22 @@ namespace mapEditor
                     break;
             }
         }
+
+
+
         private void Save()
         {
-            if (selectedImplementList != null && selectedImplementList.implements.Length > selectedImplementIndex)
+            if (selectedImplementList != null && selectedImplementList.Implements.Length > selectedImplementIndex)
             {
-                Implement implement = selectedImplementList.implements[selectedImplementIndex];
+                Implement implement = selectedImplementList.Implements[selectedImplementIndex];
                 if (selectionObject.activeInHierarchy)
                 {
 
                 }
                 else if (animationsObject.activeInHierarchy)
                 {
-                    implement.animations = SaveAnimations(selectedImplementList.ImplementPath(selectedImplementIndex));
-                    implement = SetAnimationIdexes(implement);
+                    implement.animations = AnimationElement.SaveAnimations(animationList);
+                    implement = AnimationElement.GetAnimationIdexes(animationList,implement);
                 }
                 else if (splashObject.activeInHierarchy)
                 {
@@ -72,12 +75,10 @@ namespace mapEditor
                 {
 
                 }
-                selectedImplementList.implements[selectedImplementIndex] = implement;
+                selectedImplementList.Implements[selectedImplementIndex] = implement;
                 SaveSystem.SaveImplmentList(selectedImplementList);
             }
         }
-
-
 
         /// <summary>
         /// Turns off all windows and saves game
@@ -86,6 +87,7 @@ namespace mapEditor
         {
             Save();
             UnsubscribeSelectionElements();
+            AnimationElement.UnsubsubscribeAnimation(animationHolderTransform, animationList);
 
             unitMenu.value = 0;
             windowObject.SetActive(true);
@@ -187,11 +189,11 @@ namespace mapEditor
                 ImplementList implementList = SaveSystem.LoadImplementList(modPath);
                 modHolder.GetChild(0).GetChild(0).GetComponent<Text>().text = implementList.modName;
 
-                if (implementList.implements != null)
+                if (implementList.Implements != null)
                 {
-                    for (int i = 0; i < implementList.implements.Length; i++)
+                    for (int i = 0; i < implementList.Implements.Length; i++)
                     {
-                        if (implementList.implements[i].index == i)
+                        if (implementList.Implements[i].index == i)
                         {
                             GameObject unitObject = Instantiate(implementSelectionObject, modHolder);
                             Button unitButton = unitObject.GetComponent<Button>();
@@ -199,7 +201,7 @@ namespace mapEditor
                             unitButton.onClick.AddListener(delegate { SelectionEvent?.Invoke(implementList, index); });
                             implementButtons.Add(unitButton);
                             unitObject.transform.GetChild(0).GetComponent<Text>().text = i.ToString();
-                            unitObject.transform.GetChild(2).GetChild(0).GetComponentInChildren<Text>().text = implementList.implements[i].name;
+                            unitObject.transform.GetChild(2).GetChild(0).GetComponentInChildren<Text>().text = implementList.Implements[i].name;
                             Sprite sprite = implementList.BaseSprite(i);
                             Image image = unitObject.transform.GetChild(1).GetComponent<Image>();
                             if (sprite == null)
@@ -221,13 +223,13 @@ namespace mapEditor
             modPath = SaveSystem.SetDefualtModPath(modPath);
             ImplementList implementList = SaveSystem.LoadImplementList();
             int length = 0;
-            if (implementList.implements != null)
+            if (implementList.Implements != null)
             {
-                length = implementList.implements.Length;
+                length = implementList.Implements.Length;
             }
 
             Implement[] implements = new Implement[length + 1];
-            implementList.implements.CopyTo(implements, 0);
+            implementList.Implements.CopyTo(implements, 0);
             implements[length] = new Implement("temp", length);
             implementList.implements = implements;
             implementList = SaveSystem.SaveImplmentList(implementList);
@@ -253,14 +255,14 @@ namespace mapEditor
         private void EnableSplashScreen()
         {
             //set
-            splashNameField.text = selectedImplementList.implements[selectedImplementIndex].name;
-            splashFragmentField.text = selectedImplementList.implements[selectedImplementIndex].fragment;
-            splashPowerField.text = selectedImplementList.implements[selectedImplementIndex].power;
-            ChangeType(selectedImplementList.implements[selectedImplementIndex].type);
-            splashDescriptionField.text = selectedImplementList.implements[selectedImplementIndex].description;
-            primaryColor.Color = selectedImplementList.implements[selectedImplementIndex].PrimaryColor;
-            secondaryColor.Color = selectedImplementList.implements[selectedImplementIndex].SecondaryColor;
-            if (selectedImplementList.implements[selectedImplementIndex].GetBaseSprite(selectedImplementList.modPath) == null)
+            splashNameField.text = selectedImplementList.Implements[selectedImplementIndex].name;
+            splashFragmentField.text = selectedImplementList.Implements[selectedImplementIndex].fragment;
+            splashPowerField.text = selectedImplementList.Implements[selectedImplementIndex].power;
+            ChangeType(selectedImplementList.Implements[selectedImplementIndex].type);
+            splashDescriptionField.text = selectedImplementList.Implements[selectedImplementIndex].description;
+            primaryColor.Color = selectedImplementList.Implements[selectedImplementIndex].PrimaryColor;
+            secondaryColor.Color = selectedImplementList.Implements[selectedImplementIndex].SecondaryColor;
+            if (selectedImplementList.Implements[selectedImplementIndex].GetBaseSprite(selectedImplementList.modPath) == null)
             {
                 splashScreenProfile.color = Color.clear;
             }
@@ -268,7 +270,7 @@ namespace mapEditor
             {
                 splashScreenProfile.color = Color.white;
             }
-            splashScreenProfile.sprite = selectedImplementList.implements[selectedImplementIndex].GetBaseSprite(selectedImplementList.modPath);
+            splashScreenProfile.sprite = selectedImplementList.Implements[selectedImplementIndex].GetBaseSprite(selectedImplementList.modPath);
 
             //activate
             splashObject.SetActive(true);
@@ -299,155 +301,27 @@ namespace mapEditor
         }
 
         //Animation
-        public Transform animationHolderTransform;
-        public GameObject animationSelectionObject;
-        public GameObject animationAddObject;
-        public GameObject animationAttachmentObject;
+        public RectTransform animationHolderTransform;
+        public GameObject animationElementObject;
+        public GameObject addAnimationObject;
+        public GameObject attachmentObject;
         public static List<AnimationElement> AnimationElements => animationList;
         private static List<AnimationElement> animationList = new List<AnimationElement>();
         private static List<Attachment> attachments = new List<Attachment>();
 
-        private void PopulateAnimation()
+        private void EnableAnimation()
         {
-            UnsubsubscribeAnimation();
-            if (selectedImplementList != null && selectedImplementList.implements[selectedImplementIndex].animations != null)
+            AnimationElement.SetStatics(animationElementObject,addAnimationObject,attachmentObject);
+            AnimationElement.UnsubsubscribeAnimation(animationHolderTransform,animationList);
+            if (selectedImplementList != null && selectedImplementList.Implements[selectedImplementIndex].animations != null)
             {
-                IAnimation[] animations = selectedImplementList.implements[selectedImplementIndex].animations;
-
-                for (int i = 0; i < animations.Length; i++)
-                {
-                    AnimationElement animationElement = Instantiate(animationSelectionObject, animationHolderTransform).GetComponent<AnimationElement>();
-                    animationList.Add(animationElement);
-                    animations[i].Index = i;
-                    animationElement.DestroyEvent += DestroyAnimation;
-                    animationElement.Initalize(animations[i]);
-                    PopulateAnimationAttachments(i, animationElement);
-                }
-            }
-            Instantiate(animationAddObject, animationHolderTransform).GetComponent<Button>().onClick.AddListener(call: AddAnimation);
-            animationsObject.SetActive(true);
-        }
-
-        private void PopulateAnimationAttachments(int index, AnimationElement animation)
-        {
-            if (selectedImplementList.implements[selectedImplementIndex].idelIndex == index)
-            {
-                InstantiateAnimationAttachment(animation, "Idel", index);
-            }
-            if (selectedImplementList.implements[selectedImplementIndex].attackIndex == index)
-            {
-                InstantiateAnimationAttachment(animation, "Attack", index);
-            }
-            if (selectedImplementList.implements[selectedImplementIndex].fidgetIndex == index)
-            {
-                InstantiateAnimationAttachment(animation, "Fidget", index);
-            }
-            if (selectedImplementList.implements[selectedImplementIndex].walkIndex == index)
-            {
-                InstantiateAnimationAttachment(animation, "Walk", index).Directional = true;
-            }
-            if (selectedUnit != null && false)
-            {
-                foreach (KeyValuePair<Ability, int> AKey in (selectedUnit.battle as JRPGBattle).abilites)
-                {
-                    if (AKey.Value == index)
-                    {
-                        InstantiateAnimationAttachment(animation, AKey.Key.name, index);
-                        return;
-                    }
-                }
+                Implement implement = selectedImplementList.Implements[selectedImplementIndex];
+                IAnimation[] animations = implement.animations;
+                AnimationElement.PopulateTransformWithAnimations(animationHolderTransform, animations, implement);
+                animationsObject.SetActive(true);
             }
         }
 
-        private Attachment InstantiateAnimationAttachment(AnimationElement animation, string name, int index)
-        {
-            GameObject attachmentObject = Instantiate(animationAttachmentObject, animation.attachmentHolderTransform);
-            Attachment attachment = attachmentObject.GetComponent<Attachment>();
-            attachment.Name = name;
-            attachment.index = index;
-            attachments.Add(attachment);
-            return attachment;
-        }
-
-        private void AddAnimation()
-        {
-            DisableAllWindows();
-            IAnimation[] selectedAnimations = selectedImplementList.implements[selectedImplementIndex].animations;
-            int length = selectedAnimations.Length;
-            IAnimation[] animations = new IAnimation[length + 1];
-            selectedAnimations.CopyTo(animations, 0);
-            animations[length] = new animations.Animation(SaveSystem.LoadPNG(Vector2.one / 2f), length, selectedImplementList.ImplementPath(selectedImplementIndex));
-            selectedImplementList.implements[selectedImplementIndex].animations = animations;
-            PopulateAnimation();
-        }
-        private void DestroyAnimation(int index)
-        {
-            animationList.Remove(animationList[index]);
-            ChangeWindow(2);
-        }
-        private IAnimation[] SaveAnimations(string implmentPath)
-        {
-            List<IAnimation> animations = new List<IAnimation>();
-            foreach (AnimationElement a in animationList)
-            {
-                animations.Add(a.CurrentSpritesAsAnimation());
-            }
-            return animations.ToArray();
-        }
-        private void UnsubsubscribeAnimation()
-        {
-            animationList.Clear();
-            attachments.Clear();
-            foreach (Transform t in animationHolderTransform)
-            {
-                if (TryGetComponent(out AnimationElement a))
-                {
-                    a.DeInitalize();
-                }
-                else if (TryGetComponent(out Button b))
-                {
-                    b.onClick.RemoveAllListeners();
-                }
-
-                Destroy(t.gameObject);
-            }
-        }
-        private Implement SetAnimationIdexes(Implement implement)
-        {
-            foreach(Attachment attachment in attachments)
-            {
-                if (attachment.Name == "Idel")
-                {
-                    implement.idelIndex = attachment.index;
-                }
-                else if (attachment.Name == "Attack")
-                {
-                    implement.attackIndex = attachment.index;
-                }
-                else if (attachment.Name == "Fidget")
-                {
-                    implement.fidgetIndex = attachment.index;
-                }
-                else if (attachment.Name == "Walk")
-                {
-                    implement.walkIndex = attachment.index;
-                }
-                else if (selectedUnit != null && false)
-                {
-                    Dictionary<Ability, int> abilites = (selectedUnit.battle as JRPGBattle).abilites;
-                    foreach (KeyValuePair<Ability, int> AKey in abilites)
-                    {
-                        if (attachment.Name == AKey.Key.name)
-                        {
-                            abilites[AKey.Key] = attachment.index;
-                            break;
-                        }
-                    }
-                }
-
-            }
-            return implement;
-        }
 
         //Ability
         public GameObject abilitySelectionObject;
@@ -473,7 +347,7 @@ namespace mapEditor
         {
             if (windowObject.activeInHierarchy)
             {
-                if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.S)) 
+                if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.S))
                 {
                     Save();
                 }
