@@ -4,7 +4,7 @@ using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace mapEditor.animations
+namespace MapEditor.Animations
 {
     public class AnimationElement : Selectable
     {
@@ -315,7 +315,7 @@ namespace mapEditor.animations
             Destroy(buttonTransform.gameObject);
         }
 
-        public IAnimation CurrentSpritesAsAnimation()
+        public IAnimation GetAnimation()
         {
             IAnimation animation = null;
             if (Variant || Directional)
@@ -366,7 +366,7 @@ namespace mapEditor.animations
         private void ResetPreview()
         {
             AnimatorController controller = new AnimatorController();
-            IAnimation animation = CurrentSpritesAsAnimation();
+            IAnimation animation = GetAnimation();
             AnimationClip motion = animation.GetAnimationClip(typeof(Image));
             controller.AddLayer("Base");
             controller.AddMotion(motion);
@@ -472,7 +472,7 @@ namespace mapEditor.animations
             List<IAnimation> animations = new List<IAnimation>();
             foreach (AnimationElement a in animationList)
             {
-                animations.Add(a.CurrentSpritesAsAnimation());
+                animations.Add(a.GetAnimation());
             }
             return animations.ToArray();
         }

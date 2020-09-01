@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace mapEditor
+namespace MapEditor
 {
     public class MapEditorGUI : MonoBehaviour
     {

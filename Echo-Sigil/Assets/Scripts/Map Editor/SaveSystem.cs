@@ -3,8 +3,9 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System;
 
-namespace mapEditor
+namespace MapEditor
 {
     public static class SaveSystem
     {
@@ -48,6 +49,13 @@ namespace mapEditor
             {
                 Debug.LogWarning("Map File not found in " + path + ". So... um, I guess its been sucsessfuly gotten rid of then.");
             }
+        }
+
+        internal static string[] GetModPaths()
+        {
+            string[] modPaths = new string[1];
+            modPaths[0] = SetDefualtModPath(modPaths[0]);
+            return modPaths;
         }
 
         public static Sprite[] LoadPallate(string questPath)

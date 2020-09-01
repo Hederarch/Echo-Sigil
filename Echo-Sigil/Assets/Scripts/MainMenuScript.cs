@@ -2,7 +2,7 @@
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
-using mapEditor;
+using MapEditor;
 
 public class MainMenuScript : MonoBehaviour
 {

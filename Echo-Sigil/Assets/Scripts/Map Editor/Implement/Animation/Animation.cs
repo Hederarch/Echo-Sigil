@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
 
-namespace mapEditor.animations
+namespace MapEditor.Animations
 {
     public interface IAnimation : IComparable<IAnimation>
     {

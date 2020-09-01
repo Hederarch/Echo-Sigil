@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using MapEditor.Windows;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace mapEditor.animations
+namespace MapEditor.Animations
 {
     public class Attachment : Selectable
     {
@@ -65,7 +66,7 @@ namespace mapEditor.animations
         {
             float minDistance = float.MaxValue;
             AnimationElement minElement = null;
-            foreach (AnimationElement animationElement in ImplementEditor.AnimationElements)
+            foreach (AnimationElement animationElement in AnimationWindow.AnimationElements)
             {
                 float distance = animationElement.transform.position.y - transform.position.y;
                 
@@ -75,7 +76,7 @@ namespace mapEditor.animations
                     minElement = animationElement;
                 }
             }
-            minElement = minElement == null ? ImplementEditor.AnimationElements[0] : minElement;
+            minElement = minElement == null ? AnimationWindow.AnimationElements[0] : minElement;
             return minElement;
         }
     }

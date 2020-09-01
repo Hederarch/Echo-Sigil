@@ -122,7 +122,7 @@ public class JRPGBattle : MonoBehaviour , IBattle
         return null;
     }
 
-    internal void SetValues(MapImplement.BattleSettings battleSettings)
+    internal void SetValues(MapEditor.MapImplement.BattleSettings battleSettings)
     {
         health = battleSettings.health;
         maxHealth = battleSettings.maxHealth;

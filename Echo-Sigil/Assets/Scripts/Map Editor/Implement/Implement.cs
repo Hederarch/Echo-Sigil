@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Unity.Collections;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
-using mapEditor.animations;
+using MapEditor.Animations;
 
-namespace mapEditor
+namespace MapEditor
 {
     [Serializable]
     public struct Implement : ISerializationCallbackReceiver
@@ -22,7 +21,7 @@ namespace mapEditor
 
         public IAnimation[] animations;
         //only to be used for saveing
-        public animations.Animation[] saveAnimations;
+        public Animations.Animation[] saveAnimations;
         public DirectionalAnimation[] saveDirectionalAnimations;
         public VaraintAnimation[] saveVaraintAnimations;
         public MultiTileAnimation[] saveMultiTileAnimations;
@@ -35,23 +34,15 @@ namespace mapEditor
         [NonSerialized]
         public ImplementList implementList;
         public string ImplementPath => implementList.modPath + "/" + name;
+        public Sprite BaseSprite { get => SaveSystem.LoadPNG(ImplementPath + "/Base.png", Vector2.one / 2f, 1); set => SaveSystem.SavePNG(ImplementPath + "/Base.png", value.texture); }
 
         public Color PrimaryColor { get => new Color(primaryColor[0], primaryColor[1], primaryColor[2]); set => SetUnitColors(value, SecondaryColor); }
         public Color SecondaryColor { get => new Color(secondaryColor[0], secondaryColor[1], secondaryColor[2]); set => SetUnitColors(PrimaryColor, value); }
-        public Sprite GetBaseSprite(string modPath) => SaveSystem.LoadPNG(modPath + "/" + name + "/Base.png", Vector2.one / 2f, 1);
-        public void SetBaseSprite(string modPath, Sprite sprite)
-        {
-            if (sprite != null)
-            {
-                SaveSystem.SavePNG(modPath + "/" + name + "/Base.png", sprite.texture);
-            }
-        }
 
-        public Implement(string name, int index)
+        public Implement(string name, ImplementList implementList)
         {
             primaryColor = new float[3];
             secondaryColor = new float[3];
-            this.index = index;
             this.name = name;
             fragment = "";
             power = "";
@@ -66,7 +57,17 @@ namespace mapEditor
             saveDirectionalAnimations = null;
             saveMultiTileAnimations = null;
             saveVaraintAnimations = null;
-            implementList = null;
+            this.implementList = implementList;
+            int length = 0;
+            if (implementList.Implements != null)
+            {
+                length = implementList.Implements.Length;
+            }
+            Implement[] implements = new Implement[length + 1];
+            implementList.Implements.CopyTo(implements, 0);
+            index = length;
+            implements[length] = this;
+            implementList.implements = implements;
         }
 
         public void SetUnitColors(Color primaryColor, Color secondaryColor)
@@ -159,7 +160,7 @@ namespace mapEditor
             spriteKeyFrames[0] = new ObjectReferenceKeyframe
             {
                 time = 0,
-                value = GetBaseSprite(modPath)
+                value = BaseSprite
             };
 
             AnimationUtility.SetObjectReferenceCurve(clip, spriteBinding, spriteKeyFrames);
@@ -175,7 +176,7 @@ namespace mapEditor
 
         public void OnBeforeSerialize()
         {
-            saveAnimations = new animations.Animation[0];
+            saveAnimations = new Animations.Animation[0];
             saveDirectionalAnimations = new DirectionalAnimation[0];
             saveVaraintAnimations = new VaraintAnimation[0];
             saveMultiTileAnimations = new MultiTileAnimation[0];
@@ -185,11 +186,11 @@ namespace mapEditor
                 IAnimation animation = animations[i];
                 animation.Index = i;
 
-                if (animation.Type == typeof(animations.Animation))
+                if (animation.Type == typeof(Animations.Animation))
                 {
-                    animations.Animation[] animationArray = new animations.Animation[saveAnimations.Length + 1];
+                    Animations.Animation[] animationArray = new Animations.Animation[saveAnimations.Length + 1];
                     saveAnimations.CopyTo(animationArray, 0);
-                    animationArray[saveAnimations.Length] = (animations.Animation)animation;
+                    animationArray[saveAnimations.Length] = (Animations.Animation)animation;
                     saveAnimations = animationArray;
                 }
                 else if (animation.Type == typeof(DirectionalAnimation))
@@ -225,7 +226,7 @@ namespace mapEditor
             List<IAnimation> listOfAnimations = new List<IAnimation>();
             if (saveAnimations != null)
             {
-                foreach (animations.Animation animation in saveAnimations)
+                foreach (Animations.Animation animation in saveAnimations)
                 {
                     listOfAnimations.Add(animation);
                 }
@@ -262,7 +263,6 @@ namespace mapEditor
         public string modName;
         public Implement[] implements;
         public Implement[] Implements => linkImplents();
-        public Sprite BaseSprite(int index) => implements[index].GetBaseSprite(modPath);
 
         public static implicit operator Implement[](ImplementList i) => i.implements;
 
@@ -292,5 +292,7 @@ namespace mapEditor
         }
 
         public string ImplementPath(int index) => modPath + "/" + Implements[index].name;
+
+        public Implement this[int index] { get => implements[index]; set => implements[index] = value; }
     }
 }

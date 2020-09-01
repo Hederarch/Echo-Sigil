@@ -7,15 +7,67 @@
             "index": 0,
             "fragment": "Pool Ball",
             "power": "Bank Shot",
-            "type": 0,
+            "type": 2,
             "description": "Can create and propel fast and deadly pool balls",
             "primaryColor": [
-                1.0,
-                1.0,
+                0.581818163394928,
+                0.9090909361839294,
                 1.0
             ],
             "secondaryColor": [
+                0.145454540848732,
+                0.1090909093618393,
+                0.1090909093618393
+            ],
+            "saveAnimations": [],
+            "saveDirectionalAnimations": [],
+            "saveVaraintAnimations": [],
+            "saveMultiTileAnimations": [],
+            "walkIndex": 0,
+            "attackIndex": 0,
+            "idelIndex": 0,
+            "fidgetIndex": 0
+        },
+        {
+            "name": "Temp",
+            "index": 1,
+            "fragment": "",
+            "power": "",
+            "type": 0,
+            "description": "",
+            "primaryColor": [
                 0.0,
+                0.0,
+                0.0
+            ],
+            "secondaryColor": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "saveAnimations": [],
+            "saveDirectionalAnimations": [],
+            "saveVaraintAnimations": [],
+            "saveMultiTileAnimations": [],
+            "walkIndex": 0,
+            "attackIndex": 0,
+            "idelIndex": 0,
+            "fidgetIndex": 0
+        },
+        {
+            "name": "Temp",
+            "index": 2,
+            "fragment": "",
+            "power": "",
+            "type": 0,
+            "description": "",
+            "primaryColor": [
+                0.0,
+                0.5636363625526428,
+                0.0
+            ],
+            "secondaryColor": [
+                1.0,
                 0.0,
                 0.0
             ],

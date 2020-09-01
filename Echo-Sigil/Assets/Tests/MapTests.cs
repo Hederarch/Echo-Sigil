@@ -1,4 +1,4 @@
-﻿using mapEditor;
+﻿using MapEditor;
 using NUnit.Framework;
 using UnityEngine;
 

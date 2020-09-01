@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace mapEditor.animations
+namespace MapEditor.Animations
 {
     public class SpriteHolder : MonoBehaviour
     {
