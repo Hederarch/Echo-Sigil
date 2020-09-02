@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,7 +21,7 @@ namespace MapEditor.Windows
 
         private Implement implement;
 
-        public override void Initalize(Implement implement)
+        public override void Initalize(Implement implement, Unit unit = null)
         {
             nameField.text = implement.name;
             fragmentField.text = implement.fragment;
@@ -39,7 +37,7 @@ namespace MapEditor.Windows
             //activate
             gameObject.SetActive(true);
         }
-        public override Implement Save(Implement implement)
+        public override Implement Save(Implement implement, Unit unit = null)
         {
             implement.name = nameField.text;
             implement.fragment = fragmentField.text;

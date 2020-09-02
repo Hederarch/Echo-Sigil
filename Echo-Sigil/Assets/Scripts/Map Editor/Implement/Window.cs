@@ -1,15 +1,15 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace MapEditor.Windows
 {
     public class Window : MonoBehaviour
     {
-        public virtual bool Active { get => gameObject.activeInHierarchy; set => gameObject.SetActive(value); }
-        public virtual void Initalize(Implement implement)
+        public virtual void Initalize(Implement implement, Unit unit = null)
         {
-
+            throw new NotImplementedException("Called Window.Initalize.Base");
         }
-        public virtual Implement Save(Implement implement)
+        public virtual Implement Save(Implement implement, Unit unit = null)
         {
             return implement;
         }

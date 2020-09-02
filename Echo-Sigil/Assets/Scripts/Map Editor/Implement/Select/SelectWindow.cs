@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,7 +25,7 @@ namespace MapEditor.Windows
             }
         }
 
-        public override void Initalize(Implement implement) => Initalize();
+        public override void Initalize(Implement implement, Unit unit = null) => Initalize();
 
         public void Initalize()
         {
@@ -73,7 +72,7 @@ namespace MapEditor.Windows
             SelectionEvent?.Invoke(implementList, length);
         }
 
-        public override Implement Save(Implement implement)
+        public override Implement Save(Implement implement, Unit unit = null)
         {
             return implement;
         }

@@ -66,7 +66,7 @@ namespace MapEditor.Animations
         {
             float minDistance = float.MaxValue;
             AnimationElement minElement = null;
-            foreach (AnimationElement animationElement in AnimationWindow.AnimationElements)
+            foreach (AnimationElement animationElement in AnimationWindow.animationElements)
             {
                 float distance = animationElement.transform.position.y - transform.position.y;
                 
@@ -76,7 +76,7 @@ namespace MapEditor.Animations
                     minElement = animationElement;
                 }
             }
-            minElement = minElement == null ? AnimationWindow.AnimationElements[0] : minElement;
+            minElement = minElement == null ? AnimationWindow.animationElements[0] : minElement;
             return minElement;
         }
     }

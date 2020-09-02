@@ -11,22 +11,21 @@ namespace MapEditor.Windows
         public GameObject animationElementObject;
         public GameObject addAnimationObject;
         public GameObject attachmentObject;
-        public static List<AnimationElement> AnimationElements => animationList;
-        private static List<AnimationElement> animationList = new List<AnimationElement>();
+        public static List<AnimationElement> animationElements = new List<AnimationElement>();
         private static List<Attachment> attachments = new List<Attachment>();
 
-        public override void Initalize(Implement implement)
+        public override void Initalize(Implement implement, Unit unit = null)
         {
             AnimationElement.SetStatics(animationElementObject, addAnimationObject, attachmentObject);
-            AnimationElement.UnsubsubscribeAnimation(animationHolderTransform, animationList);
-            AnimationElement.PopulateTransformWithAnimations(animationHolderTransform, implement.animations, implement);
+            AnimationElement.UnsubsubscribeAnimation(animationHolderTransform, animationElements);
+            animationElements = AnimationElement.PopulateTransformWithAnimations(animationHolderTransform, implement.animations, implement);
             gameObject.SetActive(true);
         }
 
-        public override Implement Save(Implement implement)
+        public override Implement Save(Implement implement, Unit unit = null)
         {
             List<IAnimation> animations = new List<IAnimation>();
-            foreach(AnimationElement animationElement in animationList)
+            foreach(AnimationElement animationElement in animationElements)
             {
                 animations.Add(animationElement.GetAnimation());
             }

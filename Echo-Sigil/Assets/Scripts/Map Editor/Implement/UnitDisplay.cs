@@ -1,9 +1,8 @@
 ﻿using System.Collections;
-using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace MapEditor
+namespace MapEditor.Windows
 {
     public class UnitDisplay : MonoBehaviour
     {
@@ -32,7 +31,7 @@ namespace MapEditor
                 DisplayUnit(implementList[index], unit);
             }
         }
-        public void SetAsSaved()
+        public void Saved()
         {
             if(savedIcon.gameObject.activeInHierarchy)
             {

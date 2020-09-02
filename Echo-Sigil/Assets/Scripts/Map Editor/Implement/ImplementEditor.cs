@@ -10,6 +10,7 @@ namespace MapEditor
     {
         private int selectedImplementIndex;
         private ImplementList selectedImplementList;
+        public Unit selectedUnit = null;
         public UnitDisplay unitDisplay;
         public RectTransform contentArea;
 
@@ -29,7 +30,7 @@ namespace MapEditor
                 unitDisplay.DisplayUnit(selectedImplementList, selectedImplementIndex);
                 Implement implement = selectedImplementList[selectedImplementIndex];
                 curWindow = Instantiate(windowObjects[arg0], contentArea).GetComponent<Window>();
-                curWindow.Initalize(implement);
+                curWindow.Initalize(implement, selectedUnit);
             }
             else
             {
@@ -46,8 +47,9 @@ namespace MapEditor
                 Implement implement = selectedImplementList.Implements[selectedImplementIndex];
                 implement = curWindow.Save(implement);
                 selectedImplementList.Implements[selectedImplementIndex] = implement;
+                unitDisplay.DisplayUnit(implement, selectedUnit);
                 SaveSystem.SaveImplmentList(selectedImplementList);
-                unitDisplay.SetAsSaved();
+                unitDisplay.Saved();
             }
         }
 
