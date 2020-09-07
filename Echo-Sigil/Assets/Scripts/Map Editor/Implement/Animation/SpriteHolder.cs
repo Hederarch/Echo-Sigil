@@ -9,7 +9,7 @@ namespace MapEditor.Animations
     public class SpriteHolder : MonoBehaviour
     {
         public Image image;
-        public event Action<int,Sprite> ChangeEvent;
+        public event Action<int, Sprite> ChangeEvent;
         public event Action<int> RemoveEvent;
         /// <summary>
         /// Change index of a sprite. Toggle if move right
@@ -20,8 +20,11 @@ namespace MapEditor.Animations
 
         public void InvokeChange()
         {
-            Sprite sprite = SaveSystem.LoadPNG(EditorUtility.OpenFilePanel("Select sprite to change to",Directory.GetCurrentDirectory(),"png"), Vector2.one / 2);
-            ChangeEvent?.Invoke(Index, sprite);
+            Sprite sprite = SaveSystem.LoadPNG(EditorUtility.OpenFilePanel("Select sprite to change to", Directory.GetCurrentDirectory(), "png"), Vector2.one / 2);
+            if (sprite != null)
+            {
+                ChangeEvent?.Invoke(Index, sprite);
+            }
         }
 
         public void InvokeRemove()

@@ -11,7 +11,7 @@ namespace MapEditor.Animations
         /// <summary>
         /// Path to the implements animation folder. 
         /// </summary>
-        public static string ImplementPath;
+        public static string implementPath;
         public InputField nameField;
         public RectTransform nameFieldTransform;
         public InputField FPSField;
@@ -21,9 +21,9 @@ namespace MapEditor.Animations
         public Button pulldownButton;
         public Transform subAnimationHolder;
         public RectTransform rectTransform;
-        public Vector2 rectHeightMinMax = new Vector2(205,605);
+        public Vector2 rectHeightMinMax = new Vector2(205, 605);
         public VerticalLayoutGroup holder;
-        public List<AnimationElement> animationElements = new List<AnimationElement>();
+
         public bool Extened
         {
             get => rectTransform.offsetMin.y != rectHeightMinMax.x; set
@@ -155,9 +155,13 @@ namespace MapEditor.Animations
         Button newSpriteButton;
         List<SpriteHolder> spriteHolders = new List<SpriteHolder>();
 
+        public Transform attachmentHolderTransform;
+
         public int index;
 
-        public Transform attachmentHolderTransform;
+        public List<AnimationElement> containerList;
+        public List<AnimationElement> subAnimationElements;
+
 
         public void Initalize(IAnimation animation)
         {
@@ -176,14 +180,7 @@ namespace MapEditor.Animations
 
         private void TypeSpesficInitialization(IAnimation animation)
         {
-            //Falseify all bools
-            Directional = true;
-            Variant = false;
-            ToggleDirectional();
-            Variant = true;
-            ToggleVariant();
-            MultiTile = true;
-            ToggleMultiTile();
+            FalseifyBools();
 
             if (animation.Type == typeof(Animation))
             {
@@ -192,10 +189,14 @@ namespace MapEditor.Animations
             else if (animation.Type == typeof(DirectionalAnimation))
             {
                 ToggleDirectional();
+                DirectionalAnimation directionalAnimation = (DirectionalAnimation)animation;
+                subAnimationElements = PopulateTransformWithAnimations(subAnimationHolder, directionalAnimation.animations, implementPath, directionalAnimation.animationIndexes);
             }
             else if (animation.Type == typeof(VaraintAnimation))
             {
                 ToggleVariant();
+                VaraintAnimation varaintAnimation = (VaraintAnimation)animation;
+                subAnimationElements = PopulateTransformWithAnimations(subAnimationHolder, varaintAnimation.animations, implementPath);
             }
             else if (animation.Type == typeof(MultiTileAnimation))
             {
@@ -210,10 +211,17 @@ namespace MapEditor.Animations
                 Debug.LogError("Type was not assigned");
             }
         }
+        
 
-        public void Destroy()
+        private void FalseifyBools()
         {
-            DestroyAnimation(transform.parent, containerList, index);
+            Directional = true;
+            Variant = false;
+            ToggleDirectional();
+            Variant = true;
+            ToggleVariant();
+            MultiTile = true;
+            ToggleMultiTile();
         }
 
         private void PopulateSpriteHolder(Animation animation)
@@ -319,7 +327,31 @@ namespace MapEditor.Animations
             IAnimation animation = null;
             if (Variant || Directional)
             {
-                throw new NotImplementedException();
+                List<IAnimation> animations = new List<IAnimation>();
+                foreach(AnimationElement animationElement in subAnimationElements)
+                {
+                    animations.Add(animationElement.GetAnimation());
+                }
+
+                if (Variant)
+                {
+                    animation = new VaraintAnimation()
+                    {
+                        Name = nameField.text,
+                        Framerate = int.Parse(FPSField.text),
+                        animations = animations.ToArray()
+                    };
+                } 
+                else if (Directional)
+                {
+                    animation = new DirectionalAnimation()
+                    {
+                        Name = nameField.text,
+                        Framerate = int.Parse(FPSField.text),
+                        animations = animations.ToArray(),
+                        animationIndexes = (DirectionalAnimation.AnimationIndexes)GetAnimationIdexes(subAnimationElements, new DirectionalAnimation.AnimationIndexes())
+                    };
+                }
             }
             else if (Animation || MultiTile)
             {
@@ -327,7 +359,7 @@ namespace MapEditor.Animations
                 for (int i = 0; i < spriteHolders.Count; i++)
                 {
                     Sprite sprite = spriteHolders[i].image.sprite;
-                    string filePath = ImplementPath + "/" + nameField.text + "/" + i + ".png";
+                    string filePath = implementPath + "/" + nameField.text + "/" + i + ".png";
                     if (sprite != null)
                     {
                         SaveSystem.SavePNG(filePath, sprite.texture);
@@ -392,10 +424,12 @@ namespace MapEditor.Animations
                 staticAttachmentObject = attachmentObject;
             }
         }
-
-        public List<AnimationElement> containerList;
-        public static List<AnimationElement> PopulateTransformWithAnimations(Transform transform, IAnimation[] animations, Implement implement, Dictionary<Ability, int> abilites = null)
+        public static List<AnimationElement> PopulateTransformWithAnimations(Transform transform, IAnimation[] animations, string implementPath, IAnimationIndexes indexes = null)
         {
+            foreach (Transform toDealte in transform)
+            {
+                Destroy(toDealte.gameObject);
+            }
             List<AnimationElement> animationElements = new List<AnimationElement>();
             for (int i = 0; i < animations.Length; i++)
             {
@@ -404,53 +438,29 @@ namespace MapEditor.Animations
                 animations[i].Index = i;
                 animationElement.holder = transform.GetComponent<VerticalLayoutGroup>();
                 animationElement.Initalize(animations[i]);
-                PopulateAnimationAttachments(i, animationElement, implement, abilites);
+                if (indexes != null)
+                {
+                    PopulateAnimationAttachments(i, animationElement, indexes);
+                }
                 animationElement.containerList = animationElements;
             }
-            
-            Instantiate(staticAddAnimationObject, transform).GetComponent<Button>().onClick.AddListener(delegate { AddAnimation(transform, animationElements, implement.ImplementPath); });
+
+            Instantiate(staticAddAnimationObject, transform).GetComponent<Button>().onClick.AddListener(delegate { AddAnimation(transform, animationElements, implementPath); });
             return animationElements;
 
         }
-        private static void PopulateAnimationAttachments(int index, AnimationElement animation, Implement implement, Dictionary<Ability, int> abilites = null)
+        private static void PopulateAnimationAttachments(int index, AnimationElement animation, IAnimationIndexes indexes)
         {
-            if (implement.idelIndex == index)
+            foreach(AnimationIndexPair animationIndexPair in indexes)
             {
-                InstantiateAnimationAttachment(animation, "Idel", index);
-            }
-            if (implement.attackIndex == index)
-            {
-                InstantiateAnimationAttachment(animation, "Attack", index);
-            }
-            if (implement.fidgetIndex == index)
-            {
-                InstantiateAnimationAttachment(animation, "Fidget", index);
-            }
-            if (implement.walkIndex == index)
-            {
-                InstantiateAnimationAttachment(animation, "Walk", index).Directional = true;
-            }
-            if (abilites != null && false)
-            {
-                foreach (KeyValuePair<Ability, int> AKey in abilites)
+                if(animationIndexPair == index)
                 {
-                    if (AKey.Value == index)
-                    {
-                        InstantiateAnimationAttachment(animation, AKey.Key.name, index);
-                        return;
-                    }
+                    AnimationAttachment animationAttachment = Instantiate(staticAttachmentObject, animation.attachmentHolderTransform).GetComponent<AnimationAttachment>();
+                    animationAttachment.animationIndex = animationIndexPair;
+                    animationAttachment.animationElements = animation.containerList;
                 }
             }
         }
-
-        private static Attachment InstantiateAnimationAttachment(AnimationElement animation, string name, int index)
-        {
-            Attachment attachment = Instantiate(staticAttachmentObject, animation.attachmentHolderTransform).GetComponent<Attachment>();
-            attachment.Name = name;
-            attachment.index = index;
-            return attachment;
-        }
-
         private static AnimationElement AddAnimation(Transform transform, List<AnimationElement> animationList, string implementPath)
         {
             Animation animation = new Animation(SaveSystem.LoadPNG(Vector2.one / 2f), animationList.Count, implementPath);
@@ -494,33 +504,22 @@ namespace MapEditor.Animations
                 Destroy(t.gameObject);
             }
         }
-        public static Implement GetAnimationIdexes(List<AnimationElement> animationList, Implement implement)
+        public static IAnimationIndexes GetAnimationIdexes(List<AnimationElement> animationList, IAnimationIndexes indexes)
         {
             foreach (AnimationElement animationElement in animationList)
             {
                 foreach (Transform attachmentTransform in animationElement.attachmentHolderTransform)
                 {
-                    Attachment attachment = attachmentTransform.GetComponent<Attachment>();
-                    if (attachment.Name == "Idel")
+                    AnimationAttachment attachment = attachmentTransform.GetComponent<AnimationAttachment>();
+                    AnimationIndexPair animationIndexPair = indexes[attachment.Label];
+                    if (animationIndexPair.label != "NULL")
                     {
-                        implement.idelIndex = attachment.index;
-                    }
-                    else if (attachment.Name == "Attack")
-                    {
-                        implement.attackIndex = attachment.index;
-                    }
-                    else if (attachment.Name == "Fidget")
-                    {
-                        implement.fidgetIndex = attachment.index;
-                    }
-                    else if (attachment.Name == "Walk")
-                    {
-                        implement.walkIndex = attachment.index;
+                        indexes[attachment.Label] = attachment.animationIndex;
                     }
 
                 }
             }
-            return implement;
+            return indexes;
         }
         public static Dictionary<Ability, int> GetAnimationIdexes(List<AnimationElement> animationList, Dictionary<Ability, int> abilites)
         {
@@ -530,11 +529,11 @@ namespace MapEditor.Animations
                 {
                     foreach (Transform attachmentTransform in animationElement.attachmentHolderTransform)
                     {
-                        Attachment attachment = attachmentTransform.GetComponent<Attachment>();
+                        AnimationAttachment attachment = attachmentTransform.GetComponent<AnimationAttachment>();
 
                         foreach (KeyValuePair<Ability, int> AKey in abilites)
                         {
-                            if (attachment.Name == AKey.Key.name)
+                            if (attachment.Label == AKey.Key.name)
                             {
                                 abilites[AKey.Key] = attachment.index;
                                 break;

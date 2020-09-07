@@ -3,7 +3,6 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 namespace MapEditor
 {
     public class ImplementEditor : MonoBehaviour

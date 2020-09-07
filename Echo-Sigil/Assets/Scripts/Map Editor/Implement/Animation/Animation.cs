@@ -23,7 +23,7 @@ namespace MapEditor.Animations
     }
 
     [Serializable]
-    public struct Animation : IAnimation , IEnumerable<Sprite>, IEnumerator<Sprite>
+    public struct Animation : IAnimation, IEnumerable<Sprite>, IEnumerator<Sprite>
     {
         public string name;
         public string Name { get => name; set => name = value; }
@@ -60,7 +60,7 @@ namespace MapEditor.Animations
             name = "New";
             framerate = 12;
             this.sprites = new string[sprites.Length];
-            for(int i = 0; i < sprites.Length; i++)
+            for (int i = 0; i < sprites.Length; i++)
             {
                 string filePath = implementPath + "/" + name + "/" + i + ".png";
                 if (sprites[i] != null)
@@ -165,7 +165,7 @@ namespace MapEditor.Animations
     }
 
     [Serializable]
-    public struct DirectionalAnimation : IAnimation
+    public struct DirectionalAnimation : IAnimation, ISerializationCallbackReceiver
     {
         public IAnimation[] animations;
 
@@ -185,6 +185,7 @@ namespace MapEditor.Animations
             framerate = 12;
             this.animations = animations;
             this.index = index;
+            animationIndexes = new AnimationIndexes();
         }
 
         public AnimationClip GetAnimationClip(Type type)
@@ -198,11 +199,11 @@ namespace MapEditor.Animations
         public AnimatorStateMachine GetAnimatorStateMachine(Type type)
         {
             AnimatorStateMachine animatorStateMachine = new AnimatorStateMachine();
-            for(int i = 0; i<4; i++)
+            for (int i = 0; i < 4; i++)
             {
                 AnimatorState animatorState = new AnimatorState();
                 animatorState.motion = animations[i].GetAnimationClip(type);
-                animatorStateMachine.AddState(animatorState,new Vector3(1,i,0));
+                animatorStateMachine.AddState(animatorState, new Vector3(1, i, 0));
                 animatorState.AddExitTransition();
             }
             return animatorStateMachine;
@@ -217,6 +218,139 @@ namespace MapEditor.Animations
         {
             return Index.CompareTo(other.Index);
         }
+
+        public void OnBeforeSerialize()
+        {
+            IAnimation[] animations = new IAnimation[4];
+            animationIndexes.Clamp(this.animations);
+            animations[0] = this.animations[animationIndexes["Up"]];
+            animations[1] = this.animations[animationIndexes["Down"]];
+            animations[2] = this.animations[animationIndexes["Left"]];
+            animations[3] = this.animations[animationIndexes["Right"]];
+            this.animations = animations;
+        }
+
+        public void OnAfterDeserialize()
+        {
+            animationIndexes = new AnimationIndexes();
+        }
+
+        public class AnimationIndexes : IAnimationIndexes
+        {
+            public AnimationIndexPair up = new AnimationIndexPair(0, "Up");
+            public AnimationIndexPair down = new AnimationIndexPair(1, "Down");
+            public AnimationIndexPair left = new AnimationIndexPair(2, "Left");
+            public AnimationIndexPair right = new AnimationIndexPair(3, "Right");
+            private int index = -1;
+
+            public AnimationIndexPair this[string s]
+            {
+                get
+                {
+                    switch (s)
+                    {
+                        case "Up":
+                            return up;
+                        case "Down":
+                            return down;
+                        case "Left":
+                            return left;
+                        case "Right":
+                            return right;
+                    }
+                    return new AnimationIndexPair(0, "NULL");
+                }
+                set
+                {
+                    switch (s)
+                    {
+                        case "Up":
+                            up = value;
+                            break;
+                        case "Down":
+                            down = value;
+                            break;
+                        case "Left":
+                            left = value;
+                            break;
+                        case "Right":
+                            right = value;
+                            break;
+                    }
+                }
+            }
+
+            public AnimationIndexPair Current
+            {
+                get
+                {
+                    switch (index)
+                    {
+                        case 0:
+                            return up;
+                        case 1:
+                            return down;
+                        case 2:
+                            return left;
+                        case 3:
+                            return right;
+                    }
+                    throw new IndexOutOfRangeException();
+                }
+            }
+
+            object IEnumerator.Current => Current;
+
+            public bool Clamp(IAnimation[] animations)
+            {
+                if (!up.Clamp(animations))
+                {
+                    return false;
+                }
+                if (!down.Clamp(animations))
+                {
+                    return false;
+                }
+                if (!left.Clamp(animations))
+                {
+                    return false;
+                }
+                if (!right.Clamp(animations))
+                {
+                    return false;
+                }
+                return true;
+            }
+
+            public void Dispose()
+            {
+
+            }
+
+            public IEnumerator<AnimationIndexPair> GetEnumerator()
+            {
+                return this;
+            }
+
+            public bool MoveNext()
+            {
+                index++;
+                return index < 4;
+            }
+
+            public void Reset()
+            {
+                index = -1;
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return this;
+            }
+        }
+        [NonSerialized]
+        public AnimationIndexes animationIndexes;
+
     }
 
     [Serializable]
@@ -234,7 +368,7 @@ namespace MapEditor.Animations
 
         public Type Type => typeof(VaraintAnimation);
 
-        public VaraintAnimation(IAnimation[] animations,int index)
+        public VaraintAnimation(IAnimation[] animations, int index)
         {
             name = "New";
             framerate = 12;
@@ -418,12 +552,12 @@ namespace MapEditor.Animations
 
         public void Dispose()
         {
-            
+
         }
 
         public int CompareTo(IAnimation other)
         {
             return Index.CompareTo(other.Index);
         }
-    } 
+    }
 }

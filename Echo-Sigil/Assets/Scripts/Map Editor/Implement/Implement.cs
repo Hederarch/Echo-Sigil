@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
 using MapEditor.Animations;
+using System.Collections;
 
 namespace MapEditor
 {
@@ -26,10 +27,124 @@ namespace MapEditor
         public VaraintAnimation[] saveVaraintAnimations;
         public MultiTileAnimation[] saveMultiTileAnimations;
 
-        public int walkIndex;
-        public int attackIndex;
-        public int idelIndex;
-        public int fidgetIndex;
+        [Serializable]
+        public class AnimationIndexes : IAnimationIndexes
+        {
+            public AnimationIndexPair walkIndex = new AnimationIndexPair(0, "Walk", true);
+            public AnimationIndexPair attackIndex = new AnimationIndexPair(0, "Attack");
+            public AnimationIndexPair idelIndex = new AnimationIndexPair(0, "Idel");
+            public AnimationIndexPair fidgetIndex = new AnimationIndexPair(0, "Fidget");
+            private int index = -1;
+
+            public AnimationIndexPair this[string s]
+            {
+                get
+                {
+                    switch (s)
+                    {
+                        case "Walk":
+                            return walkIndex;
+                        case "Attack":
+                            return attackIndex;
+                        case "Idel":
+                            return idelIndex;
+                        case "Fidget":
+                            return fidgetIndex;
+                    }
+                    return new AnimationIndexPair(0, "NULL");
+                }
+                set
+                {
+                    switch (s)
+                    {
+                        case "Walk":
+                            walkIndex = value;
+                            break;
+                        case "Attack":
+                            attackIndex = value;
+                            break;
+                        case "Idel":
+                            idelIndex = value;
+                            break;
+                        case "Fidget":
+                            fidgetIndex = value;
+                            break;
+                    }
+                }
+            }
+
+            public AnimationIndexPair Current
+            {
+                get
+                {
+                    switch (index)
+                    {
+                        case 0:
+                            return walkIndex;
+                        case 1:
+                            return attackIndex;
+                        case 2:
+                            return idelIndex;
+                        case 3:
+                            return fidgetIndex;
+                    }
+                    return new AnimationIndexPair(0, "NULL");
+                }
+            }
+
+            object IEnumerator.Current => Current;
+
+            public bool Clamp(IAnimation[] animations)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    if (!walkIndex.Clamp(animations))
+                    {
+                        return false;
+                    }
+                    if (!attackIndex.Clamp(animations))
+                    {
+                        return false;
+                    }
+                    if (!idelIndex.Clamp(animations))
+                    {
+                        return false;
+                    }
+                    if (!fidgetIndex.Clamp(animations))
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            public void Dispose()
+            {
+                
+            }
+
+            public IEnumerator<AnimationIndexPair> GetEnumerator()
+            {
+                return this;
+            }
+
+            public bool MoveNext()
+            {
+                index++;
+                return index < 4;
+            }
+
+            public void Reset()
+            {
+                index = -1;
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return this;
+            }
+        }
+        public AnimationIndexes animationIndexes;
 
         [NonSerialized]
         public ImplementList implementList;
@@ -49,10 +164,7 @@ namespace MapEditor
             type = -1;
             description = "";
             animations = new IAnimation[0];
-            walkIndex = 0;
-            attackIndex = 0;
-            idelIndex = 0;
-            fidgetIndex = 0;
+            animationIndexes = new AnimationIndexes();
             saveAnimations = null;
             saveDirectionalAnimations = null;
             saveMultiTileAnimations = null;
@@ -80,62 +192,21 @@ namespace MapEditor
             this.secondaryColor[2] = secondaryColor.b;
         }
 
-        public AnimatorController GetAnimationController(string modPath, Dictionary<Ability, int> abilityDictionary = null)
+        public AnimatorController GetAnimationController(string modPath)
         {
             AnimatorController animator = new AnimatorController();
             animator.AddLayer("Base");
             animator.AddParameter("Direction", AnimatorControllerParameterType.Int);
             AnimatorStateMachine stateMachine = animator.layers[0].stateMachine;
-            if (!ClampAnimationIndex(abilityDictionary))
+            if (!animationIndexes.Clamp(animations))
             {
                 stateMachine.AddState(GetAnimatorStateOfBaseSprite(modPath), Vector3.zero);
             }
             else
             {
-                stateMachine.AddState(animations[idelIndex].GetAnimatorState(typeof(SpriteRenderer)), new Vector3(1, 0, 0));
+                stateMachine.AddState(animations[animationIndexes.idelIndex].GetAnimatorState(typeof(SpriteRenderer)), new Vector3(1, 0, 0));
             }
             return animator;
-        }
-
-        private bool ClampAnimationIndex(Dictionary<Ability, int> abilityDictionary = null)
-        {
-            int length = animations.Length;
-            if (length > 0)
-            {
-                //Upper Bounds
-                walkIndex = length <= walkIndex ? length - 1 : walkIndex;
-                attackIndex = length <= attackIndex ? length - 1 : attackIndex;
-                idelIndex = length <= idelIndex ? length - 1 : idelIndex;
-                fidgetIndex = length <= fidgetIndex ? length - 1 : fidgetIndex;
-
-                //lowerbounds
-                walkIndex = 0 > walkIndex ? 0 : walkIndex;
-                attackIndex = 0 > attackIndex ? 0 : attackIndex;
-                idelIndex = 0 > idelIndex ? 0 : idelIndex;
-                fidgetIndex = 0 > fidgetIndex ? 0 : fidgetIndex;
-
-                if (abilityDictionary != null)
-                {
-                    foreach (KeyValuePair<Ability, int> iKey in abilityDictionary)
-                    {
-                        int i = iKey.Value;
-                        if (length <= i)
-                        {
-                            abilityDictionary[iKey.Key] = length - 1;
-                        }
-                        else if (0 > i)
-                        {
-                            abilityDictionary[iKey.Key] = 0;
-                        }
-                    }
-                }
-                return true;
-            }
-            else
-            {
-                Debug.LogWarning("No amimations for " + name + " found on file");
-                return false;
-            }
         }
 
         private AnimatorState GetAnimatorStateOfBaseSprite(string modPath)
@@ -268,7 +339,7 @@ namespace MapEditor
 
         public Implement[] linkImplents()
         {
-            for(int i = 0; i < implements.Length; i++)
+            for (int i = 0; i < implements.Length; i++)
             {
                 implements[i].implementList = this;
             }
