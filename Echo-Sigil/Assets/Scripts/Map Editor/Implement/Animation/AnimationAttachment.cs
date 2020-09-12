@@ -7,11 +7,11 @@ using UnityEngine.UI;
 
 namespace MapEditor.Animations
 {
-    public class AnimationAttachment : Selectable
+    public class AnimationAttachment : Selectable, IBeginDragHandler , IDragHandler, IEndDragHandler
     {
-        public float attachmentSizeIncrese = 2f;
-        public float attachedSizeIncrese = 1.1f;
-        public Text text;
+        [SerializeField] private static float attachmentSizeIncrese = 2f;
+        [SerializeField] private static float attachedSizeIncrese = 1.1f;
+        [SerializeField] private Text text;
         public string Label { get => text.text; set => text.text = value; }
         public AnimationIndexPair animationIndex
         {
@@ -22,60 +22,16 @@ namespace MapEditor.Animations
                 Directional = value.directional;
             }
         }
-        private bool selected;
         public int index;
         public bool Directional
         {
             get => directionalIcon.color == Color.white; set => directionalIcon.color = value ? Color.white : Color.clear;
         }
-        public Image directionalIcon;
+        [SerializeField] private Image directionalIcon;
         Transform prevTransform;
+        [SerializeField] private LayoutElement layoutElement;
 
         public List<AnimationElement> animationElements;
-
-        private void Update()
-        {
-            if (Input.GetMouseButton(0) && selected)
-            {
-                Drag(Input.mousePosition.y);
-            }
-        }
-
-        private void Drag(float yPos)
-        {
-            Vector2 pos = transform.position;
-            pos.y = yPos;
-            transform.position = pos;
-            Transform elementTransform = FindClosestAnimationElement().transform;
-            if (prevTransform != null)
-            {
-                prevTransform.localScale = Vector3.one;
-            }
-            elementTransform.localScale = Vector3.one * attachedSizeIncrese;
-            prevTransform = elementTransform;
-
-        }
-
-        public override void OnPointerDown(PointerEventData eventData)
-        {
-            selected = true;
-            transform.localScale = Vector3.one * attachmentSizeIncrese;
-            animationElements = transform.parent.parent.parent.GetComponent<AnimationElement>().containerList;
-            transform.SetParent(transform.parent.parent.parent.parent);
-            base.OnPointerDown(eventData);
-        }
-
-        public override void OnPointerUp(PointerEventData eventData)
-        {
-            selected = false;
-            transform.localScale = Vector3.one;
-            AnimationElement animationElement = FindClosestAnimationElement();
-            index = animationElement.index;
-            transform.SetParent(animationElement.attachmentHolderTransform, false);
-            animationElement.transform.localScale = Vector3.one;
-            animationElements = null;
-            base.OnPointerUp(eventData);
-        }
 
         private AnimationElement FindClosestAnimationElement()
         {
@@ -96,10 +52,69 @@ namespace MapEditor.Animations
             }
             else
             {
-                Debug.LogError("Animation Attachment did not reseive Animation Element container list");
+                Debug.LogError("Animation Attachment "+ Label + " did not have list");
             }
-            minElement = minElement == null ? AnimationWindow.animationElements[0] : minElement;
-            return minElement;
+            if(minElement != null)
+            {
+                return minElement;
+            }
+            else
+            {
+                if(animationElements != null && animationElements.Count > 0)
+                {
+                    return animationElements[0];
+                }
+                else
+                {
+                    Debug.LogError("Animation Attachment " + Label + "has no contaniner list. Going up to highest level animation elements");
+                    return AnimationWindow.animationElements[0];
+                }
+            }
+            
+        }
+
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            transform.localScale = Vector3.one * attachmentSizeIncrese;
+            if (animationElements == null || (animationElements != null && animationElements.Count <= 0))
+            {
+                Debug.LogWarning("Animation Attachment " + Label + " had no list. Fixing.");
+                animationElements = transform.parent.parent.parent.GetComponent<AnimationElement>().containerList;
+            }
+
+            if (animationElements != null && animationElements.Count > 0)
+            {
+                transform.SetParent(animationElements[0].transform.parent, true);
+                layoutElement.ignoreLayout = true;
+            }
+            else
+            {
+                Debug.LogError("Animation Attachment " + Label + " had no list, and could not get list from parent. Aborting.");
+            }
+        }
+
+        public void OnDrag(PointerEventData eventData)
+        {
+            Vector2 pos = transform.position;
+            pos.y = Input.mousePosition.y;
+            transform.position = pos;
+            Transform elementTransform = FindClosestAnimationElement().transform;
+            if (prevTransform != null)
+            {
+                prevTransform.localScale = Vector3.one;
+            }
+            elementTransform.localScale = Vector3.one * attachedSizeIncrese;
+            prevTransform = elementTransform;
+        }
+
+        public void OnEndDrag(PointerEventData eventData)
+        {
+            transform.localScale = Vector3.one;
+            AnimationElement animationElement = FindClosestAnimationElement();
+            index = animationElement.index;
+            layoutElement.ignoreLayout = false;
+            transform.SetParent(animationElement.attachmentHolderTransform, false);
+            animationElement.transform.localScale = Vector3.one;
         }
     }
     public interface IAnimationIndexes : IEnumerable<AnimationIndexPair>, IEnumerator<AnimationIndexPair>
@@ -124,19 +139,27 @@ namespace MapEditor.Animations
 
         public bool Clamp(IAnimation[] animations)
         {
-            int length = animations.Length;
-            if (length > 0)
+            if (animations != null)
             {
-                //Upper Bounds
-                index = length <= index ? length - 1 : index;
-                //lowerbounds
-                index = 0 > index ? 0 : index;
+                int length = animations.Length;
+                if (length > 0)
+                {
+                    //Upper Bounds
+                    index = length <= index ? length - 1 : index;
+                    //lowerbounds
+                    index = 0 > index ? 0 : index;
 
-                return true;
+                    return true;
+                }
+                else
+                {
+                    Debug.LogWarning("No animations found on file");
+                    return false;
+                }
             }
             else
             {
-                Debug.LogWarning("No amimations found on file");
+                Debug.LogWarning("No animations found on file");
                 return false;
             }
         }

@@ -1,21 +1,20 @@
 ﻿using MapEditor.Windows;
-using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace MapEditor
 {
     public class ImplementEditor : MonoBehaviour
     {
-        private int selectedImplementIndex;
-        private ImplementList selectedImplementList;
-        public Unit selectedUnit = null;
-        public UnitDisplay unitDisplay;
-        public RectTransform contentArea;
+        public static int selectedImplementIndex;
+        public static ImplementList selectedImplementList;
+        public static Implement selectedImplement { get => selectedImplementList[selectedImplementIndex]; set => selectedImplementList[selectedImplementIndex] = value; }
+        public static Unit selectedUnit = null;
+        [SerializeField] private UnitDisplay unitDisplay;
+        [SerializeField] private RectTransform contentArea;
 
-        public GameObject[] windowObjects;
-        public GameObject selectWindowObject;
-        private Window curWindow;
+        [SerializeField] private GameObject[] windowObjects;
+        [SerializeField] private GameObject selectWindowObject;
+        public static Window curWindow;
 
         public void ChangeWindow(int arg0)
         {
@@ -27,7 +26,7 @@ namespace MapEditor
             if (selectedImplementList != null && selectedImplementList.Implements.Length > selectedImplementIndex)
             {
                 unitDisplay.DisplayUnit(selectedImplementList, selectedImplementIndex);
-                Implement implement = selectedImplementList[selectedImplementIndex];
+                Implement implement = selectedImplement;
                 curWindow = Instantiate(windowObjects[arg0], contentArea).GetComponent<Window>();
                 curWindow.Initalize(implement, selectedUnit);
             }
@@ -43,9 +42,9 @@ namespace MapEditor
         {
             if (selectedImplementList != null && selectedImplementList.Implements.Length > selectedImplementIndex)
             {
-                Implement implement = selectedImplementList.Implements[selectedImplementIndex];
+                Implement implement = selectedImplement;
                 implement = curWindow.Save(implement);
-                selectedImplementList.Implements[selectedImplementIndex] = implement;
+                selectedImplement = implement;
                 unitDisplay.DisplayUnit(implement, selectedUnit);
                 SaveSystem.SaveImplmentList(selectedImplementList);
                 unitDisplay.Saved();

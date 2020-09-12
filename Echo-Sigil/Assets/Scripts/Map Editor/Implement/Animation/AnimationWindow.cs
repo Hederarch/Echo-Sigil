@@ -12,7 +12,6 @@ namespace MapEditor.Windows
         public GameObject addAnimationObject;
         public GameObject attachmentObject;
         public static List<AnimationElement> animationElements = new List<AnimationElement>();
-        private static List<AnimationAttachment> attachments = new List<AnimationAttachment>();
 
         public override void Initalize(Implement implement, Unit unit = null)
         {

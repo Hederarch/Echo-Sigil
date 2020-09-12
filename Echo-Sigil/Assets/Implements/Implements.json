@@ -23,17 +23,26 @@
                 {
                     "name": "New",
                     "framerate": 12,
-                    "sprites": [],
+                    "sprites": [
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/New/0.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/New/1.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/New/2.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/New/3.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/New/4.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/New/5.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/New/6.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/New/7.png"
+                    ],
                     "index": 0
-                },
+                }
+            ],
+            "saveDirectionalAnimations": [
                 {
                     "name": "New",
                     "framerate": 12,
-                    "sprites": [],
                     "index": 1
                 }
             ],
-            "saveDirectionalAnimations": [],
             "saveVaraintAnimations": [],
             "saveMultiTileAnimations": [],
             "animationIndexes": {}

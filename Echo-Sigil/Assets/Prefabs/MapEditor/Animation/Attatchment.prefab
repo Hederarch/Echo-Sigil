@@ -125,6 +125,8 @@ MonoBehaviour:
   text: {fileID: 7671842701431043065}
   index: 0
   directionalIcon: {fileID: 6212556647791648146}
+  layoutElement: {fileID: 6072215365223214575}
+  animationElements: []
 --- !u!114 &6072215365223214575
 MonoBehaviour:
   m_ObjectHideFlags: 0

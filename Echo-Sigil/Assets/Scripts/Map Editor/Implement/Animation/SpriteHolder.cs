@@ -15,7 +15,7 @@ namespace MapEditor.Animations
         /// Change index of a sprite. Toggle if move right
         /// </summary>
         public event Action<int, bool> MoveEvent;
-        public Text indexText;
+        [SerializeField] private Text indexText;
         public int Index { get => int.Parse(indexText.text); set => indexText.text = value.ToString(); }
 
         public void InvokeChange()

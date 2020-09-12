@@ -79,7 +79,7 @@ namespace MapEditor.Animations
             AnimationClip clip = new AnimationClip
             {
                 name = name,
-                frameRate = framerate,
+                frameRate = framerate > 0 ? framerate : 12,
             };
 
             AnimationClipSettings settings = AnimationUtility.GetAnimationClipSettings(clip);
@@ -93,8 +93,9 @@ namespace MapEditor.Animations
                 propertyName = "m_Sprite"
             };
 
-            ObjectReferenceKeyframe[] spriteKeyFrames = new ObjectReferenceKeyframe[sprites.Length];
-            for (int i = 0; i < sprites.Length; i++)
+            int spritesLength = sprites != null ? sprites.Length : 0;
+            ObjectReferenceKeyframe[] spriteKeyFrames = new ObjectReferenceKeyframe[spritesLength];
+            for (int i = 0; i < spritesLength; i++)
             {
                 spriteKeyFrames[i] = new ObjectReferenceKeyframe
                 {
@@ -190,7 +191,16 @@ namespace MapEditor.Animations
 
         public AnimationClip GetAnimationClip(Type type)
         {
-            AnimationClip animationClip = animations[0].GetAnimationClip(type);
+            AnimationClip animationClip;
+            if (animations != null && animations.Length > 0)
+            {
+                animationClip = animations[0].GetAnimationClip(type);
+            }
+            else
+            {
+                animationClip = new Animation().GetAnimationClip(type);
+            }
+
             animationClip.name = name;
             animationClip.frameRate = framerate;
             return animationClip;
@@ -222,17 +232,30 @@ namespace MapEditor.Animations
         public void OnBeforeSerialize()
         {
             IAnimation[] animations = new IAnimation[4];
-            animationIndexes.Clamp(this.animations);
-            animations[0] = this.animations[animationIndexes["Up"]];
-            animations[1] = this.animations[animationIndexes["Down"]];
-            animations[2] = this.animations[animationIndexes["Left"]];
-            animations[3] = this.animations[animationIndexes["Right"]];
+            if (animationIndexes.Clamp(this.animations))
+            {
+                animations[0] = this.animations[animationIndexes["Up"]];
+                animations[1] = this.animations[animationIndexes["Down"]];
+                animations[2] = this.animations[animationIndexes["Left"]];
+                animations[3] = this.animations[animationIndexes["Right"]];
+            }
+            else
+            {
+                for(int i = 0; i < 4; i++)
+                {
+                    animations[i] = new Animation();
+                }
+            }
             this.animations = animations;
         }
 
         public void OnAfterDeserialize()
         {
             animationIndexes = new AnimationIndexes();
+            if(animations == null)
+            {
+                animations = new IAnimation[0];
+            }
         }
 
         public class AnimationIndexes : IAnimationIndexes
@@ -354,7 +377,7 @@ namespace MapEditor.Animations
     }
 
     [Serializable]
-    public struct VaraintAnimation : IAnimation
+    public struct VaraintAnimation : IAnimation, ISerializationCallbackReceiver
     {
         public IAnimation[] animations;
 
@@ -417,6 +440,18 @@ namespace MapEditor.Animations
             return Index.CompareTo(other.Index);
         }
 
+        public void OnBeforeSerialize()
+        {
+            
+        }
+
+        public void OnAfterDeserialize()
+        {
+            if(animations == null)
+            {
+                animations = new IAnimation[0];
+            }
+        }
     }
 
     [Serializable]
