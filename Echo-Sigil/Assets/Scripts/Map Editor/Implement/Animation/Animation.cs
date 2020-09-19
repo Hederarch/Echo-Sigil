@@ -135,11 +135,13 @@ namespace MapEditor.Animations
 
         IEnumerator<Sprite> IEnumerable<Sprite>.GetEnumerator()
         {
+            Reset();
             return this;
         }
 
         public IEnumerator GetEnumerator()
         {
+            Reset();
             return this;
         }
 

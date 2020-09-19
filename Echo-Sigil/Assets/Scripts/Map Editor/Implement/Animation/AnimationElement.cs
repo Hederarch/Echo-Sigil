@@ -266,23 +266,12 @@ namespace MapEditor.Animations
         private void MoveSprite(int index, bool right)
         {
             SpriteHolder moveing = spriteHolders[index];
-            int newIndex = right ? index - 1 : index + 1;
+            int newIndex = right ? index + 1 : index - 1;
             moveing.Index = newIndex;
             moveing.transform.SetSiblingIndex(newIndex);
             spriteHolders.Remove(moveing);
             spriteHolders.Insert(newIndex, moveing);
-            IAnimation animation = GetAnimation();
-            if (animation.Type == typeof(Animation))
-            {
-                Animation animation1 = (Animation)animation;
-                PopulateSpriteHolder(animation1);
-            } 
-            else if(animation.Type == typeof(MultiTileAnimation))
-            {
-                MultiTileAnimation animation1 = (MultiTileAnimation)animation;
-                PopulateSpriteHolder(animation1);
-            }
-            ResetPreview();
+            ReCaluculateSpriteHolders();
         }
 
         private void ChangeSprite(int index, Sprite sprite)
@@ -295,11 +284,8 @@ namespace MapEditor.Animations
         {
             SpriteHolder spriteHolder = spriteHolders[index];
             spriteHolders.Remove(spriteHolder);
-            spriteHolder.RemoveEvent -= RemoveSprite;
-            spriteHolder.ChangeEvent -= ChangeSprite;
-            spriteHolder.MoveEvent -= MoveSprite;
-            Destroy(spriteHolder.gameObject);
-            ResetPreview();
+            DeInializeSpriteHolder(spriteHolder);
+            ReCaluculateSpriteHolders();
         }
 
         private void AddSprite()
@@ -309,8 +295,22 @@ namespace MapEditor.Animations
             {
                 IstantiateSpriteHolder(spriteHolders.Count, sprite);
             }
+            ReCaluculateSpriteHolders();
+        }
 
-            newSpriteButton.transform.SetAsLastSibling();
+        private void ReCaluculateSpriteHolders()
+        {
+            IAnimation animation = GetAnimation();
+            if (animation.Type == typeof(Animation))
+            {
+                Animation animation1 = (Animation)animation;
+                PopulateSpriteHolder(animation1);
+            }
+            else if (animation.Type == typeof(MultiTileAnimation))
+            {
+                MultiTileAnimation animation1 = (MultiTileAnimation)animation;
+                PopulateSpriteHolder(animation1);
+            }
             ResetPreview();
         }
 
@@ -329,10 +329,7 @@ namespace MapEditor.Animations
         {
             foreach (SpriteHolder spriteHolder in spriteHolders)
             {
-                spriteHolder.RemoveEvent -= RemoveSprite;
-                spriteHolder.ChangeEvent -= ChangeSprite;
-                spriteHolder.MoveEvent -= MoveSprite;
-                Destroy(spriteHolder.gameObject);
+                DeInializeSpriteHolder(spriteHolder);
             }
             spriteHolders.Clear();
             if (newSpriteButton != null)
@@ -341,10 +338,14 @@ namespace MapEditor.Animations
                 Destroy(newSpriteButton.gameObject);
                 newSpriteButton = null;
             }
-            foreach (Transform transform in spritesHolderTransform)
-            {
-                Destroy(transform.gameObject);
-            }
+        }
+
+        private void DeInializeSpriteHolder(SpriteHolder spriteHolder)
+        {
+            spriteHolder.RemoveEvent -= RemoveSprite;
+            spriteHolder.ChangeEvent -= ChangeSprite;
+            spriteHolder.MoveEvent -= MoveSprite;
+            Destroy(spriteHolder.gameObject);
         }
 
         public IAnimation GetAnimation()
@@ -398,7 +399,7 @@ namespace MapEditor.Animations
                     animation = new Animation
                     {
                         Name = Name,
-                        Framerate = int.Parse(FPSField.text),
+                        Framerate = FPS,
                         sprites = sprites
                     };
                 }
@@ -407,7 +408,7 @@ namespace MapEditor.Animations
                     animation = new MultiTileAnimation
                     {
                         Name = Name,
-                        Framerate = int.Parse(FPSField.text),
+                        Framerate = FPS,
                         sprites = sprites,
                         tileWidth = int.Parse(numTileField.text)
 
