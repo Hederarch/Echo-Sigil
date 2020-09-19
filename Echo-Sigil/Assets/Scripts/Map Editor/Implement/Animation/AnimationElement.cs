@@ -170,6 +170,7 @@ namespace MapEditor.Animations
 
         public Transform attachmentHolderTransform;
 
+        public Button DeleteButton;
         public int index;
 
         public List<AnimationElement> containerList;
@@ -473,6 +474,8 @@ namespace MapEditor.Animations
                     animationElement.holder = transform.GetComponent<VerticalLayoutGroup>();
                     animationElement.Initalize(animations[i]);
 
+                    animationElement.DeleteButton.onClick.AddListener(delegate { DestroyAnimation(transform, animationElements, animationElement.index); });
+
                     if (indexes != null)
                     {
                         PopulateAnimationAttachments(i, animationElement, indexes);
@@ -510,7 +513,9 @@ namespace MapEditor.Animations
         }
         private static void DestroyAnimation(Transform transform, List<AnimationElement> animationList, int index)
         {
-            animationList.Remove(animationList[index]);
+            AnimationElement item = animationList[index];
+            item.DeleteButton.onClick.RemoveAllListeners();
+            animationList.Remove(item);
             Destroy(transform.GetChild(index).gameObject);
         }
         public static IAnimation[] SaveAnimations(List<AnimationElement> animationList)

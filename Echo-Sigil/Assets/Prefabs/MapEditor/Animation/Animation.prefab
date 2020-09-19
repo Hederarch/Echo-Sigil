@@ -998,7 +998,6 @@ MonoBehaviour:
   rectTransform: {fileID: 7710746087826376748}
   rectHeightMinMax: {x: -205, y: -605}
   holder: {fileID: 0}
-  animationElements: []
   directionalIcon: {fileID: 481973675323340269}
   variantIcon: {fileID: 793119242865119867}
   multiTileIcon: {fileID: 4535296511535211380}
@@ -1009,9 +1008,11 @@ MonoBehaviour:
     type: 3}
   newSpriteObject: {fileID: 1811534890320507940, guid: 725c8932129b99d448f819e0d01826ca,
     type: 3}
-  index: 0
   attachmentHolderTransform: {fileID: 5270491930602716144}
+  DeleteButton: {fileID: 8072353878800405977}
+  index: 0
   containerList: []
+  subAnimationElements: []
 --- !u!1 &2631444444348953592
 GameObject:
   m_ObjectHideFlags: 0
@@ -1254,19 +1255,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3377728831134456851}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8117941764984359286}
-        m_TargetAssemblyTypeName: mapEditor.animations.AnimationElement, Scripts
-        m_MethodName: InvokeDestroy
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &2641635232151087560
 GameObject:
   m_ObjectHideFlags: 0
@@ -2285,8 +2274,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4674670255187444204}
   m_HandleRect: {fileID: 1414322321628012508}
   m_Direction: 3
-  m_Value: 1.0000122
-  m_Size: 0.75
+  m_Value: 1.0000061
+  m_Size: 0.5
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

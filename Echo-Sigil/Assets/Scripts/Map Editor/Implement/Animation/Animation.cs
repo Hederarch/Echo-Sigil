@@ -354,6 +354,7 @@ namespace MapEditor.Animations
 
             public IEnumerator<AnimationIndexPair> GetEnumerator()
             {
+                Reset();
                 return this;
             }
 
@@ -370,6 +371,7 @@ namespace MapEditor.Animations
 
             IEnumerator IEnumerable.GetEnumerator()
             {
+                Reset();
                 return this;
             }
         }

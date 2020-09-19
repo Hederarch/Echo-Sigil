@@ -24,12 +24,14 @@ namespace MapEditor.Windows
 
         public override Implement Save(Implement implement, Unit unit = null)
         {
-            List<IAnimation> animations = new List<IAnimation>();
+            implement.animationIndexes = (Implement.AnimationIndexes)AnimationElement.GetAnimationIdexes(animationElements, implement.animationIndexes);
+            List <IAnimation> animations = new List<IAnimation>();
             foreach(AnimationElement animationElement in animationElements)
             {
                 animations.Add(animationElement.GetAnimation());
             }
             implement.animations = animations.ToArray();
+            
             return implement;
         }
     }
