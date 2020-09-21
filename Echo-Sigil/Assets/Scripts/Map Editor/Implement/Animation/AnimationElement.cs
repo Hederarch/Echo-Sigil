@@ -33,20 +33,12 @@ namespace MapEditor.Animations
 
         [SerializeField] private Button pulldownButton;
         [SerializeField] private Transform subAnimationHolder;
-        [SerializeField] private RectTransform rectTransform;
-        [SerializeField] private Vector2 rectHeightMinMax = new Vector2(205, 605);
-        [SerializeField] private VerticalLayoutGroup holder;
+        [SerializeField] private Vector3 rectHeightMinMax = new Vector3(200,205,605);
 
+        [SerializeField] private LayoutElement layoutElement;
         public bool Extened
         {
-            get => rectTransform.offsetMin.y != rectHeightMinMax.x; set
-            {
-                Vector2 offsetMin = rectTransform.offsetMin;
-                offsetMin.y = value ? rectHeightMinMax.y : rectHeightMinMax.x;
-                rectTransform.offsetMin = offsetMin;
-                holder.spacing += .1f;
-                holder.spacing -= .1f;
-            }
+            get => layoutElement.minHeight <= rectHeightMinMax.y; set => layoutElement.minHeight = value ? rectHeightMinMax.y : rectHeightMinMax.z;
         }
         public void ToggleExtened()
         {
@@ -76,11 +68,13 @@ namespace MapEditor.Animations
                 {
                     pulldownButton.gameObject.SetActive(true);
                     subAnimationHolder.gameObject.SetActive(true);
+                    layoutElement.minHeight = rectHeightMinMax.y;
                 }
                 else
                 {
                     pulldownButton.gameObject.SetActive(false);
                     subAnimationHolder.gameObject.SetActive(false);
+                    layoutElement.minHeight = rectHeightMinMax.x;
                 }
             }
             else
@@ -112,11 +106,13 @@ namespace MapEditor.Animations
                 {
                     pulldownButton.gameObject.SetActive(true);
                     subAnimationHolder.gameObject.SetActive(true);
+                    layoutElement.minHeight = rectHeightMinMax.y;
                 }
                 else
                 {
                     pulldownButton.gameObject.SetActive(false);
                     subAnimationHolder.gameObject.SetActive(false);
+                    layoutElement.minHeight = rectHeightMinMax.x;
                 }
             }
             else
@@ -189,6 +185,7 @@ namespace MapEditor.Animations
             Name = animation.Name;
             FPSField.text = animation.Framerate.ToString();
             index = animation.Index;
+            layoutElement.minHeight = rectHeightMinMax.x;
         }
 
         private void TypeSpesficInitialization(IAnimation animation)
@@ -471,7 +468,6 @@ namespace MapEditor.Animations
                     animationElement.containerList = animationElements;
 
                     animations[i].Index = i;
-                    animationElement.holder = transform.GetComponent<VerticalLayoutGroup>();
                     animationElement.Initalize(animations[i]);
 
                     animationElement.DeleteButton.onClick.AddListener(delegate { DestroyAnimation(transform, animationElements, animationElement.index); });
@@ -505,7 +501,6 @@ namespace MapEditor.Animations
             GameObject gameObject = Instantiate(staticAnimationElementObject, transform);
             gameObject.transform.SetSiblingIndex(gameObject.transform.parent.childCount - 2);
             AnimationElement animationElement = gameObject.GetComponent<AnimationElement>();
-            animationElement.holder = transform.GetComponent<VerticalLayoutGroup>();
             animationElement.Initalize(animation);
             animationList.Add(animationElement);
             return animationElement;

@@ -252,7 +252,7 @@ MonoBehaviour:
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
-  m_ChildControlHeight: 0
+  m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
@@ -912,6 +912,7 @@ GameObject:
   - component: {fileID: 7710746087826376748}
   - component: {fileID: 171931874199836905}
   - component: {fileID: 8117941764984359286}
+  - component: {fileID: 2686321901151590379}
   m_Layer: 5
   m_Name: Animation
   m_TagString: Untagged
@@ -995,9 +996,8 @@ MonoBehaviour:
   previewAnimatior: {fileID: 2718860155224324038}
   pulldownButton: {fileID: 2256923611957803903}
   subAnimationHolder: {fileID: 8954187382777241944}
-  rectTransform: {fileID: 7710746087826376748}
-  rectHeightMinMax: {x: -205, y: -605}
-  holder: {fileID: 0}
+  rectHeightMinMax: {x: 200, y: 205, z: 605}
+  layoutElement: {fileID: 2686321901151590379}
   directionalIcon: {fileID: 481973675323340269}
   variantIcon: {fileID: 793119242865119867}
   multiTileIcon: {fileID: 4535296511535211380}
@@ -1013,6 +1013,26 @@ MonoBehaviour:
   index: 0
   containerList: []
   subAnimationElements: []
+--- !u!114 &2686321901151590379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2388681569459594627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: 200
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &2631444444348953592
 GameObject:
   m_ObjectHideFlags: 0
@@ -2273,7 +2293,7 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 4674670255187444204}
   m_HandleRect: {fileID: 1414322321628012508}
-  m_Direction: 3
+  m_Direction: 2
   m_Value: 1.0000061
   m_Size: 0.5
   m_NumberOfSteps: 0
