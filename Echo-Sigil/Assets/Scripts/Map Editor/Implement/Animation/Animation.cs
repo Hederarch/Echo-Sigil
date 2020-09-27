@@ -20,6 +20,7 @@ namespace MapEditor.Animations
         AnimatorState GetAnimatorState(Type type);
 
         AnimatorStateMachine GetAnimatorStateMachine(Type type);
+
     }
 
     [Serializable]
@@ -165,12 +166,102 @@ namespace MapEditor.Animations
         {
             return Index.CompareTo(other.Index);
         }
+
+        public static void SerilizeAnimationArrays(IAnimation[] animations, ref Animation[] saveAnimations, ref DirectionalAnimation[] saveDirectionalAnimations, ref VaraintAnimation[] saveVaraintAnimations, ref MultiTileAnimation[] saveMultiTileAnimations)
+        {
+            saveAnimations = new Animations.Animation[0];
+            saveDirectionalAnimations = new DirectionalAnimation[0];
+            saveVaraintAnimations = new VaraintAnimation[0];
+            saveMultiTileAnimations = new MultiTileAnimation[0];
+
+            for (int i = 0; i < animations.Length; i++)
+            {
+                IAnimation animation = animations[i];
+                animation.Index = i;
+
+                if (animation.Type == typeof(Animation))
+                {
+                    Animations.Animation[] animationArray = new Animation[saveAnimations.Length + 1];
+                    saveAnimations.CopyTo(animationArray, 0);
+                    animationArray[saveAnimations.Length] = (Animation)animation;
+                    saveAnimations = animationArray;
+                }
+                else if (animation.Type == typeof(DirectionalAnimation))
+                {
+                    DirectionalAnimation[] directionalAnimationArray = new DirectionalAnimation[saveDirectionalAnimations.Length + 1];
+                    saveDirectionalAnimations.CopyTo(directionalAnimationArray, 0);
+                    directionalAnimationArray[saveDirectionalAnimations.Length] = (DirectionalAnimation)animation;
+                    saveDirectionalAnimations = directionalAnimationArray;
+                }
+                else if (animation.Type == typeof(VaraintAnimation))
+                {
+                    VaraintAnimation[] variantAnimationArray = new VaraintAnimation[saveVaraintAnimations.Length + 1];
+                    saveAnimations.CopyTo(variantAnimationArray, 0);
+                    variantAnimationArray[saveVaraintAnimations.Length] = (VaraintAnimation)animation;
+                    saveVaraintAnimations = variantAnimationArray;
+                }
+                else if (animation.Type == typeof(MultiTileAnimation))
+                {
+                    MultiTileAnimation[] multiTileAnimationArray = new MultiTileAnimation[saveMultiTileAnimations.Length + 1];
+                    saveMultiTileAnimations.CopyTo(multiTileAnimationArray, 0);
+                    multiTileAnimationArray[saveMultiTileAnimations.Length] = (MultiTileAnimation)animation;
+                    saveMultiTileAnimations = multiTileAnimationArray;
+                }
+                else
+                {
+                    Debug.LogError("Type was not assigned");
+                }
+            }
+        }
+
+        public static IAnimation[] DeserializeAnimationArray(Animation[] saveAnimations, DirectionalAnimation[] saveDirectionalAnimations, VaraintAnimation[] saveVaraintAnimations, MultiTileAnimation[] saveMultiTileAnimations)
+        {
+            List<IAnimation> listOfAnimations = new List<IAnimation>();
+            if (saveAnimations != null)
+            {
+                foreach (Animations.Animation animation in saveAnimations)
+                {
+                    listOfAnimations.Add(animation);
+                }
+            }
+            if (saveDirectionalAnimations != null)
+            {
+                foreach (DirectionalAnimation animation in saveDirectionalAnimations)
+                {
+                    listOfAnimations.Add(animation);
+                }
+            }
+            if (saveVaraintAnimations != null)
+            {
+                foreach (VaraintAnimation animation in saveVaraintAnimations)
+                {
+                    listOfAnimations.Add(animation);
+                }
+            }
+            if (saveMultiTileAnimations != null)
+            {
+                foreach (MultiTileAnimation animation in saveMultiTileAnimations)
+                {
+                    listOfAnimations.Add(animation);
+                }
+            }
+            listOfAnimations.Sort();
+            return listOfAnimations.ToArray();
+        }
+
     }
 
     [Serializable]
     public struct DirectionalAnimation : IAnimation, ISerializationCallbackReceiver
     {
         public IAnimation[] animations;
+
+        [SerializeField]
+        Animation[] saveAnimations;
+        [SerializeField]
+        VaraintAnimation[] saveVaraintAnimations;
+        [SerializeField]
+        MultiTileAnimation[] saveMultiTileAnimations;
 
         public string name;
         public string Name { get => name; set => name = value; }
@@ -189,6 +280,9 @@ namespace MapEditor.Animations
             this.animations = animations;
             this.index = index;
             animationIndexes = new AnimationIndexes();
+            saveAnimations = new Animation[0];
+            saveMultiTileAnimations = new MultiTileAnimation[0];
+            saveVaraintAnimations = new VaraintAnimation[0];
         }
 
         public AnimationClip GetAnimationClip(Type type)
@@ -243,21 +337,77 @@ namespace MapEditor.Animations
             }
             else
             {
-                for(int i = 0; i < 4; i++)
+                for (int i = 0; i < 4; i++)
                 {
                     animations[i] = new Animation();
                 }
             }
-            this.animations = animations;
+
+            saveAnimations = new Animation[0];
+            saveVaraintAnimations = new VaraintAnimation[0];
+            saveMultiTileAnimations = new MultiTileAnimation[0];
+
+            for (int i = 0; i < animations.Length; i++)
+            {
+                IAnimation animation = animations[i];
+                animation.Index = i;
+
+                if (animation.Type == typeof(Animation))
+                {
+                    Animation[] animationArray = new Animation[saveAnimations.Length + 1];
+                    saveAnimations.CopyTo(animationArray, 0);
+                    animationArray[saveAnimations.Length] = (Animation)animation;
+                    saveAnimations = animationArray;
+                }
+                else if (animation.Type == typeof(VaraintAnimation))
+                {
+                    VaraintAnimation[] variantAnimationArray = new VaraintAnimation[saveVaraintAnimations.Length + 1];
+                    saveAnimations.CopyTo(variantAnimationArray, 0);
+                    variantAnimationArray[saveVaraintAnimations.Length] = (VaraintAnimation)animation;
+                    saveVaraintAnimations = variantAnimationArray;
+                }
+                else if (animation.Type == typeof(MultiTileAnimation))
+                {
+                    MultiTileAnimation[] multiTileAnimationArray = new MultiTileAnimation[saveMultiTileAnimations.Length + 1];
+                    saveMultiTileAnimations.CopyTo(multiTileAnimationArray, 0);
+                    multiTileAnimationArray[saveMultiTileAnimations.Length] = (MultiTileAnimation)animation;
+                    saveMultiTileAnimations = multiTileAnimationArray;
+                }
+                else
+                {
+                    Debug.LogError("Type was not assigned");
+                }
+            }
         }
 
         public void OnAfterDeserialize()
         {
-            animationIndexes = new AnimationIndexes();
-            if(animations == null)
+            List<IAnimation> listOfAnimations = new List<IAnimation>();
+            if (saveAnimations != null)
             {
-                animations = new IAnimation[0];
+                foreach (Animation animation in saveAnimations)
+                {
+                    listOfAnimations.Add(animation);
+                }
             }
+            if (saveVaraintAnimations != null)
+            {
+                foreach (VaraintAnimation animation in saveVaraintAnimations)
+                {
+                    listOfAnimations.Add(animation);
+                }
+            }
+            if (saveMultiTileAnimations != null)
+            {
+                foreach (MultiTileAnimation animation in saveMultiTileAnimations)
+                {
+                    listOfAnimations.Add(animation);
+                }
+            }
+            listOfAnimations.Sort();
+            animations = listOfAnimations.ToArray();
+
+            animationIndexes = new AnimationIndexes();
         }
 
         public class AnimationIndexes : IAnimationIndexes
@@ -385,6 +535,11 @@ namespace MapEditor.Animations
     {
         public IAnimation[] animations;
 
+        [SerializeField]
+        Animation[] saveAnimations;
+        [SerializeField]
+        MultiTileAnimation[] saveMultiTileAnimations;
+
         public string name;
         public string Name { get => name; set => name = value; }
         public int framerate;
@@ -401,6 +556,8 @@ namespace MapEditor.Animations
             framerate = 12;
             this.animations = animations;
             this.index = index;
+            saveAnimations = new Animation[0];
+            saveMultiTileAnimations = new MultiTileAnimation[0];
         }
 
         public AnimationClip GetAnimationClip(Type type)
@@ -446,16 +603,56 @@ namespace MapEditor.Animations
 
         public void OnBeforeSerialize()
         {
-            
+            saveAnimations = new Animation[0];
+            saveMultiTileAnimations = new MultiTileAnimation[0];
+
+            for (int i = 0; i < animations.Length; i++)
+            {
+                IAnimation animation = animations[i];
+                animation.Index = i;
+
+                if (animation.Type == typeof(Animations.Animation))
+                {
+                    Animations.Animation[] animationArray = new Animations.Animation[saveAnimations.Length + 1];
+                    saveAnimations.CopyTo(animationArray, 0);
+                    animationArray[saveAnimations.Length] = (Animations.Animation)animation;
+                    saveAnimations = animationArray;
+                }
+                else if (animation.Type == typeof(MultiTileAnimation))
+                {
+                    MultiTileAnimation[] multiTileAnimationArray = new MultiTileAnimation[saveMultiTileAnimations.Length + 1];
+                    saveMultiTileAnimations.CopyTo(multiTileAnimationArray, 0);
+                    multiTileAnimationArray[saveMultiTileAnimations.Length] = (MultiTileAnimation)animation;
+                    saveMultiTileAnimations = multiTileAnimationArray;
+                }
+                else
+                {
+                    Debug.LogError("Valid Type was not assigned");
+                }
+            }
         }
 
         public void OnAfterDeserialize()
         {
-            if(animations == null)
+            List<IAnimation> listOfAnimations = new List<IAnimation>();
+            if (saveAnimations != null)
             {
-                animations = new IAnimation[0];
+                foreach (Animations.Animation animation in saveAnimations)
+                {
+                    listOfAnimations.Add(animation);
+                }
             }
+            if (saveMultiTileAnimations != null)
+            {
+                foreach (MultiTileAnimation animation in saveMultiTileAnimations)
+                {
+                    listOfAnimations.Add(animation);
+                }
+            }
+            listOfAnimations.Sort();
+            animations = listOfAnimations.ToArray();
         }
+
     }
 
     [Serializable]

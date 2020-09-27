@@ -20,12 +20,17 @@ namespace MapEditor
         public float[] primaryColor;
         public float[] secondaryColor;
 
+
         public IAnimation[] animations;
         //only to be used for saveing
-        public Animations.Animation[] saveAnimations;
-        public DirectionalAnimation[] saveDirectionalAnimations;
-        public VaraintAnimation[] saveVaraintAnimations;
-        public MultiTileAnimation[] saveMultiTileAnimations;
+        [SerializeField]
+        Animations.Animation[] saveAnimations;
+        [SerializeField]
+        DirectionalAnimation[] saveDirectionalAnimations;
+        [SerializeField]
+        VaraintAnimation[] saveVaraintAnimations;
+        [SerializeField]
+        MultiTileAnimation[] saveMultiTileAnimations;
 
         [Serializable]
         public class AnimationIndexes : IAnimationIndexes
@@ -120,7 +125,7 @@ namespace MapEditor
 
             public void Dispose()
             {
-                
+
             }
 
             public IEnumerator<AnimationIndexPair> GetEnumerator()
@@ -249,85 +254,15 @@ namespace MapEditor
 
         public void OnBeforeSerialize()
         {
-            saveAnimations = new Animations.Animation[0];
-            saveDirectionalAnimations = new DirectionalAnimation[0];
-            saveVaraintAnimations = new VaraintAnimation[0];
-            saveMultiTileAnimations = new MultiTileAnimation[0];
-
-            for (int i = 0; i < animations.Length; i++)
-            {
-                IAnimation animation = animations[i];
-                animation.Index = i;
-
-                if (animation.Type == typeof(Animations.Animation))
-                {
-                    Animations.Animation[] animationArray = new Animations.Animation[saveAnimations.Length + 1];
-                    saveAnimations.CopyTo(animationArray, 0);
-                    animationArray[saveAnimations.Length] = (Animations.Animation)animation;
-                    saveAnimations = animationArray;
-                }
-                else if (animation.Type == typeof(DirectionalAnimation))
-                {
-                    DirectionalAnimation[] directionalAnimationArray = new DirectionalAnimation[saveDirectionalAnimations.Length + 1];
-                    saveDirectionalAnimations.CopyTo(directionalAnimationArray, 0);
-                    directionalAnimationArray[saveDirectionalAnimations.Length] = (DirectionalAnimation)animation;
-                    saveDirectionalAnimations = directionalAnimationArray;
-                }
-                else if (animation.Type == typeof(VaraintAnimation))
-                {
-                    VaraintAnimation[] variantAnimationArray = new VaraintAnimation[saveVaraintAnimations.Length + 1];
-                    saveAnimations.CopyTo(variantAnimationArray, 0);
-                    variantAnimationArray[saveVaraintAnimations.Length] = (VaraintAnimation)animation;
-                    saveVaraintAnimations = variantAnimationArray;
-                }
-                else if (animation.Type == typeof(MultiTileAnimation))
-                {
-                    MultiTileAnimation[] multiTileAnimationArray = new MultiTileAnimation[saveMultiTileAnimations.Length + 1];
-                    saveMultiTileAnimations.CopyTo(multiTileAnimationArray, 0);
-                    multiTileAnimationArray[saveMultiTileAnimations.Length] = (MultiTileAnimation)animation;
-                    saveMultiTileAnimations = multiTileAnimationArray;
-                }
-                else
-                {
-                    Debug.LogError("Type was not assigned");
-                }
-            }
+            Animations.Animation.SerilizeAnimationArrays(animations, ref saveAnimations, ref saveDirectionalAnimations, ref saveVaraintAnimations, ref saveMultiTileAnimations);
         }
+
 
         public void OnAfterDeserialize()
         {
-            List<IAnimation> listOfAnimations = new List<IAnimation>();
-            if (saveAnimations != null)
-            {
-                foreach (Animations.Animation animation in saveAnimations)
-                {
-                    listOfAnimations.Add(animation);
-                }
-            }
-            if (saveDirectionalAnimations != null)
-            {
-                foreach (DirectionalAnimation animation in saveDirectionalAnimations)
-                {
-                    listOfAnimations.Add(animation);
-                }
-            }
-            if (saveVaraintAnimations != null)
-            {
-                foreach (VaraintAnimation animation in saveVaraintAnimations)
-                {
-                    listOfAnimations.Add(animation);
-                }
-            }
-            if (saveMultiTileAnimations != null)
-            {
-                foreach (MultiTileAnimation animation in saveMultiTileAnimations)
-                {
-                    listOfAnimations.Add(animation);
-                }
-            }
-            listOfAnimations.Sort();
-            animations = listOfAnimations.ToArray();
+           animations = Animations.Animation.DeserializeAnimationArray(saveAnimations,saveDirectionalAnimations,saveVaraintAnimations,saveMultiTileAnimations);
         }
+
     }
     [Serializable]
     public class ImplementList

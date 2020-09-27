@@ -990,19 +990,11 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 4800245177480106872}
   nameField: {fileID: 5644633012415404748}
-  nameFieldTransform: {fileID: 4944746838781397227}
   FPSField: {fileID: 6465784246649595486}
-  FPSFieldTransform: {fileID: 5154247511022665842}
-  previewAnimatior: {fileID: 2718860155224324038}
-  pulldownButton: {fileID: 2256923611957803903}
-  subAnimationHolder: {fileID: 8954187382777241944}
-  rectHeightMinMax: {x: 200, y: 205, z: 605}
-  layoutElement: {fileID: 2686321901151590379}
-  directionalIcon: {fileID: 481973675323340269}
-  variantIcon: {fileID: 793119242865119867}
-  multiTileIcon: {fileID: 4535296511535211380}
   numTileField: {fileID: 549602181088517816}
-  numTileFieldTransform: {fileID: 2926689219144026546}
+  previewAnimatior: {fileID: 2718860155224324038}
+  subAnimationHolder: {fileID: 8954187382777241944}
+  animationTypeInfo: {fileID: 5468107949125613207}
   spritesHolderTransform: {fileID: 4876574728284541615}
   spriteHodlerObject: {fileID: 5795284675362282600, guid: 712a35dc4d3c2f449a8c62a824f3c8f6,
     type: 3}
@@ -1653,8 +1645,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8117941764984359286}
-        m_TargetAssemblyTypeName: mapEditor.animations.AnimationElement, Scripts
+      - m_Target: {fileID: 5468107949125613207}
+        m_TargetAssemblyTypeName: MapEditor.Animations.AnimationTypeInfo, Scripts
         m_MethodName: ToggleVariant
         m_Mode: 1
         m_Arguments:
@@ -1785,8 +1777,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8117941764984359286}
-        m_TargetAssemblyTypeName: mapEditor.animations.AnimationElement, Scripts
+      - m_Target: {fileID: 5468107949125613207}
+        m_TargetAssemblyTypeName: MapEditor.Animations.AnimationTypeInfo, Scripts
         m_MethodName: ToggleExtened
         m_Mode: 1
         m_Arguments:
@@ -1807,6 +1799,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4229457574724653151}
   - component: {fileID: 3120532103906817372}
+  - component: {fileID: 5468107949125613207}
   m_Layer: 5
   m_Name: Icons
   m_TagString: Untagged
@@ -1862,6 +1855,43 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &5468107949125613207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4313718977514769291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57abe61d1ac08a14baa608fab08e18d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colorsTrue:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.5, g: 1, b: 1, a: 1}
+    m_PressedColor: {r: 0, g: 0.5, b: 1, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 0, g: 0, b: 0, a: 0.5019608}
+    m_ColorMultiplier: 0
+    m_FadeDuration: 0
+  colorsFalse:
+    m_NormalColor: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 1}
+    m_HighlightedColor: {r: 0.15, g: 0.3, b: 0.3, a: 1}
+    m_PressedColor: {r: 0, g: 0.15, b: 0.3, a: 1}
+    m_SelectedColor: {r: 0.39607847, g: 0.39607847, b: 0.39607847, a: 1}
+    m_DisabledColor: {r: 0, g: 0, b: 0, a: 0.5019608}
+    m_ColorMultiplier: 0
+    m_FadeDuration: 0
+  directionalIcon: {fileID: 481973675323340269}
+  variantIcon: {fileID: 793119242865119867}
+  multiTileIcon: {fileID: 4535296511535211380}
+  numTileFieldTransform: {fileID: 2926689219144026546}
+  FPSFieldTransform: {fileID: 5154247511022665842}
+  nameFieldTransform: {fileID: 4944746838781397227}
+  rectHeightMinMax: {x: 200, y: 205, z: 605}
+  layoutElement: {fileID: 2686321901151590379}
+  pulldownButton: {fileID: 2256923611957803903}
 --- !u!1 &4371238524073354310
 GameObject:
   m_ObjectHideFlags: 0
@@ -2825,8 +2855,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8117941764984359286}
-        m_TargetAssemblyTypeName: mapEditor.animations.AnimationElement, Scripts
+      - m_Target: {fileID: 5468107949125613207}
+        m_TargetAssemblyTypeName: MapEditor.Animations.AnimationTypeInfo, Scripts
         m_MethodName: ToggleDirectional
         m_Mode: 1
         m_Arguments:
@@ -3215,8 +3245,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8117941764984359286}
-        m_TargetAssemblyTypeName: mapEditor.animations.AnimationElement, Scripts
+      - m_Target: {fileID: 5468107949125613207}
+        m_TargetAssemblyTypeName: MapEditor.Animations.AnimationTypeInfo, Scripts
         m_MethodName: ToggleMultiTile
         m_Mode: 1
         m_Arguments:

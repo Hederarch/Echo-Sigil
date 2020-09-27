@@ -18,7 +18,7 @@ namespace MapEditor.Windows
             AnimationElement.implementPath = implement.ImplementPath;
             AnimationElement.SetStatics(animationElementObject, addAnimationObject, attachmentObject);
             AnimationElement.UnsubsubscribeAnimation(animationHolderTransform, animationElements);
-            animationElements = AnimationElement.PopulateTransformWithAnimations(animationHolderTransform, implement.animations, implement.ImplementPath, implement.animationIndexes);
+            animationElements = AnimationElement.PopulateTransformWithAnimations(animationHolderTransform, implement.animations, implement.ImplementPath, true, implement.animationIndexes);
             gameObject.SetActive(true);
         }
 

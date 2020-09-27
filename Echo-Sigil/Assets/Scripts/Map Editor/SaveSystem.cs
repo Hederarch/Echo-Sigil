@@ -151,13 +151,12 @@ namespace MapEditor
             File.WriteAllBytes(filePath, fileData);
         }
 
-        public static ImplementList SaveImplmentList(ImplementList implements)
+        public static void SaveImplmentList(ImplementList implements)
         {
             using (StreamWriter stream = new StreamWriter(implements.modPath + "/" + Path.GetFileName(implements.modPath) + ".json"))
             {
                 stream.Write(JsonUtility.ToJson(implements,true));
             }
-            return implements;
         }
         internal static ImplementList LoadImplementList(string modPath = null)
         {

@@ -1,4 +1,5 @@
 ﻿using MapEditor.Windows;
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
@@ -43,7 +44,7 @@ namespace MapEditor.Animations
                 {
                     float distance = animationElement.transform.position.y - transform.position.y;
 
-                    if (minDistance > Mathf.Abs(distance) && (!Directional || (Directional && animationElement.Directional)))
+                    if (minDistance > Mathf.Abs(distance) && (!Directional || (Directional && animationElement.animationTypeInfo.Directional)))
                     {
                         minDistance = distance;
                         minElement = animationElement;
@@ -131,6 +132,7 @@ namespace MapEditor.Animations
             set;
         }
     }
+    [Serializable]
     public struct AnimationIndexPair
     {
         public int index;

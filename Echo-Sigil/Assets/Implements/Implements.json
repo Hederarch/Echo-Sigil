@@ -50,6 +50,62 @@
             ],
             "saveDirectionalAnimations": [
                 {
+                    "saveAnimations": [
+                        {
+                            "name": "",
+                            "framerate": 12,
+                            "sprites": [
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//0.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//1.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//2.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//3.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//4.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//5.png"
+                            ],
+                            "index": 0
+                        },
+                        {
+                            "name": "",
+                            "framerate": 12,
+                            "sprites": [
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//0.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//1.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//2.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//3.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//4.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//5.png"
+                            ],
+                            "index": 1
+                        },
+                        {
+                            "name": "",
+                            "framerate": 12,
+                            "sprites": [
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//0.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//1.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//2.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//3.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//4.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//5.png"
+                            ],
+                            "index": 2
+                        },
+                        {
+                            "name": "",
+                            "framerate": 12,
+                            "sprites": [
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//0.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//1.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//2.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//3.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//4.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//5.png"
+                            ],
+                            "index": 3
+                        }
+                    ],
+                    "saveVaraintAnimations": [],
+                    "saveMultiTileAnimations": [],
                     "name": "Walk",
                     "framerate": 12,
                     "index": 1
@@ -57,7 +113,28 @@
             ],
             "saveVaraintAnimations": [],
             "saveMultiTileAnimations": [],
-            "animationIndexes": {}
+            "animationIndexes": {
+                "walkIndex": {
+                    "index": 1,
+                    "label": "Walk",
+                    "directional": true
+                },
+                "attackIndex": {
+                    "index": 0,
+                    "label": "Attack",
+                    "directional": false
+                },
+                "idelIndex": {
+                    "index": 2,
+                    "label": "Idel",
+                    "directional": false
+                },
+                "fidgetIndex": {
+                    "index": 2,
+                    "label": "Fidget",
+                    "directional": false
+                }
+            }
         },
         {
             "name": "Temp",
@@ -80,7 +157,28 @@
             "saveDirectionalAnimations": [],
             "saveVaraintAnimations": [],
             "saveMultiTileAnimations": [],
-            "animationIndexes": {}
+            "animationIndexes": {
+                "walkIndex": {
+                    "index": 0,
+                    "label": "Walk",
+                    "directional": true
+                },
+                "attackIndex": {
+                    "index": 0,
+                    "label": "Attack",
+                    "directional": false
+                },
+                "idelIndex": {
+                    "index": 0,
+                    "label": "Idel",
+                    "directional": false
+                },
+                "fidgetIndex": {
+                    "index": 0,
+                    "label": "Fidget",
+                    "directional": false
+                }
+            }
         },
         {
             "name": "Temp",
@@ -103,7 +201,28 @@
             "saveDirectionalAnimations": [],
             "saveVaraintAnimations": [],
             "saveMultiTileAnimations": [],
-            "animationIndexes": {}
+            "animationIndexes": {
+                "walkIndex": {
+                    "index": 0,
+                    "label": "Walk",
+                    "directional": true
+                },
+                "attackIndex": {
+                    "index": 0,
+                    "label": "Attack",
+                    "directional": false
+                },
+                "idelIndex": {
+                    "index": 0,
+                    "label": "Idel",
+                    "directional": false
+                },
+                "fidgetIndex": {
+                    "index": 0,
+                    "label": "Fidget",
+                    "directional": false
+                }
+            }
         }
     ]
 }

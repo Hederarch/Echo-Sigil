@@ -68,13 +68,8 @@ namespace MapEditor.Windows
             ImplementList implementList = SaveSystem.LoadImplementList(modPath);
             int length = implementList.implements.Length;
             new Implement("temp", implementList);
-            implementList = SaveSystem.SaveImplmentList(implementList);
+            SaveSystem.SaveImplmentList(implementList);
             SelectionEvent?.Invoke(implementList, length);
-        }
-
-        public override Implement Save(Implement implement, Unit unit = null)
-        {
-            return implement;
         }
 
         protected void OnDestroy()

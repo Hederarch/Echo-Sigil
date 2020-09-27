@@ -14,11 +14,9 @@ namespace MapEditor.Animations
         public static string implementPath;
 
         [SerializeField] private InputField nameField;
-        [SerializeField] private RectTransform nameFieldTransform;
         public string Name { get => nameField.text; set => nameField.text = value; }
 
         [SerializeField] private InputField FPSField;
-        [SerializeField] private RectTransform FPSFieldTransform;
         public int FPS
         {
             get
@@ -29,138 +27,26 @@ namespace MapEditor.Animations
             set => FPSField.text = value > 0 ? value.ToString() : "12";
         }
 
-        [SerializeField] private Animator previewAnimatior;
-
-        [SerializeField] private Button pulldownButton;
-        [SerializeField] private Transform subAnimationHolder;
-        [SerializeField] private Vector3 rectHeightMinMax = new Vector3(200,205,605);
-
-        [SerializeField] private LayoutElement layoutElement;
-        public bool Extened
-        {
-            get => layoutElement.minHeight <= rectHeightMinMax.y; set => layoutElement.minHeight = value ? rectHeightMinMax.y : rectHeightMinMax.z;
-        }
-        public void ToggleExtened()
-        {
-            Extened = !Extened;
-        }
-
-        public bool Directional
-        {
-            get => directionalIcon.colors.normalColor == Color.white; set
-            {
-                ColorBlock colors = directionalIcon.colors;
-                Color color = value ? Color.white : Color.black;
-                colors.normalColor = color;
-                colors.pressedColor = color;
-                directionalIcon.colors = colors;
-                variantIcon.interactable = !value;
-                multiTileIcon.interactable = !value;
-            }
-        }
-        [SerializeField] private Button directionalIcon;
-        public void ToggleDirectional()
-        {
-            if (!Variant)
-            {
-                Directional = !Directional;
-                if (Directional)
-                {
-                    pulldownButton.gameObject.SetActive(true);
-                    subAnimationHolder.gameObject.SetActive(true);
-                    layoutElement.minHeight = rectHeightMinMax.y;
-                }
-                else
-                {
-                    pulldownButton.gameObject.SetActive(false);
-                    subAnimationHolder.gameObject.SetActive(false);
-                    layoutElement.minHeight = rectHeightMinMax.x;
-                }
-            }
-            else
-            {
-                throw new Exception("Animation cannot be Directional and Varaint");
-            }
-        }
-
-        public bool Variant
-        {
-            get => variantIcon.colors.normalColor == Color.white; set
-            {
-                ColorBlock colors = variantIcon.colors;
-                Color color = value ? Color.white : Color.black;
-                colors.normalColor = color;
-                colors.pressedColor = color;
-                variantIcon.colors = colors;
-                directionalIcon.interactable = !value;
-                multiTileIcon.interactable = !value;
-            }
-        }
-        [SerializeField] private Button variantIcon;
-        public void ToggleVariant()
-        {
-            if (!Directional)
-            {
-                Variant = !Variant;
-                if (Variant)
-                {
-                    pulldownButton.gameObject.SetActive(true);
-                    subAnimationHolder.gameObject.SetActive(true);
-                    layoutElement.minHeight = rectHeightMinMax.y;
-                }
-                else
-                {
-                    pulldownButton.gameObject.SetActive(false);
-                    subAnimationHolder.gameObject.SetActive(false);
-                    layoutElement.minHeight = rectHeightMinMax.x;
-                }
-            }
-            else
-            {
-                throw new Exception("Animation cannot be Directional and Varaint");
-            }
-        }
-
-        public bool MultiTile
-        {
-            get => multiTileIcon.colors.normalColor == Color.white; set
-            {
-                ColorBlock colors = multiTileIcon.colors;
-                Color color = value ? Color.white : Color.black;
-                colors.normalColor = color;
-                colors.pressedColor = color;
-                multiTileIcon.colors = colors;
-                directionalIcon.interactable = !value;
-                variantIcon.interactable = !value;
-            }
-        }
-        [SerializeField] private Button multiTileIcon;
         [SerializeField] private InputField numTileField;
-        [SerializeField] private RectTransform numTileFieldTransform;
-        public void ToggleMultiTile()
+        public int NumTile
         {
-            MultiTile = !MultiTile;
-            if (MultiTile)
+            get
             {
-                numTileFieldTransform.gameObject.SetActive(true);
-                Vector2 offsetMax = nameFieldTransform.offsetMax;
-                offsetMax.x = -Math.Abs(FPSFieldTransform.rect.width + numTileFieldTransform.rect.width + 15);
-                nameFieldTransform.offsetMax = offsetMax;
+                int value = int.Parse(numTileField.text);
+                return value > 0 ? value : 1;
             }
-            else
-            {
-                numTileFieldTransform.gameObject.SetActive(false);
-                Vector2 offsetMax = nameFieldTransform.offsetMax;
-                offsetMax.x = -Math.Abs(FPSFieldTransform.rect.width + 10);
-                nameFieldTransform.offsetMax = offsetMax;
-            }
+            set => numTileField.text = value > 0 ? value.ToString() : "1";
         }
 
-        public bool Animation => !Directional && !Variant && !MultiTile;
+        [SerializeField] private Animator previewAnimatior;
+        [SerializeField] private Transform subAnimationHolder;
+
+        public AnimationTypeInfo animationTypeInfo;
 
         [SerializeField] private Transform spritesHolderTransform;
         [SerializeField] private GameObject spriteHodlerObject;
         [SerializeField] private GameObject newSpriteObject;
+
         Button newSpriteButton;
         List<SpriteHolder> spriteHolders = new List<SpriteHolder>();
 
@@ -172,25 +58,25 @@ namespace MapEditor.Animations
         public List<AnimationElement> containerList;
         public List<AnimationElement> subAnimationElements;
 
-        public void Initalize(IAnimation animation)
+        public void Initalize(IAnimation animation, bool firstLayer)
         {
-            GeneralInitialization(animation);
+            GeneralInitialization(animation,firstLayer);
             TypeSpesficInitialization(animation);
 
             ResetPreview();
         }
 
-        private void GeneralInitialization(IAnimation animation)
+        private void GeneralInitialization(IAnimation animation, bool firstLayer)
         {
             Name = animation.Name;
             FPSField.text = animation.Framerate.ToString();
             index = animation.Index;
-            layoutElement.minHeight = rectHeightMinMax.x;
+            animationTypeInfo.SetFirstLayer(firstLayer, animation.Type == typeof(VaraintAnimation));
         }
 
         private void TypeSpesficInitialization(IAnimation animation)
         {
-            FalseifyBools();
+            animationTypeInfo.FalsifyBools();
 
             if (animation.Type == typeof(Animation))
             {
@@ -198,39 +84,28 @@ namespace MapEditor.Animations
             }
             else if (animation.Type == typeof(DirectionalAnimation))
             {
-                ToggleDirectional();
+                animationTypeInfo.ToggleDirectional();
                 DirectionalAnimation directionalAnimation = (DirectionalAnimation)animation;
-                subAnimationElements = PopulateTransformWithAnimations(subAnimationHolder, directionalAnimation.animations, implementPath, directionalAnimation.animationIndexes);
+                subAnimationElements = PopulateTransformWithAnimations(subAnimationHolder, directionalAnimation.animations, implementPath, false, directionalAnimation.animationIndexes);
             }
             else if (animation.Type == typeof(VaraintAnimation))
             {
-                ToggleVariant();
+                animationTypeInfo.ToggleVariant();
                 VaraintAnimation varaintAnimation = (VaraintAnimation)animation;
-                subAnimationElements = PopulateTransformWithAnimations(subAnimationHolder, varaintAnimation.animations, implementPath);
+                subAnimationElements = PopulateTransformWithAnimations(subAnimationHolder, varaintAnimation.animations, implementPath, false);
             }
             else if (animation.Type == typeof(MultiTileAnimation))
             {
-                ToggleMultiTile();
+                animationTypeInfo.ToggleMultiTile();
 
                 MultiTileAnimation multiTileAnimation = (MultiTileAnimation)animation;
                 PopulateSpriteHolder(multiTileAnimation);
-                numTileField.text = multiTileAnimation.tileWidth.ToString();
+                NumTile = multiTileAnimation.tileWidth;
             }
             else
             {
                 Debug.LogError("Type was not assigned");
             }
-        }
-
-        private void FalseifyBools()
-        {
-            Directional = true;
-            Variant = false;
-            ToggleDirectional();
-            Variant = true;
-            ToggleVariant();
-            MultiTile = true;
-            ToggleMultiTile();
         }
 
         private void PopulateSpriteHolder(Animation animation)
@@ -349,7 +224,7 @@ namespace MapEditor.Animations
         public IAnimation GetAnimation()
         {
             IAnimation animation = null;
-            if (Variant || Directional)
+            if (animationTypeInfo.Variant || animationTypeInfo.Directional)
             {
                 List<IAnimation> animations = new List<IAnimation>();
                 foreach (AnimationElement animationElement in subAnimationElements)
@@ -357,7 +232,7 @@ namespace MapEditor.Animations
                     animations.Add(animationElement.GetAnimation());
                 }
 
-                if (Variant)
+                if (animationTypeInfo.Variant)
                 {
                     animation = new VaraintAnimation()
                     {
@@ -366,7 +241,7 @@ namespace MapEditor.Animations
                         animations = animations.ToArray()
                     };
                 }
-                else if (Directional)
+                else if (animationTypeInfo.Directional)
                 {
                     animation = new DirectionalAnimation()
                     {
@@ -377,7 +252,7 @@ namespace MapEditor.Animations
                     };
                 }
             }
-            else if (Animation || MultiTile)
+            else if (animationTypeInfo.Animation || animationTypeInfo.MultiTile)
             {
                 string[] sprites = new string[spriteHolders.Count];
                 for (int i = 0; i < spriteHolders.Count; i++)
@@ -392,7 +267,7 @@ namespace MapEditor.Animations
                     sprites[i] = filePath;
                 }
 
-                if (Animation)
+                if (animationTypeInfo.Animation)
                 {
                     animation = new Animation
                     {
@@ -401,14 +276,14 @@ namespace MapEditor.Animations
                         sprites = sprites
                     };
                 }
-                else if (MultiTile)
+                else if (animationTypeInfo.MultiTile)
                 {
                     animation = new MultiTileAnimation
                     {
                         Name = Name,
                         Framerate = FPS,
                         sprites = sprites,
-                        tileWidth = int.Parse(numTileField.text)
+                        tileWidth = NumTile
 
                     };
                 }
@@ -448,7 +323,7 @@ namespace MapEditor.Animations
                 staticAttachmentObject = attachmentObject;
             }
         }
-        public static List<AnimationElement> PopulateTransformWithAnimations(Transform transform, IAnimation[] animations, string implementPath, IAnimationIndexes indexes = null)
+        public static List<AnimationElement> PopulateTransformWithAnimations(Transform transform, IAnimation[] animations, string implementPath, bool firstLayer = true, IAnimationIndexes indexes = null)
         {
             foreach (Transform toDealte in transform)
             {
@@ -456,7 +331,7 @@ namespace MapEditor.Animations
             }
             List<AnimationElement> animationElements = new List<AnimationElement>();
             GameObject addAnimationObject = Instantiate(staticAddAnimationObject, transform);
-            addAnimationObject.GetComponent<Button>().onClick.AddListener(delegate { AddAnimation(transform, animationElements, implementPath); });
+            addAnimationObject.GetComponent<Button>().onClick.AddListener(delegate { AddAnimation(transform, animationElements, firstLayer, implementPath); });
 
             if (animations != null)
             {
@@ -468,7 +343,7 @@ namespace MapEditor.Animations
                     animationElement.containerList = animationElements;
 
                     animations[i].Index = i;
-                    animationElement.Initalize(animations[i]);
+                    animationElement.Initalize(animations[i], firstLayer);
 
                     animationElement.DeleteButton.onClick.AddListener(delegate { DestroyAnimation(transform, animationElements, animationElement.index); });
 
@@ -495,13 +370,13 @@ namespace MapEditor.Animations
                 }
             }
         }
-        private static AnimationElement AddAnimation(Transform transform, List<AnimationElement> animationList, string implementPath)
+        private static AnimationElement AddAnimation(Transform transform, List<AnimationElement> animationList, bool firstLayer, string implementPath)
         {
             Animation animation = new Animation(SaveSystem.LoadPNG(Vector2.one / 2f), animationList.Count, implementPath);
             GameObject gameObject = Instantiate(staticAnimationElementObject, transform);
             gameObject.transform.SetSiblingIndex(gameObject.transform.parent.childCount - 2);
             AnimationElement animationElement = gameObject.GetComponent<AnimationElement>();
-            animationElement.Initalize(animation);
+            animationElement.Initalize(animation, firstLayer);
             animationList.Add(animationElement);
             return animationElement;
 
