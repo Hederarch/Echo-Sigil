@@ -43,7 +43,10 @@ namespace MapEditor
             if (selectedImplementList != null && selectedImplementList.Implements.Length > selectedImplementIndex)
             {
                 Implement implement = selectedImplement;
-                implement = curWindow.Save(implement);
+                if (curWindow != null)
+                {
+                    implement = curWindow.Save(implement);
+                }
                 selectedImplement = implement;
                 unitDisplay.DisplayUnit(implement, selectedUnit);
                 SaveSystem.SaveImplmentList(selectedImplementList);
@@ -74,6 +77,7 @@ namespace MapEditor
 
         public void DefualtSelectionEvent(ImplementList implementList, int index)
         {
+            SelectWindow.SelectionEvent -= DefualtSelectionEvent;
             selectedImplementIndex = index;
             selectedImplementList = implementList;
             unitDisplay.DisplayUnit(implementList, index);

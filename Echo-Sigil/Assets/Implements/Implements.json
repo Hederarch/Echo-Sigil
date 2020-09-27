@@ -3,39 +3,39 @@
     "modName": "Tales from the Metaheadron: Main Story Pack",
     "implements": [
         {
-            "name": "Jeanette Sekch",
+            "name": "Jannete",
             "index": 0,
-            "fragment": "Pool Ball",
-            "power": "Bank Shot",
-            "type": 2,
-            "description": "Can create and propel fast and deadly pool balls",
+            "fragment": "",
+            "power": "",
+            "type": -1,
+            "description": "",
             "primaryColor": [
-                0.581818163394928,
-                0.9090909361839294,
-                1.0
+                0.0,
+                0.0,
+                0.0
             ],
             "secondaryColor": [
-                0.145454540848732,
-                0.1090909093618393,
-                0.1090909093618393
+                0.5272727012634277,
+                0.0,
+                0.0
             ],
             "saveAnimations": [
                 {
                     "name": "Attack",
                     "framerate": 12,
                     "sprites": [
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/0.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/1.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/2.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/3.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/4.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/5.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/6.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/7.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/8.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/9.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/10.png",
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Attack/11.png"
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Attack/0.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Attack/1.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Attack/2.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Attack/3.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Attack/4.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Attack/5.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Attack/6.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Attack/7.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Attack/8.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Attack/9.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Attack/10.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Attack/11.png"
                     ],
                     "index": 0
                 },
@@ -43,7 +43,7 @@
                     "name": "Idel",
                     "framerate": 12,
                     "sprites": [
-                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch/Idel/0.png"
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Idel/0.png"
                     ],
                     "index": 2
                 }
@@ -52,54 +52,54 @@
                 {
                     "saveAnimations": [
                         {
-                            "name": "",
+                            "name": "Up",
                             "framerate": 12,
                             "sprites": [
-                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//0.png",
-                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//1.png",
-                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//2.png",
-                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//3.png",
-                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//4.png",
-                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//5.png"
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Up/0.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Up/1.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Up/2.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Up/3.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Up/4.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Up/5.png"
                             ],
                             "index": 0
                         },
                         {
-                            "name": "",
+                            "name": "Down",
                             "framerate": 12,
                             "sprites": [
-                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//0.png",
-                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//1.png",
-                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//2.png",
-                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//3.png",
-                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//4.png",
-                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//5.png"
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Down/0.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Down/1.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Down/2.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Down/3.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Down/4.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Down/5.png"
                             ],
                             "index": 1
                         },
                         {
-                            "name": "",
+                            "name": "Left",
                             "framerate": 12,
                             "sprites": [
-                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//0.png",
-                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//1.png",
-                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//2.png",
-                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//3.png",
-                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//4.png",
-                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//5.png"
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Left/0.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Left/1.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Left/2.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Left/3.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Left/4.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Left/5.png"
                             ],
                             "index": 2
                         },
                         {
-                            "name": "",
+                            "name": "Right",
                             "framerate": 12,
                             "sprites": [
-                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//0.png",
-                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//1.png",
-                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//2.png",
-                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//3.png",
-                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//4.png",
-                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jeanette Sekch//5.png"
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Right/0.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Right/1.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Right/2.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Right/3.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Right/4.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Right/5.png"
                             ],
                             "index": 3
                         }
@@ -131,94 +131,6 @@
                 },
                 "fidgetIndex": {
                     "index": 2,
-                    "label": "Fidget",
-                    "directional": false
-                }
-            }
-        },
-        {
-            "name": "Temp",
-            "index": 1,
-            "fragment": "",
-            "power": "",
-            "type": 0,
-            "description": "",
-            "primaryColor": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "secondaryColor": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "saveAnimations": [],
-            "saveDirectionalAnimations": [],
-            "saveVaraintAnimations": [],
-            "saveMultiTileAnimations": [],
-            "animationIndexes": {
-                "walkIndex": {
-                    "index": 0,
-                    "label": "Walk",
-                    "directional": true
-                },
-                "attackIndex": {
-                    "index": 0,
-                    "label": "Attack",
-                    "directional": false
-                },
-                "idelIndex": {
-                    "index": 0,
-                    "label": "Idel",
-                    "directional": false
-                },
-                "fidgetIndex": {
-                    "index": 0,
-                    "label": "Fidget",
-                    "directional": false
-                }
-            }
-        },
-        {
-            "name": "Temp",
-            "index": 2,
-            "fragment": "",
-            "power": "",
-            "type": 0,
-            "description": "",
-            "primaryColor": [
-                0.0,
-                0.5636363625526428,
-                0.0
-            ],
-            "secondaryColor": [
-                1.0,
-                0.0,
-                0.0
-            ],
-            "saveAnimations": [],
-            "saveDirectionalAnimations": [],
-            "saveVaraintAnimations": [],
-            "saveMultiTileAnimations": [],
-            "animationIndexes": {
-                "walkIndex": {
-                    "index": 0,
-                    "label": "Walk",
-                    "directional": true
-                },
-                "attackIndex": {
-                    "index": 0,
-                    "label": "Attack",
-                    "directional": false
-                },
-                "idelIndex": {
-                    "index": 0,
-                    "label": "Idel",
-                    "directional": false
-                },
-                "fidgetIndex": {
-                    "index": 0,
                     "label": "Fidget",
                     "directional": false
                 }

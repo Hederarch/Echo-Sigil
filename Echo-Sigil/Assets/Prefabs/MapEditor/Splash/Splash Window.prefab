@@ -1213,8 +1213,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ImplementEditor, Scripts
+      - m_Target: {fileID: 4141520051545974927}
+        m_TargetAssemblyTypeName: MapEditor.Windows.SplashWindow, Scripts
         m_MethodName: AddProfile
         m_Mode: 1
         m_Arguments:

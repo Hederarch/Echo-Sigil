@@ -221,7 +221,7 @@ namespace MapEditor.Animations
             Destroy(spriteHolder.gameObject);
         }
 
-        public IAnimation GetAnimation()
+        public IAnimation GetAnimation(IAnimation parent = null)
         {
             IAnimation animation = null;
             if (animationTypeInfo.Variant || animationTypeInfo.Directional)
@@ -229,7 +229,8 @@ namespace MapEditor.Animations
                 List<IAnimation> animations = new List<IAnimation>();
                 foreach (AnimationElement animationElement in subAnimationElements)
                 {
-                    animations.Add(animationElement.GetAnimation());
+                    IAnimation item = animationElement.GetAnimation(parent);
+                    animations.Add(item);
                 }
 
                 if (animationTypeInfo.Variant)
@@ -254,11 +255,16 @@ namespace MapEditor.Animations
             }
             else if (animationTypeInfo.Animation || animationTypeInfo.MultiTile)
             {
+                string name = Name;
+                if(parent != null)
+                {
+                    name = parent.Name + name;
+                }
                 string[] sprites = new string[spriteHolders.Count];
                 for (int i = 0; i < spriteHolders.Count; i++)
                 {
                     Sprite sprite = spriteHolders[i].image.sprite;
-                    string filePath = implementPath + "/" + Name + "/" + i + ".png";
+                    string filePath = implementPath + "/" + name + "/" + i + ".png";
                     if (sprite != null)
                     {
                         SaveSystem.SavePNG(filePath, sprite.texture);
@@ -271,7 +277,7 @@ namespace MapEditor.Animations
                 {
                     animation = new Animation
                     {
-                        Name = Name,
+                        Name = name,
                         Framerate = FPS,
                         sprites = sprites
                     };
@@ -280,7 +286,7 @@ namespace MapEditor.Animations
                 {
                     animation = new MultiTileAnimation
                     {
-                        Name = Name,
+                        Name = name,
                         Framerate = FPS,
                         sprites = sprites,
                         tileWidth = NumTile
@@ -331,7 +337,7 @@ namespace MapEditor.Animations
             }
             List<AnimationElement> animationElements = new List<AnimationElement>();
             GameObject addAnimationObject = Instantiate(staticAddAnimationObject, transform);
-            addAnimationObject.GetComponent<Button>().onClick.AddListener(delegate { AddAnimation(transform, animationElements, firstLayer, implementPath); });
+            addAnimationObject.GetComponent<Button>().onClick.AddListener(delegate { AddAnimation(transform, animationElements, firstLayer, implementPath, indexes); });
 
             if (animations != null)
             {
@@ -370,7 +376,7 @@ namespace MapEditor.Animations
                 }
             }
         }
-        private static AnimationElement AddAnimation(Transform transform, List<AnimationElement> animationList, bool firstLayer, string implementPath)
+        private static AnimationElement AddAnimation(Transform transform, List<AnimationElement> animationList, bool firstLayer, string implementPath, IAnimationIndexes indexes = null)
         {
             Animation animation = new Animation(SaveSystem.LoadPNG(Vector2.one / 2f), animationList.Count, implementPath);
             GameObject gameObject = Instantiate(staticAnimationElementObject, transform);
@@ -378,6 +384,7 @@ namespace MapEditor.Animations
             AnimationElement animationElement = gameObject.GetComponent<AnimationElement>();
             animationElement.Initalize(animation, firstLayer);
             animationList.Add(animationElement);
+            PopulateAnimationAttachments(animationList.Count -1, animationElement, indexes);
             return animationElement;
 
         }
