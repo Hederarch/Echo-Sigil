@@ -374,4 +374,11 @@ public class TacticsMove : MonoBehaviour , IMovement
         }
         return false;
     }
+
+    public void SetValues(MapEditor.MapImplement.MovementSettings movementSettings)
+    {
+        moveDistance = movementSettings.distance;
+        moveSpeed = movementSettings.speed;
+        jumpHeight = movementSettings.jumpHeight;
+    }
 }

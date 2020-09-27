@@ -13,7 +13,7 @@ public class JRPGBattle : MonoBehaviour , IBattle
     public int will =5;
     public int maxWill = 5;
 
-    public List<Ability> abilites = new List<Ability>();
+    public Dictionary<Ability,int> abilites = new Dictionary<Ability, int>();
     public int reach;
 
     public bool IsTurn { get; set; }
@@ -122,6 +122,22 @@ public class JRPGBattle : MonoBehaviour , IBattle
         return null;
     }
 
+    internal void SetValues(MapEditor.MapImplement.BattleSettings battleSettings)
+    {
+        health = battleSettings.health;
+        maxHealth = battleSettings.maxHealth;
+        will = battleSettings.will;
+        maxWill = battleSettings.maxWill;
+        reach = battleSettings.reach;
+
+        if (battleSettings.abilities != null)
+        {
+            for (int i = 0; i < battleSettings.abilities.Length; i++)
+            {
+                abilites.Add(battleSettings.abilities[i], battleSettings.abilityAnimationIndex[i]);
+            }
+        }
+    }
 
     protected JRPGBattle CheckAdjecent()
     {

@@ -12,7 +12,7 @@ namespace Implement_Tests
         public void health_percent_returns_correctly()
         {
             GameObject gam = new GameObject();
-            Implement imp = gam.AddComponent<Implement>();
+            Unit imp = gam.AddComponent<Unit>();
             JRPGBattle jrpg = gam.AddComponent<JRPGBattle>();
             imp.battle = jrpg;
             jrpg.health = 3;
@@ -23,7 +23,7 @@ namespace Implement_Tests
         public void will_percent_returns_correctly()
         {
             GameObject gam = new GameObject();
-            Implement imp = gam.AddComponent<Implement>();
+            Unit imp = gam.AddComponent<Unit>();
             JRPGBattle jrpg = gam.AddComponent<JRPGBattle>();
             imp.battle = jrpg;
             jrpg.will = 3;
@@ -31,5 +31,8 @@ namespace Implement_Tests
             Assert.AreEqual(3f / 5f, imp.battle.WillPercent);
         }
 
+    }
+    class animations
+    {
     }
 }

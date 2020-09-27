@@ -1,0 +1,140 @@
+{
+    "modPath": "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements",
+    "modName": "Tales from the Metaheadron: Main Story Pack",
+    "implements": [
+        {
+            "name": "Jannete",
+            "index": 0,
+            "fragment": "",
+            "power": "",
+            "type": -1,
+            "description": "",
+            "primaryColor": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "secondaryColor": [
+                0.5272727012634277,
+                0.0,
+                0.0
+            ],
+            "saveAnimations": [
+                {
+                    "name": "Attack",
+                    "framerate": 12,
+                    "sprites": [
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Attack/0.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Attack/1.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Attack/2.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Attack/3.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Attack/4.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Attack/5.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Attack/6.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Attack/7.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Attack/8.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Attack/9.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Attack/10.png",
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Attack/11.png"
+                    ],
+                    "index": 0
+                },
+                {
+                    "name": "Idel",
+                    "framerate": 12,
+                    "sprites": [
+                        "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Idel/0.png"
+                    ],
+                    "index": 2
+                }
+            ],
+            "saveDirectionalAnimations": [
+                {
+                    "saveAnimations": [
+                        {
+                            "name": "Up",
+                            "framerate": 12,
+                            "sprites": [
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Up/0.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Up/1.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Up/2.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Up/3.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Up/4.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Up/5.png"
+                            ],
+                            "index": 0
+                        },
+                        {
+                            "name": "Down",
+                            "framerate": 12,
+                            "sprites": [
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Down/0.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Down/1.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Down/2.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Down/3.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Down/4.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Down/5.png"
+                            ],
+                            "index": 1
+                        },
+                        {
+                            "name": "Left",
+                            "framerate": 12,
+                            "sprites": [
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Left/0.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Left/1.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Left/2.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Left/3.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Left/4.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Left/5.png"
+                            ],
+                            "index": 2
+                        },
+                        {
+                            "name": "Right",
+                            "framerate": 12,
+                            "sprites": [
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Right/0.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Right/1.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Right/2.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Right/3.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Right/4.png",
+                                "C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Assets/Implements/Jannete/Right/5.png"
+                            ],
+                            "index": 3
+                        }
+                    ],
+                    "saveVaraintAnimations": [],
+                    "saveMultiTileAnimations": [],
+                    "name": "Walk",
+                    "framerate": 12,
+                    "index": 1
+                }
+            ],
+            "saveVaraintAnimations": [],
+            "saveMultiTileAnimations": [],
+            "animationIndexes": {
+                "walkIndex": {
+                    "index": 1,
+                    "label": "Walk",
+                    "directional": true
+                },
+                "attackIndex": {
+                    "index": 0,
+                    "label": "Attack",
+                    "directional": false
+                },
+                "idelIndex": {
+                    "index": 2,
+                    "label": "Idel",
+                    "directional": false
+                },
+                "fidgetIndex": {
+                    "index": 2,
+                    "label": "Fidget",
+                    "directional": false
+                }
+            }
+        }
+    ]
+}

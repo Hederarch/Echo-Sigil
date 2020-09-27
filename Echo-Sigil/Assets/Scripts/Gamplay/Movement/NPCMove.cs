@@ -35,7 +35,7 @@ public class NPCMove : TacticsMove
 
         foreach (GameObject obj in targets)
         {
-            if (obj.GetComponent<Implement>())
+            if (obj.GetComponent<Unit>())
             { 
 
                 float d = Vector3.Distance(transform.position, obj.transform.position);

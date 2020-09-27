@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class NPCBattle : JRPGBattle
@@ -15,7 +16,7 @@ public class NPCBattle : JRPGBattle
         {
             int damage = 0;
             Ability use = null;
-            foreach(Ability a in abilites)
+            foreach(Ability a in abilites.Keys.ToArray())
             {
                 if(a.healthDameage > damage)
                 {

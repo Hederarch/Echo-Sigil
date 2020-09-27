@@ -23,7 +23,7 @@ public class PlayerGUIScript : MonoBehaviour
     private void Start()
     {
         staticThis = this;
-        Implement.IsTurnEvent += SetAsCurrentUnit;
+        Unit.IsTurnEvent += SetAsCurrentUnit;
     }
 
     private void Update()
@@ -55,7 +55,7 @@ public class PlayerGUIScript : MonoBehaviour
         }
     }
 
-    public void SetAsCurrentUnit(Implement unit)
+    public void SetAsCurrentUnit(Unit unit)
     {
         if(unit != null)
         {

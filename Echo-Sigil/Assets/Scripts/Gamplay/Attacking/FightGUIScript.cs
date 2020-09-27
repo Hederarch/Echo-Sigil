@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -47,7 +48,7 @@ public class FightGUIScript : MonoBehaviour
     {
         foreach (JRPGBattle j in BattleData.leftCombatants)
         {
-            foreach (Ability a in j.abilites)
+            foreach (Ability a in j.abilites.Keys.ToArray())
             {
                 GameObject m = Instantiate(staticMenuGUIItem, staticMenuGUI);
                 m.name = a.name;

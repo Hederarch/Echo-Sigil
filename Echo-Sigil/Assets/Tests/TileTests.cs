@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.TestTools;
+using MapEditor;
 
 namespace Tile_Tests
 {
@@ -43,7 +41,7 @@ namespace Tile_Tests
         public void pos_in_grid_is_acurate_0x0()
 
         {
-            Tile[,] tiles = MapReader.GeneratePhysicalMap(SaveSystem.LoadPallate(Application.dataPath + "/Quests/Tests"), new Map(1, 1));
+            Tile[,] tiles = MapReader.GeneratePhysicalMap(new Map(1, 1));
             Assert.AreEqual(new Vector2Int(0, 0), tiles[0, 0].PosInGrid);
         }
         [Test]
@@ -51,7 +49,7 @@ namespace Tile_Tests
         public void pos_in_grid_is_acurate_3x5()
 
         {
-            Tile[,] tiles = MapReader.GeneratePhysicalMap(SaveSystem.LoadPallate(Application.dataPath + "/Quests/Tests"), new Map(3, 5));
+            Tile[,] tiles = MapReader.GeneratePhysicalMap(new Map(3, 5));
             Assert.AreEqual(new Vector2Int(2, 4), tiles[2, 4].PosInGrid);
         }
     }
