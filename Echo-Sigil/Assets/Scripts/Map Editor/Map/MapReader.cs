@@ -6,30 +6,32 @@ using UnityEngine;
 
 public static class MapReader
 {
+    public static int modPathIndex;
     public static Transform tileParent;
     public static Tile[,] tiles;
     public static List<Unit> implements = new List<Unit>();
 
-    public static ImplementList implementList;
     public static Sprite[] spritePallate;
 
     public static Map Map => new Map(tiles, implements.ToArray());
 
-    
-    public static Action<Sprite[]> MapGeneratedEvent;
 
-    public static Tile[,] GeneratePhysicalMap(Map map = null)
+    public static Action MapGeneratedEvent;
+
+    public static Tile[,] GeneratePhysicalMap(Map map = null, int modPathIndex = 0)
     {
         DestroyPhysicalMapTiles();
         if (map == null)
         {
-            map = new Map(1, 1);
+            map = new Map(1, 1)
+            {
+                modPathIndex = modPathIndex
+            };
         }
+        modPathIndex = map.modPathIndex;
         tileParent = new GameObject("Tile Parent").transform;
         tiles = new Tile[map.sizeX, map.sizeY];
-        spritePallate = SaveSystem.LoadPallate(Directory.GetParent(map.path).FullName);
-        implementList = SaveSystem.LoadImplementList(Directory.GetParent(Directory.GetParent(Directory.GetParent(map.path).FullName).FullName).FullName + "/Implements");
-
+        spritePallate = SaveSystem.LoadPallate(map.modPathIndex);
         Vector2 mapHalfHeight = new Vector2(map.sizeX / 2, map.sizeY / 2);
 
         for (int x = 0; x < map.sizeX; x++)
@@ -59,17 +61,17 @@ public static class MapReader
         {
             foreach (MapImplement mi in map.units)
             {
-                MapImplementToImplement(mi);
+                MapImplementToUnit(mi, map.modPathIndex);
             }
         }
 
-        MapGeneratedEvent?.Invoke(spritePallate);
+        MapGeneratedEvent?.Invoke();
         return tiles;
     }
 
-    public static Unit MapImplementToImplement(MapImplement mi)
+    public static Unit MapImplementToUnit(MapImplement mi, int modPathIndex)
     {
-        GameObject unit = new GameObject(mi.GetName(implementList));
+        GameObject unit = new GameObject(mi.name);
         Vector2 pos = GridToWorldSpace(mi.PosInGrid);
         unit.transform.parent = tileParent;
         Tile tile = GetTile(mi.PosInGrid);
@@ -101,7 +103,7 @@ public static class MapReader
         spriteRender.transform.localPosition = new Vector3(0, 0, .1f);
         SpriteRenderer spriteRenderer = spriteRender.AddComponent<SpriteRenderer>();
         i.unitSprite = spriteRenderer;
-        spriteRender.AddComponent<Animator>().runtimeAnimatorController = implementList.Implements[mi.implementListIndex].GetAnimationController(implementList.modPath);
+        spriteRender.AddComponent<Animator>().runtimeAnimatorController = SaveSystem.LoadImplement(modPathIndex, mi.name).GetAnimationController();
         spriteRenderer.spriteSortPoint = SpriteSortPoint.Pivot;
         spriteRender.AddComponent<BoxCollider2D>().size = new Vector3(1, 1, .2f);
 
@@ -156,19 +158,4 @@ public static class MapReader
         }
     }
 
-    public static void SaveMap(string path, Sprite[] pallate)
-    {
-        SaveSystem.SaveMap(path, Map);
-        SaveSystem.SavePallate(Directory.GetParent(path).FullName, pallate);
-    }
-
-    public static void LoadMap(string path, Sprite[] spritePallate = null)
-    {
-        Map map = SaveSystem.LoadMap(path, true);
-        if(spritePallate == null)
-        {
-            spritePallate = SaveSystem.LoadPallate(Directory.GetParent(path).FullName);
-        }
-        GeneratePhysicalMap(map);
-    }
 }

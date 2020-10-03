@@ -5,9 +5,7 @@ namespace MapEditor
 {
     public class ImplementEditor : MonoBehaviour
     {
-        public static int selectedImplementIndex;
-        public static ImplementList selectedImplementList;
-        public static Implement selectedImplement { get => selectedImplementList[selectedImplementIndex]; set => selectedImplementList[selectedImplementIndex] = value; }
+        public static Implement selectedImplement = null;
         public static Unit selectedUnit = null;
         [SerializeField] private UnitDisplay unitDisplay;
         [SerializeField] private RectTransform contentArea;
@@ -21,17 +19,17 @@ namespace MapEditor
             Save();
             DisableAllWindows();
             gameObject.SetActive(true);
-            SelectWindow.SelectionEvent += DefualtSelectionEvent;
-
-            if (selectedImplementList != null && selectedImplementList.Implements.Length > selectedImplementIndex)
+            
+            if (selectedImplement != null)
             {
-                unitDisplay.DisplayUnit(selectedImplementList, selectedImplementIndex);
+                unitDisplay.DisplayUnit(selectedImplement);
                 Implement implement = selectedImplement;
                 curWindow = Instantiate(windowObjects[arg0], contentArea).GetComponent<Window>();
                 curWindow.Initalize(implement, selectedUnit);
             }
             else
             {
+                SelectWindow.SelectionEvent += DefualtSelectionEvent;
                 SelectWindow selectWindow = Instantiate(selectWindowObject, contentArea).GetComponent<SelectWindow>();
                 curWindow = selectWindow;
                 selectWindow.Initalize();
@@ -40,7 +38,7 @@ namespace MapEditor
 
         public void Save()
         {
-            if (selectedImplementList != null && selectedImplementList.Implements.Length > selectedImplementIndex)
+            if (selectedImplement != null)
             {
                 Implement implement = selectedImplement;
                 if (curWindow != null)
@@ -49,7 +47,7 @@ namespace MapEditor
                 }
                 selectedImplement = implement;
                 unitDisplay.DisplayUnit(implement, selectedUnit);
-                SaveSystem.SaveImplmentList(selectedImplementList);
+                SaveSystem.SaveImplement(selectedImplement.modPathIndex,selectedImplement);
                 unitDisplay.Saved();
             }
         }
@@ -75,12 +73,12 @@ namespace MapEditor
             DisableAllWindows();
         }
 
-        public void DefualtSelectionEvent(ImplementList implementList, int index)
+        public void DefualtSelectionEvent(Implement implement, int modPathIndex)
         {
             SelectWindow.SelectionEvent -= DefualtSelectionEvent;
-            selectedImplementIndex = index;
-            selectedImplementList = implementList;
-            unitDisplay.DisplayUnit(implementList, index);
+            unitDisplay.DisplayUnit(implement);
+            selectedImplement = implement;
+            implement.modPathIndex = modPathIndex;
             ChangeWindow(1);
         }
     }

@@ -15,10 +15,9 @@ namespace MapEditor.Windows
 
         public override void Initalize(Implement implement, Unit unit = null)
         {
-            AnimationElement.implementPath = implement.ImplementPath;
             AnimationElement.SetStatics(animationElementObject, addAnimationObject, attachmentObject);
             AnimationElement.UnsubsubscribeAnimation(animationHolderTransform, animationElements);
-            animationElements = AnimationElement.PopulateTransformWithAnimations(animationHolderTransform, implement.animations, implement.ImplementPath, true, implement.animationIndexes);
+            animationElements = AnimationElement.PopulateTransformWithAnimations(animationHolderTransform, implement.animations, true, implement.animationIndexes);
             gameObject.SetActive(true);
         }
 

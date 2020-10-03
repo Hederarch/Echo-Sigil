@@ -1,0 +1,42 @@
+{
+    "index": 0,
+    "splashInfo": {
+        "name": "",
+        "fragment": "",
+        "power": "",
+        "type": -1,
+        "description": "",
+        "primaryColor": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "secondaryColor": [
+            1.0,
+            1.0,
+            1.0
+        ]
+    },
+    "animationIndexes": {
+        "walkIndex": {
+            "index": 0,
+            "label": "Walk",
+            "directional": true
+        },
+        "attackIndex": {
+            "index": 0,
+            "label": "Attack",
+            "directional": false
+        },
+        "idelIndex": {
+            "index": 0,
+            "label": "Idel",
+            "directional": false
+        },
+        "fidgetIndex": {
+            "index": 0,
+            "label": "Fidget",
+            "directional": false
+        }
+    }
+}

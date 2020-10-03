@@ -15,7 +15,7 @@ namespace MapEditor.Windows
         public GameObject newImplementSelectionObject;
 
         private static List<Button> implementButtons = new List<Button>();
-        public static event Action<ImplementList, int> SelectionEvent;
+        public static event Action<Implement,int> SelectionEvent;
 
         private void UnsubscribeSelectionElements()
         {
@@ -29,52 +29,44 @@ namespace MapEditor.Windows
 
         public void Initalize()
         {
-            string[] modPaths = SaveSystem.GetModPaths();
+            ModPath[] modPaths = SaveSystem.GetModPaths(true);
 
             UnsubscribeSelectionElements();
-            foreach (string modPath in modPaths)
+            for (int i = 0; i < modPaths.Length; i++)
             {
-                Transform modHolder = Instantiate(implementModHolderObject, implementHolderTransform).transform;
-                ImplementList implementList = SaveSystem.LoadImplementList(modPath);
-                modHolder.GetChild(0).GetChild(0).GetComponent<Text>().text = implementList.modName;
+                ModPath modPath = modPaths[i];
+                int index = i;
 
-                if (implementList.Implements != null)
+                Transform modHolder = Instantiate(implementModHolderObject, implementHolderTransform).transform;
+                modHolder.GetChild(0).GetChild(0).GetComponent<Text>().text = modPath.modName;
+
+                Implement[] implements = SaveSystem.LoadImplements(i);
+
+                for (int implemntIndex = 0; implemntIndex < implements.Length; implemntIndex++)
                 {
-                    for (int i = 0; i < implementList.implements.Length; i++)
-                    {
-                        if (implementList[i].index == i)
-                        {
-                            GameObject unitObject = Instantiate(implementSelectionObject, modHolder);
-                            Button unitButton = unitObject.GetComponent<Button>();
-                            int index = i;
-                            unitButton.onClick.AddListener(delegate { SelectionEvent?.Invoke(implementList, index); });
-                            implementButtons.Add(unitButton);
-                            unitObject.transform.GetChild(0).GetComponent<Text>().text = i.ToString();
-                            unitObject.transform.GetChild(2).GetChild(0).GetComponentInChildren<Text>().text = implementList.Implements[i].name;
-                            Sprite sprite = implementList[i].BaseSprite;
-                            Image image = unitObject.transform.GetChild(1).GetComponent<Image>();
-                            image.color = sprite == null ? Color.clear : Color.white;
-                            image.sprite = sprite;
-                        }
-                    }
+                    Implement implement = implements[implemntIndex];
+                    GameObject unitObject = Instantiate(implementSelectionObject, modHolder);
+                    Button unitButton = unitObject.GetComponent<Button>();
+                    unitButton.onClick.AddListener(delegate { SelectionEvent?.Invoke(implement,index); });
+                    implementButtons.Add(unitButton);
+                    unitObject.transform.GetChild(0).GetComponent<Text>().text = implemntIndex.ToString();
+                    unitObject.transform.GetChild(2).GetChild(0).GetComponentInChildren<Text>().text = implement.splashInfo.name;
+                    Sprite sprite = implement.baseSprite;
+                    Image image = unitObject.transform.GetChild(1).GetComponent<Image>();
+                    image.color = sprite == null ? Color.clear : Color.white;
+                    image.sprite = sprite;
                 }
+
                 Button addButton = Instantiate(newImplementSelectionObject, modHolder).GetComponent<Button>();
-                addButton.onClick.AddListener(delegate { CreateNewImplement(modPath); });
+                
+                addButton.onClick.AddListener(delegate { CreateNewImplement(index,implements.Length); });
                 implementButtons.Add(addButton);
             }
         }
-        private void CreateNewImplement(string modPath = null)
+        private void CreateNewImplement(int modPathIndex, int index)
         {
-            ImplementList implementList = SaveSystem.LoadImplementList(modPath);
-            int length = implementList.implements.Length;
-            new Implement("temp", implementList);
-            SaveSystem.SaveImplmentList(implementList);
-            SelectionEvent?.Invoke(implementList, length);
+            SelectionEvent?.Invoke(new Implement(modPathIndex, index),modPathIndex);
         }
 
-        protected void OnDestroy()
-        {
-            UnsubscribeSelectionElements();
-        }
     }
 }

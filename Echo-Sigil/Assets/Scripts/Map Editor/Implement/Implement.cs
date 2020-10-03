@@ -9,28 +9,62 @@ using System.Collections;
 namespace MapEditor
 {
     [Serializable]
-    public struct Implement : ISerializationCallbackReceiver
+    public class Implement
     {
-        public string name;
         public int index;
-        public string fragment;
-        public string power;
-        public int type;
-        public string description;
-        public float[] primaryColor;
-        public float[] secondaryColor;
 
+        [Serializable]
+        public struct SplashInfo
+        {
+            public string name;
+            public string fragment;
+            public string power;
+            public int type;
+            public string description;
+            public float[] primaryColor;
+            public float[] secondaryColor;
 
+            public SplashInfo(string name, string fragment, string power, int type, string description, float[] primaryColor, float[] secondaryColor)
+            {
+                this.name = name ?? "";
+                this.fragment = fragment ?? "";
+                this.power = power ?? "";
+                this.type = type;
+                this.description = description ?? "";
+                this.primaryColor = primaryColor ?? new float[] { 0, 0, 0 };
+                this.secondaryColor = secondaryColor ?? new float[] { 1, 1, 1 };
+            }
+
+            public SplashInfo(string name, string fragment, string power, int type, string description, Color primaryColor, Color secondaryColor)
+            {
+                this.name = name ?? "";
+                this.fragment = fragment ?? "";
+                this.power = power ?? "";
+                this.type = type;
+                this.description = description ?? "";
+                this.primaryColor = new float[] { 0, 0, 0 };
+                this.secondaryColor = new float[] { 1, 1, 1 };
+                PrimaryColor = primaryColor;
+                SecondaryColor = secondaryColor;
+            }
+            public Color PrimaryColor { get => new Color(primaryColor[0], primaryColor[1], primaryColor[2]); set => SetUnitColors(value, SecondaryColor); }
+            public Color SecondaryColor { get => new Color(secondaryColor[0], secondaryColor[1], secondaryColor[2]); set => SetUnitColors(PrimaryColor, value); }
+
+            public void SetUnitColors(Color primaryColor, Color secondaryColor)
+            {
+                this.primaryColor[0] = primaryColor.r;
+                this.primaryColor[1] = primaryColor.g;
+                this.primaryColor[2] = primaryColor.b;
+                this.secondaryColor[0] = secondaryColor.r;
+                this.secondaryColor[1] = secondaryColor.g;
+                this.secondaryColor[2] = secondaryColor.b;
+            }
+
+        }
+        public SplashInfo splashInfo;
+        
+        [NonSerialized]
         public IAnimation[] animations;
-        //only to be used for saveing
-        [SerializeField]
-        Animations.Animation[] saveAnimations;
-        [SerializeField]
-        DirectionalAnimation[] saveDirectionalAnimations;
-        [SerializeField]
-        VaraintAnimation[] saveVaraintAnimations;
-        [SerializeField]
-        MultiTileAnimation[] saveMultiTileAnimations;
 
         [Serializable]
         public class AnimationIndexes : IAnimationIndexes
@@ -154,52 +188,21 @@ namespace MapEditor
         public AnimationIndexes animationIndexes;
 
         [NonSerialized]
-        public ImplementList implementList;
-        public string ImplementPath => implementList.modPath + "/" + name;
-        public Sprite BaseSprite { get => SaveSystem.LoadPNG(ImplementPath + "/Base.png", Vector2.one / 2f, 1); set => SaveSystem.SavePNG(ImplementPath + "/Base.png", value.texture); }
+        public int modPathIndex;
+        [NonSerialized]
+        public Sprite baseSprite;
 
-        public Color PrimaryColor { get => new Color(primaryColor[0], primaryColor[1], primaryColor[2]); set => SetUnitColors(value, SecondaryColor); }
-        public Color SecondaryColor { get => new Color(secondaryColor[0], secondaryColor[1], secondaryColor[2]); set => SetUnitColors(PrimaryColor, value); }
-
-        public Implement(string name, ImplementList implementList)
+        public Implement(int _modPathIndex,int _index)
         {
-            primaryColor = new float[3];
-            secondaryColor = new float[3];
-            this.name = name;
-            fragment = "";
-            power = "";
-            type = -1;
-            description = "";
+            splashInfo = new SplashInfo("", "", "", -1, "", Color.black, Color.white);
+            index = _index;
+            modPathIndex = _modPathIndex;
             animations = new IAnimation[0];
             animationIndexes = new AnimationIndexes();
-            saveAnimations = null;
-            saveDirectionalAnimations = null;
-            saveMultiTileAnimations = null;
-            saveVaraintAnimations = null;
-            this.implementList = implementList;
-            int length = 0;
-            if (implementList.Implements != null)
-            {
-                length = implementList.Implements.Length;
-            }
-            Implement[] implements = new Implement[length + 1];
-            implementList.Implements.CopyTo(implements, 0);
-            index = length;
-            implements[length] = this;
-            implementList.implements = implements;
+            baseSprite = null;
         }
 
-        public void SetUnitColors(Color primaryColor, Color secondaryColor)
-        {
-            this.primaryColor[0] = primaryColor.r;
-            this.primaryColor[1] = primaryColor.g;
-            this.primaryColor[2] = primaryColor.b;
-            this.secondaryColor[0] = secondaryColor.r;
-            this.secondaryColor[1] = secondaryColor.g;
-            this.secondaryColor[2] = secondaryColor.b;
-        }
-
-        public AnimatorController GetAnimationController(string modPath)
+        public AnimatorController GetAnimationController()
         {
             AnimatorController animator = new AnimatorController();
             animator.AddLayer("Base");
@@ -207,7 +210,7 @@ namespace MapEditor
             AnimatorStateMachine stateMachine = animator.layers[0].stateMachine;
             if (!animationIndexes.Clamp(animations))
             {
-                stateMachine.AddState(GetAnimatorStateOfBaseSprite(modPath), Vector3.zero);
+                stateMachine.AddState(GetAnimatorStateOfBaseSprite(), Vector3.zero);
             }
             else
             {
@@ -216,7 +219,7 @@ namespace MapEditor
             return animator;
         }
 
-        private AnimatorState GetAnimatorStateOfBaseSprite(string modPath)
+        private AnimatorState GetAnimatorStateOfBaseSprite()
         {
             AnimationClip clip = new AnimationClip
             {
@@ -238,7 +241,7 @@ namespace MapEditor
             spriteKeyFrames[0] = new ObjectReferenceKeyframe
             {
                 time = 0,
-                value = BaseSprite
+                value = baseSprite
             };
 
             AnimationUtility.SetObjectReferenceCurve(clip, spriteBinding, spriteKeyFrames);
@@ -252,55 +255,5 @@ namespace MapEditor
             return animatorState;
         }
 
-        public void OnBeforeSerialize()
-        {
-            Animations.Animation.SerilizeAnimationArrays(animations, ref saveAnimations, ref saveDirectionalAnimations, ref saveVaraintAnimations, ref saveMultiTileAnimations);
-        }
-
-
-        public void OnAfterDeserialize()
-        {
-           animations = Animations.Animation.DeserializeAnimationArray(saveAnimations,saveDirectionalAnimations,saveVaraintAnimations,saveMultiTileAnimations);
-        }
-
-    }
-    [Serializable]
-    public class ImplementList
-    {
-        public string modPath;
-        public string modName;
-        public Implement[] implements;
-        public Implement[] Implements => linkImplents();
-
-        public static implicit operator Implement[](ImplementList i) => i.implements;
-
-        public Implement[] linkImplents()
-        {
-            for (int i = 0; i < implements.Length; i++)
-            {
-                implements[i].implementList = this;
-            }
-            return implements;
-        }
-
-        public ImplementList(int Length, string modPath = null, string modName = "Defualt")
-        {
-            this.modPath = SaveSystem.SetDefualtModPath(modPath);
-            this.modName = modName;
-            implements = new Implement[Length];
-            linkImplents();
-        }
-
-        public ImplementList(Implement[] implements, string modPath = null, string modName = "Defualt")
-        {
-            this.modPath = SaveSystem.SetDefualtModPath(modPath);
-            this.modName = modName;
-            this.implements = implements;
-            linkImplents();
-        }
-
-        public string ImplementPath(int index) => modPath + "/" + Implements[index].name;
-
-        public Implement this[int index] { get => implements[index]; set => implements[index] = value; }
     }
 }

@@ -7,6 +7,7 @@ namespace MapEditor
 {
     public class MapEditor : MonoBehaviour
     {
+        public static int modPathIndex;
         public static Sprite[] pallate;
 
         static Transform editorTileParent;
@@ -33,18 +34,19 @@ namespace MapEditor
             MapReader.MapGeneratedEvent += ResetSelection;
         }
 
-        private static void ResetSelection(Sprite[] _)
+        private static void ResetSelection()
         {
             SelectedEvent?.Invoke(null);
         }
 
-        private static void SetPallate(Sprite[] sprites)
+        private static void SetPallate()
         {
-            pallate = sprites;
+            pallate = MapReader.spritePallate;
         }
 
-        public static void GenerateExpationTiles(Sprite[] sprites)
+        public static void GenerateExpationTiles()
         {
+            Sprite[] sprites = MapReader.spritePallate;
             if (editorTileParent == null)
             {
                 editorTileParent = new GameObject("Editor Tiles").transform;
@@ -67,6 +69,11 @@ namespace MapEditor
                     }
                 }
             }
+        }
+
+        public static void SetModPathIndex()
+        {
+
         }
 
         private static void CreateEditorTile(int x, int y, Sprite sprite) => CreateEditorTile(new Vector2Int(x, y), sprite);
@@ -289,7 +296,7 @@ namespace MapEditor
 
         public static void AddUnit()
         {
-            MapReader.MapImplementToImplement(new MapImplement(MapReader.WorldToGridSpace(Vector2.zero)));
+            MapReader.MapImplementToUnit(new MapImplement(SaveSystem.LoadImplements(0)[0].splashInfo.name, MapReader.WorldToGridSpace(Vector2.zero)), 0);
         }
 
         public static void RemoveUnit(Unit selectedImplement)

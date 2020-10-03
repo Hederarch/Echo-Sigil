@@ -222,33 +222,6 @@ namespace Map_Tests
             }
         }
     }
-    class save_system
-    {
-        [Test]
-        public void get_map_from_file_with_size()
-        {
-            Map savedMap = new Map(1, 1);
-            SaveSystem.SaveMap(Application.dataPath + "/Quests/Tests/unitTest.hedrap",savedMap);
-            Map loadMap = SaveSystem.LoadMap(Application.dataPath + "/Quests/Tests/unitTest.hedrap");
-            Assert.AreEqual(new Vector2Int(savedMap.sizeX,savedMap.sizeY), new Vector2Int(loadMap.sizeX, loadMap.sizeY));
-            SaveSystem.DeleteMap(Application.dataPath + "/Quests/Tests/unitTest.hedrap");
-        }
-        [Test]
-        public void get_map_from_file_with_tile_with_height()
-        {
-            Tile[,] tiles = new Tile[1, 1];
-            Tile tile = new Tile(0, 0)
-            {
-                height = 2
-            };
-            tiles[0, 0] = tile;
-            Map savedMap = new Map(tiles);
-            SaveSystem.SaveMap(Application.dataPath + "/Quests/Tests/unitTest.hedrap",savedMap);
-            Map loadMap = SaveSystem.LoadMap(Application.dataPath + "/Quests/Tests/unitTest.hedrap");
-            Assert.AreEqual(2, loadMap.SetTileProperties(0,0).height);
-            SaveSystem.DeleteMap(Application.dataPath + "/Quests/Tests/unitTest.hedrap");
-        }
-    }
     class conversions
     {
         [Test]

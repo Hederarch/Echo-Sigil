@@ -213,8 +213,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000061035156}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -9.999996, y: -0.000061035156}
+  m_SizeDelta: {x: -20.000008, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &3867402290665507634
 MonoBehaviour:
@@ -1867,22 +1867,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57abe61d1ac08a14baa608fab08e18d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorsTrue:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.5, g: 1, b: 1, a: 1}
-    m_PressedColor: {r: 0, g: 0.5, b: 1, a: 1}
-    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
-    m_DisabledColor: {r: 0, g: 0, b: 0, a: 0.5019608}
-    m_ColorMultiplier: 0
-    m_FadeDuration: 0
-  colorsFalse:
-    m_NormalColor: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 1}
-    m_HighlightedColor: {r: 0.15, g: 0.3, b: 0.3, a: 1}
-    m_PressedColor: {r: 0, g: 0.15, b: 0.3, a: 1}
-    m_SelectedColor: {r: 0.39607847, g: 0.39607847, b: 0.39607847, a: 1}
-    m_DisabledColor: {r: 0, g: 0, b: 0, a: 0.5019608}
-    m_ColorMultiplier: 0
-    m_FadeDuration: 0
+  trueColor: {r: 1, g: 1, b: 1, a: 1}
+  falseColor: {r: 0, g: 0, b: 0, a: 1}
   directionalIcon: {fileID: 481973675323340269}
   variantIcon: {fileID: 793119242865119867}
   multiTileIcon: {fileID: 4535296511535211380}
@@ -2960,7 +2946,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 8954187382777241944}
-  m_Horizontal: 1
+  m_Horizontal: 0
   m_Vertical: 1
   m_MovementType: 1
   m_Elasticity: 0.1
