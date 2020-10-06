@@ -219,6 +219,32 @@ namespace MapEditor
             return animator;
         }
 
+        internal bool NullCheck()
+        {
+            if(animations != null)
+            {
+                foreach (IAnimation animation in animations)
+                {
+                    if(animation != null)
+                    {
+                        if (!animation.NullCheck())
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                return false;
+            }
+            return animationIndexes != null;
+        }
+
         private AnimatorState GetAnimatorStateOfBaseSprite()
         {
             AnimationClip clip = new AnimationClip

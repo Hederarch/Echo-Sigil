@@ -197,6 +197,19 @@ namespace MapEditor
             {
                 Directory.CreateDirectory(implementPath);
             }
+            else
+            {
+                if (implement != null && implement.NullCheck())
+                {
+                    Directory.Delete(implementPath, true);
+                    Directory.CreateDirectory(implementPath);
+                }
+                else
+                {
+                    Debug.LogError("Tried to save, but found null value");
+                    return;
+                }
+            }
             using (StreamWriter stream = new StreamWriter(implementPath + "/" + name + ".json"))
             {
                 stream.Write(JsonUtility.ToJson(implement, true));
@@ -256,67 +269,64 @@ namespace MapEditor
         private static IAnimation LoadAnimation(int modPathIndex, string implementName, string animationName)
         {
             string path = GetImplementPath(modPathIndex) + "/" + implementName + "/" + animationName;
-            IAnimation animation;
+            string json;
             using (StreamReader stream = new StreamReader(path + "/" + Path.GetFileName(path) + ".json"))
             {
-                string json = stream.ReadToEnd();
-                animation = JsonUtility.FromJson<IAnimation>(json);
+                json = stream.ReadToEnd();
             }
+            int endOfJson = json.LastIndexOf('}') + 1;
+            string jsonEnd = json.Substring(endOfJson);
+            json = json.Substring(0, endOfJson);
 
-            if (animation.Type == typeof(VaraintAnimation) || animation.Type == typeof(DirectionalAnimation))
+            switch (jsonEnd)
             {
-                IAnimation[] animations = LoadAnimations(modPathIndex, implementName + "/" + animationName);
-                if (animation.Type == typeof(VaraintAnimation))
-                {
-                    VaraintAnimation varaintAnimation = (VaraintAnimation)animation;
-                    varaintAnimation.animations = animations;
-                    animation = varaintAnimation;
-                }
-                else if (animation.Type == typeof(DirectionalAnimation))
-                {
-                    DirectionalAnimation directionalAnimation = (DirectionalAnimation)animation;
-                    directionalAnimation.animations = animations;
-                    animation = directionalAnimation;
-                }
-            }
-            else if (animation.Type == typeof(Animations.Animation) || animation.Type == typeof(MultiTileAnimation))
-            {
-                List<Sprite> sprites = new List<Sprite>();
-                string[] files = Directory.GetFiles(path, "*.png");
-
-                //Order files
-                List<string> fileList = new List<string>();
-                foreach (string file in files)
-                {
-                    fileList.Add(file);
-                }
-                fileList.Sort();
-                files = fileList.ToArray();
-
-                if (animation.Type == typeof(Animations.Animation))
-                {
+                case "MapEditor.Animations.VaraintAnimation":
+                    VaraintAnimation varaintAnimation = JsonUtility.FromJson<VaraintAnimation>(json);
+                    varaintAnimation.animations = LoadAnimations(modPathIndex, implementName + "/" + animationName);
+                    return varaintAnimation;
+                case "MapEditor.Animations.DirectionalAnimation":
+                    DirectionalAnimation directionalAnimation = JsonUtility.FromJson<DirectionalAnimation>(json);
+                    directionalAnimation.animations = LoadAnimations(modPathIndex, implementName + "/" + animationName);
+                    directionalAnimation.animationIndexes = new DirectionalAnimation.AnimationIndexes();
+                    return directionalAnimation;
+                case "MapEditor.Animations.MultiTileAnimation":
+                    List<Sprite> MultiTilesprites = new List<Sprite>();
+                    string[] MultiTilefiles = GetOrderedSpriteFiles(path);
+                    MultiTileAnimation multiTileAnimation = JsonUtility.FromJson<MultiTileAnimation>(json);
+                    foreach (string file in MultiTilefiles)
+                    {
+                        MultiTilesprites.Add(LoadPNG(file, Vector2.one / 2f, multiTileAnimation.tileWidth));
+                    }
+                    multiTileAnimation.sprites = MultiTilesprites.ToArray();
+                    return multiTileAnimation;
+                case "MapEditor.Animations.Animation":
+                    List<Sprite> sprites = new List<Sprite>();
+                    string[] files = GetOrderedSpriteFiles(path);
                     foreach (string file in files)
                     {
                         sprites.Add(LoadPNG(file, Vector2.one / 2f));
                     }
-                    Animations.Animation animation1 = (Animations.Animation)animation;
+                    Animations.Animation animation1 = JsonUtility.FromJson<Animations.Animation>(json);
                     animation1.sprites = sprites.ToArray();
-                    animation = animation1;
-                }
-                else if (animation.Type == typeof(MultiTileAnimation))
-                {
-                    MultiTileAnimation multiTileAnimation = (MultiTileAnimation)animation;
-                    foreach (string file in files)
-                    {
-                        sprites.Add(LoadPNG(file, Vector2.one / 2f, multiTileAnimation.tileWidth));
-                    }
-                    multiTileAnimation.sprites = sprites.ToArray();
-                    animation = multiTileAnimation;
-                }
-
+                    return animation1;
+                default:
+                    Debug.LogError("Tried to load type " + jsonEnd);
+                    return null;
             }
+        }
 
-            return animation;
+        private static string[] GetOrderedSpriteFiles(string path)
+        {
+            string[] files = Directory.GetFiles(path, "*.png");
+
+            //Order files
+            List<string> fileList = new List<string>();
+            foreach (string file in files)
+            {
+                fileList.Add(file);
+            }
+            fileList.Sort();
+            return fileList.ToArray();
         }
 
         private static void SaveAnimations(int modPathIndex, string ImplementName, IAnimation[] animations, string parentName = null)
@@ -328,56 +338,63 @@ namespace MapEditor
         }
         private static void SaveAnimation(int modPathIndex, string implementName, IAnimation animation, string parentName = null)
         {
-            string implementPath = GetImplementPath(modPathIndex) + "/" + implementName;
-            //format parernt name
-            parentName = parentName == null ? "" : parentName + "/";
-            string path = implementPath + "/" + parentName + animation.Name;
-            if (!Directory.Exists(path))
+            if (animation != null)
             {
-                Directory.CreateDirectory(path);
+                string implementPath = GetImplementPath(modPathIndex) + "/" + implementName;
+                //format parernt name
+                parentName = parentName == null ? "" : parentName + "/";
+                string path = implementPath + "/" + parentName + animation.Name;
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                using (StreamWriter stream = new StreamWriter(path + "/" + Path.GetFileName(path) + ".json"))
+                {
+                    stream.Write(JsonUtility.ToJson(animation, true) + animation.Type.ToString());
+                }
+
+                if (animation.Type == typeof(VaraintAnimation) || animation.Type == typeof(DirectionalAnimation))
+                {
+                    if (animation.Type == typeof(VaraintAnimation))
+                    {
+                        VaraintAnimation varaintAnimation = (VaraintAnimation)animation;
+                        SaveAnimations(modPathIndex, implementName, varaintAnimation.animations, parentName + animation.Name);
+
+                    }
+                    else if (animation.Type == typeof(DirectionalAnimation))
+                    {
+                        DirectionalAnimation directionalAnimation = (DirectionalAnimation)animation;
+                        SaveAnimations(modPathIndex, implementName, directionalAnimation.animations, parentName + animation.Name);
+
+                    }
+                }
+                else if (animation.Type == typeof(Animations.Animation) || animation.Type == typeof(MultiTileAnimation))
+                {
+                    Sprite[] sprites = new Sprite[0];
+                    if (animation.Type == typeof(Animations.Animation))
+                    {
+                        Animations.Animation animation1 = (Animations.Animation)animation;
+                        sprites = animation1.sprites;
+                    }
+                    else if (animation.Type == typeof(MultiTileAnimation))
+                    {
+                        MultiTileAnimation multiTileAnimation = (MultiTileAnimation)animation;
+                        sprites = multiTileAnimation.sprites;
+
+                    }
+
+                    for (int i = 0; i < sprites.Length; i++)
+                    {
+                        SavePNG(path + "/" + animation.Name + "_" + i.ToString() + ".png", sprites[i].texture);
+                    }
+
+                }
+
             }
-            using (StreamWriter stream = new StreamWriter(path + "/" + Path.GetFileName(path) + ".json"))
+            else
             {
-                stream.Write(JsonUtility.ToJson(animation, true));
+                Debug.LogError("You just tried to save a Null animation, wow!");
             }
-
-            if (animation.Type == typeof(VaraintAnimation) || animation.Type == typeof(DirectionalAnimation))
-            {
-                if (animation.Type == typeof(VaraintAnimation))
-                {
-                    VaraintAnimation varaintAnimation = (VaraintAnimation)animation;
-                    SaveAnimations(modPathIndex, implementName, varaintAnimation.animations, parentName + animation.Name);
-
-                }
-                else if (animation.Type == typeof(DirectionalAnimation))
-                {
-                    DirectionalAnimation directionalAnimation = (DirectionalAnimation)animation;
-                    SaveAnimations(modPathIndex, implementName, directionalAnimation.animations, parentName + animation.Name);
-
-                }
-            }
-            else if (animation.Type == typeof(Animations.Animation) || animation.Type == typeof(MultiTileAnimation))
-            {
-                Sprite[] sprites = new Sprite[0];
-                if (animation.Type == typeof(Animations.Animation))
-                {
-                    Animations.Animation animation1 = (Animations.Animation)animation;
-                    sprites = animation1.sprites;
-                }
-                else if (animation.Type == typeof(MultiTileAnimation))
-                {
-                    MultiTileAnimation multiTileAnimation = (MultiTileAnimation)animation;
-                    sprites = multiTileAnimation.sprites;
-
-                }
-
-                for (int i = 0; i < sprites.Length; i++)
-                {
-                    SavePNG(path + "/" + animation.Name + "_" + i.ToString() + ".png", sprites[i].texture);
-                }
-
-            }
-
         }
     }
 }

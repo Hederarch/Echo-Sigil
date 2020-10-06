@@ -20,7 +20,7 @@ namespace MapEditor
             DisableAllWindows();
             gameObject.SetActive(true);
             
-            if (selectedImplement != null)
+            if (selectedImplement != null && arg0 != 0)
             {
                 unitDisplay.DisplayUnit(selectedImplement);
                 Implement implement = selectedImplement;

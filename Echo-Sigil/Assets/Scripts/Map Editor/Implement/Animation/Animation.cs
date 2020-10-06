@@ -20,7 +20,7 @@ namespace MapEditor.Animations
         AnimatorState GetAnimatorState(Type type);
 
         AnimatorStateMachine GetAnimatorStateMachine(Type type);
-
+        bool NullCheck();
     }
 
     [Serializable]
@@ -108,6 +108,8 @@ namespace MapEditor.Animations
         {
             return Index.CompareTo(other.Index);
         }
+
+        public bool NullCheck() => true;
     }
 
     [Serializable]
@@ -197,6 +199,8 @@ namespace MapEditor.Animations
         {
             return Index.CompareTo(other.Index);
         }
+
+        public bool NullCheck() => true;
     }
 
     [Serializable]
@@ -284,6 +288,31 @@ namespace MapEditor.Animations
         public void OnAfterDeserialize()
         {
             animationIndexes = new AnimationIndexes();
+        }
+
+        public bool NullCheck()
+        {
+            bool notNull = true;
+            notNull &= animationIndexes != null;
+            if(animations != null)
+            {
+                foreach(IAnimation animation in animations)
+                {
+                    if(animation != null)
+                    {
+                        notNull &= animation.NullCheck();
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                return false;
+            }
+            return notNull;
         }
 
         public class AnimationIndexes : IAnimationIndexes
@@ -468,6 +497,31 @@ namespace MapEditor.Animations
             return Index.CompareTo(other.Index);
         }
 
+        public bool NullCheck()
+        {
+            if (animations != null)
+            {
+                foreach (IAnimation animation in animations)
+                {
+                    if (animation != null)
+                    {
+                        if (!animation.NullCheck())
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                return false;
+            }
+            return true;
+        }
     }
 
 }
