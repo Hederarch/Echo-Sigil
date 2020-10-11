@@ -7,14 +7,14 @@
         "type": -1,
         "description": "",
         "primaryColor": [
-            1.0,
-            1.0,
-            1.0
-        ],
-        "secondaryColor": [
             0.0,
             0.0,
             0.0
+        ],
+        "secondaryColor": [
+            1.0,
+            1.0,
+            1.0
         ]
     },
     "animationIndexes": {

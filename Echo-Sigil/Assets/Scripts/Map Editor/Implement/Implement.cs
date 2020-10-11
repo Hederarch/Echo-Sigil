@@ -242,7 +242,7 @@ namespace MapEditor
             {
                 return false;
             }
-            return animationIndexes != null;
+            return animationIndexes != null && splashInfo.name != "";
         }
 
         private AnimatorState GetAnimatorStateOfBaseSprite()

@@ -315,6 +315,7 @@ namespace MapEditor.Animations
             return notNull;
         }
 
+        [Serializable]
         public class AnimationIndexes : IAnimationIndexes
         {
             public AnimationIndexPair up = new AnimationIndexPair(0, "Up");

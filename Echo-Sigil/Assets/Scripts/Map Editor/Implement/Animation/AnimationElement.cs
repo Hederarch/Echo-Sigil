@@ -326,7 +326,7 @@ namespace MapEditor.Animations
             }
             List<AnimationElement> animationElements = new List<AnimationElement>();
             GameObject addAnimationObject = Instantiate(staticAddAnimationObject, transform);
-            addAnimationObject.GetComponent<Button>().onClick.AddListener(delegate { AddAnimation(transform, animationElements, firstLayer, indexes); });
+            addAnimationObject.GetComponent<Button>().onClick.AddListener(delegate { AddAnimation(transform, ref animationElements, firstLayer, indexes); });
 
             if (animations != null)
             {
@@ -365,7 +365,7 @@ namespace MapEditor.Animations
                 }
             }
         }
-        private static AnimationElement AddAnimation(Transform transform, List<AnimationElement> animationList, bool firstLayer, IAnimationIndexes indexes = null)
+        private static AnimationElement AddAnimation(Transform transform, ref List<AnimationElement> animationList, bool firstLayer, IAnimationIndexes indexes = null)
         {
             Animation animation = new Animation(SaveSystem.LoadPNG(Vector2.one / 2f), animationList.Count);
             GameObject gameObject = Instantiate(staticAnimationElementObject, transform);

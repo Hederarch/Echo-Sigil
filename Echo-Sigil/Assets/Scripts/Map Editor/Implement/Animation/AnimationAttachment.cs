@@ -67,7 +67,7 @@ namespace MapEditor.Animations
                 }
                 else
                 {
-                    Debug.LogError("Animation Attachment " + Label + "has no contaniner list. Going up to highest level animation elements");
+                    Debug.LogError("Animation Attachment " + Label + " has no contaniner list. Going up to highest level animation elements");
                     return AnimationWindow.animationElements[0];
                 }
             }
