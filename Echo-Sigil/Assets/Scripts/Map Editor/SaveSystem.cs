@@ -336,6 +336,7 @@ namespace MapEditor
                 SaveAnimation(modPathIndex, ImplementName, animation, parentName);
             }
         }
+
         private static void SaveAnimation(int modPathIndex, string implementName, IAnimation animation, string parentName = null)
         {
             if (animation != null)
@@ -343,7 +344,7 @@ namespace MapEditor
                 string implementPath = GetImplementPath(modPathIndex) + "/" + implementName;
                 //format parernt name
                 parentName = parentName == null ? "" : parentName + "/";
-                string path = implementPath + "/" + parentName + animation.Name;
+                string path = GetUniqueName(implementPath + "/" + parentName + animation.Name);
                 if (!Directory.Exists(path))
                 {
                     Directory.CreateDirectory(path);
@@ -395,6 +396,22 @@ namespace MapEditor
             {
                 Debug.LogError("You just tried to save a Null animation, wow!");
             }
+        }
+
+        private static string GetUniqueName(string path)
+        {
+            string name = Path.GetFileNameWithoutExtension(path);
+            bool nameTaken = false;
+            foreach (string otherName in Directory.EnumerateFiles(Path.GetDirectoryName(path)))
+            {
+                nameTaken &= name != otherName;
+            }
+            if (nameTaken)
+            {
+                name += "0";
+                return GetUniqueName(Path.GetDirectoryName(path) + "/" + name + Path.GetExtension(path));
+            }
+            return path;
         }
     }
 }
