@@ -27,9 +27,9 @@ namespace MapEditor.Windows
                 index.text = implement.index.ToString();
             }
         }
-        public void Saved()
+        public void Saved(bool saved)
         {
-            if (savedIcon.gameObject.activeInHierarchy)
+            if (saved && savedIcon.gameObject.activeInHierarchy)
             {
                 StartCoroutine(SavedTween());
             }

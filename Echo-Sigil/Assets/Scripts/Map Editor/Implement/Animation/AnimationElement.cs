@@ -361,7 +361,6 @@ namespace MapEditor.Animations
                 {
                     AnimationAttachment animationAttachment = Instantiate(staticAttachmentObject, animation.attachmentHolderTransform).GetComponent<AnimationAttachment>();
                     animationAttachment.animationIndex = animationIndexPair;
-                    animationAttachment.animationElements = animation.containerList;
                 }
             }
         }

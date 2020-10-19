@@ -31,16 +31,49 @@ namespace MapEditor.Animations
         [SerializeField] private Image directionalIcon;
         Transform prevTransform;
         [SerializeField] private LayoutElement layoutElement;
+        private bool isDragging;
 
-        public List<AnimationElement> animationElements;
+        public AnimationElement animationElement
+        {
+            get
+            {
+                if (!isDragging)
+                {
+                    AnimationElement output = transform.parent.parent.parent.GetComponent<AnimationElement>();
+                    if(output != null)
+                    {
+                        return output;
+                    }
+                    else
+                    {
+                        Debug.LogError("Animation Attachment " + Label + "could not find Animation Element. Returning top level");
+                        if(AnimationWindow.animationElements != null && AnimationWindow.animationElements.Count > 0)
+                        {
+                            return AnimationWindow.animationElements[0];
+                        }
+                        else
+                        {
+                            Debug.LogError("No animation exist! AAAAHHHHH!");
+                            return null;
+                        }
+                        
+                    }
+                }
+                else
+                {
+                    return prevAnimationElement;
+                }
+            }
+        }
+        private AnimationElement prevAnimationElement;
 
         private AnimationElement FindClosestAnimationElement()
         {
             float minDistance = float.MaxValue;
             AnimationElement minElement = null;
-            if (animationElements != null)
+            if (animationElement != null)
             {
-                foreach (AnimationElement animationElement in animationElements)
+                foreach (AnimationElement animationElement in animationElement.containerList)
                 {
                     float distance = animationElement.transform.position.y - transform.position.y;
 
@@ -55,15 +88,16 @@ namespace MapEditor.Animations
             {
                 Debug.LogError("Animation Attachment "+ Label + " did not have list");
             }
+
             if(minElement != null)
             {
                 return minElement;
             }
             else
             {
-                if(animationElements != null && animationElements.Count > 0)
+                if(animationElement != null)
                 {
-                    return animationElements[0];
+                    return animationElement;
                 }
                 else
                 {
@@ -76,22 +110,11 @@ namespace MapEditor.Animations
 
         public void OnBeginDrag(PointerEventData eventData)
         {
+            prevAnimationElement = animationElement;
+            isDragging = true;
             transform.localScale = Vector3.one * attachmentSizeIncrese;
-            if (animationElements == null || (animationElements != null && animationElements.Count <= 0))
-            {
-                Debug.LogWarning("Animation Attachment " + Label + " had no list. Fixing.");
-                animationElements = transform.parent.parent.parent.GetComponent<AnimationElement>().containerList;
-            }
-
-            if (animationElements != null && animationElements.Count > 0)
-            {
-                transform.SetParent(animationElements[0].transform.parent, true);
-                layoutElement.ignoreLayout = true;
-            }
-            else
-            {
-                Debug.LogError("Animation Attachment " + Label + " had no list, and could not get list from parent. Aborting.");
-            }
+            transform.SetParent(animationElement.transform.parent, true);
+            layoutElement.ignoreLayout = true;
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -110,6 +133,7 @@ namespace MapEditor.Animations
 
         public void OnEndDrag(PointerEventData eventData)
         {
+            isDragging = false;
             transform.localScale = Vector3.one;
             AnimationElement animationElement = FindClosestAnimationElement();
             index = animationElement.index;

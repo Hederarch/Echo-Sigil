@@ -269,7 +269,7 @@ namespace MapEditor.Animations
         public void OnBeforeSerialize()
         {
             IAnimation[] animations = new IAnimation[4];
-            if (animationIndexes.Clamp(this.animations))
+            if (animationIndexes != null && animationIndexes.Clamp(this.animations))
             {
                 animations[0] = this.animations[animationIndexes["Up"]];
                 animations[1] = this.animations[animationIndexes["Down"]];
@@ -293,7 +293,9 @@ namespace MapEditor.Animations
         public bool NullCheck()
         {
             bool notNull = true;
+            //this is a bandaid soulution
             notNull &= animationIndexes != null;
+            notNull &= name != "";
             if(animations != null)
             {
                 foreach(IAnimation animation in animations)
@@ -460,7 +462,7 @@ namespace MapEditor.Animations
         public AnimationClip GetAnimationClip(Type type)
         {
             int randomInt = UnityEngine.Random.Range(0, animations.Length - 1);
-            Debug.LogError("Variant Animation is being collaped to index " + randomInt);
+            Debug.LogWarning("Variant Animation is being collaped to index " + randomInt);
 
             AnimationClip animationClip = animations[randomInt].GetAnimationClip(type);
             animationClip.name = Name;

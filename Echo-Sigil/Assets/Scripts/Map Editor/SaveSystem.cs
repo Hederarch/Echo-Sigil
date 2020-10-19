@@ -189,7 +189,7 @@ namespace MapEditor
             }
         }
 
-        public static void SaveImplement(int modPathIndex, Implement implement)
+        public static bool SaveImplement(int modPathIndex, Implement implement)
         {
             string name = implement.splashInfo.name;
             string implementPath = GetImplementPath(modPathIndex) + "/" + name;
@@ -201,13 +201,21 @@ namespace MapEditor
             {
                 if (implement != null && implement.NullCheck())
                 {
-                    Directory.Delete(implementPath, true);
-                    Directory.CreateDirectory(implementPath);
+                    try
+                    {
+                        Directory.Delete(implementPath, true);
+                        Directory.CreateDirectory(implementPath);
+                    }
+                    catch (UnauthorizedAccessException)
+                    {
+                        return false;
+                    }
+
                 }
                 else
                 {
                     Debug.LogError("Tried to save, but found null value");
-                    return;
+                    return false;
                 }
             }
             using (StreamWriter stream = new StreamWriter(implementPath + "/" + name + ".json"))
@@ -220,6 +228,7 @@ namespace MapEditor
             }
 
             SaveAnimations(modPathIndex, name, implement.animations);
+            return true;
         }
 
         public static Implement[] LoadImplements(int modPathIndex)

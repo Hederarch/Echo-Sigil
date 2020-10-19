@@ -47,8 +47,7 @@ namespace MapEditor
                 }
                 selectedImplement = implement;
                 unitDisplay.DisplayUnit(implement, selectedUnit);
-                SaveSystem.SaveImplement(selectedImplement.modPathIndex,selectedImplement);
-                unitDisplay.Saved();
+                unitDisplay.Saved(SaveSystem.SaveImplement(selectedImplement.modPathIndex, selectedImplement));
             }
         }
 
