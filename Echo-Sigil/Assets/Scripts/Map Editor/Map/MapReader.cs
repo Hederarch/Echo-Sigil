@@ -40,18 +40,23 @@ public static class MapReader
             {
                 Tile tile = map.SetTileProperties(x, y);
 
-                if (tile.height >= 0)
+                if (tile.topHeight >= 0)
                 {
                     GameObject gameObjectTile = InstantateTileGameObject(mapHalfHeight, tile);
 
                     gameObjectTile.AddComponent<TileBehaviour>().tile = tile;
                     tiles[x, y] = tile;
 
-                    gameObjectTile.transform.position += new Vector3(0, 0, tile.height);
+                    gameObjectTile.transform.position += new Vector3(0, 0, tile.topHeight);
 
                     gameObjectTile.AddComponent<BoxCollider2D>().size = new Vector3(1, 1, .2f);
 
-                    gameObjectTile.AddComponent<SpriteRenderer>().sprite = tile.spriteIndex < spritePallate.Length ? spritePallate[tile.spriteIndex] : spritePallate[0];
+                    Sprite sprite = null;
+                    if (spritePallate != null && spritePallate.Length > 0)
+                    {
+                        sprite = tile.spriteIndex < spritePallate.Length ? spritePallate[tile.spriteIndex] : spritePallate[0];
+                    }
+                    gameObjectTile.AddComponent<SpriteRenderer>().sprite = sprite;
                 }
             }
         }
@@ -75,7 +80,7 @@ public static class MapReader
         Vector2 pos = GridToWorldSpace(mi.PosInGrid);
         unit.transform.parent = tileParent;
         Tile tile = GetTile(mi.PosInGrid);
-        unit.transform.position = new Vector3(pos.x, pos.y, tile.height - .1f);
+        unit.transform.position = new Vector3(pos.x, pos.y, tile.topHeight - .1f);
         JRPGBattle j;
         TacticsMove t;
         Unit i;

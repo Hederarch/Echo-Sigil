@@ -57,7 +57,7 @@ namespace MapEditor
                 {
                     if (tiles[x, y] != null)
                     {
-                        heightMap[x, y] = tiles[x, y].height;
+                        heightMap[x, y] = tiles[x, y].topHeight;
                         walkableMap[x, y] = tiles[x, y].walkable;
                         spriteIndexMap[x, y] = tiles[x, y].spriteIndex;
                     }
@@ -86,7 +86,7 @@ namespace MapEditor
         {
             Tile tile = new Tile(x, y)
             {
-                height = heightMap[x, y],
+                topHeight = heightMap[x, y],
                 walkable = walkableMap[x, y],
                 spriteIndex = spriteIndexMap[x, y]
             };

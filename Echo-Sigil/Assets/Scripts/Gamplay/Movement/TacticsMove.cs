@@ -99,7 +99,7 @@ public class TacticsMove : MonoBehaviour , IMovement
             Tile t = path.Peek();
             Vector3 target = t.PosInWorld;
 
-            target.z -= t.height + .1f;
+            target.z -= t.topHeight + .1f;
 
             if (Vector2.Distance(transform.position, target) >= .05f)
             {
@@ -295,7 +295,7 @@ public class TacticsMove : MonoBehaviour , IMovement
         openList.Add(currentTile);
         //currentTile.parent = ??
         currentTile.h = Vector3.Distance(currentTile.PosInWorld, target.PosInWorld);
-        currentTile.f = currentTile.h;
+        //currentTile.f = currentTile.h;
 
         while (openList.Count > 0)
         {
@@ -325,7 +325,6 @@ public class TacticsMove : MonoBehaviour , IMovement
                         tile.parent = t;
 
                         tile.g = tempG;
-                        tile.f = tile.g + tile.h;
                     }
                 } 
                 else
@@ -334,7 +333,6 @@ public class TacticsMove : MonoBehaviour , IMovement
 
                     tile.g = t.g + Vector3.Distance(tile.PosInWorld, t.PosInWorld);
                     tile.h = Vector3.Distance(tile.PosInWorld, target.PosInWorld);
-                    tile.f = tile.g + tile.h;
 
                     openList.Add(tile);
                 }

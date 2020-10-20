@@ -240,7 +240,7 @@ namespace MapEditor
                 int walkableNo = 0;
                 Vector2Int upperTilePos = new Vector2Int(int.MinValue, int.MinValue);
                 Vector2Int lowerTilePos = new Vector2Int(int.MaxValue, int.MaxValue);
-                float heightAverage = tile[0].height;
+                float heightAverage = tile[0].topHeight;
 
                 for (int i = 0; i < selected.Length && i < tile.Length; i++)
                 {
@@ -271,7 +271,7 @@ namespace MapEditor
                         walkableNo++;
                     }
 
-                    heightAverage = (heightAverage + tile[i].height) / 2f;
+                    heightAverage = (heightAverage + tile[i].topHeight) / 2f;
                 }
 
                 tileName.text = upperTilePos.ToString() + " / " + lowerTilePos.ToString();
@@ -294,7 +294,7 @@ namespace MapEditor
             unitGUI.SetActive(false);
             tileName.text = selected.name;
             walkable.isOn = tile.walkable;
-            height.text = tile.height.ToString();
+            height.text = tile.topHeight.ToString();
             tileGUI.SetActive(true);
         }
 
