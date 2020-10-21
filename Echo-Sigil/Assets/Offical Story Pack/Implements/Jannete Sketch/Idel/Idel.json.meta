@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: c3826d346a8dd344283b215eab7e7b08
+=======
+guid: 733d0c8bfe2c5ef439bfc2fda8fa39ec
+>>>>>>> TileTexture
 TextScriptImporter:
   externalObjects: {}
   userData: 

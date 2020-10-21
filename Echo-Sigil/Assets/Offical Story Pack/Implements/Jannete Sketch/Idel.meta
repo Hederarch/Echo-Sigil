@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: fa65e428c27ab584283d1f8a99be6e3f
+=======
+guid: 1c953e0d145985d459592a0a2599a642
+>>>>>>> TileTexture
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

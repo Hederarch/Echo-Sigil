@@ -4,7 +4,7 @@ using MapEditor;
 
 namespace Tile_Tests
 {
-    class tile
+    class initialization
     {
         [Test]
 
@@ -21,9 +21,9 @@ namespace Tile_Tests
         {
             Tile tile = new Tile(0, 0)
             {
-                height = 1
+                topHeight = 1
             };
-            Assert.AreEqual(1, tile.height);
+            Assert.AreEqual(1, tile.topHeight);
         }
         [Test]
 
@@ -51,6 +51,41 @@ namespace Tile_Tests
         {
             Tile[,] tiles = MapReader.GeneratePhysicalMap(new Map(3, 5));
             Assert.AreEqual(new Vector2Int(2, 4), tiles[2, 4].PosInGrid);
+        }
+    }
+
+    class texture
+    {
+        [Test]
+        public void original_returns_original_texture()
+        {
+            Texture2D texture2D = new Texture2D(64, 64);
+            Assert.AreEqual(texture2D, Tile.GetTileTexture(texture2D, TileTextureType.Original));
+        }
+
+        [Test]
+        public void top_returns_square()
+        {
+            int random = Random.Range(2, 256);
+            Texture2D texture2D = new Texture2D(random, random);
+            texture2D = Tile.GetTileTextureSection(texture2D, TileTextureSection.Top);
+            Assert.AreEqual(texture2D.width, texture2D.height);
+        }
+
+        [Test]
+        public void get_tile_border_returns_10_percent()
+        {
+            int random = Random.Range(2, 256);
+            Texture2D texture2D = new Texture2D(random, random + random/10);
+            int width = texture2D.width;
+            texture2D = Tile.GetTileTextureSection(texture2D, TileTextureSection.Border);
+            Assert.AreEqual(width/10, texture2D.height);
+        }
+
+        [Test]
+        public void dubug_returns_correct_placement()
+        {
+
         }
     }
 }

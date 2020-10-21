@@ -167,7 +167,7 @@ namespace MapEditor
                 Tile selectedTile = tile;
                 if (desierdHeight >= 0)
                 {
-                    selectedTile.height = desierdHeight;
+                    selectedTile.topHeight = desierdHeight;
                     tileTransform.position = new Vector3(tileTransform.position.x, tileTransform.position.y, desierdHeight);
                     //GenerateExpationTile(tileTransform.GetComponent<SpriteRenderer>().sprite,selectedTile);
                 }
@@ -197,9 +197,9 @@ namespace MapEditor
             }
             foreach (Transform t in tileTransforms)
             {
-                tiles[t].height += delta;
+                tiles[t].topHeight += delta;
                 t.position += new Vector3(0, 0, delta);
-                if (tiles[t].height < 0)
+                if (tiles[t].topHeight < 0)
                 {
                     RemoveTile(t, tiles[t]);
                 }
@@ -215,7 +215,7 @@ namespace MapEditor
 
         public static void ChangeTileWalkable(bool walkable, Tile selectedTile) => selectedTile.walkable = walkable;
 
-        public static void ChangeTileHeight(string delta, Tile selectedTile, Transform tileTransform) => ChangeTileHeight(float.Parse(delta) - selectedTile.height, tileTransform);
+        public static void ChangeTileHeight(string delta, Tile selectedTile, Transform tileTransform) => ChangeTileHeight(float.Parse(delta) - selectedTile.topHeight, tileTransform);
 
         public static void ChangeUnitPos(Vector3 point, Unit selectedImplement) => ChangeUnitPos(MapReader.WorldToGridSpace(point), selectedImplement);
 
@@ -229,7 +229,7 @@ namespace MapEditor
             Tile tile = MapReader.GetTile(pointOnGrid);
             if (tile != null)
             {
-                selectedImplement.transform.position = new Vector3(worldSpace.x, worldSpace.y, tile.height - .1f);
+                selectedImplement.transform.position = new Vector3(worldSpace.x, worldSpace.y, tile.topHeight - .1f);
             }
             else
             {

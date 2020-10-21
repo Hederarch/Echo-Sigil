@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 296272725999a93468c29f064be7cc79
+=======
+guid: 764f4ea0e2243b943b581b59fe456d80
+>>>>>>> TileTexture
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -23,6 +27,10 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+<<<<<<< HEAD
+=======
+  vTOnly: 0
+>>>>>>> TileTexture
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -57,6 +65,10 @@ TextureImporter:
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+<<<<<<< HEAD
+=======
+  ignorePngGamma: 0
+>>>>>>> TileTexture
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3

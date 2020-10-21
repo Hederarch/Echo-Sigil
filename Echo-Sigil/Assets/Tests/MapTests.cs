@@ -12,11 +12,11 @@ namespace Map_Tests
             Tile[,] tiles = new Tile[1, 1];
             Tile tile = new Tile(0, 0)
             {
-                height = 2
+                topHeight = 2
             };
             tiles[0, 0] = tile;
             Tile[,] outTiles = MapReader.GeneratePhysicalMap(new Map(tiles));
-            Assert.AreEqual(2, outTiles[0,0].height);
+            Assert.AreEqual(2, outTiles[0,0].topHeight);
         }
         [Test]
         public void genarates_map_with_tile()
@@ -24,7 +24,7 @@ namespace Map_Tests
             Tile[,] tiles = new Tile[1, 1];
             Tile tile = new Tile(0, 0)
             {
-                height = 2
+                topHeight = 2
             };
             tiles[0, 0] = tile;
             Tile[,] outTiles = MapReader.GeneratePhysicalMap(new Map(tiles));
@@ -33,9 +33,10 @@ namespace Map_Tests
         [Test]
         public void genarates_map_with_unit()
         {
-            Map map = new Map(1, 1);
-            map.units = new System.Collections.Generic.List<MapImplement>();
-            map.units.Add(new MapImplement());
+            Map map = new Map(1, 1)
+            {
+                units = new System.Collections.Generic.List<MapImplement>() { new MapImplement()}
+            };
             MapReader.GeneratePhysicalMap(map);
             Assert.IsNotNull(MapReader.implements[0]);
         }
