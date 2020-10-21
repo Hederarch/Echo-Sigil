@@ -9,16 +9,22 @@ namespace MapEditor.Animations
         public Color trueColor = Color.white;
         public Color falseColor = Color.black;
 
+        private bool parentIsVariant = false;
         public bool FirstLayer { get; private set; }
-        public void SetFirstLayer(bool value,bool isVariant)
+        public void SetFirstLayer(bool value, bool isVariant)
         {
             if (!value)
             {
                 directionalIcon.interactable = false;
                 if(isVariant)
                 {
+                    parentIsVariant = true;
                     variantIcon.interactable = false;
                 }
+            }
+            else
+            {
+                parentIsVariant = false;
             }
             FirstLayer = value;
         }
@@ -37,11 +43,18 @@ namespace MapEditor.Animations
                 {
                     pulldownButton.gameObject.SetActive(true);
                     layoutElement.minHeight = rectHeightMinMax.y;
+                    multiTileIcon.interactable = false;
+                    variantIcon.interactable = false;
                 }
                 else
                 {
                     pulldownButton.gameObject.SetActive(false);
                     layoutElement.minHeight = rectHeightMinMax.x;
+                    multiTileIcon.interactable = true;
+                    if (!parentIsVariant)
+                    {
+                        variantIcon.interactable = true;
+                    }
                 }
             }
             else
@@ -64,11 +77,18 @@ namespace MapEditor.Animations
                 {
                     pulldownButton.gameObject.SetActive(true);
                     layoutElement.minHeight = rectHeightMinMax.y;
+                    directionalIcon.interactable = false;
+                    multiTileIcon.interactable = false;
                 }
                 else
                 {
                     pulldownButton.gameObject.SetActive(false);
                     layoutElement.minHeight = rectHeightMinMax.x;
+                    multiTileIcon.interactable = true;
+                    if (FirstLayer)
+                    {
+                        directionalIcon.interactable = true;
+                    }
                 }
             }
             else
@@ -91,6 +111,8 @@ namespace MapEditor.Animations
                 Vector2 offsetMax = nameFieldTransform.offsetMax;
                 offsetMax.x = -Math.Abs(FPSFieldTransform.rect.width + numTileFieldTransform.rect.width + 15);
                 nameFieldTransform.offsetMax = offsetMax;
+                directionalIcon.interactable = false;
+                variantIcon.interactable = false;
             }
             else
             {
@@ -98,6 +120,15 @@ namespace MapEditor.Animations
                 Vector2 offsetMax = nameFieldTransform.offsetMax;
                 offsetMax.x = -Math.Abs(FPSFieldTransform.rect.width + 10);
                 nameFieldTransform.offsetMax = offsetMax;
+                if (FirstLayer)
+                {
+                    directionalIcon.interactable = true;
+                }
+                if (!parentIsVariant)
+                {
+                    variantIcon.interactable = true;
+                }
+
             }
         }
         [SerializeField] private RectTransform numTileFieldTransform;
@@ -132,6 +163,7 @@ namespace MapEditor.Animations
         [SerializeField] private Vector3 rectHeightMinMax = new Vector3(200, 205, 605);
         [SerializeField] private LayoutElement layoutElement;
         [SerializeField] private Button pulldownButton;
+
         public bool Extened
         {
             get => layoutElement.minHeight <= rectHeightMinMax.y; set => layoutElement.minHeight = value ? rectHeightMinMax.y : rectHeightMinMax.z;

@@ -1,0 +1,42 @@
+{
+    "index": 0,
+    "splashInfo": {
+        "name": "Jannete Sketch",
+        "fragment": "Cue Ball",
+        "power": "",
+        "type": -1,
+        "description": "",
+        "primaryColor": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "secondaryColor": [
+            1.0,
+            1.0,
+            1.0
+        ]
+    },
+    "animationIndexes": {
+        "walkIndex": {
+            "index": 2,
+            "label": "Walk",
+            "directional": true
+        },
+        "attackIndex": {
+            "index": 0,
+            "label": "Attack",
+            "directional": false
+        },
+        "idelIndex": {
+            "index": 1,
+            "label": "Idel",
+            "directional": false
+        },
+        "fidgetIndex": {
+            "index": 1,
+            "label": "Fidget",
+            "directional": false
+        }
+    }
+}

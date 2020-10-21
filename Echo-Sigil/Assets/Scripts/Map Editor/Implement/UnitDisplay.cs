@@ -16,24 +16,20 @@ namespace MapEditor.Windows
 
         public void DisplayUnit(Implement implement, Unit unit = null)
         {
-            modText.text = implement.implementList.modName;
-            implmentText.text = implement.name;
-            Sprite baseSprite = implement.BaseSprite;
-            baseImage.sprite = baseSprite;
-            baseImage.color = baseSprite == null ? Color.clear : Color.white;
-            unitPosText.text = unit != null ? MapReader.WorldToGridSpace(unit.transform.position).ToString() : "" ;
-            index.text = implement.index.ToString();
-        }
-        public void DisplayUnit(ImplementList implementList, int index, Unit unit = null)
-        {
-            if(implementList.implements != null && implementList.implements.Length > index && index >= 0)
+            if (implement != null)
             {
-                DisplayUnit(implementList[index], unit);
+                modText.text = SaveSystem.GetModPaths()[implement.modPathIndex].modName;
+                implmentText.text = implement.splashInfo.name;
+                Sprite baseSprite = implement.baseSprite;
+                baseImage.sprite = baseSprite;
+                baseImage.color = baseSprite == null ? Color.clear : Color.white;
+                unitPosText.text = unit != null ? MapReader.WorldToGridSpace(unit.transform.position).ToString() : "";
+                index.text = implement.index.ToString();
             }
         }
-        public void Saved()
+        public void Saved(bool saved)
         {
-            if(savedIcon.gameObject.activeInHierarchy)
+            if (saved && savedIcon.gameObject.activeInHierarchy)
             {
                 StartCoroutine(SavedTween());
             }
@@ -44,5 +40,5 @@ namespace MapEditor.Windows
             yield return new WaitForSeconds(secondsOfSave);
             savedIcon.enabled = false;
         }
-    } 
+    }
 }

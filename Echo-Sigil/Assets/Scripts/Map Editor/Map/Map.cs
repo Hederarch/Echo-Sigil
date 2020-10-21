@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,6 +8,12 @@ namespace MapEditor
     [Serializable]
     public class Map
     {
+        public string name;
+        public string quest;
+        [NonSerialized]
+        public int modPathIndex;
+        public string modPath { get => SaveSystem.GetModPaths()[modPathIndex]; }
+
         //map data
         public int sizeX;
         public int sizeY;
@@ -16,7 +21,6 @@ namespace MapEditor
         public bool[,] walkableMap;
         public int[,] spriteIndexMap;
         public List<MapImplement> units;
-        internal string path = null;
 
         public Map(int sizeX, int sizeY, string path = null) : this(new Vector2Int(sizeX, sizeY), path) { }
 
@@ -27,8 +31,6 @@ namespace MapEditor
             heightMap = new float[sizeX, sizeY];
             walkableMap = new bool[sizeX, sizeY];
             spriteIndexMap = new int[sizeX, sizeY];
-
-            this.path = path == null ? Application.dataPath + "/Quests/Tests/Default.headrap" : path;
 
             for (int x = 0; x < sizeX; x++)
             {
@@ -41,15 +43,13 @@ namespace MapEditor
             }
         }
 
-        public Map(Tile[,] tiles, Unit[] units = null, string path = null)
+        public Map(Tile[,] tiles, Unit[] units = null)
         {
             sizeX = tiles.GetLength(0);
             sizeY = tiles.GetLength(1);
             heightMap = new float[sizeX, sizeY];
             walkableMap = new bool[sizeX, sizeY];
             spriteIndexMap = new int[sizeX, sizeY];
-
-            this.path = path == null ? Application.dataPath + "/Quests/Tests/Default.headrap" : path;
 
             for (int x = 0; x < sizeX; x++)
             {
@@ -76,7 +76,7 @@ namespace MapEditor
                 {
                     TacticsMove t = i.move as TacticsMove;
                     JRPGBattle j = i.battle as JRPGBattle;
-                    MapImplement mapImplement = new MapImplement(t.currentTile.PosInGrid, t, j, i is PlayerUnit, i.implementListIndex);
+                    MapImplement mapImplement = new MapImplement(i.name, t.currentTile.PosInGrid, t, j, i is PlayerUnit);
                     this.units.Add(mapImplement);
                 }
             }
@@ -97,16 +97,20 @@ namespace MapEditor
     [Serializable]
     public struct MapImplement
     {
-        public int implementListIndex;
-        public string GetName(ImplementList implementList) => implementList.Implements[implementListIndex].name;
-
+        public string name;
+        public Implement GetImplement(int modPathIndex)
+        {
+            return SaveSystem.LoadImplement(modPathIndex, name);
+        }
         public int posX;
         public int posY;
-        public Vector2Int PosInGrid { get => new Vector2Int(posX, posY); set => SetPos(value); }
-        private void SetPos(Vector2Int value)
+        public Vector2Int PosInGrid
         {
-            posX = value.x;
-            posY = value.y;
+            get => new Vector2Int(posX, posY); set
+            {
+                posX = value.x;
+                posY = value.y;
+            }
         }
 
         public bool player;
@@ -188,30 +192,31 @@ namespace MapEditor
             public static implicit operator BattleSettings(JRPGBattle jRPGBattle) => new BattleSettings(jRPGBattle);
         }
 
-        public MapImplement(int x, int y, MovementSettings movementSettings, BattleSettings battleSettings, bool player = true, int index = 0)
+        public MapImplement(string _name, int x, int y, MovementSettings _movementSettings, BattleSettings _battleSettings, bool _player = true)
         {
+            name = _name;
+
             posX = x;
             posY = y;
 
-            this.player = player;
-            implementListIndex = index;
+            player = _player;
 
-            this.movementSettings = movementSettings;
-            this.battleSettings = battleSettings;
+            movementSettings = _movementSettings;
+            battleSettings = _battleSettings;
 
         }
 
-        public MapImplement(Vector2Int posInGrid, MovementSettings movementSettings, BattleSettings battleSettings, bool player = true, int index = 0) :
-            this(posInGrid.x, posInGrid.y, movementSettings, battleSettings, player, index)
+        public MapImplement(string name, Vector2Int posInGrid, MovementSettings movementSettings, BattleSettings battleSettings, bool player = true) :
+            this(name, posInGrid.x, posInGrid.y, movementSettings, battleSettings, player)
         { }
 
-        public MapImplement(Vector2Int posInGrid)
+        public MapImplement(string _name, Vector2Int posInGrid)
         {
+            name = _name;
             posX = posInGrid.x;
             posY = posInGrid.y;
 
             player = false;
-            implementListIndex = 0;
 
             movementSettings = new MovementSettings(5, 1, 2);
             battleSettings = new BattleSettings(5, 5, 1);

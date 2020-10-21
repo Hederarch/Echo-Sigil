@@ -8,10 +8,6 @@ namespace MapEditor.Animations
 {
     public class AnimationElement : Selectable
     {
-        /// <summary>
-        /// Path to the implements animation folder. 
-        /// </summary>
-        public static string implementPath;
 
         [SerializeField] private InputField nameField;
         public string Name { get => nameField.text; set => nameField.text = value; }
@@ -86,13 +82,13 @@ namespace MapEditor.Animations
             {
                 animationTypeInfo.ToggleDirectional();
                 DirectionalAnimation directionalAnimation = (DirectionalAnimation)animation;
-                subAnimationElements = PopulateTransformWithAnimations(subAnimationHolder, directionalAnimation.animations, implementPath, false, directionalAnimation.animationIndexes);
+                subAnimationElements = PopulateTransformWithAnimations(subAnimationHolder, directionalAnimation.animations, false, directionalAnimation.animationIndexes);
             }
             else if (animation.Type == typeof(VaraintAnimation))
             {
                 animationTypeInfo.ToggleVariant();
                 VaraintAnimation varaintAnimation = (VaraintAnimation)animation;
-                subAnimationElements = PopulateTransformWithAnimations(subAnimationHolder, varaintAnimation.animations, implementPath, false);
+                subAnimationElements = PopulateTransformWithAnimations(subAnimationHolder, varaintAnimation.animations, false);
             }
             else if (animation.Type == typeof(MultiTileAnimation))
             {
@@ -112,7 +108,7 @@ namespace MapEditor.Animations
         {
             DeInitalizeSpriteHolders();
             int i = 0;
-            foreach (Sprite sprite in animation)
+            foreach (Sprite sprite in animation.sprites)
             {
                 IstantiateSpriteHolder(i, sprite);
                 i++;
@@ -126,7 +122,7 @@ namespace MapEditor.Animations
         {
             DeInitalizeSpriteHolders();
             int i = 0;
-            foreach (Sprite sprite in animation)
+            foreach (Sprite sprite in animation.sprites)
             {
                 IstantiateSpriteHolder(i, sprite);
                 i++;
@@ -260,17 +256,10 @@ namespace MapEditor.Animations
                 {
                     name = parent.Name + name;
                 }
-                string[] sprites = new string[spriteHolders.Count];
+                Sprite[] sprites = new Sprite[spriteHolders.Count];
                 for (int i = 0; i < spriteHolders.Count; i++)
                 {
-                    Sprite sprite = spriteHolders[i].image.sprite;
-                    string filePath = implementPath + "/" + name + "/" + i + ".png";
-                    if (sprite != null)
-                    {
-                        SaveSystem.SavePNG(filePath, sprite.texture);
-                    }
-
-                    sprites[i] = filePath;
+                    sprites[i] = spriteHolders[i].image.sprite;
                 }
 
                 if (animationTypeInfo.Animation)
@@ -329,7 +318,7 @@ namespace MapEditor.Animations
                 staticAttachmentObject = attachmentObject;
             }
         }
-        public static List<AnimationElement> PopulateTransformWithAnimations(Transform transform, IAnimation[] animations, string implementPath, bool firstLayer = true, IAnimationIndexes indexes = null)
+        public static List<AnimationElement> PopulateTransformWithAnimations(Transform transform, IAnimation[] animations, bool firstLayer = true, IAnimationIndexes indexes = null)
         {
             foreach (Transform toDealte in transform)
             {
@@ -337,7 +326,7 @@ namespace MapEditor.Animations
             }
             List<AnimationElement> animationElements = new List<AnimationElement>();
             GameObject addAnimationObject = Instantiate(staticAddAnimationObject, transform);
-            addAnimationObject.GetComponent<Button>().onClick.AddListener(delegate { AddAnimation(transform, animationElements, firstLayer, implementPath, indexes); });
+            addAnimationObject.GetComponent<Button>().onClick.AddListener(delegate { AddAnimation(transform, ref animationElements, firstLayer, indexes); });
 
             if (animations != null)
             {
@@ -372,13 +361,12 @@ namespace MapEditor.Animations
                 {
                     AnimationAttachment animationAttachment = Instantiate(staticAttachmentObject, animation.attachmentHolderTransform).GetComponent<AnimationAttachment>();
                     animationAttachment.animationIndex = animationIndexPair;
-                    animationAttachment.animationElements = animation.containerList;
                 }
             }
         }
-        private static AnimationElement AddAnimation(Transform transform, List<AnimationElement> animationList, bool firstLayer, string implementPath, IAnimationIndexes indexes = null)
+        private static AnimationElement AddAnimation(Transform transform, ref List<AnimationElement> animationList, bool firstLayer, IAnimationIndexes indexes = null)
         {
-            Animation animation = new Animation(SaveSystem.LoadPNG(Vector2.one / 2f), animationList.Count, implementPath);
+            Animation animation = new Animation(SaveSystem.LoadPNG(Vector2.one / 2f), animationList.Count);
             GameObject gameObject = Instantiate(staticAnimationElementObject, transform);
             gameObject.transform.SetSiblingIndex(gameObject.transform.parent.childCount - 2);
             AnimationElement animationElement = gameObject.GetComponent<AnimationElement>();

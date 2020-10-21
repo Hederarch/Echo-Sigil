@@ -41,9 +41,6 @@ namespace MapEditor
         public Slider will;
         public InputField reach;
 
-        //ToolBar
-        public Dropdown file;
-
         // Start is called before the first frame update
         void Start()
         {
@@ -57,27 +54,8 @@ namespace MapEditor
             MapEditor.SelectedEvent += ResetPrevTile;
             MapEditor.MultiSelectedEvent += ResetPrevTile;
             MapReader.MapGeneratedEvent += delegate { addUnit.gameObject.SetActive(true); };
-            file.onValueChanged.AddListener(HandleFile);
 
         }
-
-        private void HandleFile(int arg0)
-        {
-            file.value = 0;
-            switch (arg0)
-            {
-                case 1:
-                    NewMap();
-                    break;
-                case 2:
-                    SaveMap();
-                    break;
-                case 3:
-                    LoadMap();
-                    break;
-            }
-        }
-
 
         private void OnDestroy()
         {
@@ -86,7 +64,6 @@ namespace MapEditor
             MapEditor.SelectedEvent -= ResetPrevTile;
             MapEditor.MultiSelectedEvent -= ResetPrevTile;
             MapReader.MapGeneratedEvent -= delegate { addUnit.gameObject.SetActive(true); };
-            file.onValueChanged.RemoveAllListeners();
 
             UnSubscribeTile();
             UnSubscribeUnit();
@@ -435,10 +412,6 @@ namespace MapEditor
         }
 
         public void AddUnit() => MapEditor.AddUnit();
-
-        public void SaveMap() => MapReader.SaveMap(EditorUtility.SaveFilePanel("Save Map", Application.dataPath + "/Quests", "New Map", "hedrap"), MapEditor.pallate);
-
-        public void LoadMap() => MapReader.LoadMap(EditorUtility.OpenFilePanel("Load Map", Application.dataPath + "/Quests", "hedrap"));
 
         public void NewMap() => MapReader.GeneratePhysicalMap(new Map(1, 1));
     }

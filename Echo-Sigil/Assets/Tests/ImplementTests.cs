@@ -34,5 +34,8 @@ namespace Implement_Tests
     }
     class animations
     {
+        public void Test()
+        {
+        }
     }
 }

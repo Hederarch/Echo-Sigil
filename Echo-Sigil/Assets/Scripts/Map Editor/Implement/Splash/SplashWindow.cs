@@ -23,15 +23,16 @@ namespace MapEditor.Windows
 
         public override void Initalize(Implement implement, Unit unit = null)
         {
-            nameField.text = implement.name;
-            fragmentField.text = implement.fragment;
-            powerField.text = implement.power;
-            ChangeType(implement.type);
-            descriptionField.text = implement.description;
-            primaryColor.Color = implement.PrimaryColor;
-            secondaryColor.Color = implement.SecondaryColor;
-            screenProfile.color = implement.BaseSprite == null ? Color.clear : Color.white;
-            screenProfile.sprite = implement.BaseSprite;
+            Implement.SplashInfo splashInfo = implement.splashInfo;
+            nameField.text = splashInfo.name;
+            fragmentField.text = splashInfo.fragment;
+            powerField.text = splashInfo.power;
+            ChangeType(splashInfo.type);
+            descriptionField.text = splashInfo.description;
+            primaryColor.Color = splashInfo.PrimaryColor;
+            secondaryColor.Color = splashInfo.SecondaryColor;
+            screenProfile.color = implement.baseSprite == null ? Color.clear : Color.white;
+            screenProfile.sprite = implement.baseSprite;
             this.implement = implement;
 
             //activate
@@ -39,19 +40,13 @@ namespace MapEditor.Windows
         }
         public override Implement Save(Implement implement, Unit unit = null)
         {
-            implement.name = nameField.text;
-            implement.fragment = fragmentField.text;
-            implement.power = powerField.text;
-            implement.type = powerType;
-            implement.description = descriptionField.text;
-            implement.PrimaryColor = primaryColor.Color;
-            implement.SecondaryColor = secondaryColor.Color;
+            implement.splashInfo = new Implement.SplashInfo(nameField.text, fragmentField.text, powerField.text, powerType, descriptionField.text, primaryColor.Color, secondaryColor.Color);
             return implement;
         }
         public void AddProfile()
         {
             Sprite texture = SaveSystem.LoadPNG(EditorUtility.OpenFilePanel("Set Profile", Application.persistentDataPath, "png"), Vector2.one, 1);
-            SaveSystem.SavePNG(implement.implementList.ImplementPath(implement.index) + "/Base.png", texture.texture);
+            implement.baseSprite = texture;
             screenProfile.color = Color.white;
             screenProfile.sprite = texture;
         }

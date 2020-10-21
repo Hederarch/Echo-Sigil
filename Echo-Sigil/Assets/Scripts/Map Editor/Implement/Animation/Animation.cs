@@ -20,67 +20,37 @@ namespace MapEditor.Animations
         AnimatorState GetAnimatorState(Type type);
 
         AnimatorStateMachine GetAnimatorStateMachine(Type type);
-
+        bool NullCheck();
     }
 
     [Serializable]
-    public struct Animation : IAnimation, IEnumerable<Sprite>, IEnumerator<Sprite>
+    public struct Animation : IAnimation
     {
-        public string name;
         public string Name { get => name; set => name = value; }
-        public int framerate;
         public int Framerate { get => framerate; set => framerate = value; }
-
-        public string[] sprites;
-        int curIndex;
-
-        public Sprite Current
-        {
-            get
-            {
-                try
-                {
-                    return SaveSystem.LoadPNG(sprites[curIndex], Vector2.one / 2f);
-                }
-                catch (IndexOutOfRangeException)
-                {
-                    throw new InvalidOperationException();
-                }
-            }
-        }
-
-        object IEnumerator.Current => Current;
-
-        public int index;
         public int Index { get => index; set => index = value; }
+        [NonSerialized]
+        public Sprite[] sprites;
+        [SerializeField] private string name;
+        [SerializeField] private int framerate;
+        [SerializeField] private int index;
 
         public Type Type => typeof(Animation);
 
-        public Animation(Sprite[] sprites, int index, string implementPath)
+        public Animation(Sprite[] _sprites, int _index)
         {
             name = "New";
             framerate = 12;
-            this.sprites = new string[sprites.Length];
-            for (int i = 0; i < sprites.Length; i++)
-            {
-                string filePath = implementPath + "/" + name + "/" + i + ".png";
-                if (sprites[i] != null)
-                {
-                    SaveSystem.SavePNG(filePath, sprites[i].texture);
-                }
-
-                this.sprites[i] = filePath;
-            }
-            this.index = index;
-            curIndex = -1;
+            sprites = _sprites;
+            index = _index;
         }
 
         public AnimationClip GetAnimationClip(Type type)
         {
             AnimationClip clip = new AnimationClip
             {
-                name = name,
-                frameRate = framerate > 0 ? framerate : 12,
+                name = Name,
+                frameRate = Framerate > 0 ? Framerate : 12,
             };
 
             AnimationClipSettings settings = AnimationUtility.GetAnimationClipSettings(clip);
@@ -100,15 +70,15 @@ namespace MapEditor.Animations
             {
                 spriteKeyFrames[i] = new ObjectReferenceKeyframe
                 {
-                    time = (float)i / (float)framerate,
-                    value = SaveSystem.LoadPNG(sprites[i], new Vector2(.5f, 0))
+                    time = (float)i / (float)Framerate,
+                    value = sprites[i]
                 };
             }
             AnimationUtility.SetObjectReferenceCurve(clip, spriteBinding, spriteKeyFrames);
 
             if (!clip.isLooping)
             {
-                Debug.LogError("Animation " + name + " not set to loop");
+                Debug.LogError("Animation " + Name + " not set to loop");
             }
 
             return clip;
@@ -120,7 +90,7 @@ namespace MapEditor.Animations
             AnimatorState state = GetAnimatorState(type);
             state.AddExitTransition();
             animatorStateMachine.AddState(state, Vector3.one);
-            animatorStateMachine.name = name;
+            animatorStateMachine.name = Name;
 
             return animatorStateMachine;
         }
@@ -129,37 +99,9 @@ namespace MapEditor.Animations
         {
             AnimatorState animatorState = new AnimatorState();
             animatorState.motion = GetAnimationClip(type);
-            animatorState.name = name;
+            animatorState.name = Name;
 
             return animatorState;
-        }
-
-        IEnumerator<Sprite> IEnumerable<Sprite>.GetEnumerator()
-        {
-            Reset();
-            return this;
-        }
-
-        public IEnumerator GetEnumerator()
-        {
-            Reset();
-            return this;
-        }
-
-        public bool MoveNext()
-        {
-            curIndex++;
-            return curIndex < sprites.Length;
-        }
-
-        public void Reset()
-        {
-            curIndex = -1;
-        }
-
-        public void Dispose()
-        {
-
         }
 
         public int CompareTo(IAnimation other)
@@ -167,88 +109,98 @@ namespace MapEditor.Animations
             return Index.CompareTo(other.Index);
         }
 
-        public static void SerilizeAnimationArrays(IAnimation[] animations, ref Animation[] saveAnimations, ref DirectionalAnimation[] saveDirectionalAnimations, ref VaraintAnimation[] saveVaraintAnimations, ref MultiTileAnimation[] saveMultiTileAnimations)
+        public bool NullCheck() => true;
+    }
+
+    [Serializable]
+    public struct MultiTileAnimation : IAnimation
+    {
+        public int tileWidth;
+
+        public string Name { get => name; set => name = value; }
+        public int Framerate { get => framerate; set => framerate = value; }
+        public int Index { get => index; set => index = value; }
+        [NonSerialized]
+        public Sprite[] sprites;
+        [SerializeField] private string name;
+        [SerializeField] private int framerate;
+        [SerializeField] private int index;
+
+        public Type Type => typeof(MultiTileAnimation);
+
+        public MultiTileAnimation(Sprite[] _sprites, int _index, int _tileWidth = 1)
         {
-            saveAnimations = new Animations.Animation[0];
-            saveDirectionalAnimations = new DirectionalAnimation[0];
-            saveVaraintAnimations = new VaraintAnimation[0];
-            saveMultiTileAnimations = new MultiTileAnimation[0];
-
-            for (int i = 0; i < animations.Length; i++)
-            {
-                IAnimation animation = animations[i];
-                animation.Index = i;
-
-                if (animation.Type == typeof(Animation))
-                {
-                    Animations.Animation[] animationArray = new Animation[saveAnimations.Length + 1];
-                    saveAnimations.CopyTo(animationArray, 0);
-                    animationArray[saveAnimations.Length] = (Animation)animation;
-                    saveAnimations = animationArray;
-                }
-                else if (animation.Type == typeof(DirectionalAnimation))
-                {
-                    DirectionalAnimation[] directionalAnimationArray = new DirectionalAnimation[saveDirectionalAnimations.Length + 1];
-                    saveDirectionalAnimations.CopyTo(directionalAnimationArray, 0);
-                    directionalAnimationArray[saveDirectionalAnimations.Length] = (DirectionalAnimation)animation;
-                    saveDirectionalAnimations = directionalAnimationArray;
-                }
-                else if (animation.Type == typeof(VaraintAnimation))
-                {
-                    VaraintAnimation[] variantAnimationArray = new VaraintAnimation[saveVaraintAnimations.Length + 1];
-                    saveAnimations.CopyTo(variantAnimationArray, 0);
-                    variantAnimationArray[saveVaraintAnimations.Length] = (VaraintAnimation)animation;
-                    saveVaraintAnimations = variantAnimationArray;
-                }
-                else if (animation.Type == typeof(MultiTileAnimation))
-                {
-                    MultiTileAnimation[] multiTileAnimationArray = new MultiTileAnimation[saveMultiTileAnimations.Length + 1];
-                    saveMultiTileAnimations.CopyTo(multiTileAnimationArray, 0);
-                    multiTileAnimationArray[saveMultiTileAnimations.Length] = (MultiTileAnimation)animation;
-                    saveMultiTileAnimations = multiTileAnimationArray;
-                }
-                else
-                {
-                    Debug.LogError("Type was not assigned");
-                }
-            }
+            name = "New";
+            framerate = 12;
+            sprites = _sprites;
+            index = _index;
+            tileWidth = _tileWidth;
         }
 
-        public static IAnimation[] DeserializeAnimationArray(Animation[] saveAnimations, DirectionalAnimation[] saveDirectionalAnimations, VaraintAnimation[] saveVaraintAnimations, MultiTileAnimation[] saveMultiTileAnimations)
+        public AnimationClip GetAnimationClip(Type type)
         {
-            List<IAnimation> listOfAnimations = new List<IAnimation>();
-            if (saveAnimations != null)
+            AnimationClip clip = new AnimationClip
             {
-                foreach (Animations.Animation animation in saveAnimations)
-                {
-                    listOfAnimations.Add(animation);
-                }
-            }
-            if (saveDirectionalAnimations != null)
+                name = Name,
+                frameRate = Framerate,
+            };
+
+            AnimationClipSettings settings = AnimationUtility.GetAnimationClipSettings(clip);
+            settings.loopTime = true;
+            AnimationUtility.SetAnimationClipSettings(clip, settings);
+
+            EditorCurveBinding spriteBinding = new EditorCurveBinding
             {
-                foreach (DirectionalAnimation animation in saveDirectionalAnimations)
-                {
-                    listOfAnimations.Add(animation);
-                }
-            }
-            if (saveVaraintAnimations != null)
+                type = type,
+                path = "",
+                propertyName = "m_Sprite"
+            };
+
+            ObjectReferenceKeyframe[] spriteKeyFrames = new ObjectReferenceKeyframe[sprites.Length];
+            for (int i = 0; i < sprites.Length; i++)
             {
-                foreach (VaraintAnimation animation in saveVaraintAnimations)
+                spriteKeyFrames[i] = new ObjectReferenceKeyframe
                 {
-                    listOfAnimations.Add(animation);
-                }
+                    time = (float)i / (float)Framerate,
+                    value = sprites[i]
+                };
             }
-            if (saveMultiTileAnimations != null)
+            AnimationUtility.SetObjectReferenceCurve(clip, spriteBinding, spriteKeyFrames);
+
+            if (!clip.isLooping)
             {
-                foreach (MultiTileAnimation animation in saveMultiTileAnimations)
-                {
-                    listOfAnimations.Add(animation);
-                }
+                Debug.LogError("Animation " + Name + " not set to loop");
             }
-            listOfAnimations.Sort();
-            return listOfAnimations.ToArray();
+
+            return clip;
         }
 
+        public AnimatorState GetAnimatorState(Type type)
+        {
+            AnimatorState animatorState = new AnimatorState();
+            animatorState.motion = GetAnimationClip(type);
+            animatorState.name = Name;
+
+            return animatorState;
+        }
+
+        public AnimatorStateMachine GetAnimatorStateMachine(Type type)
+        {
+            AnimatorStateMachine animatorStateMachine = new AnimatorStateMachine();
+            AnimatorState state = GetAnimatorState(type);
+            state.AddExitTransition();
+            animatorStateMachine.AddState(state, Vector3.one);
+            animatorStateMachine.name = Name;
+
+            return animatorStateMachine;
+        }
+
+        public int CompareTo(IAnimation other)
+        {
+            return Index.CompareTo(other.Index);
+        }
+
+        public bool NullCheck() => true;
     }
 
     [Serializable]
@@ -256,33 +208,22 @@ namespace MapEditor.Animations
     {
         public IAnimation[] animations;
 
-        [SerializeField]
-        Animation[] saveAnimations;
-        [SerializeField]
-        VaraintAnimation[] saveVaraintAnimations;
-        [SerializeField]
-        MultiTileAnimation[] saveMultiTileAnimations;
-
-        public string name;
         public string Name { get => name; set => name = value; }
-        public int framerate;
         public int Framerate { get => framerate; set => framerate = value; }
-
-        public int index;
         public int Index { get => index; set => index = value; }
+        [SerializeField] private string name;
+        [SerializeField] private int framerate;
+        [SerializeField] private int index;
 
         public Type Type => typeof(DirectionalAnimation);
 
-        public DirectionalAnimation(IAnimation[] animations, int index)
+        public DirectionalAnimation(IAnimation[] _animations, int _index)
         {
             name = "New";
             framerate = 12;
-            this.animations = animations;
-            this.index = index;
+            animations = _animations;
+            index = _index;
             animationIndexes = new AnimationIndexes();
-            saveAnimations = new Animation[0];
-            saveMultiTileAnimations = new MultiTileAnimation[0];
-            saveVaraintAnimations = new VaraintAnimation[0];
         }
 
         public AnimationClip GetAnimationClip(Type type)
@@ -297,8 +238,8 @@ namespace MapEditor.Animations
                 animationClip = new Animation().GetAnimationClip(type);
             }
 
-            animationClip.name = name;
-            animationClip.frameRate = framerate;
+            animationClip.name = Name;
+            animationClip.frameRate = Framerate;
             return animationClip;
         }
 
@@ -328,7 +269,7 @@ namespace MapEditor.Animations
         public void OnBeforeSerialize()
         {
             IAnimation[] animations = new IAnimation[4];
-            if (animationIndexes.Clamp(this.animations))
+            if (animationIndexes != null && animationIndexes.Clamp(this.animations))
             {
                 animations[0] = this.animations[animationIndexes["Up"]];
                 animations[1] = this.animations[animationIndexes["Down"]];
@@ -342,74 +283,41 @@ namespace MapEditor.Animations
                     animations[i] = new Animation();
                 }
             }
-
-            saveAnimations = new Animation[0];
-            saveVaraintAnimations = new VaraintAnimation[0];
-            saveMultiTileAnimations = new MultiTileAnimation[0];
-
-            for (int i = 0; i < animations.Length; i++)
-            {
-                IAnimation animation = animations[i];
-                animation.Index = i;
-
-                if (animation.Type == typeof(Animation))
-                {
-                    Animation[] animationArray = new Animation[saveAnimations.Length + 1];
-                    saveAnimations.CopyTo(animationArray, 0);
-                    animationArray[saveAnimations.Length] = (Animation)animation;
-                    saveAnimations = animationArray;
-                }
-                else if (animation.Type == typeof(VaraintAnimation))
-                {
-                    VaraintAnimation[] variantAnimationArray = new VaraintAnimation[saveVaraintAnimations.Length + 1];
-                    saveAnimations.CopyTo(variantAnimationArray, 0);
-                    variantAnimationArray[saveVaraintAnimations.Length] = (VaraintAnimation)animation;
-                    saveVaraintAnimations = variantAnimationArray;
-                }
-                else if (animation.Type == typeof(MultiTileAnimation))
-                {
-                    MultiTileAnimation[] multiTileAnimationArray = new MultiTileAnimation[saveMultiTileAnimations.Length + 1];
-                    saveMultiTileAnimations.CopyTo(multiTileAnimationArray, 0);
-                    multiTileAnimationArray[saveMultiTileAnimations.Length] = (MultiTileAnimation)animation;
-                    saveMultiTileAnimations = multiTileAnimationArray;
-                }
-                else
-                {
-                    Debug.LogError("Type was not assigned");
-                }
-            }
         }
 
         public void OnAfterDeserialize()
         {
-            List<IAnimation> listOfAnimations = new List<IAnimation>();
-            if (saveAnimations != null)
-            {
-                foreach (Animation animation in saveAnimations)
-                {
-                    listOfAnimations.Add(animation);
-                }
-            }
-            if (saveVaraintAnimations != null)
-            {
-                foreach (VaraintAnimation animation in saveVaraintAnimations)
-                {
-                    listOfAnimations.Add(animation);
-                }
-            }
-            if (saveMultiTileAnimations != null)
-            {
-                foreach (MultiTileAnimation animation in saveMultiTileAnimations)
-                {
-                    listOfAnimations.Add(animation);
-                }
-            }
-            listOfAnimations.Sort();
-            animations = listOfAnimations.ToArray();
-
             animationIndexes = new AnimationIndexes();
         }
 
+        public bool NullCheck()
+        {
+            bool notNull = true;
+            //this is a bandaid soulution
+            notNull &= animationIndexes != null;
+            notNull &= name != "";
+            if(animations != null)
+            {
+                foreach(IAnimation animation in animations)
+                {
+                    if(animation != null)
+                    {
+                        notNull &= animation.NullCheck();
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                return false;
+            }
+            return notNull;
+        }
+
+        [Serializable]
         public class AnimationIndexes : IAnimationIndexes
         {
             public AnimationIndexPair up = new AnimationIndexPair(0, "Up");
@@ -525,49 +433,40 @@ namespace MapEditor.Animations
                 return this;
             }
         }
-        [NonSerialized]
         public AnimationIndexes animationIndexes;
 
     }
 
     [Serializable]
-    public struct VaraintAnimation : IAnimation, ISerializationCallbackReceiver
+    public struct VaraintAnimation : IAnimation
     {
         public IAnimation[] animations;
 
-        [SerializeField]
-        Animation[] saveAnimations;
-        [SerializeField]
-        MultiTileAnimation[] saveMultiTileAnimations;
-
-        public string name;
         public string Name { get => name; set => name = value; }
-        public int framerate;
         public int Framerate { get => framerate; set => framerate = value; }
-
-        public int index;
         public int Index { get => index; set => index = value; }
+        [SerializeField] private string name;
+        [SerializeField] private int framerate;
+        [SerializeField] private int index;
 
         public Type Type => typeof(VaraintAnimation);
 
-        public VaraintAnimation(IAnimation[] animations, int index)
+        public VaraintAnimation(IAnimation[] _animations, int _index)
         {
             name = "New";
             framerate = 12;
-            this.animations = animations;
-            this.index = index;
-            saveAnimations = new Animation[0];
-            saveMultiTileAnimations = new MultiTileAnimation[0];
+            animations = _animations;
+            index = _index;
         }
 
         public AnimationClip GetAnimationClip(Type type)
         {
             int randomInt = UnityEngine.Random.Range(0, animations.Length - 1);
-            Debug.LogError("Variant Animation is being collaped to index " + randomInt);
+            Debug.LogWarning("Variant Animation is being collaped to index " + randomInt);
 
             AnimationClip animationClip = animations[randomInt].GetAnimationClip(type);
-            animationClip.name = name;
-            animationClip.frameRate = framerate;
+            animationClip.name = Name;
+            animationClip.frameRate = Framerate;
             return animationClip;
         }
 
@@ -591,7 +490,7 @@ namespace MapEditor.Animations
 
             AnimatorState animatorState = new AnimatorState();
             animatorState.motion = animations[randomInt].GetAnimationClip(type);
-            animatorState.name = name;
+            animatorState.name = Name;
 
             return animatorState;
         }
@@ -601,199 +500,31 @@ namespace MapEditor.Animations
             return Index.CompareTo(other.Index);
         }
 
-        public void OnBeforeSerialize()
+        public bool NullCheck()
         {
-            saveAnimations = new Animation[0];
-            saveMultiTileAnimations = new MultiTileAnimation[0];
-
-            for (int i = 0; i < animations.Length; i++)
+            if (animations != null)
             {
-                IAnimation animation = animations[i];
-                animation.Index = i;
-
-                if (animation.Type == typeof(Animations.Animation))
+                foreach (IAnimation animation in animations)
                 {
-                    Animations.Animation[] animationArray = new Animations.Animation[saveAnimations.Length + 1];
-                    saveAnimations.CopyTo(animationArray, 0);
-                    animationArray[saveAnimations.Length] = (Animations.Animation)animation;
-                    saveAnimations = animationArray;
-                }
-                else if (animation.Type == typeof(MultiTileAnimation))
-                {
-                    MultiTileAnimation[] multiTileAnimationArray = new MultiTileAnimation[saveMultiTileAnimations.Length + 1];
-                    saveMultiTileAnimations.CopyTo(multiTileAnimationArray, 0);
-                    multiTileAnimationArray[saveMultiTileAnimations.Length] = (MultiTileAnimation)animation;
-                    saveMultiTileAnimations = multiTileAnimationArray;
-                }
-                else
-                {
-                    Debug.LogError("Valid Type was not assigned");
+                    if (animation != null)
+                    {
+                        if (!animation.NullCheck())
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
+            else
+            {
+                return false;
+            }
+            return true;
         }
-
-        public void OnAfterDeserialize()
-        {
-            List<IAnimation> listOfAnimations = new List<IAnimation>();
-            if (saveAnimations != null)
-            {
-                foreach (Animations.Animation animation in saveAnimations)
-                {
-                    listOfAnimations.Add(animation);
-                }
-            }
-            if (saveMultiTileAnimations != null)
-            {
-                foreach (MultiTileAnimation animation in saveMultiTileAnimations)
-                {
-                    listOfAnimations.Add(animation);
-                }
-            }
-            listOfAnimations.Sort();
-            animations = listOfAnimations.ToArray();
-        }
-
     }
 
-    [Serializable]
-    public struct MultiTileAnimation : IAnimation, IEnumerable<Sprite>, IEnumerator<Sprite>
-    {
-        public int tileWidth;
-
-        public string name;
-        public string Name { get => name; set => name = value; }
-        public int framerate;
-        public int Framerate { get => framerate; set => framerate = value; }
-        public string[] sprites;
-        int curIndex;
-
-        public int index;
-        public int Index { get => index; set => index = value; }
-
-        public Type Type => typeof(MultiTileAnimation);
-        public Sprite Current
-        {
-            get
-            {
-                try
-                {
-                    return SaveSystem.LoadPNG(sprites[curIndex], Vector2.one / 2f, tileWidth);
-                }
-                catch (IndexOutOfRangeException)
-                {
-                    throw new InvalidOperationException();
-                }
-            }
-        }
-        object IEnumerator.Current => Current;
-
-        public MultiTileAnimation(Sprite[] sprites, int index, string implementPath, int tileWidth = 1)
-        {
-            name = "New";
-            framerate = 12;
-            this.sprites = new string[sprites.Length];
-            for (int i = 0; i < sprites.Length; i++)
-            {
-                string filePath = implementPath + "/" + name + "/" + i + ".png";
-                if (sprites[i] != null)
-                {
-                    SaveSystem.SavePNG(filePath, sprites[i].texture);
-                }
-
-                this.sprites[i] = filePath;
-            }
-            this.index = index;
-            curIndex = -1;
-            this.tileWidth = tileWidth;
-        }
-
-        public AnimationClip GetAnimationClip(Type type)
-        {
-            AnimationClip clip = new AnimationClip
-            {
-                name = name,
-                frameRate = framerate,
-            };
-
-            AnimationClipSettings settings = AnimationUtility.GetAnimationClipSettings(clip);
-            settings.loopTime = true;
-            AnimationUtility.SetAnimationClipSettings(clip, settings);
-
-            EditorCurveBinding spriteBinding = new EditorCurveBinding
-            {
-                type = type,
-                path = "",
-                propertyName = "m_Sprite"
-            };
-
-            ObjectReferenceKeyframe[] spriteKeyFrames = new ObjectReferenceKeyframe[sprites.Length];
-            for (int i = 0; i < sprites.Length; i++)
-            {
-                spriteKeyFrames[i] = new ObjectReferenceKeyframe
-                {
-                    time = (float)i / (float)framerate,
-                    value = SaveSystem.LoadPNG(sprites[i], new Vector2(.5f, 0), tileWidth)
-                };
-            }
-            AnimationUtility.SetObjectReferenceCurve(clip, spriteBinding, spriteKeyFrames);
-
-            if (!clip.isLooping)
-            {
-                Debug.LogError("Animation " + name + " not set to loop");
-            }
-
-            return clip;
-        }
-
-        public AnimatorState GetAnimatorState(Type type)
-        {
-            AnimatorState animatorState = new AnimatorState();
-            animatorState.motion = GetAnimationClip(type);
-            animatorState.name = name;
-
-            return animatorState;
-        }
-
-        public AnimatorStateMachine GetAnimatorStateMachine(Type type)
-        {
-            AnimatorStateMachine animatorStateMachine = new AnimatorStateMachine();
-            AnimatorState state = GetAnimatorState(type);
-            state.AddExitTransition();
-            animatorStateMachine.AddState(state, Vector3.one);
-            animatorStateMachine.name = name;
-
-            return animatorStateMachine;
-        }
-
-        public IEnumerator<Sprite> GetEnumerator()
-        {
-            return this;
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this;
-        }
-
-        public bool MoveNext()
-        {
-            curIndex++;
-            return curIndex < sprites.Length;
-        }
-
-        public void Reset()
-        {
-            curIndex = -1;
-        }
-
-        public void Dispose()
-        {
-
-        }
-
-        public int CompareTo(IAnimation other)
-        {
-            return Index.CompareTo(other.Index);
-        }
-    }
 }
