@@ -21,7 +21,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 4}
-  m_MinSize: {x: 875, y: 300}
+  m_MinSize: {x: 875, y: 371}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 --- !u!114 &2
@@ -71,10 +71,10 @@ MonoBehaviour:
     y: 0
     width: 520
     height: 947
-  m_MinSize: {x: 201, y: 342}
-  m_MaxSize: {x: 4001, y: 8042}
+  m_MinSize: {x: 275, y: 271}
+  m_MaxSize: {x: 4001, y: 8021}
   vertical: 1
-  controlID: 93
+  controlID: 119
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -143,10 +143,10 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 604, y: 342}
-  m_MaxSize: {x: 12004, y: 8042}
+  m_MinSize: {x: 675, y: 321}
+  m_MaxSize: {x: 12003, y: 8021}
   vertical: 0
-  controlID: 17
+  controlID: 118
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -185,10 +185,10 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 892
+    width: 893
     height: 947
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 19}
@@ -211,12 +211,12 @@ MonoBehaviour:
   - {fileID: 12}
   m_Position:
     serializedVersion: 2
-    x: 892
+    x: 893
     y: 0
-    width: 508
+    width: 507
     height: 947
-  m_MinSize: {x: 202, y: 342}
-  m_MaxSize: {x: 4002, y: 8042}
+  m_MinSize: {x: 200, y: 321}
+  m_MaxSize: {x: 4002, y: 8021}
   vertical: 1
   controlID: 38
 --- !u!114 &10
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: TestRunnerWindow
+  m_Name: InspectorWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -238,16 +238,16 @@ MonoBehaviour:
     y: 0
     width: 520
     height: 569
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 16}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
   - {fileID: 16}
   - {fileID: 14}
   - {fileID: 13}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -265,7 +265,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 508
+    width: 507
     height: 417
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 4000, y: 4000}
@@ -291,10 +291,10 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 417
-    width: 508
+    width: 507
     height: 530
-  m_MinSize: {x: 102, y: 121}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 18}
@@ -382,9 +382,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 892
+    x: 893
     y: 490
-    width: 506
+    width: 505
     height: 509
   m_ViewDataDictionary: {fileID: 0}
 --- !u!114 &16
@@ -413,7 +413,7 @@ MonoBehaviour:
     height: 548
   m_ViewDataDictionary: {fileID: 0}
   m_Spl:
-    ID: 162
+    ID: 163
     splitterInitialOffset: 299
     currentActiveSplitter: -1
     realSizes: 6701000077000000
@@ -468,7 +468,7 @@ MonoBehaviour:
       name: Tales From The Metahedron
       fullName: Tales From The Metahedron
       resultStatus: 2
-      duration: 0.8787271
+      duration: 0.283464
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -484,7 +484,7 @@ MonoBehaviour:
       name: Tests.dll
       fullName: C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Library/ScriptAssemblies/Tests.dll
       resultStatus: 2
-      duration: 0.7695858
+      duration: 0.1896649
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -1481,9 +1481,9 @@ MonoBehaviour:
       uniqueId: Tests.dll/[Tests][Tile_Tests][suite]
       name: Tile_Tests
       fullName: Tile_Tests
-      resultStatus: 1
-      duration: 0.154248
-      messages: 
+      resultStatus: 2
+      duration: 0.178574
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1598,9 +1598,9 @@ MonoBehaviour:
       uniqueId: Tests.dll/Tile_Tests/[Tests][Tile_Tests.texture][suite]
       name: texture
       fullName: Tile_Tests.texture
-      resultStatus: 1
-      duration: 0.0976731
-      messages: 
+      resultStatus: 2
+      duration: 0.1732149
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1614,11 +1614,15 @@ MonoBehaviour:
       uniqueId: Tests.dll/Tile_Tests/texture/[Tests][Tile_Tests.texture.dubug_returns_correct_placement]
       name: dubug_returns_correct_placement
       fullName: Tile_Tests.texture.dubug_returns_correct_placement
-      resultStatus: 1
-      duration: 0.0007919
-      messages: 
+      resultStatus: 2
+      duration: 0.1356994
+      messages: "  Expected: not equal to RGBA(1.000, 0.000, 0.000, 1.000)\r\n  But
+        was:  RGBA(1.000, 0.000, 0.000, 1.000)\r\n"
       output: 
-      stacktrace: 
+      stacktrace: 'at Tile_Tests.texture.dubug_returns_correct_placement () [0x00028]
+        in C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil\Assets\Tests\TileTests.cs:92
+
+'
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1678,18 +1682,19 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1007
       parentUniqueId: Tests.dll/Tile_Tests/[Tests][Tile_Tests.texture][suite]
-    m_ResultText: 'selection (0.142s)
+    m_ResultText: "dubug_returns_correct_placement (0.136s)\n---\nExpected: not equal
+      to RGBA(1.000, 0.000, 0.000, 1.000)\r\n  But was:  RGBA(1.000, 0.000, 0.000,
+      1.000)\n---\nat Tile_Tests.texture.dubug_returns_correct_placement () [0x00028]
+      in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Tests\\TileTests.cs:92"
+    m_ResultStacktrace: 'at Tile_Tests.texture.dubug_returns_correct_placement ()
+      [0x00028] in C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil\Assets\Tests\TileTests.cs:92
 
-      ---
-
-      One or more child tests had
-      errors'
-    m_ResultStacktrace: 
+'
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 28bd3ff4
-      m_LastClickedID: -197149400
-      m_ExpandedIDs: f58144dfe557abf72b220e14371e5f68ffffff7f
+      m_SelectedIDs: 79f11773
+      m_LastClickedID: 1930948985
+      m_ExpandedIDs: 2756b58df58144dfe557abf72b220e14f7bd6e67371e5f68ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1739,7 +1744,7 @@ MonoBehaviour:
     x: 1400
     y: 73
     width: 519
-    height: 375
+    height: 548
   m_ViewDataDictionary: {fileID: 0}
   m_OpenAddComponentMenu: 0
   m_ObjectsLockedBeforeSerialization: []
@@ -1752,7 +1757,7 @@ MonoBehaviour:
     m_PrefName: Preview_InspectorPreview
   m_PreviewWindow: {fileID: 0}
   m_LastInspectedObjectInstanceID: -1
-  m_LastVerticalScrollValue: 0
+  m_LastVerticalScrollValue: 100
 --- !u!114 &18
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1792,20 +1797,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets/Sprites
   m_ViewMode: 1
   m_StartGridSize: 63
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Sprites
   m_LastFoldersGridSize: 63
   m_LastProjectPath: C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: f86d0000
-    m_LastClickedID: 28152
-    m_ExpandedIDs: 00000000ec6d0000f66d0000f86d00000c6e0000ca6e0000
+    m_SelectedIDs: 424f0000
+    m_LastClickedID: 20290
+    m_ExpandedIDs: 00000000284f0000344f0000364f0000464f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1833,7 +1838,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000ec6d0000
+    m_ExpandedIDs: 00000000284f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1858,9 +1863,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_SelectedInstanceIDs: e4540000
+    m_LastClickedInstanceID: 21732
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1877,7 +1882,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 10}
+      m_ClientGUIView: {fileID: 12}
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
       m_InstanceID: 0
@@ -1912,7 +1917,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 73
-    width: 891
+    width: 892
     height: 926
   m_ViewDataDictionary: {fileID: 0}
   m_SerializedViewNames: []
@@ -1923,7 +1928,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 891, y: 905}
+  m_TargetSize: {x: 892, y: 905}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -1938,8 +1943,8 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -445.5
-    m_HBaseRangeMax: 445.5
+    m_HBaseRangeMin: -446
+    m_HBaseRangeMax: 446
     m_VBaseRangeMin: -452.5
     m_VBaseRangeMax: 452.5
     m_HAllowExceedBaseRangeMin: 1
@@ -1947,8 +1952,8 @@ MonoBehaviour:
     m_VAllowExceedBaseRangeMin: 1
     m_VAllowExceedBaseRangeMax: 1
     m_ScaleWithWindow: 0
-    m_HSlider: 0
-    m_VSlider: 0
+    m_HSlider: 1
+    m_VSlider: 1
     m_IgnoreScrollWheelUntilClicked: 0
     m_EnableMouseInput: 1
     m_EnableSliderZoomHorizontal: 0
@@ -1959,23 +1964,23 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 891
+      width: 892
       height: 905
-    m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 445.5, y: 452.5}
+    m_Scale: {x: 2.3604763, y: 2.3604763}
+    m_Translation: {x: 530.5126, y: 389.5515}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -445.5
-      y: -452.5
-      width: 891
-      height: 905
+      x: -224.74811
+      y: -165.0309
+      width: 377.88983
+      height: 383.39722
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 891, y: 926}
+  m_LastWindowPixelSize: {x: 892, y: 926}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -2017,9 +2022,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 412.5105, y: 448.1741, z: -208.98418}
+    m_Target: {x: -119.493546, y: 8.537392, z: -1836.1116}
     speed: 2
-    m_Value: {x: 412.5105, y: 448.1741, z: -208.98418}
+    m_Value: {x: -119.493546, y: 8.537392, z: -1836.1116}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -2069,9 +2074,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 467.4584
+    m_Target: 148.0798
     speed: 2
-    m_Value: 467.4584
+    m_Value: 148.0798
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -2117,17 +2122,17 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 892
+    x: 893
     y: 73
-    width: 506
+    width: 505
     height: 396
   m_ViewDataDictionary: {fileID: 0}
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: d4bdffff40c0ffff
+      m_SelectedIDs: c6e4ffff
+      m_LastClickedID: -6970
+      m_ExpandedIDs: f0f2ffff10f3ffff1af8ffffce4f0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

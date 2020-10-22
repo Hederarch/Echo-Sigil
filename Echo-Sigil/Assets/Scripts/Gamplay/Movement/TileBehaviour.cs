@@ -153,6 +153,12 @@ public class Tile
                 case TileTextureType.TopEdgedContext:
                     tileTextureType = TileTextureType.TopEdged;
                     break;
+                case TileTextureType.DebugTopContext:
+                    tileTextureType = TileTextureType.DebugTop;
+                    break;
+                case TileTextureType.DebugSideContext:
+                    tileTextureType = TileTextureType.DebugSide;
+                    break;
             }
             if (inContext)
             {
@@ -173,23 +179,43 @@ public class Tile
                 return GetTileTextureSection(texture, TileTextureSection.Side);
             case TileTextureType.Extents:
                 return GetTileTextureSection(texture, TileTextureSection.Extents);
-            case TileTextureType.ExtentsContext:
-                throw new NotImplementedException();
             case TileTextureType.TopBordered:
-                throw new NotImplementedException();
-            case TileTextureType.TopBorederedContext:
                 throw new NotImplementedException();
             case TileTextureType.TopEdged:
                 throw new NotImplementedException();
-            case TileTextureType.TopEdgedContext:
-                throw new NotImplementedException();
             case TileTextureType.SideExtenets:
+                throw new NotImplementedException();
+            case TileTextureType.Debug:
+                Texture2D texture2D = new Texture2D(texture.width, texture.height);
+                texture2D = GetTileTextureSection(texture2D, TileTextureSection.Top, true, true);
+                texture2D = GetTileTextureSection(texture2D, TileTextureSection.Border, true, true);
+                texture2D = GetTileTextureSection(texture2D, TileTextureSection.Edge, true, true);
+                texture2D = GetTileTextureSection(texture2D, TileTextureSection.Side, true, true);
+                texture2D = GetTileTextureSection(texture2D, TileTextureSection.Extents, true, true);
+                return texture2D;
+            case TileTextureType.DebugTop:
+                return GetTileTextureSection(texture, TileTextureSection.Top, true);
+            case TileTextureType.DebugSide:
+                Texture2D debugSideTexture2D = GetTileTexture(texture, TileTextureType.Debug);
+                int index = texture.width + texture.width / 10;
+                Color[] debugSideColors = debugSideTexture2D.GetPixels(0,index,debugSideTexture2D.width,debugSideTexture2D.height-index);
+                debugSideTexture2D = new Texture2D(debugSideTexture2D.width, debugSideTexture2D.height - index);
+                debugSideTexture2D.SetPixels(debugSideColors);
+                debugSideTexture2D.Apply();
+                return debugSideTexture2D;
+            case TileTextureType.DebugContext:
+                throw new NotImplementedException();
+            case TileTextureType.DebugTopContext:
+                throw new NotImplementedException();
+            case TileTextureType.DebugSideContext:
+                throw new NotImplementedException();
+            case TileTextureType.ExtentsContext:
+                throw new NotImplementedException();
+            case TileTextureType.TopEdgedContext:
                 throw new NotImplementedException();
             case TileTextureType.SideExtenetsContext:
                 throw new NotImplementedException();
-            case TileTextureType.Debug:
-                throw new NotImplementedException();
-            case TileTextureType.DebugContext:
+            case TileTextureType.TopBorederedContext:
                 throw new NotImplementedException();
             default:
                 Debug.LogWarning("No TileTextureType selected. Returning top");
@@ -197,64 +223,78 @@ public class Tile
         }
     }
 
-    public static Texture2D GetTileTextureSection(Texture2D texture, TileTextureSection tileTextureSection, bool debug = false)
+    public static Texture2D GetTileTextureSection(Texture2D texture, TileTextureSection tileTextureSection, bool debug = false, bool deface = false)
     {
         int width = texture.width;
         switch (tileTextureSection)
         {
             case TileTextureSection.Top:
-                return GetTextureSection(texture, debug ? Color.blue : Color.black, 0, 0, width, width);
+                return GetTextureSection(texture, debug ? Color.blue : Color.black, 0, 0, width, width, deface);
             case TileTextureSection.Border:
-                return GetTextureSection(texture, debug ? Color.green : Color.black, 0, width, width / 2, width + width / 10);
+                return GetTextureSection(texture, debug ? Color.green : Color.black, 0, width, width / 2, width + width / 10, deface);
             case TileTextureSection.Edge:
-                return GetTextureSection(texture, debug ? Color.green - Color.white / 2f : Color.black, width / 2, width, width, width + width / 10);
+                return GetTextureSection(texture, debug ? Color.yellow : Color.black, width / 2, width, width, width + width / 10, deface);
             case TileTextureSection.Side:
-                return GetTextureSection(texture, debug ? Color.red : Color.black, 0, width + width / 10, width, Mathf.Min(2 * width + width / 10, texture.height - 4));
+                return GetTextureSection(texture, debug ? Color.cyan : Color.black, 0, width + width / 10, width, Mathf.Min(2 * width + width / 10, texture.height - 4), deface);
             case TileTextureSection.Extents:
-                return GetTextureSection(texture, debug ? Color.red - Color.white / 2f : Color.black, 0, Mathf.Min(2 * width + width / 10, texture.height - 4), texture.height, width);
+                return GetTextureSection(texture, debug ? Color.red : Color.black, 0, Mathf.Min(2 * width + width / 10, texture.height - width / 10), width, texture.height, deface);
             default:
                 Debug.LogWarning("No TileTextureSection selection, returning top");
-                return GetTextureSection(texture, debug ? Color.blue : Color.black, 0, 0, width, width);
+                return GetTextureSection(texture, debug ? Color.blue : Color.black, 0, 0, width, width, deface);
         }
 
     }
 
-    private static Texture2D GetTextureSection(Texture2D texture, Color debug, int topLeftX, int topLeftY, int bottomRightX, int bottomRightY)
+    private static Texture2D GetTextureSection(Texture2D texture, Color debugColor, int topLeftX, int topLeftY, int bottomRightX, int bottomRightY, bool deface = false)
     {
         int width = texture.width;
+        bool debug = debugColor != Color.black;
+        if (!debug || deface)
+        {
+            topLeftX = Mathf.Clamp(topLeftX, 0, texture.width);
+            bottomRightX = Mathf.Clamp(bottomRightX, 0, texture.width);
 
-        topLeftX = Mathf.Clamp(topLeftX, 0, texture.width);
-        bottomRightX = Mathf.Clamp(bottomRightX, 0, texture.width);
-
-        topLeftY = Mathf.Clamp(topLeftY, 0, texture.height);
-        bottomRightY = Mathf.Clamp(bottomRightY, 0, texture.height);
+            topLeftY = Mathf.Clamp(topLeftY, 0, texture.height);
+            bottomRightY = Mathf.Clamp(bottomRightY, 0, texture.height);
+        }
 
         int deltaX = bottomRightX - topLeftX;
         int deltaY = bottomRightY - topLeftY;
 
-        Color[] outputTexture = new Color[deltaX * deltaY];
-        if (debug != Color.black)
+        Color[] outputColors = deface ? texture.GetPixels() : new Color[deltaX * deltaY];
+        if (debug)
         {
-            for (int i = 0; i < deltaX * deltaY; i++)
+            if (deface)
             {
-                outputTexture[i] = debug;
+                for (int y = 0; y < deltaY; y++)
+                {
+                    for (int x = 0; x < deltaX; x++)
+                    {
+                        int index = topLeftY * width + (y * width) + topLeftX + x;
+                        outputColors[index] = debugColor;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < deltaX * deltaY; i++)
+                {
+                    outputColors[i] = debugColor;
+                }
             }
         }
         else
         {
-            for (int y = 0; y < deltaY; y++)
-            {
-                Array.Copy(texture.GetPixels(), (topLeftY * width + topLeftX) + y*width, outputTexture, y*deltaX , deltaX);
-            }
+            outputColors = texture.GetPixels(topLeftX, topLeftY, deltaX, deltaY);
         }
 
-        Texture2D ouputTexture = new Texture2D(deltaX, deltaY);
-        ouputTexture.SetPixels(outputTexture);
-        ouputTexture.Apply();
+        Texture2D outputTexture = deface ? texture : new Texture2D(deltaX, deltaY);
+        outputTexture.SetPixels(outputColors);
+        outputTexture.Apply();
 
-        return ouputTexture;
+        return outputTexture;
     }
 }
 
-public enum TileTextureType { Top, Border, TopBordered, TopBorederedContext, Edge, TopEdged, TopEdgedContext, Side, Extents, ExtentsContext, SideExtenets, SideExtenetsContext, Original, Debug, DebugContext }
+public enum TileTextureType { Top, Border, TopBordered, TopBorederedContext, Edge, TopEdged, TopEdgedContext, Side, Extents, ExtentsContext, SideExtenets, SideExtenetsContext, Original, Debug, DebugContext, DebugTop, DebugTopContext, DebugSide, DebugSideContext }
 public enum TileTextureSection { Top, Border, Edge, Side, Extents }

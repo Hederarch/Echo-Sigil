@@ -76,16 +76,22 @@ namespace Tile_Tests
         public void get_tile_border_returns_10_percent()
         {
             int random = Random.Range(2, 256);
-            Texture2D texture2D = new Texture2D(random, random + random/10);
+            Texture2D texture2D = new Texture2D(random, random + random / 10);
             int width = texture2D.width;
             texture2D = Tile.GetTileTextureSection(texture2D, TileTextureSection.Border);
-            Assert.AreEqual(width/10, texture2D.height);
+            Assert.AreEqual(width / 10, texture2D.height);
         }
 
         [Test]
         public void dubug_returns_correct_placement()
         {
-
+            int random = Random.Range(2, 256);
+            Texture2D texture2D = new Texture2D(random, random * 3);
+            int width = texture2D.width;
+            texture2D = Tile.GetTileTexture(texture2D, TileTextureType.Debug);
+            Assert.AreNotEqual(texture2D.GetPixel(0, width - 1), texture2D.GetPixel(0, width + 1));
+            Assert.AreNotEqual(texture2D.GetPixel(0, width + (width / 10) - 1), texture2D.GetPixel(0, width + (width / 10) + 1));
+            Assert.AreNotEqual(texture2D.GetPixel(0, texture2D.height), texture2D.GetPixel(0, (width * 2) - 1));
         }
     }
 }
