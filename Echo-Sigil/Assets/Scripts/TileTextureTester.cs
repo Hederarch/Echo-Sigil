@@ -11,7 +11,7 @@ public class TileTextureTester : MonoBehaviour
 
     protected void OnValidate()
     {
-        Texture2D texture2D = Tile.GetTileTexture(new Texture2D(textureSize.x, textureSize.y), tileTextureType);
+        Texture2D texture2D = TileTextureManager.GetTileTexture(new Texture2D(textureSize.x, textureSize.y), tileTextureType);
         texture2D.filterMode = FilterMode.Point;
         texture2D.wrapMode = TextureWrapMode.Clamp;
         rawImage.texture = texture2D;

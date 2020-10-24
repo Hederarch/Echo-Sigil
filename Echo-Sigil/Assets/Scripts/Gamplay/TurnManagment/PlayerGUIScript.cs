@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -60,11 +58,11 @@ public class PlayerGUIScript : MonoBehaviour
         if(unit != null)
         {
             guiCharacterImageRenderer.sprite = unit.unitSprite.sprite;
-            SetSliders(unit.battle);
+            SetSliders(unit);
             if (TurnManager.IsPlayerTurn)
             {
-                moveButton.interactable = unit.move.CanMove && !unit.hasMoved;
-                attackButton.interactable = unit.battle.CanAttack && !unit.hasAttacked;
+                moveButton.interactable = unit.CanMove && !unit.hasMoved;
+                attackButton.interactable = unit.CanAttack && !unit.hasAttacked;
             }
         } else
         {

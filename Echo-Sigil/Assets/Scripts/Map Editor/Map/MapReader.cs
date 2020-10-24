@@ -9,8 +9,12 @@ public static class MapReader
     public static Transform tileParent;
 
     public static bool lodeing = false;
+
     public static int sizeX;
     public static int sizeY => rowIndexes.Length;
+    public static Vector2Int Size => new Vector2Int(sizeX, sizeY);
+    public static Vector2 mapHalfSize => new Vector2(sizeX / 2, sizeY / 2);
+
     private static Tile[] tiles;
     /// <summary>
     /// Cumulative number of tiles in all rows before spesified row
@@ -22,7 +26,7 @@ public static class MapReader
     private static int[] numTile;
     public static List<Unit> implements = new List<Unit>();
 
-    public static Sprite[] spritePallate;
+    public static Texture2D[] spritePallate;
 
     public static Map Map => new Map(tiles, rowIndexes, numTile, sizeX, implements.ToArray());
 
@@ -33,12 +37,13 @@ public static class MapReader
         DestroyPhysicalMapTiles();
 
         tileParent = new GameObject("Tile Parent").transform;
+        sizeX = map.sizeX;
         tiles = new Tile[map.sizeX * map.sizeY];
         rowIndexes = new int[map.sizeY];
         numTile = new int[map.sizeX * map.sizeY];
         implements.Clear();
 
-        spritePallate = map.readyForSave ? SaveSystem.LoadPallate(map.modPathIndex, map.quest) : Tile.GetDebugPallate();
+        spritePallate = map.readyForSave ? SaveSystem.LoadPallate(map.modPathIndex, map.quest) : TileTextureManager.GetDebugPallate();
 
         for (int y = 0; y < map.sizeY; y++)
         {
@@ -58,7 +63,7 @@ public static class MapReader
                     tiles[index] = tile;
 
                     TileToGameObject(tile);
-                    MapImplementToUnit(mapTile.unit,map.modPathIndex);
+                    MapImplementToUnit(mapTile.unit);
 
                     MapGeneratedEvent?.Invoke(); 
                 }
@@ -82,54 +87,51 @@ public static class MapReader
 
             gameObjectTile.AddComponent<BoxCollider2D>().size = new Vector3(1, 1, .2f);
 
-            Sprite sprite = null;
-            if (spritePallate != null && spritePallate.Length > 0)
-            {
-                sprite = tile.spriteIndex < spritePallate.Length ? spritePallate[tile.spriteIndex] : spritePallate[0];
-            }
-            gameObjectTile.AddComponent<SpriteRenderer>().sprite = sprite;
+
         }
     }
 
-    public static Unit MapImplementToUnit(MapImplement mi, int modPathIndex)
+    public static Unit MapImplementToUnit(MapImplement mi)
     {
-        GameObject unit = new GameObject(mi.name);
-        Vector2 pos = GridToWorldSpace(mi.PosInGrid);
-        unit.transform.parent = tileParent;
-        Tile tile = GetTile(mi.PosInGrid, 0);
-        unit.transform.position = new Vector3(pos.x, pos.y, tile.topHeight - .1f);
-        Unit i;
-        if (mi.player)
+        if (mi != null)
         {
-            i = unit.AddComponent<PlayerUnit>();
+            GameObject unit = new GameObject(mi.name);
+            Vector2 pos = GridToWorldSpace(mi.PosInGrid);
+            unit.transform.parent = tileParent;
+            Tile tile = GetTile(mi.PosInGrid, 0);
+            unit.transform.position = new Vector3(pos.x, pos.y, tile.topHeight - .1f);
+            Unit i;
+            if (mi.player)
+            {
+                i = unit.AddComponent<PlayerUnit>();
+            }
+            else
+            {
+                i = unit.AddComponent<NPCUnit>();
+            }
+
+            i.SetValues(mi.movementSettings);
+
+            i.SetValues(mi.battleSettings);
+
+            GameObject spriteRender = new GameObject("Sprite Render");
+            spriteRender.transform.parent = unit.transform;
+            spriteRender.transform.localPosition = new Vector3(0, 0, .1f);
+            SpriteRenderer spriteRenderer = spriteRender.AddComponent<SpriteRenderer>();
+            i.unitSprite = spriteRenderer;
+            spriteRenderer.spriteSortPoint = SpriteSortPoint.Pivot;
+            spriteRender.AddComponent<BoxCollider2D>().size = new Vector3(1, 1, .2f);
+
+            implements.Add(i);
+
+            return i; 
         }
-        else
-        {
-            i = unit.AddComponent<NPCUnit>();
-        }
-
-        i.SetValues(mi.movementSettings);
-
-        i.SetValues(mi.battleSettings);
-
-        GameObject spriteRender = new GameObject("Sprite Render");
-        spriteRender.transform.parent = unit.transform;
-        spriteRender.transform.localPosition = new Vector3(0, 0, .1f);
-        SpriteRenderer spriteRenderer = spriteRender.AddComponent<SpriteRenderer>();
-        i.unitSprite = spriteRenderer;
-        spriteRender.AddComponent<Animator>().runtimeAnimatorController = SaveSystem.LoadImplement(modPathIndex, mi.name).GetAnimationController();
-        spriteRenderer.spriteSortPoint = SpriteSortPoint.Pivot;
-        spriteRender.AddComponent<BoxCollider2D>().size = new Vector3(1, 1, .2f);
-
-        implements.Add(i);
-
-        return i;
+        return null;
     }
 
     public static Vector2 GridToWorldSpace(Vector2Int posInGrid)
     {
-        Vector2 mapHalfHeight = new Vector2(tiles.GetLength(0) / 2, tiles.GetLength(1) / 2);
-        Vector2 realitivePosition = new Vector2(posInGrid.x - mapHalfHeight.x, posInGrid.y - mapHalfHeight.y);
+        Vector2 realitivePosition = new Vector2(posInGrid.x - mapHalfSize.x, posInGrid.y - mapHalfSize.y);
         return new Vector2(tileParent.transform.position.x, tileParent.transform.position.y) - realitivePosition;
     }
 
@@ -137,9 +139,8 @@ public static class MapReader
 
     public static Vector2Int WorldToGridSpace(Vector2 posInWorld)
     {
-        Vector2 mapHalfHeight = new Vector2(tiles.GetLength(0) / 2, tiles.GetLength(1) / 2);
         Vector2 realitivePosition = posInWorld - new Vector2(tileParent.position.x, tileParent.position.y);
-        return new Vector2Int((int)Math.Abs(realitivePosition.x - mapHalfHeight.x - .5f), (int)Math.Abs(realitivePosition.y - mapHalfHeight.y - .5f));
+        return new Vector2Int((int)Math.Abs(realitivePosition.x - mapHalfSize.x - .5f), (int)Math.Abs(realitivePosition.y - mapHalfSize.y - .5f));
     }
 
     public static Vector2Int WorldToGridSpace(float x, float y) => WorldToGridSpace(new Vector2(x, y));
