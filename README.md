@@ -1,5 +1,5 @@
-# Tales from the Metaheadron
-a status effect based tactics game in the world of the Metaheadron
+# Tales from The Metahedron
+A status effect based tactics game in the world of The Metahedron
 
-# What is the Metaheadron?
-The Metaheadron is an alien entiy from byond platos cave, who experices the world based on concepts. It pulls in people from our world along with and object, leaving behind only a triangle symobol. This object merges with the person, called an **Implement**, and becomes their **Artifact**.
+# What is The Metahedron?
+The Metahedron is an alien entity from beyond platos cave, who experiences the world based on concepts. It pulls in people from our world along with an object, leaving behind only a triangle symbol. The person, called an **Implement**, merges with that object, which becomes their **Artifact**.
