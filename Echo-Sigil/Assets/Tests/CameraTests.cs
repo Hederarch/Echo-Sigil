@@ -51,7 +51,7 @@ namespace Camera_Tests
         {
             Vector3 point = ResetCamera().GetScreenPoint(Camera.main.pixelWidth/2, Camera.main.pixelHeight/2);
             MapReader.GeneratePhysicalMap();
-            Assert.IsNotNull(MapReader.GetTile(MapReader.WorldToGridSpace(point)));
+            Assert.IsNotNull(MapReader.GetTile(MapReader.WorldToGridSpace(point), 0));
         }
     }
     class rotation

@@ -63,7 +63,7 @@ namespace MapEditor
             {
                 for (int y = -1; y <= MapReader.tiles.GetLength(1); y++)
                 {
-                    if (MapReader.GetTile(x, y) == null)
+                    if (MapReader.GetTile(x, y, 0) == null)
                     {
                         CreateEditorTile(x, y, sprites[0]);
                     }
@@ -226,7 +226,7 @@ namespace MapEditor
         public static void ChangeUnitPos(Vector2Int pointOnGrid, Unit selectedImplement)
         {
             Vector2 worldSpace = MapReader.GridToWorldSpace(pointOnGrid);
-            Tile tile = MapReader.GetTile(pointOnGrid);
+            Tile tile = MapReader.GetTile(pointOnGrid, 0);
             if (tile != null)
             {
                 selectedImplement.transform.position = new Vector3(worldSpace.x, worldSpace.y, tile.topHeight - .1f);

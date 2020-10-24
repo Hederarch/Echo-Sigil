@@ -20,6 +20,17 @@ public class Tile
     public Vector2 PosInWorld { get => MapReader.GridToWorldSpace(PosInGrid); }
     public float topHeight;
     public float bottomHeight;
+    public float midHeight => (topHeight + bottomHeight) / 2f;
+    public float sideLength
+    {
+        get => topHeight - bottomHeight;
+        set
+        {
+            float mid = midHeight;
+            topHeight = mid + (value / 2f);
+            bottomHeight = mid - (value / 2f);
+        }
+    }
 
     public int spriteIndex;
 
@@ -27,8 +38,6 @@ public class Tile
     public bool current;
     public bool target;
     public bool selectable;
-
-    public List<Tile> adjacencyList = new List<Tile>();
 
     //BFS stuff
     public bool visited;
@@ -41,6 +50,11 @@ public class Tile
     public float h;
 
     public Tile(int x, int y) : this(new Vector2Int(x, y)) { }
+
+    internal static Sprite[] GetDebugPallate()
+    {
+        throw new NotImplementedException();
+    }
 
     public Tile(Vector2Int posInGrid)
     {
@@ -77,7 +91,6 @@ public class Tile
     /// <param name="target">Tile discounted for direction check.</param>
     public Tile[] FindNeighbors(float jumpHeight, Tile target = null)
     {
-        adjacencyList.Clear();
         return new Tile[4] {
         FindNeighbor(Vector2Int.up, jumpHeight, target),
         FindNeighbor(Vector2Int.down, jumpHeight, target),
@@ -88,16 +101,7 @@ public class Tile
 
     public Tile FindNeighbor(Vector2Int direction, float jumpHeight, Tile target)
     {
-        Tile tile = MapReader.GetTile(PosInGrid + direction);
-        if (tile != null)
-        {
-            if ((tile.DirectionCheck() || tile == target) && tile.walkable && Math.Abs(tile.topHeight - topHeight) < jumpHeight)
-            {
-                adjacencyList.Add(tile);
-            }
-            return tile;
-        }
-        return null;
+        throw new NotImplementedException();
     }
 
     public bool DirectionCheck()
@@ -140,24 +144,31 @@ public class Tile
             {
                 case TileTextureType.DebugContext:
                     tileTextureType = TileTextureType.Debug;
+                    inContext = true;
                     break;
                 case TileTextureType.ExtentsContext:
                     tileTextureType = TileTextureType.Extents;
+                    inContext = true;
                     break;
                 case TileTextureType.SideExtenetsContext:
                     tileTextureType = TileTextureType.SideExtenets;
+                    inContext = true;
                     break;
                 case TileTextureType.TopBorederedContext:
                     tileTextureType = TileTextureType.TopBordered;
+                    inContext = true;
                     break;
                 case TileTextureType.TopEdgedContext:
                     tileTextureType = TileTextureType.TopEdged;
+                    inContext = true;
                     break;
                 case TileTextureType.DebugTopContext:
                     tileTextureType = TileTextureType.DebugTop;
+                    inContext = true;
                     break;
                 case TileTextureType.DebugSideContext:
                     tileTextureType = TileTextureType.DebugSide;
+                    inContext = true;
                     break;
             }
             if (inContext)
@@ -198,7 +209,7 @@ public class Tile
             case TileTextureType.DebugSide:
                 Texture2D debugSideTexture2D = GetTileTexture(texture, TileTextureType.Debug);
                 int index = texture.width + texture.width / 10;
-                Color[] debugSideColors = debugSideTexture2D.GetPixels(0,index,debugSideTexture2D.width,debugSideTexture2D.height-index);
+                Color[] debugSideColors = debugSideTexture2D.GetPixels(0, index, debugSideTexture2D.width, debugSideTexture2D.height - index);
                 debugSideTexture2D = new Texture2D(debugSideTexture2D.width, debugSideTexture2D.height - index);
                 debugSideTexture2D.SetPixels(debugSideColors);
                 debugSideTexture2D.Apply();

@@ -17,7 +17,7 @@ public class TacticsMove : MonoBehaviour , IMovement
     public float moveSpeed = 4;
     public float jumpHeight = 2;
 
-    public Tile currentTile { get => MapReader.GetTile(MapReader.WorldToGridSpace(transform.position.x,transform.position.y)); }
+    public Tile currentTile { get => MapReader.GetTile(MapReader.WorldToGridSpace(transform.position.x, transform.position.y), 0); }
 
     Vector3 velocity = new Vector3();
     Vector3 heading = new Vector3();

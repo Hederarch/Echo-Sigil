@@ -1,101 +1,118 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Windows.Forms;
 using UnityEngine;
 
 namespace MapEditor
 {
     [Serializable]
-    public class Map
+    public struct Map
     {
+        public bool readyForSave;
         public string name;
         public string quest;
         [NonSerialized]
         public int modPathIndex;
-        public string modPath { get => SaveSystem.GetModPaths()[modPathIndex]; }
 
         //map data
         public int sizeX;
-        public int sizeY;
-        public float[,] heightMap;
-        public bool[,] walkableMap;
-        public int[,] spriteIndexMap;
-        public List<MapImplement> units;
+        public int sizeY => rowIndexes.Length;
+        [SerializeField]
+        public MapTile[] mapTiles;
+        /// <summary>
+        /// Cumulative number of tiles in all rows before spesified row
+        /// </summary>
+        [SerializeField]
+        private int[] rowIndexes;
+        /// <summary>
+        /// Number of tiles in a given grid position
+        /// </summary>
+        [SerializeField]
+        private int[] numTile;
 
-        public Map(int sizeX, int sizeY, string path = null) : this(new Vector2Int(sizeX, sizeY), path) { }
 
-        public Map(Vector2Int vectorSize, string path = null)
+        public MapTile[] this[int x, int y]
         {
-            sizeX = vectorSize.x;
-            sizeY = vectorSize.y;
-            heightMap = new float[sizeX, sizeY];
-            walkableMap = new bool[sizeX, sizeY];
-            spriteIndexMap = new int[sizeX, sizeY];
-
-            for (int x = 0; x < sizeX; x++)
+            get
             {
-                for (int y = 0; y < sizeY; y++)
+                int startIndex = rowIndexes[y];
+                for (int i = 0; i < x; i++)
                 {
-                    heightMap[x, y] = 0f;
-                    walkableMap[x, y] = true;
-                    spriteIndexMap[x, y] = 0;
+                    startIndex += numTile[y * sizeX + i];
                 }
+
+                int length = numTile[y * sizeX + x];
+                MapTile[] output = new MapTile[length];
+                for (int i = 0; i < length; i++)
+                {
+                    output[i] = mapTiles[startIndex + i];
+                }
+
+                return output;
             }
         }
 
-        public Map(Tile[,] tiles, Unit[] units = null)
+        public MapTile GetMapTile(int x, int y, float nearestHeight)
         {
-            sizeX = tiles.GetLength(0);
-            sizeY = tiles.GetLength(1);
-            heightMap = new float[sizeX, sizeY];
-            walkableMap = new bool[sizeX, sizeY];
-            spriteIndexMap = new int[sizeX, sizeY];
-
-            for (int x = 0; x < sizeX; x++)
+            MapTile[] mapTiles = this[x, y];
+            MapTile output = mapTiles[0];
+            foreach (MapTile mapTile in mapTiles)
             {
-                for (int y = 0; y < sizeY; y++)
-                {
-                    if (tiles[x, y] != null)
-                    {
-                        heightMap[x, y] = tiles[x, y].topHeight;
-                        walkableMap[x, y] = tiles[x, y].walkable;
-                        spriteIndexMap[x, y] = tiles[x, y].spriteIndex;
-                    }
-                    else
-                    {
-                        heightMap[x, y] = -1;
-                        walkableMap[x, y] = true;
-                        spriteIndexMap[x, y] = 0;
-                    }
-                }
+                output = Mathf.Abs(nearestHeight - output.midHeight) < Mathf.Abs(nearestHeight - mapTile.midHeight) ? output : mapTile;
             }
-            if (units != null && units.Length > 0)
+            return output;
+        }
+
+        public Map(Vector2Int size) : this(size.x, size.y) { }
+
+        public Map(int _sizeX, int _sizeY)
+        {
+            readyForSave = false;
+            name = "";
+            quest = "";
+            modPathIndex = -1;
+
+            sizeX = _sizeX;
+            mapTiles = new MapTile[_sizeX * _sizeY];
+            numTile = new int[_sizeX * _sizeY];
+            for (int i = 0; i < numTile.Length; i++)
             {
-                this.units = new List<MapImplement>();
-                foreach (Unit i in units)
-                {
-                    TacticsMove t = i.move as TacticsMove;
-                    JRPGBattle j = i.battle as JRPGBattle;
-                    MapImplement mapImplement = new MapImplement(i.name, t.currentTile.PosInGrid, t, j, i is PlayerUnit);
-                    this.units.Add(mapImplement);
-                }
+                numTile[i] = 1;
+            }
+            rowIndexes = new int[_sizeY];
+            for (int i = 0; i < _sizeY; i++)
+            {
+                rowIndexes[i] = _sizeX * i;
             }
         }
 
-        public Tile SetTileProperties(int x, int y)
+        public Map(Tile[] tiles, int[] rowIndexes, int[] numTile, int sizeX, Unit[] units)
         {
-            Tile tile = new Tile(x, y)
-            {
-                topHeight = heightMap[x, y],
-                walkable = walkableMap[x, y],
-                spriteIndex = spriteIndexMap[x, y]
-            };
-            return tile;
-        }
+            this.rowIndexes = rowIndexes;
+            this.numTile = numTile;
+            this.sizeX = sizeX;
 
+            readyForSave = false;
+            name = "";
+            quest = "";
+            modPathIndex = -1;
+
+            mapTiles = new MapTile[tiles.Length];
+            for (int i = 0; i < tiles.Length; i++)
+            {
+                mapTiles[i] = (MapTile)tiles[i];
+            }
+
+            foreach(Unit unit in units)
+            {
+                MapTile mapTile = GetMapTile(unit.posInGrid.x, unit.posInGrid.y, unit.curHeight);
+                mapTile.unit = (MapImplement)unit;
+            }
+        }
     }
     [Serializable]
-    public struct MapImplement
+    public class MapImplement
     {
         public string name;
         public Implement GetImplement(int modPathIndex)
@@ -221,6 +238,72 @@ namespace MapEditor
             movementSettings = new MovementSettings(5, 1, 2);
             battleSettings = new BattleSettings(5, 5, 1);
         }
-    }
 
+        public static explicit operator MapImplement(Unit v)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    [Serializable]
+    public struct MapTile
+    {
+        public int pallateIndex;
+
+        public MapTile(float pos, int pallateIndex, MapImplement mapImplement = null)
+        {
+            this.pallateIndex = pallateIndex;
+
+            topHeight = pos + .5f;
+            bottomHeight = pos + .5f;
+
+            walkable = true;
+
+            unit = mapImplement;
+        }
+
+        public MapTile(float top, float bottom, int pallateIndex, MapImplement mapImplement = null)
+        {
+            this.pallateIndex = pallateIndex;
+
+            topHeight = top;
+            bottomHeight = bottom;
+
+            walkable = true;
+
+            unit = mapImplement;
+        }
+
+        public float topHeight;
+        public float bottomHeight;
+        public float midHeight => (topHeight + bottomHeight) / 2f;
+        public float sideLength
+        {
+            get => topHeight - bottomHeight;
+            set
+            {
+                float mid = midHeight;
+                topHeight = mid + (value / 2f);
+                bottomHeight = mid - (value / 2f);
+            }
+        }
+
+        public bool walkable;
+
+        public MapImplement unit;
+
+        public static Tile ConvertTile(MapTile mapTile, int x, int y)
+        {
+            Tile tile = new Tile(x, y);
+            tile.bottomHeight = mapTile.bottomHeight;
+            tile.topHeight = mapTile.topHeight;
+            tile.spriteIndex = mapTile.pallateIndex;
+
+            return tile;
+        }
+
+        /// <summary>
+        /// This opperation does not include units
+        /// </summary>
+        public static explicit operator MapTile(Tile tile) => new MapTile(tile.topHeight, tile.bottomHeight, tile.spriteIndex);
+    }
 }

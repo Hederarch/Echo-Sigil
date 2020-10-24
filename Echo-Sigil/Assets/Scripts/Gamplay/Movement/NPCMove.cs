@@ -52,7 +52,7 @@ public class NPCMove : TacticsMove
 
     private void CalculatePath()
     {
-        Tile targetTile = MapReader.GetTile(MapReader.WorldToGridSpace(target));
+        Tile targetTile = MapReader.GetTile(MapReader.WorldToGridSpace(target), 0);
         FindPath(targetTile);
     }
 }

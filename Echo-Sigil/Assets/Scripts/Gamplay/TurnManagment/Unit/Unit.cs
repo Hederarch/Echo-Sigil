@@ -1,40 +1,44 @@
-﻿using System;
+﻿using MapEditor;
+using System;
+using System.Numerics;
+using UnityEngine;
 
 /// <summary>
 /// Character in the world
 /// </summary>
-public class Unit : FacesCamera, ITurn
+public class Unit : FacesCamera, ITurn, IMovement, IBattle
 {
-    public IMovement move;
-    public IBattle battle;
-
     public bool hasMoved;
     public bool hasAttacked;
 
     public int implementListIndex = 0;
+    public Vector2Int posInGrid;
+    public float curHeight;
 
     public string Tag { get => gameObject.tag; }
+    public bool IsTurn { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+    public bool CanMove => throw new NotImplementedException();
+
+    public float HealthPercent => throw new NotImplementedException();
+
+    public float WillPercent => throw new NotImplementedException();
+
+    public bool CanAttack => throw new NotImplementedException();
 
     public static event Action<Unit> IsTurnEvent;
-
-    private void Start()
-    {
-        move = GetComponent<TacticsMove>();
-        battle = GetComponent<JRPGBattle>();
-    }
+    public event Action EndEvent;
 
     public virtual void BeginTurn()
     {
         TurnManager.CheckForWin();
         IsTurnEvent?.Invoke(this);
-        Subscribe();
     }
 
     public virtual void EndTurn()
     {
         TurnManager.CheckForWin();
         ResetUnit();
-        UnSubscribe();
     }
 
     public virtual void Init()
@@ -52,25 +56,19 @@ public class Unit : FacesCamera, ITurn
         hasAttacked = true;
     }
 
-    protected virtual void Subscribe()
-    {
-        move.EndEvent += HasMoved;
-        battle.EndEvent += HasAttacked;
-    }
-    protected virtual void UnSubscribe()
-    {
-        move.EndEvent -= HasMoved;
-        battle.EndEvent -= HasAttacked;
-    }
-
     public virtual void ResetUnit()
     {
         hasMoved = false;
         hasAttacked = false;
     }
 
-    public virtual void DeInit()
+    internal void SetValues(MapImplement.MovementSettings movementSettings)
     {
-        TurnManager.RemoveUnit(this);
+        throw new NotImplementedException();
+    }
+
+    internal void SetValues(MapImplement.BattleSettings battleSettings)
+    {
+        throw new NotImplementedException();
     }
 }

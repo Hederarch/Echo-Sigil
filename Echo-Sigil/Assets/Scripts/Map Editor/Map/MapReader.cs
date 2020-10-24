@@ -6,72 +6,89 @@ using UnityEngine;
 
 public static class MapReader
 {
-    public static int modPathIndex;
     public static Transform tileParent;
-    public static Tile[,] tiles;
+
+    public static bool lodeing = false;
+    public static int sizeX;
+    public static int sizeY => rowIndexes.Length;
+    private static Tile[] tiles;
+    /// <summary>
+    /// Cumulative number of tiles in all rows before spesified row
+    /// </summary>
+    private static int[] rowIndexes;
+    /// <summary>
+    /// Number of tiles in a given grid position
+    /// </summary>
+    private static int[] numTile;
     public static List<Unit> implements = new List<Unit>();
 
     public static Sprite[] spritePallate;
 
-    public static Map Map => new Map(tiles, implements.ToArray());
-
+    public static Map Map => new Map(tiles, rowIndexes, numTile, sizeX, implements.ToArray());
 
     public static Action MapGeneratedEvent;
 
-    public static Tile[,] GeneratePhysicalMap(Map map = null, int modPathIndex = 0)
+    public static void GeneratePhysicalMap(Map map)
     {
         DestroyPhysicalMapTiles();
-        if (map == null)
-        {
-            map = new Map(1, 1)
-            {
-                modPathIndex = modPathIndex
-            };
-        }
-        modPathIndex = map.modPathIndex;
+
         tileParent = new GameObject("Tile Parent").transform;
-        tiles = new Tile[map.sizeX, map.sizeY];
-        spritePallate = SaveSystem.LoadPallate(map.modPathIndex);
-        Vector2 mapHalfHeight = new Vector2(map.sizeX / 2, map.sizeY / 2);
+        tiles = new Tile[map.sizeX * map.sizeY];
+        rowIndexes = new int[map.sizeY];
+        numTile = new int[map.sizeX * map.sizeY];
+        implements.Clear();
 
-        for (int x = 0; x < map.sizeX; x++)
+        spritePallate = map.readyForSave ? SaveSystem.LoadPallate(map.modPathIndex, map.quest) : Tile.GetDebugPallate();
+
+        for (int y = 0; y < map.sizeY; y++)
         {
-            for (int y = 0; y < map.sizeY; y++)
+            for (int x = 0; x < map.sizeX; x++)
             {
-                Tile tile = map.SetTileProperties(x, y);
-
-                if (tile.topHeight >= 0)
+                for (int i = 0; i < map[x, y].Length; i++)
                 {
-                    GameObject gameObjectTile = InstantateTileGameObject(mapHalfHeight, tile);
+                    MapTile mapTile = map[x, y][i];
+                    Tile tile = MapTile.ConvertTile(mapTile, x, y);
 
-                    gameObjectTile.AddComponent<TileBehaviour>().tile = tile;
-                    tiles[x, y] = tile;
-
-                    gameObjectTile.transform.position += new Vector3(0, 0, tile.topHeight);
-
-                    gameObjectTile.AddComponent<BoxCollider2D>().size = new Vector3(1, 1, .2f);
-
-                    Sprite sprite = null;
-                    if (spritePallate != null && spritePallate.Length > 0)
+                    int index = rowIndexes[y]; 
+                    for(int X = 0; X < x; X++)
                     {
-                        sprite = tile.spriteIndex < spritePallate.Length ? spritePallate[tile.spriteIndex] : spritePallate[0];
+                        index += numTile[y * sizeX + X];
                     }
-                    gameObjectTile.AddComponent<SpriteRenderer>().sprite = sprite;
+                    index += i;
+                    tiles[index] = tile;
+
+                    TileToGameObject(tile);
+                    MapImplementToUnit(mapTile.unit,map.modPathIndex);
+
+                    MapGeneratedEvent?.Invoke(); 
                 }
             }
         }
+    }
 
-        implements.Clear();
-        if (map.units != null)
+    private static void TileToGameObject(Tile tile)
+    {
+        if (tile.topHeight >= 0)
         {
-            foreach (MapImplement mi in map.units)
-            {
-                MapImplementToUnit(mi, map.modPathIndex);
-            }
-        }
+            GameObject gameObjectTile = new GameObject(tile.PosInGrid.x + "," + tile.PosInGrid.y + " tile");
+            gameObjectTile.transform.position = tile.PosInWorld;
+            gameObjectTile.transform.rotation = Quaternion.identity;
+            gameObjectTile.transform.parent = tileParent;
+            gameObjectTile.tag = "Tile";
 
-        MapGeneratedEvent?.Invoke();
-        return tiles;
+            gameObjectTile.AddComponent<TileBehaviour>().tile = tile;
+
+            gameObjectTile.transform.position += new Vector3(0, 0, tile.topHeight);
+
+            gameObjectTile.AddComponent<BoxCollider2D>().size = new Vector3(1, 1, .2f);
+
+            Sprite sprite = null;
+            if (spritePallate != null && spritePallate.Length > 0)
+            {
+                sprite = tile.spriteIndex < spritePallate.Length ? spritePallate[tile.spriteIndex] : spritePallate[0];
+            }
+            gameObjectTile.AddComponent<SpriteRenderer>().sprite = sprite;
+        }
     }
 
     public static Unit MapImplementToUnit(MapImplement mi, int modPathIndex)
@@ -79,29 +96,21 @@ public static class MapReader
         GameObject unit = new GameObject(mi.name);
         Vector2 pos = GridToWorldSpace(mi.PosInGrid);
         unit.transform.parent = tileParent;
-        Tile tile = GetTile(mi.PosInGrid);
+        Tile tile = GetTile(mi.PosInGrid, 0);
         unit.transform.position = new Vector3(pos.x, pos.y, tile.topHeight - .1f);
-        JRPGBattle j;
-        TacticsMove t;
         Unit i;
         if (mi.player)
         {
             i = unit.AddComponent<PlayerUnit>();
-            j = unit.AddComponent<PlayerBattle>();
-            t = unit.AddComponent<PlayerMove>();
         }
         else
         {
             i = unit.AddComponent<NPCUnit>();
-            j = unit.AddComponent<NPCBattle>();
-            t = unit.AddComponent<NPCMove>();
         }
-        i.battle = j;
-        i.move = t;
 
-        t.SetValues(mi.movementSettings);
+        i.SetValues(mi.movementSettings);
 
-        j.SetValues(mi.battleSettings);
+        i.SetValues(mi.battleSettings);
 
         GameObject spriteRender = new GameObject("Sprite Render");
         spriteRender.transform.parent = unit.transform;
@@ -115,16 +124,6 @@ public static class MapReader
         implements.Add(i);
 
         return i;
-    }
-
-    private static GameObject InstantateTileGameObject(Vector2 mapHalfHeight, Tile tile)
-    {
-        GameObject gameObjectTile = new GameObject(tile.PosInGrid.x + "," + tile.PosInGrid.y + " tile");
-        gameObjectTile.transform.position = new Vector3(mapHalfHeight.x - tile.PosInGrid.x, mapHalfHeight.y - tile.PosInGrid.y);
-        gameObjectTile.transform.rotation = Quaternion.identity;
-        gameObjectTile.transform.parent = tileParent;
-        gameObjectTile.tag = "Tile";
-        return gameObjectTile;
     }
 
     public static Vector2 GridToWorldSpace(Vector2Int posInGrid)
@@ -144,16 +143,37 @@ public static class MapReader
     }
 
     public static Vector2Int WorldToGridSpace(float x, float y) => WorldToGridSpace(new Vector2(x, y));
-    /// <summary>
-    /// Get a tile in the array of tiles
-    /// </summary>
-    /// <returns>Null if out of array bounds</returns>
-    public static Tile GetTile(Vector2Int pos) => GetTile(pos.x, pos.y);
-    /// <summary>
-    /// Get a tile in the array of tiles
-    /// </summary>
-    /// <returns>Null if out of array bounds</returns>
-    public static Tile GetTile(int x, int y) => x >= 0 && x < tiles.GetLength(0) && y >= 0 && y < tiles.GetLength(1) ? tiles[x, y] : null;
+
+    public static Tile[] GetTiles(int x, int y)
+    {
+        int startIndex = rowIndexes[y];
+        for (int i = 0; i < x; i++)
+        {
+            startIndex += numTile[y * sizeX + i];
+        }
+
+        int length = numTile[y * sizeX + x];
+        Tile[] output = new Tile[length];
+        for (int i = 0; i < length; i++)
+        {
+            output[i] = tiles[startIndex + i];
+        }
+
+        return output;
+    }
+
+    public static Tile GetTile(Vector2Int pos, float height) => GetTile(pos.x, pos.y, height);
+
+    public static Tile GetTile(int x, int y, float nearestHeight)
+    {
+        Tile[] tiles = GetTiles(x, y);
+        Tile output = tiles[0];
+        foreach (Tile tile in tiles)
+        {
+            output = Mathf.Abs(nearestHeight - output.midHeight) < Mathf.Abs(nearestHeight - tile.midHeight) ? output : tile;
+        }
+        return output;
+    }
 
     public static void DestroyPhysicalMapTiles()
     {

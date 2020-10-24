@@ -37,17 +37,27 @@ namespace MapEditor
 
         }
 
-        public static void SaveMap(Map map)
+        public static bool SaveMap(Map map)
         {
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(map.modPath + "/" + mapFileName + "/" + map.quest + "/" + map.name, FileMode.Create);
-            formatter.Serialize(stream, map);
-            stream.Close();
+            if (map.readyForSave)
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                FileStream stream = new FileStream(GetMapPath(map.modPathIndex, map.quest, map.name), FileMode.Create);
+                formatter.Serialize(stream, map);
+                stream.Close();
+                return true;
+            } 
+            else
+            {
+                Debug.LogWarning("Map was not ready for saveing");
+                return false;
+            }
+
         }
 
         public static string GetMapPath(int modPathIndex, string quest, string name) => GetQuestPath(modPathIndex, quest) + "/" + name;
 
-        public static Map LoadMap(int modPathindex, string quest, string name, bool logError = false)
+        /*public static Map LoadMap(int modPathindex, string quest, string name, bool logError = false)
         {
             string path = GetMapPath(modPathindex, quest, name);
             if (File.Exists(path))
@@ -63,8 +73,8 @@ namespace MapEditor
             {
                 Debug.LogError(name + " not found at " + path);
             }
-            return null;
-        }
+            return new Map();
+        }*/
 
         public static void DeleteMap(int modPathindex, string quest, string name, bool logError = false)
         {
