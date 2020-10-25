@@ -1,6 +1,7 @@
 ﻿using MapEditor;
 using NUnit.Framework;
 using UnityEngine;
+using Pathfinding;
 
 namespace Map_Tests
 {

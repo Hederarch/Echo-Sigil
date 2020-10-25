@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class TileBehaviour : MonoBehaviour
@@ -22,10 +23,11 @@ public class TileBehaviour : MonoBehaviour
 
 }
 
-public class Tile
+public class Tile : ITile
 {
-    public Vector2Int PosInGrid;
-    public Vector2 PosInWorld { get => MapReader.GridToWorldSpace(PosInGrid); }
+    public Vector2Int posInGrid;
+    Vector2Int ITile.posInGrid => posInGrid;
+    public Vector2 PosInWorld { get => MapReader.GridToWorldSpace(posInGrid); }
     public float topHeight;
     public float bottomHeight;
     public float midHeight => (topHeight + bottomHeight) / 2f;
@@ -43,25 +45,35 @@ public class Tile
     public int spriteIndex;
 
     public bool walkable = true;
+    bool IPathItem<ITile>.walkable => walkable;
     public bool current;
     public bool target;
     public bool selectable;
 
+    //Pathfinding stuff
+    public ITile parent { get; set; }
+    public int weight { get; set; }
+
     //BFS stuff
-    public bool visited;
-    public Tile parent;
-    public int distance;
+    public bool visited { get; set; }
+    public int distance { get; set; }
 
     //A* stuff
-    public float f => g + h;
-    public float g;
-    public float h;
+    public int F => G + H;
+    public int G { get; set; }
+    public int H { get; set; }
 
-    public Tile(int x, int y) : this(new Vector2Int(x, y)) { }
+    //Heap stuff
+    public int HeapIndex { get; set; }
 
-    public Tile(Vector2Int posInGrid)
+    
+
+    public Tile(int x, int y, int _weight = 1) : this(new Vector2Int(x, y), _weight) { }
+
+    public Tile(Vector2Int posInGrid, int _weight = 0)
     {
-        PosInGrid = posInGrid;
+        this.posInGrid = posInGrid;
+        weight = _weight;
     }
 
     public Color CheckColor()
@@ -92,17 +104,17 @@ public class Tile
     /// </summary>
     /// <param name="jumpHeight">Distance up and down before tiles stop being neighbors</param>
     /// <param name="target">Tile discounted for direction check.</param>
-    public Tile[] FindNeighbors(float jumpHeight, Tile target = null)
+    public ITile[] FindNeighbors()
     {
         return new Tile[4] {
-        FindNeighbor(Vector2Int.up, jumpHeight, target),
-        FindNeighbor(Vector2Int.down, jumpHeight, target),
-        FindNeighbor(Vector2Int.left, jumpHeight, target),
-        FindNeighbor(Vector2Int.right, jumpHeight, target)
+        FindNeighbor(Vector2Int.up),
+        FindNeighbor(Vector2Int.down),
+        FindNeighbor(Vector2Int.left),
+        FindNeighbor(Vector2Int.right)
         };
     }
 
-    public Tile FindNeighbor(Vector2Int direction, float jumpHeight, Tile target)
+    public Tile FindNeighbor(Vector2Int direction)
     {
         throw new NotImplementedException();
     }
@@ -128,10 +140,32 @@ public class Tile
         parent = null;
         distance = 0;
 
-        g = 0;
-        h = 0;
+        G = 0;
+        H = 0;
     }
 
+    public int CompareTo(ITile other)
+    {
+        int compare = F.CompareTo(other.F);
+        if(compare == 0)
+        {
+            compare = H.CompareTo(other.H);
+        }
+        return -compare;
+    }
 
+    public int GetDistance(ITile other)
+    {
+        return Mathf.Abs(posInGrid.x - other.posInGrid.x) + Mathf.Abs(posInGrid.y - other.posInGrid.y);
+    }
+
+    public int GetMaxSize()
+    {
+        return MapReader.numTiles;
+    }
 }
 
+public interface ITile : IAStarItem<ITile>, IBFSItem<ITile>
+{
+    Vector2Int posInGrid { get; }
+}

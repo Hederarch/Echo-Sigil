@@ -3,6 +3,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using UnityEngine;
+using Pathfinding;
 
 
 [Serializable]
@@ -136,7 +137,7 @@ public class MapImplement
 
 
 
-        public MovementSettings(IMovement movement)
+        public MovementSettings(IPathFollower<ITile> pathFollower)
         {
 
         }

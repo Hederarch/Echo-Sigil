@@ -172,7 +172,7 @@ public struct ModPath
     public ModPath(string _modPath)
     {
         modPath = _modPath;
-        modName = Path.GetFileName(_modPath);
+        modName = System.IO.Path.GetFileName(_modPath);
     }
 
     public static implicit operator ModPath(string s) => new ModPath(s);

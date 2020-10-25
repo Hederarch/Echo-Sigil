@@ -2,11 +2,12 @@
 using System;
 using System.Numerics;
 using UnityEngine;
+using Pathfinding;
 
 /// <summary>
 /// Character in the world
 /// </summary>
-public class Unit : FacesCamera, ITurn, IMovement, IBattle
+public class Unit : FacesCamera, ITurn, IPathFollower<ITile>, IBattle
 {
     public bool hasMoved;
     public bool hasAttacked;
@@ -29,7 +30,6 @@ public class Unit : FacesCamera, ITurn, IMovement, IBattle
 
 
     public static event Action<Unit> IsTurnEvent;
-    public event Action EndEvent;
 
     public virtual void BeginTurn()
     {
@@ -70,6 +70,11 @@ public class Unit : FacesCamera, ITurn, IMovement, IBattle
     }
 
     internal void SetValues(MapImplement.BattleSettings battleSettings)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnPathFound(Path<ITile> newPath)
     {
         throw new NotImplementedException();
     }

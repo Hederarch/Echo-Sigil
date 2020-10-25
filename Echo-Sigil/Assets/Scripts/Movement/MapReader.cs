@@ -30,6 +30,19 @@ public static class MapReader
 
     public static Map Map => new Map(tiles, rowIndexes, numTile, sizeX, implements.ToArray());
 
+    public static int numTiles
+    {
+        get
+        {
+            int size = 0;
+            foreach (int i in numTile)
+            {
+                size += i;
+            }
+            return size;
+        }
+    }
+
     public static Action MapGeneratedEvent;
 
     public static void GeneratePhysicalMap(Map map)
@@ -54,8 +67,8 @@ public static class MapReader
                     MapTile mapTile = map[x, y][i];
                     Tile tile = MapTile.ConvertTile(mapTile, x, y);
 
-                    int index = rowIndexes[y]; 
-                    for(int X = 0; X < x; X++)
+                    int index = rowIndexes[y];
+                    for (int X = 0; X < x; X++)
                     {
                         index += numTile[y * sizeX + X];
                     }
@@ -65,7 +78,7 @@ public static class MapReader
                     TileToGameObject(tile);
                     MapImplementToUnit(mapTile.unit);
 
-                    MapGeneratedEvent?.Invoke(); 
+                    MapGeneratedEvent?.Invoke();
                 }
             }
         }
@@ -75,7 +88,7 @@ public static class MapReader
     {
         if (tile.topHeight >= 0)
         {
-            GameObject gameObjectTile = new GameObject(tile.PosInGrid.x + "," + tile.PosInGrid.y + " tile");
+            GameObject gameObjectTile = new GameObject(tile.posInGrid.x + "," + tile.posInGrid.y + " tile");
             gameObjectTile.transform.position = tile.PosInWorld;
             gameObjectTile.transform.rotation = Quaternion.identity;
             gameObjectTile.transform.parent = tileParent;
@@ -124,7 +137,7 @@ public static class MapReader
 
             implements.Add(i);
 
-            return i; 
+            return i;
         }
         return null;
     }
