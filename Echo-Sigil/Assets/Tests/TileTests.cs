@@ -60,7 +60,7 @@ namespace Tile_Tests
         public void original_returns_original_texture()
         {
             Texture2D texture2D = new Texture2D(64, 64);
-            Assert.AreEqual(texture2D, TileTextureManager.GetTileTexture(texture2D, TileTextureType.Original));
+            Assert.AreEqual(texture2D, TileTextureManager.GetTileTexture(texture2D, TileTextureSection.Original, Vector2Int.zero, false));
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace Tile_Tests
         {
             int random = Random.Range(2, 256);
             Texture2D texture2D = new Texture2D(random, random);
-            texture2D = TileTextureManager.GetTileTextureSection(texture2D, TileTextureSection.Top);
+            texture2D = TileTextureManager.GetTileTexture(texture2D, TileTextureSection.Top, Vector2Int.zero);
             Assert.AreEqual(texture2D.width, texture2D.height);
         }
 
@@ -78,7 +78,7 @@ namespace Tile_Tests
             int random = Random.Range(2, 256);
             Texture2D texture2D = new Texture2D(random, random + random / 10);
             int width = texture2D.width;
-            texture2D = TileTextureManager.GetTileTextureSection(texture2D, TileTextureSection.Border);
+            texture2D = TileTextureManager.GetTileTexture(texture2D, TileTextureSection.Border, Vector2Int.zero);
             Assert.AreEqual(width / 10, texture2D.height);
         }
 
@@ -88,7 +88,7 @@ namespace Tile_Tests
             int random = Random.Range(2, 256);
             Texture2D texture2D = new Texture2D(random, random * 3);
             int width = texture2D.width;
-            texture2D = TileTextureManager.GetTileTexture(texture2D, TileTextureType.Debug);
+            texture2D = TileTextureManager.GetTileTexture(texture2D, TileTextureSection.Original, Vector2Int.zero, true);
             Assert.AreNotEqual(texture2D.GetPixel(0, width - 1), texture2D.GetPixel(0, width + 1));
             Assert.AreNotEqual(texture2D.GetPixel(0, width + (width / 10) - 1), texture2D.GetPixel(0, width + (width / 10) + 1));
             Assert.AreNotEqual(texture2D.GetPixel(0, texture2D.height), texture2D.GetPixel(0, (width * 2) - 1));

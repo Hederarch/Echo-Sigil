@@ -20,14 +20,12 @@ public class PlayerUnit : Unit
     public override void HasMoved()
     {
         base.HasMoved();
-        PlayerGUIScript.staticThis.SetAsCurrentUnit(this);
         QOLEndTurn();
     }
 
     public override void HasAttacked()
     {
         base.HasAttacked();
-        PlayerGUIScript.staticThis.SetAsCurrentUnit(this);
         QOLEndTurn();
     }
 

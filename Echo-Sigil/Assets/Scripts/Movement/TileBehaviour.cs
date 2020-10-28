@@ -3,20 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
-[RequireComponent(typeof(SpriteRenderer))]
 public class TileBehaviour : MonoBehaviour
 {
     public Tile tile;
-    SpriteRenderer spriteRenderer;
-
-    private void Start()
-    {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-    }
+    public SpriteRenderer spriteRenderer;
 
     private void Update()
     {
-        spriteRenderer.color = tile.CheckColor();
+        if(spriteRenderer != null)
+        {
+            spriteRenderer.color = tile.CheckColor();
+        }
     }
 
     public static implicit operator Tile(TileBehaviour t) => t.tile;
@@ -65,8 +62,7 @@ public class Tile : ITile
 
     //Heap stuff
     public int HeapIndex { get; set; }
-
-    
+    public Func<List<ITile>, List<ITile>> OnFindNeighbors { get; set; }
 
     public Tile(int x, int y, int _weight = 1) : this(new Vector2Int(x, y), _weight) { }
 
@@ -99,35 +95,41 @@ public class Tile : ITile
         return output;
     }
 
-    /// <summary>
-    /// Reset tile and then add neighbors to adjaceny list
-    /// </summary>
-    /// <param name="jumpHeight">Distance up and down before tiles stop being neighbors</param>
-    /// <param name="target">Tile discounted for direction check.</param>
     public ITile[] FindNeighbors()
     {
-        return new Tile[4] {
-        FindNeighbor(Vector2Int.up),
-        FindNeighbor(Vector2Int.down),
-        FindNeighbor(Vector2Int.left),
-        FindNeighbor(Vector2Int.right)
-        };
+        List<ITile> tiles = new List<ITile>();
+
+        for (int y = -1; y <= 1; y++)
+        {
+            for (int x = -1; x <= 1; x++)
+            {
+                if (Mathf.Abs(x) != Mathf.Abs(y))
+                {
+                    Tile tile = FindNeighbor(new Vector2Int(x, y));
+                    if(tile != null)
+                    {
+                        tiles.Add(tile);
+                    }
+                }
+            }
+        }
+
+        if (OnFindNeighbors != null)
+        {
+            tiles = OnFindNeighbors(tiles);
+        }
+
+        return tiles.ToArray();
     }
 
     public Tile FindNeighbor(Vector2Int direction)
     {
-        throw new NotImplementedException();
-    }
-
-    public bool DirectionCheck()
-    {
-        bool output = true;
-        //TODO
-        /*if(Physics.Raycast(transform.position,Vector3.back,out RaycastHit hit))
+        Tile tile = MapReader.GetTile(posInGrid + direction, topHeight);
+        if(tile != null && tile.walkable)
         {
-            output = false;
-        }*/
-        return output;
+            return tile;
+        }
+        return null;
     }
 
     public void ResetTile()
@@ -168,4 +170,5 @@ public class Tile : ITile
 public interface ITile : IAStarItem<ITile>, IBFSItem<ITile>
 {
     Vector2Int posInGrid { get; }
+    Func<List<ITile>, List<ITile>> OnFindNeighbors { get; set; }
 }

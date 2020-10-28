@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Windows.Forms;
 using UnityEngine;
 using Pathfinding;
-
 
 [Serializable]
 public struct Map
@@ -17,32 +13,29 @@ public struct Map
 
     //map data
     public int sizeX;
-    public int sizeY => rowIndexes.Length;
-    [SerializeField]
+    public int sizeY;
     public MapTile[] mapTiles;
-    /// <summary>
-    /// Cumulative number of tiles in all rows before spesified row
-    /// </summary>
-    [SerializeField]
-    private int[] rowIndexes;
     /// <summary>
     /// Number of tiles in a given grid position
     /// </summary>
-    [SerializeField]
-    private int[] numTile;
+    public int[] numTile;
 
 
     public MapTile[] this[int x, int y]
     {
         get
         {
-            int startIndex = rowIndexes[y];
-            for (int i = 0; i < x; i++)
+            if(x > sizeX || y > sizeY)
             {
-                startIndex += numTile[y * sizeX + i];
+                throw new IndexOutOfRangeException();
+            }
+            int startIndex = 0;
+            for (int i = 0; i < (y * sizeX) + x; i++)
+            {
+                startIndex += numTile[i];
             }
 
-            int length = numTile[y * sizeX + x];
+            int length = numTile[(y * sizeX) + x];
             MapTile[] output = new MapTile[length];
             for (int i = 0; i < length; i++)
             {
@@ -74,24 +67,22 @@ public struct Map
         modPathIndex = -1;
 
         sizeX = _sizeX;
+        sizeY = _sizeY;
         mapTiles = new MapTile[_sizeX * _sizeY];
         numTile = new int[_sizeX * _sizeY];
         for (int i = 0; i < numTile.Length; i++)
         {
             numTile[i] = 1;
         }
-        rowIndexes = new int[_sizeY];
-        for (int i = 0; i < _sizeY; i++)
-        {
-            rowIndexes[i] = _sizeX * i;
-        }
+
     }
 
-    public Map(Tile[] tiles, int[] rowIndexes, int[] numTile, int sizeX, Unit[] units)
+    public Map(Tile[] tiles, int[] numTile, int sizeX, int sizeY, Unit[] units)
     {
-        this.rowIndexes = rowIndexes;
         this.numTile = numTile;
         this.sizeX = sizeX;
+        this.sizeY = sizeY;
+
 
         readyForSave = false;
         name = "";
@@ -195,7 +186,7 @@ public class MapImplement
 public struct MapTile
 {
     public int pallateIndex;
-
+    
     public MapTile(float pos, int pallateIndex, MapImplement mapImplement = null)
     {
         this.pallateIndex = pallateIndex;

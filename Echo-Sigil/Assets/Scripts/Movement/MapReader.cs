@@ -11,15 +11,11 @@ public static class MapReader
     public static bool lodeing = false;
 
     public static int sizeX;
-    public static int sizeY => rowIndexes.Length;
+    public static int sizeY;
     public static Vector2Int Size => new Vector2Int(sizeX, sizeY);
     public static Vector2 mapHalfSize => new Vector2(sizeX / 2, sizeY / 2);
 
     private static Tile[] tiles;
-    /// <summary>
-    /// Cumulative number of tiles in all rows before spesified row
-    /// </summary>
-    private static int[] rowIndexes;
     /// <summary>
     /// Number of tiles in a given grid position
     /// </summary>
@@ -28,7 +24,7 @@ public static class MapReader
 
     public static Texture2D[] spritePallate;
 
-    public static Map Map => new Map(tiles, rowIndexes, numTile, sizeX, implements.ToArray());
+    public static Map Map => new Map(tiles, numTile, sizeX, sizeY, implements.ToArray());
 
     public static int numTiles
     {
@@ -52,7 +48,6 @@ public static class MapReader
         tileParent = new GameObject("Tile Parent").transform;
         sizeX = map.sizeX;
         tiles = new Tile[map.sizeX * map.sizeY];
-        rowIndexes = new int[map.sizeY];
         numTile = new int[map.sizeX * map.sizeY];
         implements.Clear();
 
@@ -60,31 +55,37 @@ public static class MapReader
 
         for (int y = 0; y < map.sizeY; y++)
         {
+
             for (int x = 0; x < map.sizeX; x++)
             {
+                
                 for (int i = 0; i < map[x, y].Length; i++)
                 {
                     MapTile mapTile = map[x, y][i];
                     Tile tile = MapTile.ConvertTile(mapTile, x, y);
 
-                    int index = rowIndexes[y];
-                    for (int X = 0; X < x; X++)
+                    int index = 0;
+                    for (int a = 0; a < y * map.sizeX + x; a++)
                     {
-                        index += numTile[y * sizeX + X];
+                        index += map.numTile[a];
                     }
                     index += i;
                     tiles[index] = tile;
 
-                    TileToGameObject(tile);
                     MapImplementToUnit(mapTile.unit);
 
                     MapGeneratedEvent?.Invoke();
                 }
             }
         }
+
+        foreach (Tile tile in tiles)
+        {
+            TileToTileBehavior(tile);
+        }
     }
 
-    private static void TileToGameObject(Tile tile)
+    private static void TileToTileBehavior(Tile tile)
     {
         if (tile.topHeight >= 0)
         {
@@ -94,11 +95,40 @@ public static class MapReader
             gameObjectTile.transform.parent = tileParent;
             gameObjectTile.tag = "Tile";
 
-            gameObjectTile.AddComponent<TileBehaviour>().tile = tile;
+            TileBehaviour tileBehaviour = gameObjectTile.AddComponent<TileBehaviour>();
+            tileBehaviour.tile = tile;
 
-            gameObjectTile.transform.position += new Vector3(0, 0, tile.topHeight);
+            GameObject topSprite = new GameObject(tile.posInGrid.x + "," + tile.posInGrid.y + " top sprite");
+            topSprite.transform.parent = gameObjectTile.transform;
+            topSprite.transform.localPosition = Vector3.forward * (tile.sideLength / 2f);
+            SpriteRenderer spriteRenderer = topSprite.AddComponent<SpriteRenderer>();
+            tileBehaviour.spriteRenderer = spriteRenderer;
+            spriteRenderer.sprite = TileTextureManager.GetTileSprite(tile.spriteIndex, TileTextureSection.Top, Vector2Int.zero, tile);
+            for (int y = -1; y <= 1; y++)
+            {
+                for (int x = -1; x <= 1; x++)
+                {
+                    if (Mathf.Abs(x) != Mathf.Abs(y))
+                    {
+                        Vector2Int direction = new Vector2Int(x, y);
+                        Tile neighbor = tile.FindNeighbor(direction);
+                        if (neighbor == null || neighbor != null && neighbor.topHeight < tile.topHeight && tile.topHeight > 0)
+                        {
+                            GameObject sideSprite = new GameObject(tile.posInGrid.x + "," + tile.posInGrid.y + " side sprite (" + x + "," + y + ")");
+                            sideSprite.transform.parent = gameObjectTile.transform;
+                            sideSprite.transform.localPosition = new Vector3(x/2f,y/2f,0);
+                            sideSprite.transform.localRotation = Quaternion.LookRotation(new Vector3(x, y, 0), -Vector3.forward);
+                            sideSprite.AddComponent<SpriteRenderer>().sprite = TileTextureManager.GetTileSprite(tile.spriteIndex, TileTextureSection.Side, direction, tile);
+                        }
+                    }
+                }
+            }
 
-            gameObjectTile.AddComponent<BoxCollider2D>().size = new Vector3(1, 1, .2f);
+            
+
+            gameObjectTile.transform.position += Vector3.forward * tile.midHeight;
+
+            gameObjectTile.AddComponent<BoxCollider2D>().size = new Vector3(1, 1, tile.sideLength);
 
 
         }
@@ -160,10 +190,14 @@ public static class MapReader
 
     public static Tile[] GetTiles(int x, int y)
     {
-        int startIndex = rowIndexes[y];
-        for (int i = 0; i < x; i++)
+        if(x > sizeX || y > sizeY || x < 0 || y < 0)
         {
-            startIndex += numTile[y * sizeX + i];
+            return new Tile[0];
+        }
+        int startIndex = 0;
+        for (int i = 0; i < y * sizeX + x; i++)
+        {
+            startIndex += numTile[i];
         }
 
         int length = numTile[y * sizeX + x];
@@ -181,12 +215,19 @@ public static class MapReader
     public static Tile GetTile(int x, int y, float nearestHeight)
     {
         Tile[] tiles = GetTiles(x, y);
-        Tile output = tiles[0];
-        foreach (Tile tile in tiles)
+        if (tiles.Length > 0)
         {
-            output = Mathf.Abs(nearestHeight - output.midHeight) < Mathf.Abs(nearestHeight - tile.midHeight) ? output : tile;
+            Tile output = tiles[0];
+            foreach (Tile tile in tiles)
+            {
+                output = Mathf.Abs(nearestHeight - output.midHeight) < Mathf.Abs(nearestHeight - tile.midHeight) ? output : tile;
+            }
+            return output;
         }
-        return output;
+        else
+        {
+            return null;
+        }
     }
 
     public static void DestroyPhysicalMapTiles()
