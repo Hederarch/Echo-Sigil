@@ -21,13 +21,13 @@ public static class TileTextureManager
 
     public static Sprite GetTileSprite(int spriteIndex, TileTextureSection tileTextureSection, Vector2Int direction, Tile tile = null)
     {
-        Texture2D texture = GetTileTexture(MapReader.spritePallate[spriteIndex], tileTextureSection, direction, false, tile);
+        Texture2D texture = GetTileTexture(MapReader.spritePallate[spriteIndex], tileTextureSection, false, tile);
         texture.wrapMode = TextureWrapMode.Clamp;
         texture.filterMode = FilterMode.Point;
         return Sprite.Create(texture, new Rect(Vector2.zero, new Vector2(texture.width, texture.height)), Vector2.one / 2f, texture.width);
     }
 
-    public static Texture2D GetTileTexture(Texture2D texture, TileTextureSection tileTextureSection, Vector2Int direction, bool debug = false, Tile tile = null)
+    public static Texture2D GetTileTexture(Texture2D texture, TileTextureSection tileTextureSection, bool debug = false, Tile tile = null)
     {
         Texture2D sectionTexture = GetTileTextureSection(debug ? GetDebugTexture(texture.width, texture.height) : texture, tileTextureSection);
 
@@ -53,36 +53,8 @@ public static class TileTextureManager
                 }
                 return GetTileTextureSection(topTexture, TileTextureSection.Top);
             case TileTextureSection.Side:
-                if (direction == Vector2Int.zero)
-                {
-                    Debug.LogWarning("Default direction passed to GetTileTexture.Side");
-                    return sectionTexture;
-                }
-                Tile neighbor = tile.FindNeighbor(direction);
-                int height = Mathf.RoundToInt((neighbor == null ? Mathf.Min(tile.topHeight, tile.sideLength) : Mathf.Min(tile.topHeight - neighbor.topHeight, tile.sideLength)) * texture.width);
-                Texture2D sideTexture = new Texture2D(texture.width, height);
-                Color[] sideColors = new Color[texture.width * height];
+                return GetTileSide(texture, Mathf.RoundToInt(Mathf.Min(tile.topHeight, tile.sideLength) * texture.width));
 
-                for (int i = 0; i < sideColors.Length; i++)
-                {
-                    sideColors[i] = Color.white;
-                }
-
-                Array.Copy(texture.GetPixels(), (texture.width + (texture.width / 10)) * texture.width, sideColors, 0, Mathf.Min(texture.width * height, texture.width * texture.width));
-
-                if (height > texture.width)
-                {
-                    for (int y = 0; y < height - texture.width; y++)
-                    {
-                        int sideAndTop = (2 * texture.width + (texture.width / 10));
-                        int sourceIndex = Mathf.Clamp(sideAndTop + Mathf.RoundToInt(Mathf.Lerp(0, texture.height - sideAndTop, Mathf.InverseLerp(0, height - texture.width, y))), 0, texture.height - 1) * texture.width;
-                        Array.Copy(texture.GetPixels(), sourceIndex, sideColors, texture.width * texture.width + y * texture.width, texture.width);
-                    }
-                }
-
-                sideTexture.SetPixels(sideColors);
-                sideTexture.Apply();
-                return sideTexture;
         }
 
         return sectionTexture;
@@ -90,25 +62,87 @@ public static class TileTextureManager
 
     private static Texture2D ApplyBorder(Texture2D texture, Tile tile, Vector2Int direction)
     {
-        Tile neighbor = tile.FindNeighbor(direction);
-        if (neighbor == null || neighbor != null && neighbor.topHeight != tile.topHeight)
+        if ((direction.x == 0 || direction.y == 0) && (direction.x != direction.y))
         {
-            Texture2D edge = GetTileTextureSection(texture, TileTextureSection.Edge);
-            Texture2D border = GetTileTextureSection(texture, TileTextureSection.Border);
+            Tile neighbor = tile.FindNeighbor(direction);
+            if (neighbor == null || neighbor != null && neighbor.topHeight != tile.topHeight)
+            {
+                Texture2D edge = GetTileTextureSection(texture, TileTextureSection.Edge);
+                Texture2D border = GetTileTextureSection(texture, TileTextureSection.Border);
 
-            Tile leftNeighbor = tile.FindNeighbor(new Vector2Int(direction.y, -direction.x));
-            Tile rightNeighbor = tile.FindNeighbor(new Vector2Int(-direction.y, direction.x));
-            bool leftEdge = leftNeighbor == null || leftNeighbor != null && leftNeighbor.topHeight != tile.topHeight;
-            bool rightEdge = rightNeighbor == null || rightNeighbor != null && rightNeighbor.topHeight != tile.topHeight;
+                Tile leftNeighbor = tile.FindNeighbor(new Vector2Int(direction.y, -direction.x));
+                Tile rightNeighbor = tile.FindNeighbor(new Vector2Int(-direction.y, direction.x));
+                bool leftEdge = leftNeighbor == null || leftNeighbor != null && leftNeighbor.topHeight != tile.topHeight;
+                bool rightEdge = rightNeighbor == null || rightNeighbor != null && rightNeighbor.topHeight != tile.topHeight;
 
-            int div10 = texture.width/10;
+                int width = texture.width;
+                int div10 = texture.width / 10;
 
-            return texture;
+                Color[] completeEdgeColors = new Color[texture.width * div10];
+
+                for (int i = 0; i < div10; i++)
+                {
+                    Array.Copy(leftEdge ? edge.GetPixels() : border.GetPixels(), (texture.width / 2) * i, completeEdgeColors, texture.width * i, texture.width / 2);
+                    Array.Copy(rightEdge ? edge.GetPixels() : border.GetPixels(), (texture.width / 2) * i, completeEdgeColors, texture.width * i + texture.width / 2, texture.width / 2);
+                }
+
+                Texture2D outputTexture = texture;
+                outputTexture.name = "Bordered Texture";
+                Color[] outputColors = texture.GetPixels();
+
+                for (int i = 0; i < div10 * width; i++)
+                {
+                    int x = direction.x != 0 ? i/width : i % width;
+                    int y = direction.y != 0 ? i/width : i % width;
+                    int index = (y * width) + x;
+                    outputColors[index] = completeEdgeColors[i];
+                }
+
+                return outputTexture;
+            }
         }
-        else
+        return texture;
+
+    }
+
+    public static Sprite GetTileSide(int pallateIndex, Vector2Int direction, Tile tile, bool debug = false)
+    {
+        Texture2D texture = GetTileSide(MapReader.spritePallate[pallateIndex], direction, tile, debug);
+        return texture.height > 0 ? Sprite.Create(texture, new Rect(Vector2.zero, new Vector2(texture.width, texture.height)), Vector2.one / 2f, texture.width) : null;
+    }
+    private static Texture2D GetTileSide(Texture2D texture, Vector2Int direction, Tile tile, bool debug = false)
+    {
+        return GetTileSide(texture, Mathf.RoundToInt(Mathf.Min(tile.topHeight, tile.sideLength) * texture.width));
+    }
+
+    private static Texture2D GetTileSide(Texture2D texture, int height)
+    {
+        Texture2D sideTexture = new Texture2D(texture.width, height);
+        if (height > 0)
         {
-            return texture;
+            Color[] sideColors = new Color[texture.width * height];
+
+            for (int i = 0; i < sideColors.Length; i++)
+            {
+                sideColors[i] = Color.white;
+            }
+
+            Array.Copy(texture.GetPixels(), (texture.width + (texture.width / 10)) * texture.width, sideColors, 0, Mathf.Min(texture.width * height, texture.width * texture.width));
+
+            if (height > texture.width)
+            {
+                for (int y = 0; y < height - texture.width; y++)
+                {
+                    int sideAndTop = (2 * texture.width + (texture.width / 10));
+                    int sourceIndex = Mathf.Clamp(sideAndTop + Mathf.RoundToInt(Mathf.Lerp(0, texture.height - sideAndTop, Mathf.InverseLerp(0, height - texture.width, y))), 0, texture.height - 1) * texture.width;
+                    Array.Copy(texture.GetPixels(), sourceIndex, sideColors, texture.width * texture.width + y * texture.width, texture.width);
+                }
+            }
+
+            sideTexture.SetPixels(sideColors);
+            sideTexture.Apply();
         }
+        return sideTexture;
     }
 
     private static Texture2D GetTileTextureSection(Texture2D texture, TileTextureSection tileTextureSection, bool debug = false, bool deface = false)
@@ -117,20 +151,60 @@ public static class TileTextureManager
         switch (tileTextureSection)
         {
             case TileTextureSection.Top:
-                return GetTextureSection(texture, debug ? Color.blue : Color.black, 0, 0, width, width, deface);
+                Texture2D topTexture = GetTextureSection(texture,
+                                         debug ? Color.blue : Color.black,
+                                         0,
+                                         0,
+                                         width,
+                                         width,
+                                         deface);
+                topTexture.name = "Top Texture";
+                return topTexture;
             case TileTextureSection.Border:
-                return GetTextureSection(texture, debug ? Color.green : Color.black, 0, width, width / 2, width + width / 10, deface);
+                Texture2D borderTexture = GetTextureSection(texture,
+                                         debug ? Color.green : Color.black,
+                                         0,
+                                         width,
+                                         width / 2,
+                                         width + (width / 10),
+                                         deface);
+                borderTexture.name = "Border Texture";
+                return borderTexture;
             case TileTextureSection.Edge:
-                return GetTextureSection(texture, debug ? Color.black + (Color.green / 2) : Color.black, width / 2, width, width, width + width / 10, deface);
+                Texture2D edgeTexture = GetTextureSection(texture,
+                                         debug ? Color.black + (Color.green / 2) : Color.black,
+                                         width / 2,
+                                         width,
+                                         width,
+                                         width + (width / 10),
+                                         deface);
+                edgeTexture.name = "Edge Texture";
+                return edgeTexture;
             case TileTextureSection.Side:
-                return GetTextureSection(texture, debug ? Color.cyan : Color.black, 0, width + width / 10, width, Mathf.Min(2 * width + width / 10, texture.height - 4), deface);
+                Texture2D sideTexture = GetTextureSection(texture,
+                                         debug ? Color.cyan : Color.black,
+                                         0,
+                                         width + (width / 10),
+                                         width,
+                                         Mathf.Min((2 * width) + (width / 10), texture.height - 4),
+                                         deface);
+                sideTexture.name = "Side Texture";
+                return sideTexture;
             case TileTextureSection.Extents:
-                return GetTextureSection(texture, debug ? Color.red : Color.black, 0, Mathf.Min(2 * width + width / 10, texture.height - width / 10), width, texture.height, deface);
+                Texture2D extentsTexture = GetTextureSection(texture,
+                                         debug ? Color.red : Color.black,
+                                         0,
+                                         Mathf.Min((2 * width) + (width / 10), texture.height - (width / 10)),
+                                         width,
+                                         texture.height,
+                                         deface);
+                extentsTexture.name = "Extents Texture";
+                return extentsTexture;
             case TileTextureSection.Original:
                 return texture;
             default:
-                Debug.LogWarning("No TileTextureSection selection, returning top");
-                return GetTextureSection(texture, debug ? Color.blue : Color.black, 0, 0, width, width, deface);
+                Debug.LogWarning("No TileTextureSection selection, returning original");
+                return texture;
         }
 
     }
@@ -180,8 +254,11 @@ public static class TileTextureManager
         }
 
         Texture2D outputTexture = deface ? texture : new Texture2D(deltaX, deltaY);
-        outputTexture.SetPixels(outputColors);
-        outputTexture.Apply();
+        if (deltaX > 0 && deltaY > 0)
+        {
+            outputTexture.SetPixels(outputColors);
+            outputTexture.Apply();
+        }
 
         return outputTexture;
     }

@@ -7,7 +7,7 @@ using Pathfinding;
 /// <summary>
 /// Character in the world
 /// </summary>
-public class Unit : FacesCamera, ITurn, IPathFollower<ITile>, IBattle
+public class Unit : FacesCamera, ITurn, IBattle
 {
     public bool hasMoved;
     public bool hasAttacked;
@@ -74,7 +74,7 @@ public class Unit : FacesCamera, ITurn, IPathFollower<ITile>, IBattle
         throw new NotImplementedException();
     }
 
-    public void OnPathFound(Path<ITile> newPath)
+    public void OnPathFound(IPath<ITile> newPath)
     {
         throw new NotImplementedException();
     }

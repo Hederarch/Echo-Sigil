@@ -10,7 +10,7 @@ public class TileBehaviour : MonoBehaviour
 
     private void Update()
     {
-        if(spriteRenderer != null)
+        if (spriteRenderer != null)
         {
             spriteRenderer.color = tile.CheckColor();
         }
@@ -22,15 +22,26 @@ public class TileBehaviour : MonoBehaviour
 
 public class Tile : ITile
 {
-    public Vector2Int posInGrid;
-    Vector2Int ITile.posInGrid => posInGrid;
-    public Vector2 PosInWorld { get => MapReader.GridToWorldSpace(posInGrid); }
+    int x;
+    int y;
+    public TilePos posInGrid
+    {
+        get => new TilePos(x, y, topHeight);
+        set
+        {
+            x = value.x;
+            y = value.y;
+            topHeight = value.z;
+        }
+    }
+
+    public Vector3 PosInWorld => MapReader.GridToWorldSpace(posInGrid); 
     public float topHeight;
     public float bottomHeight;
     public float midHeight => (topHeight + bottomHeight) / 2f;
     public float sideLength
     {
-        get => topHeight - bottomHeight;
+        get => topHeight - Mathf.Max(bottomHeight, 0);
         set
         {
             float mid = midHeight;
@@ -52,7 +63,6 @@ public class Tile : ITile
     public int weight { get; set; }
 
     //BFS stuff
-    public bool visited { get; set; }
     public int distance { get; set; }
 
     //A* stuff
@@ -64,9 +74,9 @@ public class Tile : ITile
     public int HeapIndex { get; set; }
     public Func<List<ITile>, List<ITile>> OnFindNeighbors { get; set; }
 
-    public Tile(int x, int y, int _weight = 1) : this(new Vector2Int(x, y), _weight) { }
+    public Tile(int x, int y, float z, int spriteIndex, bool walkable = true, int _weight = 1) : this(new TilePos(x, y, z), spriteIndex, walkable, _weight) { }
 
-    public Tile(Vector2Int posInGrid, int _weight = 0)
+    public Tile(TilePos posInGrid, int spriteIndex, bool walkable = true, int _weight = 1)
     {
         this.posInGrid = posInGrid;
         weight = _weight;
@@ -106,7 +116,7 @@ public class Tile : ITile
                 if (Mathf.Abs(x) != Mathf.Abs(y))
                 {
                     Tile tile = FindNeighbor(new Vector2Int(x, y));
-                    if(tile != null)
+                    if (tile != null)
                     {
                         tiles.Add(tile);
                     }
@@ -125,7 +135,7 @@ public class Tile : ITile
     public Tile FindNeighbor(Vector2Int direction)
     {
         Tile tile = MapReader.GetTile(posInGrid + direction, topHeight);
-        if(tile != null && tile.walkable)
+        if (tile != null && tile.walkable)
         {
             return tile;
         }
@@ -137,19 +147,12 @@ public class Tile : ITile
         current = false;
         target = false;
         selectable = false;
-
-        visited = false;
-        parent = null;
-        distance = 0;
-
-        G = 0;
-        H = 0;
     }
 
     public int CompareTo(ITile other)
     {
         int compare = F.CompareTo(other.F);
-        if(compare == 0)
+        if (compare == 0)
         {
             compare = H.CompareTo(other.H);
         }
@@ -169,6 +172,41 @@ public class Tile : ITile
 
 public interface ITile : IAStarItem<ITile>, IBFSItem<ITile>
 {
-    Vector2Int posInGrid { get; }
+    TilePos posInGrid { get; }
     Func<List<ITile>, List<ITile>> OnFindNeighbors { get; set; }
+}
+
+[Serializable]
+public struct TilePos : IEquatable<TilePos>, IEquatable<Vector2Int>
+{
+    public int x;
+    public int y;
+    public float z;
+    public Vector2Int PosInGrid => new Vector2Int(x, y);
+
+    public TilePos(int x, int y, float z)
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
+    public TilePos(Vector2Int posInGrid, float z)
+    {
+        x = posInGrid.x;
+        y = posInGrid.y;
+        this.z = z;
+    }
+
+    public bool Equals(TilePos other)
+    {
+        return other.x == x && other.y == y && other.z == z;
+    }
+
+    public bool Equals(Vector2Int other)
+    {
+        return other.x == x && other.y == y;
+    }
+
+    public static implicit operator Vector2Int(TilePos t) => t.PosInGrid;
 }

@@ -7,7 +7,7 @@ namespace Map_Tests
 {
     class map_reader
     {
-       
+
     }
     class map
     {
@@ -34,14 +34,14 @@ namespace Map_Tests
         public void new_map_sets_size()
         {
             Map map = new Map(3, 5);
-            Assert.AreEqual(new Vector2Int(3, 5), new Vector2Int(map.sizeX,map.sizeY));
+            Assert.AreEqual(new Vector2Int(3, 5), new Vector2Int(map.sizeX, map.sizeY));
         }
         [Test]
         public void new_map_overloads_equivalant()
         {
             Map intmap = new Map(3, 5);
             Map vecmap = new Map(new Vector2Int(3, 5));
-            Assert.AreEqual(new Vector2Int(vecmap.sizeX,vecmap.sizeY), new Vector2Int(intmap.sizeX, intmap.sizeY));
+            Assert.AreEqual(new Vector2Int(vecmap.sizeX, vecmap.sizeY), new Vector2Int(intmap.sizeX, intmap.sizeY));
         }
     }
     class conversions
@@ -49,7 +49,7 @@ namespace Map_Tests
         [Test]
         public void center_tile_is_at_0x0_1x1()
         {
-            MapReader.GeneratePhysicalMap(new Map(1,1));
+            MapReader.GeneratePhysicalMap(new Map(1, 1));
             Transform tileTransform = MapReader.tileParent.GetChild(0);
             Assert.AreEqual(Vector3.zero, tileTransform.position);
         }
@@ -64,7 +64,7 @@ namespace Map_Tests
         public void grid_to_world_space_3x3()
         {
             MapReader.GeneratePhysicalMap(new Map(3, 3));
-            Assert.AreEqual(Vector2.one, MapReader.GridToWorldSpace(Vector2Int.zero));
+            Assert.AreEqual(Vector3.one, MapReader.GridToWorldSpace(0, 0, 1));
         }
         [Test]
         public void world_to_grid_space_3x3_center()
@@ -90,7 +90,7 @@ namespace Map_Tests
 
             MapReader.GeneratePhysicalMap(new Map(3, 3));
             MapReader.tileParent.position += Vector3.one;
-            Assert.AreEqual(Vector2.one * 2, MapReader.GridToWorldSpace(Vector2Int.zero));
+            Assert.AreEqual(Vector2.one * 2, MapReader.GridToWorldSpace(0, 0, 1));
         }
     }
 }

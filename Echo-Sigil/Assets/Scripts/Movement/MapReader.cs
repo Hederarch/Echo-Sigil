@@ -58,7 +58,7 @@ public static class MapReader
 
             for (int x = 0; x < map.sizeX; x++)
             {
-                
+
                 for (int i = 0; i < map[x, y].Length; i++)
                 {
                     MapTile mapTile = map[x, y][i];
@@ -116,15 +116,15 @@ public static class MapReader
                         {
                             GameObject sideSprite = new GameObject(tile.posInGrid.x + "," + tile.posInGrid.y + " side sprite (" + x + "," + y + ")");
                             sideSprite.transform.parent = gameObjectTile.transform;
-                            sideSprite.transform.localPosition = new Vector3(x/2f,y/2f,0);
+                            sideSprite.transform.localPosition = new Vector3(x / 2f, y / 2f, 0);
                             sideSprite.transform.localRotation = Quaternion.LookRotation(new Vector3(x, y, 0), -Vector3.forward);
-                            sideSprite.AddComponent<SpriteRenderer>().sprite = TileTextureManager.GetTileSprite(tile.spriteIndex, TileTextureSection.Side, direction, tile);
+                            sideSprite.AddComponent<SpriteRenderer>().sprite = TileTextureManager.GetTileSide(tile.spriteIndex, direction, tile);
                         }
                     }
                 }
             }
 
-            
+
 
             gameObjectTile.transform.position += Vector3.forward * tile.midHeight;
 
@@ -139,9 +139,9 @@ public static class MapReader
         if (mi != null)
         {
             GameObject unit = new GameObject(mi.name);
-            Vector2 pos = GridToWorldSpace(mi.PosInGrid);
+            Vector2 pos = GridToWorldSpace(mi.posInGrid);
             unit.transform.parent = tileParent;
-            Tile tile = GetTile(mi.PosInGrid, 0);
+            Tile tile = GetTile(mi.posInGrid, 0);
             unit.transform.position = new Vector3(pos.x, pos.y, tile.topHeight - .1f);
             Unit i;
             if (mi.player)
@@ -172,25 +172,25 @@ public static class MapReader
         return null;
     }
 
-    public static Vector2 GridToWorldSpace(Vector2Int posInGrid)
+    public static Vector3 GridToWorldSpace(TilePos posInGrid)
     {
         Vector2 realitivePosition = new Vector2(posInGrid.x - mapHalfSize.x, posInGrid.y - mapHalfSize.y);
         return new Vector2(tileParent.transform.position.x, tileParent.transform.position.y) - realitivePosition;
     }
 
-    public static Vector2 GridToWorldSpace(int x, int y) => GridToWorldSpace(new Vector2Int(x, y));
+    public static Vector3 GridToWorldSpace(int x, int y, float z) => GridToWorldSpace(new TilePos(x, y, z));
 
-    public static Vector2Int WorldToGridSpace(Vector2 posInWorld)
+    public static TilePos WorldToGridSpace(Vector3 posInWorld)
     {
-        Vector2 realitivePosition = posInWorld - new Vector2(tileParent.position.x, tileParent.position.y);
-        return new Vector2Int((int)Math.Abs(realitivePosition.x - mapHalfSize.x - .5f), (int)Math.Abs(realitivePosition.y - mapHalfSize.y - .5f));
+        Vector3 realitivePosition = posInWorld - tileParent.position;
+        return new TilePos((int)Math.Abs(realitivePosition.x - mapHalfSize.x - .5f), (int)Math.Abs(realitivePosition.y - mapHalfSize.y - .5f), realitivePosition.z);
     }
 
-    public static Vector2Int WorldToGridSpace(float x, float y) => WorldToGridSpace(new Vector2(x, y));
+    public static TilePos WorldToGridSpace(float x, float y, float z = 1) => WorldToGridSpace(new Vector3(x, y, z));
 
     public static Tile[] GetTiles(int x, int y)
     {
-        if(x > sizeX || y > sizeY || x < 0 || y < 0)
+        if (x > sizeX || y > sizeY || x < 0 || y < 0)
         {
             return new Tile[0];
         }

@@ -25,7 +25,7 @@ public struct Map
     {
         get
         {
-            if(x > sizeX || y > sizeY)
+            if (x > sizeX || y > sizeY)
             {
                 throw new IndexOutOfRangeException();
             }
@@ -73,6 +73,7 @@ public struct Map
         for (int i = 0; i < numTile.Length; i++)
         {
             numTile[i] = 1;
+            mapTiles[i].topHeight = 1;
         }
 
     }
@@ -106,16 +107,7 @@ public struct Map
 public class MapImplement
 {
     public string name;
-    public int posX;
-    public int posY;
-    public Vector2Int PosInGrid
-    {
-        get => new Vector2Int(posX, posY); set
-        {
-            posX = value.x;
-            posY = value.y;
-        }
-    }
+    public TilePos posInGrid;
 
     public bool player;
 
@@ -128,10 +120,7 @@ public class MapImplement
 
 
 
-        public MovementSettings(IPathFollower<ITile> pathFollower)
-        {
 
-        }
 
     }
     [Serializable]
@@ -147,29 +136,20 @@ public class MapImplement
 
     }
 
-    public MapImplement(string _name, int x, int y, MovementSettings _movementSettings, BattleSettings _battleSettings, bool _player = true)
+    public MapImplement(string name, TilePos posInGrid, MovementSettings movementSettings, BattleSettings battleSettings, bool player = true)
     {
-        name = _name;
+        this.name = name;
 
-        posX = x;
-        posY = y;
+        this.player = player;
 
-        player = _player;
-
-        movementSettings = _movementSettings;
-        battleSettings = _battleSettings;
-
+        this.movementSettings = movementSettings;
+        this.battleSettings = battleSettings;
     }
 
-    public MapImplement(string name, Vector2Int posInGrid, MovementSettings movementSettings, BattleSettings battleSettings, bool player = true) :
-        this(name, posInGrid.x, posInGrid.y, movementSettings, battleSettings, player)
-    { }
-
-    public MapImplement(string _name, Vector2Int posInGrid)
+    public MapImplement(string name, TilePos posInGrid)
     {
-        name = _name;
-        posX = posInGrid.x;
-        posY = posInGrid.y;
+        this.name = name;
+        this.posInGrid = posInGrid;
 
         player = false;
 
@@ -186,27 +166,29 @@ public class MapImplement
 public struct MapTile
 {
     public int pallateIndex;
-    
-    public MapTile(float pos, int pallateIndex, MapImplement mapImplement = null)
+
+    public MapTile(float pos, int pallateIndex, bool walkable = true, int weight = 1, MapImplement mapImplement = null)
     {
         this.pallateIndex = pallateIndex;
 
         topHeight = pos + .5f;
         bottomHeight = pos + .5f;
 
-        walkable = true;
+        this.walkable = walkable;
+        this.weight = weight;
 
         unit = mapImplement;
     }
 
-    public MapTile(float top, float bottom, int pallateIndex, MapImplement mapImplement = null)
+    public MapTile(float top, float bottom, int pallateIndex, bool walkable = true, int weight = 1, MapImplement mapImplement = null)
     {
         this.pallateIndex = pallateIndex;
 
         topHeight = top;
         bottomHeight = bottom;
 
-        walkable = true;
+        this.walkable = walkable;
+        this.weight = weight;
 
         unit = mapImplement;
     }
@@ -226,14 +208,14 @@ public struct MapTile
     }
 
     public bool walkable;
+    public int weight;
 
     public MapImplement unit;
 
     public static Tile ConvertTile(MapTile mapTile, int x, int y)
     {
-        Tile tile = new Tile(x, y);
+        Tile tile = new Tile(x, y, mapTile.topHeight, mapTile.pallateIndex , mapTile.walkable, mapTile.weight);
         tile.bottomHeight = mapTile.bottomHeight;
-        tile.topHeight = mapTile.topHeight;
         tile.spriteIndex = mapTile.pallateIndex;
 
         return tile;
@@ -242,5 +224,5 @@ public struct MapTile
     /// <summary>
     /// This opperation does not include units
     /// </summary>
-    public static explicit operator MapTile(Tile tile) => new MapTile(tile.topHeight, tile.bottomHeight, tile.spriteIndex);
+    public static explicit operator MapTile(Tile tile) => new MapTile(tile.topHeight, tile.bottomHeight, tile.spriteIndex, tile.walkable, tile.weight);
 }
