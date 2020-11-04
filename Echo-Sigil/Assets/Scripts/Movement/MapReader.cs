@@ -43,9 +43,19 @@ public static class MapReader
 
     public static void GeneratePhysicalMap(Map map)
     {
-        DestroyPhysicalMapTiles();
+        if(tileParent == null)
+        {
+            tileParent = new GameObject("Tile Parent").transform;
+        }
 
-        tileParent = new GameObject("Tile Parent").transform;
+        foreach(Transform transform in tileParent)
+        {
+            if( transform.TryGetComponent(out TileBehaviour t))
+            {
+                t.CacheTile();
+            }
+        }
+
         sizeX = map.sizeX;
         sizeY = map.sizeY;
         tiles = new Tile[map.sizeX * map.sizeY];
@@ -81,69 +91,13 @@ public static class MapReader
 
         foreach (Tile tile in tiles)
         {
-            TileToTileBehavior(tile);
-        }
-        MapGeneratedEvent?.Invoke();
-    }
-
-    private static void TileToTileBehavior(Tile tile)
-    {
-        if (tile.topHeight >= 0)
-        {
-            GameObject gameObjectTile = new GameObject(tile.posInGrid.x + "," + tile.posInGrid.y + " tile");
-            gameObjectTile.transform.position = tile.PosInWorld;
-            gameObjectTile.transform.rotation = Quaternion.identity;
-            gameObjectTile.transform.parent = tileParent;
-            gameObjectTile.tag = "Tile";
-
-            TileBehaviour tileBehaviour = gameObjectTile.AddComponent<TileBehaviour>();
-            tileBehaviour.tile = tile;
-
-            GameObject topSprite = new GameObject(tile.posInGrid.x + "," + tile.posInGrid.y + " top sprite");
-            topSprite.transform.parent = gameObjectTile.transform;
-            topSprite.transform.localPosition = Vector3.forward * (tile.sideLength / 2f);
-            SpriteRenderer spriteRenderer = topSprite.AddComponent<SpriteRenderer>();
-            tileBehaviour.spriteRenderer = spriteRenderer;
-            spriteRenderer.sprite = TileTextureManager.GetTileSprite(tile.spriteIndex, TileTextureSection.Top, Vector2Int.zero, tile);
-            for (int y = -1; y <= 1; y++)
+            if (tile.topHeight > 0)
             {
-                for (int x = -1; x <= 1; x++)
-                {
-                    if (Mathf.Abs(x) != Mathf.Abs(y))
-                    {
-                        Vector2Int direction = new Vector2Int(x, y);
-                        Tile neighbor = tile.FindNeighbor(direction);
-                        if (neighbor == null || neighbor != null && neighbor.topHeight < tile.topHeight && tile.topHeight > 0)
-                        {
-                            GameObject sideSpriteObject = new GameObject(tile.posInGrid.x + "," + tile.posInGrid.y + " side sprite (" + x + "," + y + ")");
-                            Sprite sideSprite = TileTextureManager.GetTileSide(tile.spriteIndex, direction, tile);
-                            sideSpriteObject.AddComponent<SpriteRenderer>().sprite = sideSprite;
-                            sideSpriteObject.transform.parent = gameObjectTile.transform;
-
-                            float sideLength = tile.sideLength;
-                            float bottom = tile.bottomHeight;
-                            if(neighbor != null)
-                            {
-                                sideLength = Mathf.Min(sideLength,tile.topHeight - neighbor.topHeight);
-                                bottom = Mathf.Max(bottom, neighbor.topHeight);
-                            }
-
-                            sideSpriteObject.transform.localPosition = new Vector3(-x / 2f, -y / 2f, bottom - sideSpriteObject.transform.position.z -sideLength);
-                            sideSpriteObject.transform.localRotation = Quaternion.LookRotation(new Vector3(x, y, 0), -Vector3.forward);
-
-                        }
-                    }
-                }
+                TileBehaviour.MakeNewTileBehaviour(tile, tileParent);
             }
-
-
-
-            gameObjectTile.transform.position += Vector3.forward * tile.midHeight;
-
-            gameObjectTile.AddComponent<BoxCollider2D>().size = new Vector3(1, 1, tile.sideLength);
-
-
         }
+        TileBehaviour.ClearCachedTiles();
+        MapGeneratedEvent?.Invoke();
     }
 
     public static Unit MapImplementToUnit(MapImplement mi)
@@ -232,21 +186,13 @@ public static class MapReader
             Tile output = tiles[0];
             foreach (Tile tile in tiles)
             {
-                output = Mathf.Abs(nearestHeight - output.midHeight) < Mathf.Abs(nearestHeight - tile.midHeight) ? output : tile;
+                output = Mathf.Abs(nearestHeight - output.topHeight) < Mathf.Abs(nearestHeight - tile.topHeight) ? output : tile;
             }
             return output;
         }
         else
         {
             return null;
-        }
-    }
-
-    public static void DestroyPhysicalMapTiles()
-    {
-        if (tileParent != null)
-        {
-            UnityEngine.Object.DestroyImmediate(tileParent.gameObject);
         }
     }
 

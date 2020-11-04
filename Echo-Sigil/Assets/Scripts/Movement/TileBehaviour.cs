@@ -6,17 +6,151 @@ using Pathfinding;
 public class TileBehaviour : MonoBehaviour
 {
     public Tile tile;
-    public SpriteRenderer spriteRenderer;
+    public SpriteRenderer topSprite;
+    public Dictionary<Vector2Int, SpriteRenderer> sideSprites = new Dictionary<Vector2Int, SpriteRenderer>();
+    static Queue<TileBehaviour> cachedTiles = new Queue<TileBehaviour>();
 
     private void Update()
     {
-        if (spriteRenderer != null)
+        if (topSprite != null)
         {
-            spriteRenderer.color = tile.CheckColor();
+            topSprite.color = tile.CheckColor();
         }
     }
 
+    public void SetTopSprite()
+    {
+        if (topSprite == null)
+        {
+            GameObject topSpriteObject = new GameObject(tile.posInGrid + " top sprite");
+            topSpriteObject.transform.parent = transform;
+            SpriteRenderer spriteRenderer = topSpriteObject.AddComponent<SpriteRenderer>();
+            topSprite = spriteRenderer;
+        }
+
+        topSprite.gameObject.transform.localPosition = Vector3.forward * (tile.sideLength / 2f);
+        topSprite.sprite = TileTextureManager.GetTileSprite(tile.spriteIndex, TileTextureSection.Top, Vector2Int.zero, tile);
+    }
+
+    public void SetSideSprite(Vector2Int direction)
+    {
+        SpriteRenderer spriteRenderer = null;
+        if (sideSprites.ContainsKey(direction))
+        {
+            spriteRenderer = sideSprites[direction];
+        }
+        else
+        {
+            GameObject sideSpriteGameObject = new GameObject(tile.posInGrid + " side sprite " + direction);
+            sideSpriteGameObject.transform.parent = transform;
+            sideSpriteGameObject.transform.localPosition = new Vector3(-direction.x / 2f, -direction.y / 2f);
+            sideSpriteGameObject.transform.localRotation = Quaternion.LookRotation(new Vector3(direction.x, direction.y, 0), -Vector3.forward);
+
+            spriteRenderer = sideSpriteGameObject.AddComponent<SpriteRenderer>();
+            sideSprites.Add(direction, spriteRenderer);
+        }
+
+        float heightInWorldUnits = Mathf.Min(tile.topHeight, tile.sideLength);
+        float bottom = tile.bottomHeight;
+        Tile neighbor = tile.FindNeighbor(direction);
+        if (neighbor != null && neighbor.topHeight > 0 && neighbor.topHeight > tile.bottomHeight)
+        {
+            heightInWorldUnits = tile.topHeight - neighbor.topHeight;
+            bottom = neighbor.topHeight;
+        }
+
+        Sprite sprite = null;
+        if (heightInWorldUnits > 0)
+        {
+            sprite = TileTextureManager.GetTileSide(tile.spriteIndex, heightInWorldUnits, bottom);
+            Transform sideTransform = spriteRenderer.gameObject.transform;
+            Vector3 localPosition = sideTransform.localPosition;
+            localPosition.z = (tile.sideLength / 2f) - (heightInWorldUnits / 2f);
+            sideTransform.localPosition = localPosition;
+        }
+        spriteRenderer.sprite = sprite;
+
+        sideSprites[direction] = spriteRenderer;
+    }
+
+    public static void ClearCachedTiles()
+    {
+        while(cachedTiles.Count > 0)
+        {
+            TileBehaviour tileBehaviour = cachedTiles.Dequeue();
+            DestroyImmediate(tileBehaviour.gameObject);
+        }
+    }
+
+    public void SetPos()
+    {
+        name = tile.posInGrid + " Tile";
+        transform.position = new Vector3(tile.PosInWorld.x,tile.PosInWorld.y, tile.midHeight);
+        transform.rotation = Quaternion.identity;
+    }
+
+    public void CacheTile()
+    {
+        topSprite.sprite = null;
+        for (int y = -1; y <= 1; y++)
+        {
+            for (int x = -1; x <= 1; x++)
+            {
+                if (Mathf.Abs(x) != Mathf.Abs(y))
+                {
+                    sideSprites.TryGetValue(new Vector2Int(x, y), out SpriteRenderer s);
+                    if(s != null)
+                    {
+                        s.sprite = null;
+                    }
+                }
+            }
+        }
+        name = "Cached Tile";
+        cachedTiles.Enqueue(this);
+    }
+
+    public static TileBehaviour MakeNewTileBehaviour(Tile t, Transform tileParent)
+    {
+        TileBehaviour tileBehaviour;
+        if (cachedTiles.Count < 1)
+        {
+            GameObject tileObject = new GameObject
+            {
+                tag = "Tile"
+            };
+            tileObject.transform.parent = tileParent;
+
+            tileBehaviour = tileObject.AddComponent<TileBehaviour>();
+        } 
+        else
+        {
+            tileBehaviour = cachedTiles.Dequeue();
+        }
+
+        tileBehaviour.tile = t;
+        tileBehaviour.SetPos();
+        tileBehaviour.SetTopSprite();
+        for (int y = -1; y <= 1; y++)
+        {
+            for (int x = -1; x <= 1; x++)
+            {
+                if (Mathf.Abs(x) != Mathf.Abs(y))
+                {
+                    tileBehaviour.SetSideSprite(new Vector2Int(x, y));
+                }
+            }
+        }
+
+        return tileBehaviour;
+    }
+
     public static implicit operator Tile(TileBehaviour t) => t.tile;
+
+    public override string ToString()
+    {
+        return tile.ToString() + " Behaviour";
+    }
 
 }
 

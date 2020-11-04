@@ -73,7 +73,7 @@ public struct Map
         for (int i = 0; i < numTile.Length; i++)
         {
             numTile[i] = 1;
-            mapTiles[i].topHeight = 1;
+            mapTiles[i].topHeight = Mathf.Lerp(0,3,Mathf.InverseLerp(0,numTile.Length,i));
             mapTiles[i].bottomHeight = 0;
             mapTiles[i].walkable = true;
         }
