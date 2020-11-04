@@ -42,7 +42,7 @@ namespace Tile_Tests
 
         {
             MapReader.GeneratePhysicalMap(new Map(1, 1));
-            Assert.AreEqual(new Vector2Int(0, 0), MapReader.GetTile(0, 0, 0));
+            Assert.AreEqual(new Vector2Int(0, 0), MapReader.GetTile(0, 0, 1).posInGrid);
         }
         [Test]
 
@@ -50,7 +50,7 @@ namespace Tile_Tests
 
         {
             MapReader.GeneratePhysicalMap(new Map(3, 5));
-            Assert.AreEqual(new Vector2Int(2, 4), MapReader.GetTile(2, 4, 0));
+            Assert.AreEqual(new Vector2Int(2, 4), MapReader.GetTile(2, 4, 0).posInGrid);
         }
     }
 
@@ -92,6 +92,18 @@ namespace Tile_Tests
             Assert.AreNotEqual(texture2D.GetPixel(0, width - 1), texture2D.GetPixel(0, width + 1));
             Assert.AreNotEqual(texture2D.GetPixel(0, width + (width / 10) - 1), texture2D.GetPixel(0, width + (width / 10) + 1));
             Assert.AreNotEqual(texture2D.GetPixel(0, texture2D.height), texture2D.GetPixel(0, (width * 2) - 1));
+        }
+    }
+
+    class get_neighbor
+    {
+        [Test]
+        public void tiles_find_neighbor()
+        {
+            MapReader.GeneratePhysicalMap(new Map(3, 3));
+            ITile[] tiles = MapReader.GetTile(1, 1, 1).FindNeighbors();
+            Assert.IsNotNull(tiles);
+            Assert.Greater(tiles.Length, 0);
         }
     }
 }

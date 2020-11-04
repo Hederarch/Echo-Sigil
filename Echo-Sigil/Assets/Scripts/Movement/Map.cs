@@ -74,6 +74,8 @@ public struct Map
         {
             numTile[i] = 1;
             mapTiles[i].topHeight = 1;
+            mapTiles[i].bottomHeight = 0;
+            mapTiles[i].walkable = true;
         }
 
     }

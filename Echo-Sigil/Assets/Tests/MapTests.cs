@@ -7,7 +7,20 @@ namespace Map_Tests
 {
     class map_reader
     {
-
+        [Test]
+        public void center_tile_is_at_0x0_1x1()
+        {
+            MapReader.GeneratePhysicalMap(new Map(1, 1));
+            Transform tileTransform = MapReader.tileParent.GetChild(0);
+            Assert.AreEqual(Vector2.zero, (Vector2)tileTransform.position);
+        }
+        [Test]
+        public void center_tile_is_at_0x0_3x3()
+        {
+            MapReader.GeneratePhysicalMap(new Map(3, 3));
+            Transform tileTransform = MapReader.tileParent.Find("1,1 tile");
+            Assert.AreEqual(Vector2.zero, (Vector2)tileTransform.position);
+        }
     }
     class map
     {
@@ -47,20 +60,6 @@ namespace Map_Tests
     class conversions
     {
         [Test]
-        public void center_tile_is_at_0x0_1x1()
-        {
-            MapReader.GeneratePhysicalMap(new Map(1, 1));
-            Transform tileTransform = MapReader.tileParent.GetChild(0);
-            Assert.AreEqual(Vector3.zero, tileTransform.position);
-        }
-        [Test]
-        public void center_tile_is_at_0x0_3x3()
-        {
-            MapReader.GeneratePhysicalMap(new Map(3, 3));
-            Transform tileTransform = MapReader.tileParent.Find("1,1 tile");
-            Assert.AreEqual(Vector3.zero, tileTransform.position);
-        }
-        [Test]
         public void grid_to_world_space_3x3()
         {
             MapReader.GeneratePhysicalMap(new Map(3, 3));
@@ -90,7 +89,7 @@ namespace Map_Tests
 
             MapReader.GeneratePhysicalMap(new Map(3, 3));
             MapReader.tileParent.position += Vector3.one;
-            Assert.AreEqual(Vector2.one * 2, MapReader.GridToWorldSpace(0, 0, 1));
+            Assert.AreEqual(Vector3.one * 2 - Vector3.forward, MapReader.GridToWorldSpace(0, 0, 1));
         }
     }
 }

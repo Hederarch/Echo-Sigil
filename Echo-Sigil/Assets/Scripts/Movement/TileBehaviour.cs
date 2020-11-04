@@ -22,6 +22,7 @@ public class TileBehaviour : MonoBehaviour
 
 public class Tile : ITile
 {
+    //Rendering help
     int x;
     int y;
     public TilePos posInGrid
@@ -35,7 +36,7 @@ public class Tile : ITile
         }
     }
 
-    public Vector3 PosInWorld => MapReader.GridToWorldSpace(posInGrid); 
+    public Vector3 PosInWorld => MapReader.GridToWorldSpace(posInGrid);
     public float topHeight;
     public float bottomHeight;
     public float midHeight => (topHeight + bottomHeight) / 2f;
@@ -52,36 +53,10 @@ public class Tile : ITile
 
     public int spriteIndex;
 
-    public bool walkable = true;
-    bool IPathItem<ITile>.walkable => walkable;
-    public bool current;
-    public bool target;
-    public bool selectable;
-
-    //Pathfinding stuff
-    public ITile parent { get; set; }
-    public int weight { get; set; }
-
-    //BFS stuff
-    public int distance { get; set; }
-
-    //A* stuff
-    public int F => G + H;
-    public int G { get; set; }
-    public int H { get; set; }
-
-    //Heap stuff
-    public int HeapIndex { get; set; }
-    public Func<List<ITile>, List<ITile>> OnFindNeighbors { get; set; }
-
-    public Tile(int x, int y, float z, int spriteIndex, bool walkable = true, int _weight = 1) : this(new TilePos(x, y, z), spriteIndex, walkable, _weight) { }
-
-    public Tile(TilePos posInGrid, int spriteIndex, bool walkable = true, int _weight = 1)
-    {
-        this.posInGrid = posInGrid;
-        weight = _weight;
-    }
-
+    //State managment
+    public bool current { get; set; }
+    public bool target { get; set; }
+    public bool selectable { get; set; }
     public Color CheckColor()
     {
         Color output = Color.white;
@@ -104,7 +79,17 @@ public class Tile : ITile
         }
         return output;
     }
+    public void ResetTile()
+    {
+        current = false;
+        target = false;
+        selectable = false;
+    }
 
+    //Pathfinding stuff
+    public ITile parent { get; set; }
+    public int weight { get; set; }
+    public bool walkable { get; set; } = true;
     public ITile[] FindNeighbors()
     {
         List<ITile> tiles = new List<ITile>();
@@ -131,24 +116,29 @@ public class Tile : ITile
 
         return tiles.ToArray();
     }
-
     public Tile FindNeighbor(Vector2Int direction)
     {
-        Tile tile = MapReader.GetTile(posInGrid + direction, topHeight);
+        Tile tile = MapReader.GetTile(posInGrid + direction);
         if (tile != null && tile.walkable)
         {
             return tile;
         }
         return null;
     }
+    public Func<List<ITile>, List<ITile>> OnFindNeighbors { get; set; }
 
-    public void ResetTile()
-    {
-        current = false;
-        target = false;
-        selectable = false;
-    }
+    //BFS stuff
+    public int distance { get; set; }
 
+    //A* stuff
+    public int F => G + H;
+    public int G { get; set; }
+    public int H { get; set; }
+    public int GetDistance(ITile other) => Mathf.Abs(posInGrid.x - other.posInGrid.x) + Mathf.Abs(posInGrid.y - other.posInGrid.y);
+
+    //Heap stuff
+    public int HeapIndex { get; set; }
+    public int GetMaxSize() => MapReader.numTiles;
     public int CompareTo(ITile other)
     {
         int compare = F.CompareTo(other.F);
@@ -159,19 +149,29 @@ public class Tile : ITile
         return -compare;
     }
 
-    public int GetDistance(ITile other)
+    //Constructors
+    public Tile(int x, int y, float z, int spriteIndex, bool walkable = true, int _weight = 1) : this(new TilePos(x, y, z), spriteIndex, walkable, _weight) { }
+
+    public Tile(TilePos posInGrid, int spriteIndex, bool walkable = true, int _weight = 1)
     {
-        return Mathf.Abs(posInGrid.x - other.posInGrid.x) + Mathf.Abs(posInGrid.y - other.posInGrid.y);
+        this.posInGrid = posInGrid;
+        this.spriteIndex = spriteIndex;
+        this.walkable = walkable;
+        weight = _weight;
     }
 
-    public int GetMaxSize()
+    public override string ToString()
     {
-        return MapReader.numTiles;
+        return posInGrid + " Tile";
     }
 }
 
 public interface ITile : IAStarItem<ITile>, IBFSItem<ITile>
 {
+    bool current { get; set; }
+    bool target { get; set; }
+    bool selectable { get; set; }
+
     TilePos posInGrid { get; }
     Func<List<ITile>, List<ITile>> OnFindNeighbors { get; set; }
 }
@@ -209,4 +209,21 @@ public struct TilePos : IEquatable<TilePos>, IEquatable<Vector2Int>
     }
 
     public static implicit operator Vector2Int(TilePos t) => t.PosInGrid;
+
+    public static implicit operator string(TilePos t) => t.ToString();
+
+    public override string ToString()
+    {
+        return "(" + x + "," + y + "," + z + ")";
+    }
+
+    public static TilePos operator +(TilePos a, Vector2Int b)
+    {
+        return new TilePos(a.x + b.x, a.y + b.y, a.z);
+    }
+
+    public static TilePos operator -(TilePos a, Vector2Int b)
+    {
+        return new TilePos(a.x - b.x, a.y - b.y, a.z);
+    }
 }

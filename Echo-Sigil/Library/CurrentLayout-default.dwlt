@@ -92,8 +92,8 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 501, y: 321}
-  m_MaxSize: {x: 12003, y: 8021}
+  m_MinSize: {x: 677, y: 321}
+  m_MaxSize: {x: 12004, y: 8021}
   vertical: 0
   controlID: 37
 --- !u!114 &5
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: TestRunnerWindow
+  m_Name: InspectorWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -188,16 +188,16 @@ MonoBehaviour:
     y: 0
     width: 551
     height: 947
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_ActualView: {fileID: 14}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
   - {fileID: 14}
   - {fileID: 12}
   - {fileID: 11}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -363,7 +363,7 @@ MonoBehaviour:
     height: 926
   m_ViewDataDictionary: {fileID: 0}
   m_Spl:
-    ID: 281
+    ID: 137
     splitterInitialOffset: 299
     currentActiveSplitter: -1
     realSizes: 83020000d5000000
@@ -418,7 +418,7 @@ MonoBehaviour:
       name: Tales From The Metahedron
       fullName: Tales From The Metahedron
       resultStatus: 2
-      duration: 0.208679
+      duration: 2.0872426
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -434,7 +434,7 @@ MonoBehaviour:
       name: Tests.dll
       fullName: C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Library/ScriptAssemblies/Tests.dll
       resultStatus: 2
-      duration: 0.160502
+      duration: 2.0302994
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -450,7 +450,7 @@ MonoBehaviour:
       name: Camera_Tests
       fullName: Camera_Tests
       resultStatus: 2
-      duration: 0.1491826
+      duration: 0.111183
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -466,7 +466,7 @@ MonoBehaviour:
       name: rotation
       fullName: Camera_Tests.rotation
       resultStatus: 1
-      duration: 0.0669431
+      duration: 0.0259992
       messages: 
       output: 
       stacktrace: 
@@ -482,7 +482,7 @@ MonoBehaviour:
       name: camera_rotates_x
       fullName: Camera_Tests.rotation.camera_rotates_x
       resultStatus: 1
-      duration: 0.0316003
+      duration: 0.0082368
       messages: 
       output: 
       stacktrace: 
@@ -499,7 +499,7 @@ MonoBehaviour:
       name: camera_rotates_y
       fullName: Camera_Tests.rotation.camera_rotates_y
       resultStatus: 1
-      duration: 0.00142
+      duration: 0.000984
       messages: 
       output: 
       stacktrace: 
@@ -516,7 +516,7 @@ MonoBehaviour:
       name: selection
       fullName: Camera_Tests.selection
       resultStatus: 2
-      duration: 0.0737082
+      duration: 0.064273
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -532,7 +532,7 @@ MonoBehaviour:
       name: get_Screen_point_returns_z0_bottom_left
       fullName: Camera_Tests.selection.get_Screen_point_returns_z0_bottom_left
       resultStatus: 2
-      duration: 0.0183671
+      duration: 0.0181787
       messages: "  Expected: 0\r\n  But was:  -2.30940294f\r\n"
       output: 
       stacktrace: 'at Camera_Tests.selection.get_Screen_point_returns_z0_bottom_left
@@ -552,7 +552,7 @@ MonoBehaviour:
       name: get_Screen_point_returns_z0_middle
       fullName: Camera_Tests.selection.get_Screen_point_returns_z0_middle
       resultStatus: 2
-      duration: 0.0031972
+      duration: 0.0022855
       messages: "  Expected: 0\r\n  But was:  -0.00255250931f\r\n"
       output: 
       stacktrace: 'at Camera_Tests.selection.get_Screen_point_returns_z0_middle ()
@@ -572,7 +572,7 @@ MonoBehaviour:
       name: get_Screen_point_returns_z0_top_right
       fullName: Camera_Tests.selection.get_Screen_point_returns_z0_top_right
       resultStatus: 2
-      duration: 0.0114195
+      duration: 0.0019845
       messages: "  Expected: 0\r\n  But was:  2.30940127f\r\n"
       output: 
       stacktrace: 'at Camera_Tests.selection.get_Screen_point_returns_z0_top_right
@@ -592,7 +592,7 @@ MonoBehaviour:
       name: unrotated_angle_is_0
       fullName: Camera_Tests.selection.unrotated_angle_is_0
       resultStatus: 1
-      duration: 0.0010472
+      duration: 0.0020339
       messages: 
       output: 
       stacktrace: 
@@ -608,9 +608,9 @@ MonoBehaviour:
       uniqueId: Tests.dll/[Tests][Map_Tests][suite]
       name: Map_Tests
       fullName: Map_Tests
-      resultStatus: 2
-      duration: 0.5199175
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 1.1745889
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -624,9 +624,9 @@ MonoBehaviour:
       uniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.conversions][suite]
       name: conversions
       fullName: Map_Tests.conversions
-      resultStatus: 2
-      duration: 0.499147
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 0.4379863
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -636,79 +636,15 @@ MonoBehaviour:
       categories: []
       parentId: 1062
       parentUniqueId: Tests.dll/[Tests][Map_Tests][suite]
-    - id: 1040
-      uniqueId: Tests.dll/Map_Tests/conversions/[Tests][Map_Tests.conversions.center_tile_is_at_0x0_1x1]
-      name: center_tile_is_at_0x0_1x1
-      fullName: Map_Tests.conversions.center_tile_is_at_0x0_1x1
-      resultStatus: 2
-      duration: 0.0497423
-      messages: 'System.IndexOutOfRangeException : Index was outside the bounds of
-        the array.'
-      output: 
-      stacktrace: "  at MapReader.GetTiles (System.Int32 x, System.Int32 y) [0x00058]
-        in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Movement\\MapReader.cs:203
-        \r\n  at MapReader.GetTile (System.Int32 x, System.Int32 y, System.Single
-        nearestHeight) [0x00001] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Movement\\MapReader.cs:217
-        \r\n  at MapReader.GetTile (UnityEngine.Vector2Int pos, System.Single height)
-        [0x00000] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Movement\\MapReader.cs:213
-        \r\n  at Tile.FindNeighbor (UnityEngine.Vector2Int direction) [0x00001] in
-        C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Movement\\TileBehaviour.cs:137
-        \r\n  at TileTextureManager.ApplyBorder (UnityEngine.Texture2D texture, Tile
-        tile, UnityEngine.Vector2Int direction) [0x0005e] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Movement\\TileTextureManager.cs:72
-        \r\n  at TileTextureManager.GetTileTexture (UnityEngine.Texture2D texture,
-        TileTextureSection tileTextureSection, System.Boolean debug, Tile tile) [0x00076]
-        in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Movement\\TileTextureManager.cs:50
-        \r\n  at TileTextureManager.GetTileSprite (System.Int32 spriteIndex, TileTextureSection
-        tileTextureSection, UnityEngine.Vector2Int direction, Tile tile) [0x00001]
-        in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Movement\\TileTextureManager.cs:24
-        \r\n  at MapReader.TileToTileBehavior (Tile tile) [0x00139] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Movement\\MapReader.cs:106
-        \r\n  at MapReader.GeneratePhysicalMap (Map map) [0x00171] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Movement\\MapReader.cs:84
-        \r\n  at Map_Tests.conversions.center_tile_is_at_0x0_1x1 () [0x00001] in
-        C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Tests\\MapTests.cs:52
-        \r\n  at (wrapper managed-to-native) System.Reflection.MonoMethod.InternalInvoke(System.Reflection.MonoMethod,object,object[],System.Exception&)\r\n 
-        at System.Reflection.MonoMethod.Invoke (System.Object obj, System.Reflection.BindingFlags
-        invokeAttr, System.Reflection.Binder binder, System.Object[] parameters,
-        System.Globalization.CultureInfo culture) [0x00032] in <9577ac7a62ef43179789031239ba8798>:0 "
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1039
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.conversions][suite]
-    - id: 1041
-      uniqueId: Tests.dll/Map_Tests/conversions/[Tests][Map_Tests.conversions.center_tile_is_at_0x0_3x3]
-      name: center_tile_is_at_0x0_3x3
-      fullName: Map_Tests.conversions.center_tile_is_at_0x0_3x3
-      resultStatus: 2
-      duration: 0.0998254
-      messages: "  Expected: (0.0, 0.0, 0.0)\r\n  But was:  (0.0, -1.0, 0.0)\r\n"
-      output: 
-      stacktrace: 'at Map_Tests.conversions.center_tile_is_at_0x0_3x3 () [0x0001e]
-        in C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil\Assets\Tests\MapTests.cs:61
-
-'
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1039
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.conversions][suite]
     - id: 1042
       uniqueId: Tests.dll/Map_Tests/conversions/[Tests][Map_Tests.conversions.grid_to_world_space_3x3]
       name: grid_to_world_space_3x3
       fullName: Map_Tests.conversions.grid_to_world_space_3x3
-      resultStatus: 2
-      duration: 0.0523435
-      messages: "  Expected: (1.0, 1.0, 1.0)\r\n  But was:  (1.0, 0.0, 0.0)\r\n"
+      resultStatus: 1
+      duration: 0.0812048
+      messages: 
       output: 
-      stacktrace: 'at Map_Tests.conversions.grid_to_world_space_3x3 () [0x0000e]
-        in C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil\Assets\Tests\MapTests.cs:67
-
-'
+      stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -721,14 +657,11 @@ MonoBehaviour:
       uniqueId: Tests.dll/Map_Tests/conversions/[Tests][Map_Tests.conversions.grid_to_world_space_with_tile_parent_move]
       name: grid_to_world_space_with_tile_parent_move
       fullName: Map_Tests.conversions.grid_to_world_space_with_tile_parent_move
-      resultStatus: 2
-      duration: 0.0626885
-      messages: "  Expected: (2.0, 2.0)\r\n  But was:  (2.0, 1.0, 0.0)\r\n"
+      resultStatus: 1
+      duration: 0.0870353
+      messages: 
       output: 
-      stacktrace: 'at Map_Tests.conversions.grid_to_world_space_with_tile_parent_move
-        () [0x00029] in C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil\Assets\Tests\MapTests.cs:93
-
-'
+      stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -742,7 +675,7 @@ MonoBehaviour:
       name: world_to_grid_space_3x3_0x0
       fullName: Map_Tests.conversions.world_to_grid_space_3x3_0x0
       resultStatus: 1
-      duration: 0.0740811
+      duration: 0.0858126
       messages: 
       output: 
       stacktrace: 
@@ -759,7 +692,7 @@ MonoBehaviour:
       name: world_to_grid_space_3x3_1x1
       fullName: Map_Tests.conversions.world_to_grid_space_3x3_1x1
       resultStatus: 1
-      duration: 0.0535924
+      duration: 0.0898304
       messages: 
       output: 
       stacktrace: 
@@ -776,7 +709,7 @@ MonoBehaviour:
       name: world_to_grid_space_3x3_center
       fullName: Map_Tests.conversions.world_to_grid_space_3x3_center
       resultStatus: 1
-      duration: 0.0553156
+      duration: 0.0813803
       messages: 
       output: 
       stacktrace: 
@@ -793,7 +726,7 @@ MonoBehaviour:
       name: map
       fullName: Map_Tests.map
       resultStatus: 1
-      duration: 0.0480494
+      duration: 0.5589899
       messages: 
       output: 
       stacktrace: 
@@ -809,7 +742,7 @@ MonoBehaviour:
       name: map_can_not_return_null_1x1
       fullName: Map_Tests.map.map_can_not_return_null_1x1
       resultStatus: 1
-      duration: 0.0015825
+      duration: 0.0011937
       messages: 
       output: 
       stacktrace: 
@@ -826,7 +759,7 @@ MonoBehaviour:
       name: map_can_not_return_null_3x5
       fullName: Map_Tests.map.map_can_not_return_null_3x5
       resultStatus: 1
-      duration: 0.0006498
+      duration: 0.0006081
       messages: 
       output: 
       stacktrace: 
@@ -843,7 +776,7 @@ MonoBehaviour:
       name: new_map_overloads_equivalant
       fullName: Map_Tests.map.new_map_overloads_equivalant
       resultStatus: 1
-      duration: 0.0036789
+      duration: 0.0020557
       messages: 
       output: 
       stacktrace: 
@@ -860,7 +793,7 @@ MonoBehaviour:
       name: new_map_sets_size
       fullName: Map_Tests.map.new_map_sets_size
       resultStatus: 1
-      duration: 0.0009415
+      duration: 0.0014544
       messages: 
       output: 
       stacktrace: 
@@ -877,7 +810,7 @@ MonoBehaviour:
       name: new_maps_is_walkable
       fullName: Map_Tests.map.new_maps_is_walkable
       resultStatus: 1
-      duration: 0.0011285
+      duration: 0.0011594
       messages: 
       output: 
       stacktrace: 
@@ -889,13 +822,63 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1026
       parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map][suite]
+    - id: 1014
+      uniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map_reader][suite]
+      name: map_reader
+      fullName: Map_Tests.map_reader
+      resultStatus: 1
+      duration: 0.1445694
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1039
+      parentUniqueId: Tests.dll/[Tests][Map_Tests][suite]
+    - id: 1015
+      uniqueId: Tests.dll/Map_Tests/map_reader/[Tests][Map_Tests.map_reader.center_tile_is_at_0x0_1x1]
+      name: center_tile_is_at_0x0_1x1
+      fullName: Map_Tests.map_reader.center_tile_is_at_0x0_1x1
+      resultStatus: 1
+      duration: 0.0355274
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1014
+      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map_reader][suite]
+    - id: 1016
+      uniqueId: Tests.dll/Map_Tests/map_reader/[Tests][Map_Tests.map_reader.center_tile_is_at_0x0_3x3]
+      name: center_tile_is_at_0x0_3x3
+      fullName: Map_Tests.map_reader.center_tile_is_at_0x0_3x3
+      resultStatus: 1
+      duration: 0.0816134
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1014
+      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map_reader][suite]
     - id: 1061
       uniqueId: Tests.dll/[Tests][Tile_Tests][suite]
       name: Tile_Tests
       fullName: Tile_Tests
-      resultStatus: 2
-      duration: 0.1483358
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 0.7140529
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -905,13 +888,46 @@ MonoBehaviour:
       categories: []
       parentId: 1060
       parentUniqueId: '[Tests.dll][suite]'
+    - id: 1012
+      uniqueId: Tests.dll/Tile_Tests/[Tests][Tile_Tests.get_neighbor][suite]
+      name: get_neighbor
+      fullName: Tile_Tests.get_neighbor
+      resultStatus: 1
+      duration: 0.1120945
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1037
+      parentUniqueId: Tests.dll/[Tests][Tile_Tests][suite]
+    - id: 1013
+      uniqueId: Tests.dll/Tile_Tests/get_neighbor/[Tests][Tile_Tests.get_neighbor.tiles_find_neighbor]
+      name: tiles_find_neighbor
+      fullName: Tile_Tests.get_neighbor.tiles_find_neighbor
+      resultStatus: 1
+      duration: 0.1027331
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1012
+      parentUniqueId: Tests.dll/Tile_Tests/[Tests][Tile_Tests.get_neighbor][suite]
     - id: 1001
       uniqueId: Tests.dll/Tile_Tests/[Tests][Tile_Tests.initialization][suite]
       name: initialization
       fullName: Tile_Tests.initialization
-      resultStatus: 2
-      duration: 0.1258503
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 0.2788344
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -926,7 +942,7 @@ MonoBehaviour:
       name: new_tile_can_hold_height_value
       fullName: Tile_Tests.initialization.new_tile_can_hold_height_value
       resultStatus: 1
-      duration: 0.0026536
+      duration: 0.0008091
       messages: 
       output: 
       stacktrace: 
@@ -943,7 +959,7 @@ MonoBehaviour:
       name: new_tile_can_hold_walkable
       fullName: Tile_Tests.initialization.new_tile_can_hold_walkable
       resultStatus: 1
-      duration: 0.0014218
+      duration: 0.0006286
       messages: 
       output: 
       stacktrace: 
@@ -960,7 +976,7 @@ MonoBehaviour:
       name: new_tile_can_not_return_null
       fullName: Tile_Tests.initialization.new_tile_can_not_return_null
       resultStatus: 1
-      duration: 0.0044371
+      duration: 0.0005267
       messages: 
       output: 
       stacktrace: 
@@ -976,35 +992,11 @@ MonoBehaviour:
       uniqueId: Tests.dll/Tile_Tests/initialization/[Tests][Tile_Tests.initialization.pos_in_grid_is_acurate_0x0]
       name: pos_in_grid_is_acurate_0x0
       fullName: Tile_Tests.initialization.pos_in_grid_is_acurate_0x0
-      resultStatus: 2
-      duration: 0.0112434
-      messages: 'System.IndexOutOfRangeException : Index was outside the bounds of
-        the array.'
+      resultStatus: 1
+      duration: 0.018742
+      messages: 
       output: 
-      stacktrace: "  at MapReader.GetTiles (System.Int32 x, System.Int32 y) [0x00058]
-        in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Movement\\MapReader.cs:203
-        \r\n  at MapReader.GetTile (System.Int32 x, System.Int32 y, System.Single
-        nearestHeight) [0x00001] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Movement\\MapReader.cs:217
-        \r\n  at MapReader.GetTile (UnityEngine.Vector2Int pos, System.Single height)
-        [0x00000] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Movement\\MapReader.cs:213
-        \r\n  at Tile.FindNeighbor (UnityEngine.Vector2Int direction) [0x00001] in
-        C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Movement\\TileBehaviour.cs:137
-        \r\n  at TileTextureManager.ApplyBorder (UnityEngine.Texture2D texture, Tile
-        tile, UnityEngine.Vector2Int direction) [0x0005e] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Movement\\TileTextureManager.cs:72
-        \r\n  at TileTextureManager.GetTileTexture (UnityEngine.Texture2D texture,
-        TileTextureSection tileTextureSection, System.Boolean debug, Tile tile) [0x00076]
-        in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Movement\\TileTextureManager.cs:50
-        \r\n  at TileTextureManager.GetTileSprite (System.Int32 spriteIndex, TileTextureSection
-        tileTextureSection, UnityEngine.Vector2Int direction, Tile tile) [0x00001]
-        in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Movement\\TileTextureManager.cs:24
-        \r\n  at MapReader.TileToTileBehavior (Tile tile) [0x00139] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Movement\\MapReader.cs:106
-        \r\n  at MapReader.GeneratePhysicalMap (Map map) [0x00171] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Scripts\\Movement\\MapReader.cs:84
-        \r\n  at Tile_Tests.initialization.pos_in_grid_is_acurate_0x0 () [0x00001]
-        in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Tests\\TileTests.cs:44
-        \r\n  at (wrapper managed-to-native) System.Reflection.MonoMethod.InternalInvoke(System.Reflection.MonoMethod,object,object[],System.Exception&)\r\n 
-        at System.Reflection.MonoMethod.Invoke (System.Object obj, System.Reflection.BindingFlags
-        invokeAttr, System.Reflection.Binder binder, System.Object[] parameters,
-        System.Globalization.CultureInfo culture) [0x00032] in <9577ac7a62ef43179789031239ba8798>:0 "
+      stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1017,14 +1009,11 @@ MonoBehaviour:
       uniqueId: Tests.dll/Tile_Tests/initialization/[Tests][Tile_Tests.initialization.pos_in_grid_is_acurate_3x5]
       name: pos_in_grid_is_acurate_3x5
       fullName: Tile_Tests.initialization.pos_in_grid_is_acurate_3x5
-      resultStatus: 2
-      duration: 0.0787756
-      messages: "  Expected: (2, 4)\r\n  But was:  null\r\n"
+      resultStatus: 1
+      duration: 0.1300504
+      messages: 
       output: 
-      stacktrace: 'at Tile_Tests.initialization.pos_in_grid_is_acurate_3x5 () [0x0000e]
-        in C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil\Assets\Tests\TileTests.cs:53
-
-'
+      stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1038,7 +1027,7 @@ MonoBehaviour:
       name: texture
       fullName: Tile_Tests.texture
       resultStatus: 1
-      duration: 0.0465501
+      duration: 0.2410961
       messages: 
       output: 
       stacktrace: 
@@ -1054,7 +1043,7 @@ MonoBehaviour:
       name: dubug_returns_correct_placement
       fullName: Tile_Tests.texture.dubug_returns_correct_placement
       resultStatus: 1
-      duration: 0.0134994
+      duration: 0.0534345
       messages: 
       output: 
       stacktrace: 
@@ -1071,7 +1060,7 @@ MonoBehaviour:
       name: get_tile_border_returns_10_percent
       fullName: Tile_Tests.texture.get_tile_border_returns_10_percent
       resultStatus: 1
-      duration: 0.0023006
+      duration: 0.0019381
       messages: 
       output: 
       stacktrace: 
@@ -1088,7 +1077,7 @@ MonoBehaviour:
       name: original_returns_original_texture
       fullName: Tile_Tests.texture.original_returns_original_texture
       resultStatus: 1
-      duration: 0.0014593
+      duration: 0.0012631
       messages: 
       output: 
       stacktrace: 
@@ -1105,7 +1094,7 @@ MonoBehaviour:
       name: top_returns_square
       fullName: Tile_Tests.texture.top_returns_square
       resultStatus: 1
-      duration: 0.00177
+      duration: 0.0041196
       messages: 
       output: 
       stacktrace: 
@@ -1117,18 +1106,18 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1007
       parentUniqueId: Tests.dll/Tile_Tests/[Tests][Tile_Tests.texture][suite]
-    m_ResultText: "grid_to_world_space_3x3 (0.052s)\n---\nExpected: (1.0, 1.0, 1.0)\r\n 
-      But was:  (1.0, 0.0, 0.0)\n---\nat Map_Tests.conversions.grid_to_world_space_3x3
-      () [0x0000e] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Tests\\MapTests.cs:67"
-    m_ResultStacktrace: 'at Map_Tests.conversions.grid_to_world_space_3x3 () [0x0000e]
-      in C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil\Assets\Tests\MapTests.cs:67
+    m_ResultText: 'Tests.dll (2.030s)
 
-'
+      ---
+
+      One or more child tests had
+      errors'
+    m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: dca230da
-      m_LastClickedID: -634346788
-      m_ExpandedIDs: 2756b58df58144df0b2469df28bd3ff4e557abf72b220e14c2710b1b5e2fcc1cc76f405df7bd6e67371e5f68ffffff7f
+      m_SelectedIDs: e557abf7
+      m_LastClickedID: -139765787
+      m_ExpandedIDs: f58144df0b2469dfe557abf72b220e14371e5f68ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1190,7 +1179,7 @@ MonoBehaviour:
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_PreviewWindow: {fileID: 0}
-  m_LastInspectedObjectInstanceID: 14508
+  m_LastInspectedObjectInstanceID: -1
   m_LastVerticalScrollValue: 0
 --- !u!114 &16
 MonoBehaviour:
@@ -1231,20 +1220,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/Movement/Path
+    - Assets/Scripts/Movement
   m_ViewMode: 1
   m_StartGridSize: 63
   m_LastFolders:
-  - Assets/Scripts/Movement/Path
+  - Assets/Scripts/Movement
   m_LastFoldersGridSize: 63
   m_LastProjectPath: C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: c43a0000
-    m_LastClickedID: 15044
-    m_ExpandedIDs: 00000000b23a0000b43a0000b63a0000b83a0000ba3a0000bc3a0000be3a0000c23a0000c63a0000
+    m_SelectedIDs: 063b0000
+    m_LastClickedID: 15110
+    m_ExpandedIDs: 00000000f83a0000fa3a0000fc3a0000fe3a0000003b0000023b0000043b0000063b0000123b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1272,7 +1261,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000b23a0000b43a0000b63a0000b83a0000ba3a0000bc3a0000be3a0000
+    m_ExpandedIDs: 00000000f83a0000fa3a0000fc3a0000fe3a0000003b0000023b0000043b0000063b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1297,8 +1286,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: ac380000
-    m_LastClickedInstanceID: 14508
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
@@ -1456,9 +1445,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -2.5444615, y: -23.602997, z: -12.911887}
+    m_Target: {x: -0.58807564, y: 4.5623536, z: 2.1569057}
     speed: 2
-    m_Value: {x: -2.5444615, y: -23.602997, z: -12.911887}
+    m_Value: {x: -0.58807564, y: 4.5623536, z: 2.1569057}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1504,13 +1493,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.0422259, y: 0.88583404, z: -0.45479295, w: -0.08237682}
+    m_Target: {x: -0.048507165, y: 0.90947056, z: -0.3983277, w: -0.11081237}
     speed: 2
-    m_Value: {x: -0.042223632, y: 0.8857864, z: -0.4547685, w: -0.0823724}
+    m_Value: {x: -0.048496645, y: 0.90927327, z: -0.3982413, w: -0.11078834}
   m_Size:
-    m_Target: 17.594229
+    m_Target: 0.2891131
     speed: 2
-    m_Value: 17.594229
+    m_Value: 0.2891131
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1564,9 +1553,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: ac380000
+      m_SelectedIDs: 50e0fdff
       m_LastClickedID: 0
-      m_ExpandedIDs: 2ab0ffffaac0ffff40c7ffff20dbffff4aefffffd8efffffb2f1ffff30f6ffffa0f8ffff16fbffff
+      m_ExpandedIDs: 74e0fdff24e1fdff5a10feffee12feff3a48feff7c4bfeffea52feffce60feff0861feff3662feff6a62feff3464fefff669feff1687feff2a88feff8a89feffbe89feffced7feffd4d7feff1adafeff20dafeff2a11ffff8211ffff8c14ffff8e15fffffa95ffff22a3ffffa4a4ffff70a6fffff2a7ffff60aaffff2cacffffaeadffff20aeffff54beffff5abeffff04bfffff26bfffffa8c0ffffdac2ffff4cc3ffffc8c5ffff3ac6ffffbcc7ffff3ec9ffffb0c9ffffccccffff9ecfffff10d0ffffe2d2ffffb4d5ffffd0d8ffff8cd9ffff70deffffe2deffff28e4ffffdef4fffff4f5ffffc4f6ffff02f7ffff5afbffff1c5e00006a5e0000cc5e0000d85e0000e25e00000a5f0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

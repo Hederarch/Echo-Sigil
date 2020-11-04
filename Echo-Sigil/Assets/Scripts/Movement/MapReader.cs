@@ -47,8 +47,9 @@ public static class MapReader
 
         tileParent = new GameObject("Tile Parent").transform;
         sizeX = map.sizeX;
+        sizeY = map.sizeY;
         tiles = new Tile[map.sizeX * map.sizeY];
-        numTile = new int[map.sizeX * map.sizeY];
+        numTile = map.numTile;
         implements.Clear();
 
         spritePallate = map.readyForSave ? SaveSystem.LoadPallate(map.modPathIndex, map.quest) : TileTextureManager.GetDebugPallate();
@@ -58,10 +59,10 @@ public static class MapReader
 
             for (int x = 0; x < map.sizeX; x++)
             {
-
-                for (int i = 0; i < map[x, y].Length; i++)
+                MapTile[] mapTiles = map[x, y];
+                for (int i = 0; i < mapTiles.Length; i++)
                 {
-                    MapTile mapTile = map[x, y][i];
+                    MapTile mapTile = mapTiles[i];
                     Tile tile = MapTile.ConvertTile(mapTile, x, y);
 
                     int index = 0;
@@ -74,7 +75,6 @@ public static class MapReader
 
                     MapImplementToUnit(mapTile.unit);
 
-                    MapGeneratedEvent?.Invoke();
                 }
             }
         }
@@ -83,6 +83,7 @@ public static class MapReader
         {
             TileToTileBehavior(tile);
         }
+        MapGeneratedEvent?.Invoke();
     }
 
     private static void TileToTileBehavior(Tile tile)
@@ -114,11 +115,22 @@ public static class MapReader
                         Tile neighbor = tile.FindNeighbor(direction);
                         if (neighbor == null || neighbor != null && neighbor.topHeight < tile.topHeight && tile.topHeight > 0)
                         {
-                            GameObject sideSprite = new GameObject(tile.posInGrid.x + "," + tile.posInGrid.y + " side sprite (" + x + "," + y + ")");
-                            sideSprite.transform.parent = gameObjectTile.transform;
-                            sideSprite.transform.localPosition = new Vector3(x / 2f, y / 2f, 0);
-                            sideSprite.transform.localRotation = Quaternion.LookRotation(new Vector3(x, y, 0), -Vector3.forward);
-                            sideSprite.AddComponent<SpriteRenderer>().sprite = TileTextureManager.GetTileSide(tile.spriteIndex, direction, tile);
+                            GameObject sideSpriteObject = new GameObject(tile.posInGrid.x + "," + tile.posInGrid.y + " side sprite (" + x + "," + y + ")");
+                            Sprite sideSprite = TileTextureManager.GetTileSide(tile.spriteIndex, direction, tile);
+                            sideSpriteObject.AddComponent<SpriteRenderer>().sprite = sideSprite;
+                            sideSpriteObject.transform.parent = gameObjectTile.transform;
+
+                            float sideLength = tile.sideLength;
+                            float bottom = tile.bottomHeight;
+                            if(neighbor != null)
+                            {
+                                sideLength = Mathf.Min(sideLength,tile.topHeight - neighbor.topHeight);
+                                bottom = Mathf.Max(bottom, neighbor.topHeight);
+                            }
+
+                            sideSpriteObject.transform.localPosition = new Vector3(-x / 2f, -y / 2f, bottom - sideSpriteObject.transform.position.z -sideLength);
+                            sideSpriteObject.transform.localRotation = Quaternion.LookRotation(new Vector3(x, y, 0), -Vector3.forward);
+
                         }
                     }
                 }
@@ -141,7 +153,7 @@ public static class MapReader
             GameObject unit = new GameObject(mi.name);
             Vector2 pos = GridToWorldSpace(mi.posInGrid);
             unit.transform.parent = tileParent;
-            Tile tile = GetTile(mi.posInGrid, 0);
+            Tile tile = GetTile(mi.posInGrid);
             unit.transform.position = new Vector3(pos.x, pos.y, tile.topHeight - .1f);
             Unit i;
             if (mi.player)
@@ -174,8 +186,8 @@ public static class MapReader
 
     public static Vector3 GridToWorldSpace(TilePos posInGrid)
     {
-        Vector2 realitivePosition = new Vector2(posInGrid.x - mapHalfSize.x, posInGrid.y - mapHalfSize.y);
-        return new Vector2(tileParent.transform.position.x, tileParent.transform.position.y) - realitivePosition;
+        Vector3 realitivePosition = new Vector3(posInGrid.x - mapHalfSize.x, posInGrid.y - mapHalfSize.y, 0);
+        return new Vector3(tileParent.transform.position.x, tileParent.transform.position.y, posInGrid.z) - realitivePosition;
     }
 
     public static Vector3 GridToWorldSpace(int x, int y, float z) => GridToWorldSpace(new TilePos(x, y, z));
@@ -186,11 +198,11 @@ public static class MapReader
         return new TilePos((int)Math.Abs(realitivePosition.x - mapHalfSize.x - .5f), (int)Math.Abs(realitivePosition.y - mapHalfSize.y - .5f), realitivePosition.z);
     }
 
-    public static TilePos WorldToGridSpace(float x, float y, float z = 1) => WorldToGridSpace(new Vector3(x, y, z));
+    public static TilePos WorldToGridSpace(float x, float y, float z) => WorldToGridSpace(new Vector3(x, y, z));
 
     public static Tile[] GetTiles(int x, int y)
     {
-        if (x > sizeX || y > sizeY || x < 0 || y < 0)
+        if (x >= sizeX || y >= sizeY || x < 0 || y < 0)
         {
             return new Tile[0];
         }
@@ -210,7 +222,7 @@ public static class MapReader
         return output;
     }
 
-    public static Tile GetTile(Vector2Int pos, float height) => GetTile(pos.x, pos.y, height);
+    public static Tile GetTile(TilePos pos) => GetTile(pos.x, pos.y, pos.z);
 
     public static Tile GetTile(int x, int y, float nearestHeight)
     {
