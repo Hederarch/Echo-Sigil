@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using Pathfinding;
+using System.Windows.Forms;
 
 [Serializable]
 public struct Map
@@ -73,9 +74,13 @@ public struct Map
         for (int i = 0; i < numTile.Length; i++)
         {
             numTile[i] = 1;
-            mapTiles[i].topHeight = Mathf.Lerp(0,3,Mathf.InverseLerp(0,numTile.Length,i));
+            mapTiles[i].topHeight = 1;
             mapTiles[i].bottomHeight = 0;
             mapTiles[i].walkable = true;
+            if (numTile.Length / 2 == i)
+            {
+                mapTiles[i].unit = new MapImplement("Test", new TilePos(sizeX / 2, sizeY / 2, 1));
+            }
         }
 
     }
@@ -100,7 +105,7 @@ public struct Map
 
         foreach (Unit unit in units)
         {
-            MapTile mapTile = GetMapTile(unit.posInGrid.x, unit.posInGrid.y, unit.curHeight);
+            MapTile mapTile = GetMapTile(unit.posInGrid.x, unit.posInGrid.y, unit.posInGrid.z);
             mapTile.unit = (MapImplement)unit;
         }
     }
@@ -216,7 +221,7 @@ public struct MapTile
 
     public static Tile ConvertTile(MapTile mapTile, int x, int y)
     {
-        Tile tile = new Tile(x, y, mapTile.topHeight, mapTile.pallateIndex , mapTile.walkable, mapTile.weight);
+        Tile tile = new Tile(x, y, mapTile.topHeight, mapTile.pallateIndex, mapTile.walkable, mapTile.weight);
         tile.bottomHeight = mapTile.bottomHeight;
         tile.spriteIndex = mapTile.pallateIndex;
 

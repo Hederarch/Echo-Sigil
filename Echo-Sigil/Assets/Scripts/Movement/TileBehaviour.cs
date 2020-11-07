@@ -8,6 +8,7 @@ public class TileBehaviour : MonoBehaviour
     public Tile tile;
     public SpriteRenderer topSprite;
     public Dictionary<Vector2Int, SpriteRenderer> sideSprites = new Dictionary<Vector2Int, SpriteRenderer>();
+    public BoxCollider selectionCollider;
     static Queue<TileBehaviour> cachedTiles = new Queue<TileBehaviour>();
 
     private void Update()
@@ -28,8 +29,11 @@ public class TileBehaviour : MonoBehaviour
             topSprite = spriteRenderer;
         }
 
-        topSprite.gameObject.transform.localPosition = Vector3.forward * (tile.sideLength / 2f);
+        Vector3 center = Vector3.forward * (tile.sideLength / 2f);
+        topSprite.gameObject.transform.localPosition = center;
+        selectionCollider.center = center;
         topSprite.sprite = TileTextureManager.GetTileSprite(tile.spriteIndex, TileTextureSection.Top, Vector2Int.zero, tile);
+        
     }
 
     public void SetSideSprite(Vector2Int direction)
@@ -106,6 +110,7 @@ public class TileBehaviour : MonoBehaviour
                 }
             }
         }
+        gameObject.layer = LayerMask.NameToLayer("Cache");
         name = "Cached Tile";
         cachedTiles.Enqueue(this);
     }
@@ -117,15 +122,19 @@ public class TileBehaviour : MonoBehaviour
         {
             GameObject tileObject = new GameObject
             {
-                tag = "Tile"
+                tag = "Tile",
+                layer = LayerMask.NameToLayer("Tiles")
             };
             tileObject.transform.parent = tileParent;
 
             tileBehaviour = tileObject.AddComponent<TileBehaviour>();
+            tileBehaviour.selectionCollider = tileObject.AddComponent<BoxCollider>();
+            tileBehaviour.selectionCollider.size = new Vector3(1, 1, .1f);
         } 
         else
         {
             tileBehaviour = cachedTiles.Dequeue();
+            tileBehaviour.gameObject.layer = LayerMask.NameToLayer("Tiles");
         }
 
         tileBehaviour.tile = t;

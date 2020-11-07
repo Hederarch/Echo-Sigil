@@ -4,11 +4,5 @@ using UnityEngine;
 
 public class NPCUnit : Unit
 {
-    public override void BeginTurn()
-    {
-        base.BeginTurn();
-        CanMove = !hasMoved;
-        CanAttack = !hasAttacked;
-    }
 
 }

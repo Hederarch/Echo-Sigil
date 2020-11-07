@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 
-public class TurnManager : MonoBehaviour
+public static class TurnManager
 {
     static Dictionary<string, List<ITurn>> units = new Dictionary<string, List<ITurn>>();
     static Queue<string> turnKey = new Queue<string>();
@@ -16,25 +13,21 @@ public class TurnManager : MonoBehaviour
     public static event Action GameWinEvent;
     public static event Action GameLoseEvent;
 
-    private void Update()
+    public static void InitTeamTurnQueue()
     {
-        if (turnTeam.Count == 0)
+        if (units.Count > 0)
         {
-            InitTeamTurnQueue();
+            List<ITurn> teamList = units[turnKey.Peek()];
+
+            foreach (ITurn unit in teamList)
+            {
+                turnTeam.Enqueue(unit);
+            }
+
+            StartTurn(); 
         }
     }
-    static void InitTeamTurnQueue()
-    {
-        List<ITurn> teamList = units[turnKey.Peek()];
-
-        foreach (ITurn unit in teamList)
-        {
-            turnTeam.Enqueue(unit);
-        }
-
-        StartTurn();
-    }
-    static void StartTurn()
+    public static void StartTurn()
     {
         if (turnTeam.Count > 0)
         {

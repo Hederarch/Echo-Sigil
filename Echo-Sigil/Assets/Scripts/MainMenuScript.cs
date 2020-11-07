@@ -34,6 +34,7 @@ public class MainMenuScript : MonoBehaviour
         mainMenuElements.SetActive(false);
         Instantiate(gameplayGUIElements, canvas);
         MapReader.GeneratePhysicalMap(map);
+        TurnManager.InitTeamTurnQueue();
     }
 
     public void QuitGame()

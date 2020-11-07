@@ -1,81 +1,80 @@
-﻿using MapEditor;
-using System;
-using System.Numerics;
+﻿using System;
 using UnityEngine;
 using Pathfinding;
+using System.Collections.Generic;
 
 /// <summary>
 /// Character in the world
 /// </summary>
-public class Unit : FacesCamera, ITurn, IBattle
+public class Unit : FacesCamera, ITurn
 {
-    public bool hasMoved;
-    public bool hasAttacked;
+    public TilePos posInGrid => MapReader.WorldToGridSpace(transform.position);
 
-    public int implementListIndex = 0;
-    public Vector2Int posInGrid;
-    public float curHeight;
+    public static Action<Unit> IsTurnEvent;
 
-    public string Tag { get => gameObject.tag; }
-    public bool IsTurn { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public string Tag => gameObject.tag;
 
-    public bool CanMove { get; set; }
-
-    public bool CanAttack { get; set; }
-
-    public float HealthPercent => throw new NotImplementedException();
-
-    public float WillPercent => throw new NotImplementedException();
-
-
-
-    public static event Action<Unit> IsTurnEvent;
-
-    public virtual void BeginTurn()
+    public void BeginTurn()
     {
-        TurnManager.CheckForWin();
         IsTurnEvent?.Invoke(this);
     }
 
-    public virtual void EndTurn()
-    {
-        TurnManager.CheckForWin();
-        ResetUnit();
-    }
-
-    public virtual void Init()
-    {
-        TurnManager.AddUnit(this);
-    }
-
-    public virtual void HasMoved()
-    {
-        hasMoved = true;
-    }
-
-    public virtual void HasAttacked()
-    {
-        hasAttacked = true;
-    }
-
-    public virtual void ResetUnit()
-    {
-        hasMoved = false;
-        hasAttacked = false;
-    }
-
-    internal void SetValues(MapImplement.MovementSettings movementSettings)
+    public void EndTurn()
     {
         throw new NotImplementedException();
     }
 
-    internal void SetValues(MapImplement.BattleSettings battleSettings)
+    public void SetPos(TilePos tilePos)
     {
-        throw new NotImplementedException();
+        transform.position = MapReader.GridToWorldSpace(tilePos);
     }
 
-    public void OnPathFound(IPath<ITile> newPath)
+    public void SetSprite()
     {
-        throw new NotImplementedException();
+        GameObject spriteRender = new GameObject(name + " Sprite Renderer");
+        spriteRender.transform.parent = transform;
+        spriteRender.transform.localPosition = new Vector3(0, 0, .1f);
+        SpriteRenderer spriteRenderer = spriteRender.AddComponent<SpriteRenderer>();
+        unitSprite = spriteRenderer;
+        spriteRenderer.spriteSortPoint = SpriteSortPoint.Pivot;
+        spriteRender.AddComponent<BoxCollider>().size = new Vector3(1, 1, .2f);
     }
+
+    public void SetValues(MapImplement.MovementSettings movementSettings)
+    {
+    }
+
+    public void SetValues(MapImplement.BattleSettings battleSettings)
+    {
+    }
+
+    public static Unit GetUnit(MapImplement mapImplement)
+    {
+        if (mapImplement != null)
+        {
+            GameObject unitObject = new GameObject(mapImplement.name);
+            unitObject.transform.parent = MapReader.tileParent;
+
+            Unit unit;
+            if (mapImplement.player)
+            {
+                unit = unitObject.AddComponent<PlayerUnit>();
+            }
+            else
+            {
+                unit = unitObject.AddComponent<NPCUnit>();
+            }
+
+            unit.SetValues(mapImplement.movementSettings);
+            unit.SetValues(mapImplement.battleSettings);
+
+            unit.SetSprite();
+            unit.SetPos(mapImplement.posInGrid);
+
+            MapReader.implements.Add(unit);
+
+            return unit;
+        }
+        return null;
+    } 
 }

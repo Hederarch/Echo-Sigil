@@ -83,7 +83,7 @@ public static class MapReader
                     index += i;
                     tiles[index] = tile;
 
-                    MapImplementToUnit(mapTile.unit);
+                    Unit.GetUnit(mapTile.unit);
 
                 }
             }
@@ -98,44 +98,6 @@ public static class MapReader
         }
         TileBehaviour.ClearCachedTiles();
         MapGeneratedEvent?.Invoke();
-    }
-
-    public static Unit MapImplementToUnit(MapImplement mi)
-    {
-        if (mi != null)
-        {
-            GameObject unit = new GameObject(mi.name);
-            Vector2 pos = GridToWorldSpace(mi.posInGrid);
-            unit.transform.parent = tileParent;
-            Tile tile = GetTile(mi.posInGrid);
-            unit.transform.position = new Vector3(pos.x, pos.y, tile.topHeight - .1f);
-            Unit i;
-            if (mi.player)
-            {
-                i = unit.AddComponent<PlayerUnit>();
-            }
-            else
-            {
-                i = unit.AddComponent<NPCUnit>();
-            }
-
-            i.SetValues(mi.movementSettings);
-
-            i.SetValues(mi.battleSettings);
-
-            GameObject spriteRender = new GameObject("Sprite Render");
-            spriteRender.transform.parent = unit.transform;
-            spriteRender.transform.localPosition = new Vector3(0, 0, .1f);
-            SpriteRenderer spriteRenderer = spriteRender.AddComponent<SpriteRenderer>();
-            i.unitSprite = spriteRenderer;
-            spriteRenderer.spriteSortPoint = SpriteSortPoint.Pivot;
-            spriteRender.AddComponent<BoxCollider2D>().size = new Vector3(1, 1, .2f);
-
-            implements.Add(i);
-
-            return i;
-        }
-        return null;
     }
 
     public static Vector3 GridToWorldSpace(TilePos posInGrid)
