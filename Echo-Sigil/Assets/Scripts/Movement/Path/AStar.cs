@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 
-
 namespace Pathfinding
 {
     public class AStar<T> : IPath<T> where T : IAStarItem<T>
@@ -8,10 +7,15 @@ namespace Pathfinding
         List<T> visitedList = new List<T>();
         public bool PathFound { get; private set; } = false;
 
+        public int MaxDistance { private get; set; }
+
+        public T LastPathElement => throw new System.NotImplementedException();
+
         Stack<T> path = new Stack<T>();
 
-        public AStar(T start, T end)
+        public AStar(T start, T end, int maxDistance)
         {
+            MaxDistance = maxDistance;
             FindPath(start, end);
         }
 
@@ -20,6 +24,7 @@ namespace Pathfinding
             Heap<T> openSet = new Heap<T>(start.GetMaxSize());
             Heap<T> closedSet = new Heap<T>(start.GetMaxSize());
 
+            start.distance = 0;
             openSet.Add(start);
 
             while (openSet.Count > 0)
@@ -47,20 +52,26 @@ namespace Pathfinding
                     }
 
                     int newMovementCostToNeighbor = current.G + current.GetDistance(neighbor) + neighbor.weight;
+
                     if (newMovementCostToNeighbor < neighbor.G || !openSet.Contains(neighbor))
                     {
                         neighbor.G = newMovementCostToNeighbor;
                         neighbor.H = neighbor.GetDistance(end);
                         neighbor.parent = current;
+                        neighbor.distance = current.distance + neighbor.weight;
 
-                        if (!openSet.Contains(neighbor))
+                        if (neighbor.distance <= MaxDistance)
                         {
-                            openSet.Add(neighbor);
-                            visitedList.Add(neighbor);
-                        }
-                        else
-                        {
-                            openSet.UpdateItem(neighbor);
+                            if (!openSet.Contains(neighbor))
+                            {
+                                openSet.Add(neighbor);
+                                visitedList.Add(neighbor);
+                            }
+                            else
+                            {
+                                openSet.UpdateItem(neighbor);
+
+                            }
                         }
                     }
                 }
@@ -87,6 +98,6 @@ namespace Pathfinding
         int H { get; set; }
 
         int GetMaxSize();
-    } 
+    }
 }
 

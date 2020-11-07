@@ -52,7 +52,7 @@ namespace Map_Tests
         public void world_to_grid_space_3x3_center()
         {
             MapReader.GeneratePhysicalMap(new Map(3, 3));
-            Assert.AreEqual(Vector2Int.zero, MapReader.WorldToGridSpace(Vector2.one));
+            Assert.AreEqual(Vector2Int.zero, MapReader.WorldToGridSpace(Vector3.one));
         }
         [Test]
         public void world_to_grid_space_3x3_1x1()

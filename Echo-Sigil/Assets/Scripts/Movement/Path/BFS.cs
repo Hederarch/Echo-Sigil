@@ -4,14 +4,16 @@ using UnityEngine;
 
 namespace Pathfinding
 {
-    public class BFS<T> : IPath<T> where T : IBFSItem<T>
+    public class BFS<T> : IPath<T> where T : IPathItem<T>
     {
         public List<T> visitedList = new List<T>();
         public int maxDistance = 2;
+        public int MaxDistance { set => maxDistance = value; }
 
         public bool PathFound { get; private set; } = false;
 
         private Stack<T> path = new Stack<T>();
+        public T LastPathElement => path.Peek();
 
         public BFS(T start, T end, int maxDistance = 2)
         {
@@ -48,7 +50,7 @@ namespace Pathfinding
                     if (!visitedList.Contains(neighbor))
                     {
                         neighbor.distance = item.distance + neighbor.weight;
-                        if(neighbor.distance < maxDistance)
+                        if(neighbor.distance <= maxDistance)
                         {
                             visitedList.Add(neighbor);
                             itemQueue.Enqueue(neighbor);
@@ -70,8 +72,4 @@ namespace Pathfinding
         }
     }
 
-    public interface IBFSItem<T> : IPathItem<T> where T : IBFSItem<T>
-    {
-        int distance { get; set; }
-    } 
 }

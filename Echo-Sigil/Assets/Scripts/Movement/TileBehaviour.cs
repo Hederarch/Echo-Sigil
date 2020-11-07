@@ -231,7 +231,7 @@ public class Tile : ITile
 
     //Pathfinding stuff
     public ITile parent { get; set; }
-    public int weight { get; set; }
+    public int weight { get; set; } = 1;
     public bool walkable { get; set; } = true;
     public ITile[] FindNeighbors()
     {
@@ -269,9 +269,7 @@ public class Tile : ITile
         return null;
     }
     public Func<List<ITile>, List<ITile>> OnFindNeighbors { get; set; }
-
-    //BFS stuff
-    public int distance { get; set; }
+    public int distance { get; set; } = 0;
 
     //A* stuff
     public int F => G + H;
@@ -309,7 +307,7 @@ public class Tile : ITile
     }
 }
 
-public interface ITile : IAStarItem<ITile>, IBFSItem<ITile>
+public interface ITile : IAStarItem<ITile>
 {
     bool current { get; set; }
     bool target { get; set; }
