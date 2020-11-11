@@ -32,7 +32,7 @@ public class TileBehaviour : MonoBehaviour
         Vector3 center = Vector3.forward * (tile.sideLength / 2f);
         topSprite.gameObject.transform.localPosition = center;
         selectionCollider.center = center;
-        topSprite.sprite = TileTextureManager.GetTileSprite(tile.spriteIndex, TileTextureSection.Top, Vector2Int.zero, tile);
+        topSprite.sprite = TileTextureManager.GetTileSprite(tile.spriteIndex, TileTextureSection.Top, tile);
         
     }
 

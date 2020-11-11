@@ -1,9 +1,44 @@
-﻿using System;
+﻿using MapEditor;
+using System;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
-public static class TileTextureManager
+[RequireComponent(typeof(RawImage))]
+public class TileTextureManager : MonoBehaviour
 {
-    public const float fogDist = .5f;
+    public Vector2Int size;
+    public bool border = true;
+    [HideInInspector]
+    public bool leftEdge = false;
+    [HideInInspector]
+    public bool rightEdge = false;
+    [HideInInspector]
+    public int blackIndex = 0;
+    public void OnValidate()
+    {
+        RawImage rawImage = GetComponent<RawImage>();
+        if (size.x <= 0)
+        {
+            size.x = 1;
+        }
+        if (size.y <= 0)
+        {
+            size.y = 1;
+        }
+        Texture2D texture = GetDebugTexture(size.x, size.y);
+        if (border)
+        {
+            Texture2D texture2d = new Texture2D(texture.width, texture.width / 10);
+            texture2d.SetPixels(GetCompleteEdgeColors(texture, leftEdge, rightEdge, blackIndex));
+            texture2d.Apply();
+            texture = texture2d;
+        }
+        rawImage.texture = texture;
+        rawImage.SetNativeSize();
+    }
+
+    public static float fogDist = .5f;
     public static Color GetFogColor(Color originalColor, float distToZ0)
     {
         if (distToZ0 < fogDist)
@@ -26,10 +61,12 @@ public static class TileTextureManager
         texture2D = GetTileTextureSection(texture2D, TileTextureSection.Edge, true, true);
         texture2D = GetTileTextureSection(texture2D, TileTextureSection.Side, true, true);
         texture2D = GetTileTextureSection(texture2D, TileTextureSection.Extents, true, true);
+        texture2D.wrapMode = TextureWrapMode.Clamp;
+        texture2D.filterMode = FilterMode.Point;
         return texture2D;
     }
 
-    public static Sprite GetTileSprite(int spriteIndex, TileTextureSection tileTextureSection, Vector2Int direction, Tile tile = null)
+    public static Sprite GetTileSprite(int spriteIndex, TileTextureSection tileTextureSection, Tile tile = null)
     {
         Texture2D texture = GetTileTexture(MapReader.spritePallate[spriteIndex], tileTextureSection, false, tile);
         texture.wrapMode = TextureWrapMode.Clamp;
@@ -90,8 +127,6 @@ public static class TileTextureManager
             Tile neighbor = tile.FindNeighbor(direction);
             if (neighbor == null || neighbor != null && neighbor.topHeight != tile.topHeight)
             {
-                Texture2D edge = GetTileTextureSection(texture, TileTextureSection.Edge);
-                Texture2D border = GetTileTextureSection(texture, TileTextureSection.Border);
 
                 Tile leftNeighbor = tile.FindNeighbor(new Vector2Int(direction.y, -direction.x));
                 Tile rightNeighbor = tile.FindNeighbor(new Vector2Int(-direction.y, direction.x));
@@ -102,19 +137,7 @@ public static class TileTextureManager
                 int div10 = texture.width / 10;
                 int div2 = texture.width / 2;
 
-                Color[] completeEdgeColors = new Color[texture.width * div10];
-                Color[] rightArray = rightEdge ? edge.GetPixels() : border.GetPixels();
-                Color[] leftArray = leftEdge ? edge.GetPixels() : border.GetPixels();
-                for (int i = 0; i < div10; i++)
-                {
-                    Array.Copy(leftArray, div2 * i, completeEdgeColors, texture.width * i, div2);
-                    for (int g = 0; g < div2; g++)
-                    {
-                        int index = Mathf.Clamp((div2 * i) + div2 - g + 1, 0, rightArray.Length - 1);
-                        int output = Mathf.Clamp((texture.width * i) + div2 + g, 0, completeEdgeColors.Length - 1);
-                        completeEdgeColors[output] = rightArray[index];
-                    }
-                }
+                Color[] completeEdgeColors = GetCompleteEdgeColors(texture, leftEdge, rightEdge);
 
                 Color[] outputColors = texture.GetPixels();
                 int y = 0;
@@ -127,27 +150,27 @@ public static class TileTextureManager
                     }
                     else if (direction.y == -1)
                     {
-                        index = width * width - i;
+                        index = width * width - i - 1;
                     }
                     else if (direction.x == 1)
                     {
-                        index = (i / width) + (y * width);
+                        index = (i / width) + ((width - y - 1) * width);
                         y++;
-                        if (y >= 64)
+                        if (y >= width)
                         {
                             y = 0;
                         }
                     }
                     else
                     {
-                        index = width - (i / width) + (y * width);
+                        index = width - 1 - (i / width) + (y * width);
                         y++;
                         if (y >= 64)
                         {
                             y = 0;
                         }
                     }
-                    index = Mathf.Clamp(index, 0, width * width);
+                    index = Mathf.Clamp(index, 0, outputColors.Length - 1);
                     Color color = completeEdgeColors[i];
                     outputColors[index] = color != Color.clear ? color : outputColors[index];
                 }
@@ -162,6 +185,34 @@ public static class TileTextureManager
         }
         return texture;
 
+    }
+
+    private static Color[] GetCompleteEdgeColors(Texture2D texture, bool leftEdge, bool rightEdge, int yBlack = 0)
+    {
+        Texture2D edge = GetTileTextureSection(texture, TileTextureSection.Edge);
+        Texture2D border = GetTileTextureSection(texture, TileTextureSection.Border);
+
+        int width = texture.width;
+        int div10 = width / 10;
+        int div2 = width / 2;
+
+        Color[] completeEdgeColors = new Color[width * div10];
+        Color[] rightArray = rightEdge ? edge.GetPixels() : border.GetPixels();
+        Color[] leftArray = leftEdge ? edge.GetPixels() : border.GetPixels();
+        for (int y = 0; y < div10; y++)
+        {
+            Array.Copy(leftArray, div2 * y, completeEdgeColors, width * y, div2);
+            for (int x = 0; x < div2; x++)
+            {
+                int sourceIndex = (div2 * y) + div2 - x;
+                int destinationIndex = (width * y) + div2 + x;
+                sourceIndex = Mathf.Clamp(sourceIndex, 0, rightArray.Length - 1);
+                destinationIndex = Mathf.Clamp(destinationIndex, 0, completeEdgeColors.Length - 1);
+                completeEdgeColors[destinationIndex] = sourceIndex == yBlack && rightEdge ? Color.black : rightArray[sourceIndex];
+            }
+        }
+
+        return completeEdgeColors;
     }
 
     public static Sprite GetTileSide(int pallateIndex, float heightInWorldUnits, float distToZ0InWorldUnits)
@@ -262,24 +313,7 @@ public static class TileTextureManager
                                          width + div10,
                                          deface);
                 edgeTexture.name = "Edge Texture";
-                /*if (edgeTexture.width > 0 && edgeTexture.height > 0)
-                {
-                    Color[] edgeColors = edgeTexture.GetPixels();
-                    for (int x = 0; x < div10; x++)
-                    {
-                        for (int y = 0; y < div10; y++)
-                        {
-                            int index = x + (y * edgeTexture.width);
-                            if (deface)
-                            {
-                                index += width * width;
-                            }
-                            edgeColors[index] = x <= y ? Color.clear : edgeColors[index];
-                        }
-                    }
-                    edgeTexture.SetPixels(edgeColors);
-                    edgeTexture.Apply();
-                }*/
+                WedgeEdge(edgeTexture, deface, width, div10);
                 return edgeTexture;
             case TileTextureSection.Side:
                 Texture2D sideTexture = GetTextureSection(texture,
@@ -310,6 +344,37 @@ public static class TileTextureManager
 
     }
 
+    private static void WedgeEdge(Texture2D edgeTexture, bool deface = false, int width = 0, int div10 = 0)
+    {
+        if (edgeTexture.width > 0 && edgeTexture.height > 0)
+        {
+            if (!deface)
+            {
+                width = edgeTexture.width;
+                div10 = edgeTexture.height;
+            }
+            Color[] edgeColors = edgeTexture.GetPixels();
+            for (int x = 0; x < div10; x++)
+            {
+                for (int y = 0; y < div10; y++)
+                {
+                    int index = x + (y * edgeTexture.width);
+                    if (deface)
+                    {
+                        index += (width * width) + (width / 2);
+                        if (index >= edgeColors.Length)
+                        {
+                            continue;
+                        }
+                    }
+                    edgeColors[index] = x <= y ? Color.clear : edgeColors[index];
+                }
+            }
+            edgeTexture.SetPixels(edgeColors);
+            edgeTexture.Apply();
+        }
+    }
+
     private static Texture2D GetTextureSection(Texture2D texture, Color debugColor, int topLeftX, int topLeftY, int bottomRightX, int bottomRightY, bool deface = false)
     {
         int width = texture.width;
@@ -336,7 +401,7 @@ public static class TileTextureManager
                     for (int x = 0; x < deltaX; x++)
                     {
                         int index = topLeftY * width + (y * width) + topLeftX + x;
-                        Color color = Color.Lerp(debugColor, Color.black, Mathf.InverseLerp(0, deltaY, y));
+                        Color color = Color.Lerp(debugColor, Color.black, Mathf.InverseLerp(0, deltaY - 1, y));
                         outputColors[index] = debugColor;
                     }
                 }
@@ -367,3 +432,49 @@ public static class TileTextureManager
 }
 
 public enum TileTextureSection { Original, Top, Border, Edge, Side, Extents }
+
+[CustomEditor(typeof(TileTextureManager))]
+public class TileTextureBehaviourEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+        TileTextureManager tileTextureManager = (TileTextureManager)target;
+        if (tileTextureManager.border)
+        {
+            EditorGUI.BeginChangeCheck();
+            tileTextureManager.leftEdge = EditorGUILayout.Toggle("Left Edge", tileTextureManager.leftEdge);
+            if(tileTextureManager.rightEdge = EditorGUILayout.Toggle("Right Edge", tileTextureManager.rightEdge))
+            {
+                int width = tileTextureManager.size.x;
+                int div2 = width / 2;
+                int div10 = width / 10;
+                tileTextureManager.blackIndex = Mathf.Clamp(EditorGUILayout.IntField("Black Index", tileTextureManager.blackIndex), 0, div2 * div10);
+                for (int y = 0; y < div10; y++)
+                {
+                    for (int x = 0; x < div2; x++)
+                    {
+                        int sourceIndex = (div2 * y) + div2 - x;
+                        int destinationIndex = (width * y) + div2 + x;
+                        if (sourceIndex == tileTextureManager.blackIndex)
+                        {
+                            EditorGUILayout.LabelField("(" + x + "/" + div2 + "," + y + "/" + div10 + ") from " + sourceIndex + " to " + destinationIndex);
+                        }
+                    }
+                }
+            }
+            if (EditorGUI.EndChangeCheck())
+            {
+                tileTextureManager.OnValidate();
+            }
+
+        }
+        TileTextureManager.fogDist = EditorGUILayout.FloatField("Fog Distance ", TileTextureManager.fogDist);
+        if (GUILayout.Button("Export Template"))
+        {
+            RawImage rawImage = tileTextureManager.GetComponent<RawImage>();
+            Texture2D texture = (Texture2D)rawImage.texture;
+            SaveSystem.SavePNG(EditorUtility.SaveFilePanel("Save as...", Application.persistentDataPath, "TileTextureTemplate", "png"), texture);
+        }
+    }
+}

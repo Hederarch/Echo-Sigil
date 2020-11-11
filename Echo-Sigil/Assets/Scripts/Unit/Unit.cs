@@ -21,7 +21,7 @@ public class Unit : FacesCamera, ITurn
 
     public void EndTurn()
     {
-        throw new NotImplementedException();
+        
     }
 
     public void SetPos(TilePos tilePos)
@@ -42,10 +42,12 @@ public class Unit : FacesCamera, ITurn
 
     public void SetValues(MapImplement.MovementSettings movementSettings)
     {
+
     }
 
     public void SetValues(MapImplement.BattleSettings battleSettings)
     {
+
     }
 
     public static Unit GetUnit(MapImplement mapImplement)

@@ -144,7 +144,7 @@ namespace MapEditor
             return null;
         }
 
-        private static void SavePNG(string filePath, Texture2D texture)
+        public static void SavePNG(string filePath, Texture2D texture)
         {
             string fullName = Directory.GetParent(filePath).FullName;
             if (!Directory.Exists(fullName))
