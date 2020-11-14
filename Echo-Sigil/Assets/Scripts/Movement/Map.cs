@@ -74,7 +74,7 @@ public struct Map
         for (int i = 0; i < numTile.Length; i++)
         {
             numTile[i] = 1;
-            mapTiles[i].topHeight = i%sizeX;
+            mapTiles[i].topHeight = 1;
             mapTiles[i].bottomHeight = 0;
             mapTiles[i].walkable = true;
             if (numTile.Length / 2 == i)

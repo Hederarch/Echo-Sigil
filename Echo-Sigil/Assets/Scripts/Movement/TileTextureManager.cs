@@ -1,37 +1,31 @@
 ﻿using MapEditor;
 using System;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(RawImage))]
 public class TileTextureManager : MonoBehaviour
 {
-    public Vector2Int size;
     public bool border = true;
     [HideInInspector]
     public bool leftEdge = false;
     [HideInInspector]
     public bool rightEdge = false;
-    [HideInInspector]
-    public int blackIndex = 0;
     public void OnValidate()
     {
         RawImage rawImage = GetComponent<RawImage>();
-        if (size.x <= 0)
-        {
-            size.x = 1;
-        }
-        if (size.y <= 0)
-        {
-            size.y = 1;
-        }
-        Texture2D texture = GetDebugTexture(size.x, size.y);
+        Texture2D texture = GetDebugTexture();
         if (border)
         {
             Texture2D texture2d = new Texture2D(texture.width, texture.width / 10);
-            texture2d.SetPixels(GetCompleteEdgeColors(texture, leftEdge, rightEdge, blackIndex));
+            texture2d.SetPixels(GetCompleteEdgeColors(texture, leftEdge, rightEdge));
             texture2d.Apply();
+            texture2d.name = "Border Texture";
+            texture2d.filterMode = FilterMode.Point;
+            texture2d.wrapMode = TextureWrapMode.Clamp;
             texture = texture2d;
         }
         rawImage.texture = texture;
@@ -50,19 +44,29 @@ public class TileTextureManager : MonoBehaviour
 
     public static Texture2D[] GetDebugPallate()
     {
-        return new Texture2D[1] { GetDebugTexture(64, 64 * 3) };
+        return new Texture2D[1] { GetDebugTexture(true) };
     }
 
-    private static Texture2D GetDebugTexture(int width, int height)
+    private static Texture2D GetDebugTexture(bool modify = true)
     {
-        Texture2D texture2D = new Texture2D(width, height);
-        texture2D = GetTileTextureSection(texture2D, TileTextureSection.Top, true, true);
-        texture2D = GetTileTextureSection(texture2D, TileTextureSection.Border, true, true);
-        texture2D = GetTileTextureSection(texture2D, TileTextureSection.Edge, true, true);
-        texture2D = GetTileTextureSection(texture2D, TileTextureSection.Side, true, true);
-        texture2D = GetTileTextureSection(texture2D, TileTextureSection.Extents, true, true);
+        Texture2D texture2D = SaveSystem.LoadPNG(Application.dataPath + "/Sprites/DefaultTileTexture.png");
+
+        bool v = texture2D == null;
+        if (v)
+        {
+            texture2D = new Texture2D(64, 64 * 3);
+        }
+
+        texture2D = GetTileTextureSection(texture2D, TileTextureSection.Top, true, v);
+        texture2D = GetTileTextureSection(texture2D, TileTextureSection.Border, true, v);
+        texture2D = GetTileTextureSection(texture2D, TileTextureSection.Edge, true, v);
+        texture2D = GetTileTextureSection(texture2D, TileTextureSection.Side, true, v);
+        texture2D = GetTileTextureSection(texture2D, TileTextureSection.Extents, true, v);
+
+
         texture2D.wrapMode = TextureWrapMode.Clamp;
         texture2D.filterMode = FilterMode.Point;
+        texture2D.name = "Debug Tile Texture";
         return texture2D;
     }
 
@@ -76,7 +80,7 @@ public class TileTextureManager : MonoBehaviour
 
     public static Texture2D GetTileTexture(Texture2D texture, TileTextureSection tileTextureSection, bool debug = false, Tile tile = null)
     {
-        Texture2D sectionTexture = GetTileTextureSection(debug ? GetDebugTexture(texture.width, texture.height) : texture, tileTextureSection);
+        Texture2D sectionTexture = GetTileTextureSection(debug ? GetDebugTexture() : texture, tileTextureSection);
 
         if (tile == null)
         {
@@ -187,7 +191,7 @@ public class TileTextureManager : MonoBehaviour
 
     }
 
-    private static Color[] GetCompleteEdgeColors(Texture2D texture, bool leftEdge, bool rightEdge, int yBlack = 0)
+    private static Color[] GetCompleteEdgeColors(Texture2D texture, bool leftEdge, bool rightEdge)
     {
         Texture2D edge = GetTileTextureSection(texture, TileTextureSection.Edge);
         Texture2D border = GetTileTextureSection(texture, TileTextureSection.Border);
@@ -204,11 +208,11 @@ public class TileTextureManager : MonoBehaviour
             Array.Copy(leftArray, div2 * y, completeEdgeColors, width * y, div2);
             for (int x = 0; x < div2; x++)
             {
-                int sourceIndex = (div2 * y) + div2 - x;
+                int sourceIndex = (div2 * y) + div2 - x - 1;
                 int destinationIndex = (width * y) + div2 + x;
                 sourceIndex = Mathf.Clamp(sourceIndex, 0, rightArray.Length - 1);
                 destinationIndex = Mathf.Clamp(destinationIndex, 0, completeEdgeColors.Length - 1);
-                completeEdgeColors[destinationIndex] = sourceIndex == yBlack && rightEdge ? Color.black : rightArray[sourceIndex];
+                completeEdgeColors[destinationIndex] = rightArray[sourceIndex];
             }
         }
 
@@ -278,8 +282,17 @@ public class TileTextureManager : MonoBehaviour
         return sideTexture;
     }
 
-    private static Texture2D GetTileTextureSection(Texture2D texture, TileTextureSection tileTextureSection, bool debug = false, bool deface = false)
+    private static Texture2D GetTileTextureSection(Texture2D texture, TileTextureSection tileTextureSection, bool deface = false, bool debug = false)
     {
+        if (debug)
+        {
+            Texture2D texture2D = SaveSystem.GetDefaultTiileTexture();
+            if(texture2D != null)
+            {
+                texture = texture2D;
+                debug = false;
+            }
+        }
         int width = texture.width;
         int div10 = width / 10;
         switch (tileTextureSection)
@@ -367,7 +380,7 @@ public class TileTextureManager : MonoBehaviour
                             continue;
                         }
                     }
-                    edgeColors[index] = x <= y ? Color.clear : edgeColors[index];
+                    edgeColors[index] = x < y ? Color.clear : edgeColors[index];
                 }
             }
             edgeTexture.SetPixels(edgeColors);
@@ -433,6 +446,7 @@ public class TileTextureManager : MonoBehaviour
 
 public enum TileTextureSection { Original, Top, Border, Edge, Side, Extents }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(TileTextureManager))]
 public class TileTextureBehaviourEditor : Editor
 {
@@ -444,25 +458,7 @@ public class TileTextureBehaviourEditor : Editor
         {
             EditorGUI.BeginChangeCheck();
             tileTextureManager.leftEdge = EditorGUILayout.Toggle("Left Edge", tileTextureManager.leftEdge);
-            if(tileTextureManager.rightEdge = EditorGUILayout.Toggle("Right Edge", tileTextureManager.rightEdge))
-            {
-                int width = tileTextureManager.size.x;
-                int div2 = width / 2;
-                int div10 = width / 10;
-                tileTextureManager.blackIndex = Mathf.Clamp(EditorGUILayout.IntField("Black Index", tileTextureManager.blackIndex), 0, div2 * div10);
-                for (int y = 0; y < div10; y++)
-                {
-                    for (int x = 0; x < div2; x++)
-                    {
-                        int sourceIndex = (div2 * y) + div2 - x;
-                        int destinationIndex = (width * y) + div2 + x;
-                        if (sourceIndex == tileTextureManager.blackIndex)
-                        {
-                            EditorGUILayout.LabelField("(" + x + "/" + div2 + "," + y + "/" + div10 + ") from " + sourceIndex + " to " + destinationIndex);
-                        }
-                    }
-                }
-            }
+            tileTextureManager.rightEdge = EditorGUILayout.Toggle("Right Edge", tileTextureManager.rightEdge);
             if (EditorGUI.EndChangeCheck())
             {
                 tileTextureManager.OnValidate();
@@ -478,3 +474,4 @@ public class TileTextureBehaviourEditor : Editor
         }
     }
 }
+#endif

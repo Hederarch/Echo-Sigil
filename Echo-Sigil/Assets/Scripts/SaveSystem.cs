@@ -56,25 +56,6 @@ namespace MapEditor
 
         public static string GetMapPath(int modPathIndex, string quest, string name) => GetQuestPath(modPathIndex, quest) + "/" + name;
 
-        /*public static Map LoadMap(int modPathindex, string quest, string name, bool logError = false)
-        {
-            string path = GetMapPath(modPathindex, quest, name);
-            if (File.Exists(path))
-            {
-                BinaryFormatter formatter = new BinaryFormatter();
-                FileStream stream = new FileStream(path, FileMode.Open);
-                Map map = formatter.Deserialize(stream) as Map;
-                stream.Close();
-                map.modPathIndex = modPathindex;
-                return map;
-            }
-            else if (logError)
-            {
-                Debug.LogError(name + " not found at " + path);
-            }
-            return new Map();
-        }*/
-
         public static void DeleteMap(int modPathindex, string quest, string name, bool logError = false)
         {
             string path = GetMapPath(modPathindex, quest, name);
@@ -105,6 +86,7 @@ namespace MapEditor
             }
         }
 
+        public static Texture2D GetDefaultTiileTexture() => LoadPNG(UnityEngine.Application.dataPath + "/Sprites/DefaultTileTexture.png");
         public static string GetQuestPath(int modPathIndex, string quest) => GetModPaths()[modPathIndex] + "/" + mapFileName + "/" + quest;
 
         public static string GetPallatePath(int modPathIndex, string quest) => GetQuestPath(modPathIndex, quest) + "/" + pallateFileName;
@@ -133,11 +115,6 @@ namespace MapEditor
                 fileData = File.ReadAllBytes(filePath);
                 Texture2D tex = new Texture2D(2, 2, TextureFormat.RGBA32, true);
                 tex.LoadImage(fileData); //..this will auto-resize the texture dimensions.
-
-                if (tex.width != tex.height)
-                {
-                    Debug.LogWarning("Texture " + filePath + " is not square. Texture hieght may be adversly affected");
-                }
 
                 return tex;
             }
