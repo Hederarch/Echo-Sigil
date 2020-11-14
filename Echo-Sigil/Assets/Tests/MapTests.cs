@@ -45,31 +45,31 @@ namespace Map_Tests
         [Test]
         public void grid_to_world_space_3x3()
         {
-            MapReader.GeneratePhysicalMap(new Map(3, 3));
+            MapReader.GenerateVirtualMap(new Map(3, 3));
             Assert.AreEqual(Vector3.one, MapReader.GridToWorldSpace(0, 0, 1));
         }
         [Test]
         public void world_to_grid_space_3x3_center()
         {
-            MapReader.GeneratePhysicalMap(new Map(3, 3));
+            MapReader.GenerateVirtualMap(new Map(3, 3));
             Assert.AreEqual(Vector2Int.zero, MapReader.WorldToGridSpace(Vector3.one));
         }
         [Test]
         public void world_to_grid_space_3x3_1x1()
         {
-            MapReader.GeneratePhysicalMap(new Map(3, 3));
+            MapReader.GenerateVirtualMap(new Map(3, 3));
             Assert.AreEqual(Vector2Int.zero, MapReader.WorldToGridSpace(Vector2.one + (Vector2.one * .4f)));
         }
         [Test]
         public void world_to_grid_space_3x3_0x0()
         {
-            MapReader.GeneratePhysicalMap(new Map(3, 3));
+            MapReader.GenerateVirtualMap(new Map(3, 3));
             Assert.AreEqual(Vector2Int.zero, MapReader.WorldToGridSpace(Vector2.one - (Vector2.one * .4f)));
         }
         [Test]
         public void grid_to_world_space_with_tile_parent_move()
         {
-            MapReader.GeneratePhysicalMap(new Map(3, 3));
+            MapReader.GenerateVirtualMap(new Map(3, 3));
             MapReader.tileParent.position += Vector3.one;
             Assert.AreEqual(Vector3.one * 2 - Vector3.forward, MapReader.GridToWorldSpace(0, 0, 1));
         }

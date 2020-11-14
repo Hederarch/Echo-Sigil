@@ -5,21 +5,24 @@ using UnityEngine;
 public class GamplayCamera : MonoBehaviour
 {
     public FacesCamera foucus;
-    public Vector3 foucusPoint;
-    public float speed = .5f;
+    [SerializeField]
+    private Vector3 foucusPoint;
+    [Range(0f, 1f)]
+    public float speed = .1f;
     public float offsetFromFoucus = 4;
 
     public float offsetFromZ0 = 4;
-    private static bool cameraMoved;
+    private bool cameraMoved;
 
-    private float desieredAngle = (float)Math.PI;
-    public float angle = 0;
+    public float desieredAngle = 0;
+    public float angle { get; private set; } = 0;
 
     public Camera cam;
 
     private void Start()
     {
         cam = GetComponent<Camera>();
+        cam.orthographic = true;
         Unit.IsTurnEvent += SetAsFoucus;
     }
 
@@ -29,12 +32,11 @@ public class GamplayCamera : MonoBehaviour
         PlayerInputs();
         FoucusInputs();
         SetSortMode();
-        cam.orthographic = true;
     }
 
     public void FoucusInputs()
     {
-        float lerpAngle = Mathf.Abs(desieredAngle - angle) > .5f ? Mathf.Lerp(angle, desieredAngle, .1f) : desieredAngle;
+        float lerpAngle = Mathf.Abs(desieredAngle - angle) > .5f ? Mathf.Lerp(angle, desieredAngle, speed) : desieredAngle;
         transform.position = CalcPostion(lerpAngle);
         transform.rotation = CalcRotation(transform.position,lerpAngle);
         angle = lerpAngle;
@@ -76,7 +78,7 @@ public class GamplayCamera : MonoBehaviour
         if (foucus != null)
         {
             foucusPoint = Vector3.Distance(foucusPoint, foucus.transform.position) > .5f
-                ? Vector3.Lerp(foucusPoint, foucus.transform.position, .1f)
+                ? Vector3.Lerp(foucusPoint, foucus.transform.position, speed)
                 : foucus.transform.position;
         }
         return foucusPoint + offset;

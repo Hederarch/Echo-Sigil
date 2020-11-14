@@ -11,6 +11,8 @@ public class TileBehaviour : MonoBehaviour
     public BoxCollider selectionCollider;
     static Queue<TileBehaviour> cachedTiles = new Queue<TileBehaviour>();
 
+    public bool cached;
+
     private void Update()
     {
         if (topSprite != null)
@@ -112,29 +114,22 @@ public class TileBehaviour : MonoBehaviour
         }
         gameObject.layer = LayerMask.NameToLayer("Cache");
         name = "Cached Tile";
+        cached = true;
         cachedTiles.Enqueue(this);
     }
 
-    public static TileBehaviour MakeNewTileBehaviour(Tile t, Transform tileParent)
+    public static TileBehaviour GetTileBehaviour(Tile t, Transform tileParent)
     {
         TileBehaviour tileBehaviour;
         if (cachedTiles.Count < 1)
         {
-            GameObject tileObject = new GameObject
-            {
-                tag = "Tile",
-                layer = LayerMask.NameToLayer("Tiles")
-            };
-            tileObject.transform.parent = tileParent;
-
-            tileBehaviour = tileObject.AddComponent<TileBehaviour>();
-            tileBehaviour.selectionCollider = tileObject.AddComponent<BoxCollider>();
-            tileBehaviour.selectionCollider.size = new Vector3(1, 1, .1f);
-        } 
+            tileBehaviour = MakeNewTileBehaviour(tileParent);
+        }
         else
         {
             tileBehaviour = cachedTiles.Dequeue();
             tileBehaviour.gameObject.layer = LayerMask.NameToLayer("Tiles");
+            tileBehaviour.cached = false;
         }
 
         tileBehaviour.tile = t;
@@ -151,6 +146,22 @@ public class TileBehaviour : MonoBehaviour
             }
         }
 
+        return tileBehaviour;
+    }
+
+    private static TileBehaviour MakeNewTileBehaviour(Transform tileParent)
+    {
+        TileBehaviour tileBehaviour;
+        GameObject tileObject = new GameObject
+        {
+            tag = "Tile",
+            layer = LayerMask.NameToLayer("Tiles")
+        };
+        tileObject.transform.parent = tileParent;
+
+        tileBehaviour = tileObject.AddComponent<TileBehaviour>();
+        tileBehaviour.selectionCollider = tileObject.AddComponent<BoxCollider>();
+        tileBehaviour.selectionCollider.size = new Vector3(1, 1, .1f);
         return tileBehaviour;
     }
 

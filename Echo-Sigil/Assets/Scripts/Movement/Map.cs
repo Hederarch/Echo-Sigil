@@ -2,9 +2,11 @@
 using UnityEngine;
 using Pathfinding;
 using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Collections;
 
 [Serializable]
-public struct Map
+public struct Map : IEnumerable<MapTilePair>
 {
     public bool readyForSave;
     public string name;
@@ -56,6 +58,16 @@ public struct Map
             output = Mathf.Abs(nearestHeight - output.midHeight) < Mathf.Abs(nearestHeight - mapTile.midHeight) ? output : mapTile;
         }
         return output;
+    }
+
+    public IEnumerator<MapTilePair> GetEnumerator()
+    {
+        return new MapTilePairEnum(this);
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
     }
 
     public Map(Vector2Int size) : this(size.x, size.y) { }
@@ -232,4 +244,70 @@ public struct MapTile
     /// This opperation does not include units
     /// </summary>
     public static explicit operator MapTile(Tile tile) => new MapTile(tile.topHeight, tile.bottomHeight, tile.spriteIndex, tile.walkable, tile.weight);
+}
+
+public struct MapTilePair
+{
+    public MapTile mapTile;
+    public TilePos tilePos;
+    public int index;
+
+    public MapTilePair(MapTile mapTile, TilePos tilePos, int index)
+    {
+        this.mapTile = mapTile;
+        this.tilePos = tilePos;
+        this.index = index;
+    }
+}
+
+class MapTilePairEnum : IEnumerator<MapTilePair>
+{
+    Map map;
+
+    public MapTilePairEnum(Map map)
+    {
+        this.map = map;
+    }
+
+    public MapTilePair Current => new MapTilePair(map.mapTiles[tileIndex], new TilePos(x, y, map.mapTiles[tileIndex].topHeight), tileIndex);
+
+    object IEnumerator.Current => Current;
+
+    int numIndex;
+    int tileIndex = -1;
+    int i = -1;
+
+    int x;
+    int y;
+
+    public void Dispose()
+    {
+
+    }
+
+    public bool MoveNext()
+    {
+        i++;
+        tileIndex++;
+        if (i > map.numTile[numIndex])
+        {
+            x++;
+            if (x > map.sizeX)
+            {
+                y++;
+                if (y > map.sizeY)
+                {
+                    return false;
+                }
+            }
+            numIndex++;
+            i = 0;
+        }
+        return tileIndex < map.mapTiles.Length;
+    }
+
+    public void Reset()
+    {
+        throw new NotSupportedException();
+    }
 }

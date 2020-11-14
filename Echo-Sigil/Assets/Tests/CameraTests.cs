@@ -20,7 +20,6 @@ namespace Camera_Tests
             tacticsMovementCamera.cam = tacticsMovementCamera.GetComponent<Camera>();
             tacticsMovementCamera.offsetFromFoucus = 4;
             tacticsMovementCamera.offsetFromZ0 = 4;
-            tacticsMovementCamera.angle = (float)Math.PI;
             tacticsMovementCamera.FoucusInputs();
             return tacticsMovementCamera;
         }

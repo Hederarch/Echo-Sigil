@@ -33,6 +33,7 @@ public class MainMenuScript : MonoBehaviour
     {
         mainMenuElements.SetActive(false);
         Instantiate(gameplayGUIElements, canvas);
+        MapReader.GenerateVirtualMap(map);
         MapReader.GeneratePhysicalMap(map);
         TurnManager.InitTeamTurnQueue();
     }

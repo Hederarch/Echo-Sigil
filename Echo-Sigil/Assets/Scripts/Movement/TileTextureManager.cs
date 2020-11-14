@@ -44,12 +44,12 @@ public class TileTextureManager : MonoBehaviour
 
     public static Texture2D[] GetDebugPallate()
     {
-        return new Texture2D[1] { GetDebugTexture(true) };
+        return new Texture2D[1] { GetDebugTexture() };
     }
 
-    private static Texture2D GetDebugTexture(bool modify = true)
+    private static Texture2D GetDebugTexture()
     {
-        Texture2D texture2D = SaveSystem.LoadPNG(Application.dataPath + "/Sprites/DefaultTileTexture.png");
+        Texture2D texture2D = SaveSystem.GetDefaultTiileTexture();
 
         bool v = texture2D == null;
         if (v)

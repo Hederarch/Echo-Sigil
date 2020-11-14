@@ -43,18 +43,24 @@ public static class MapReader
 
     public static void GeneratePhysicalMap(Map map)
     {
-        if(tileParent == null)
-        {
-            tileParent = new GameObject("Tile Parent").transform;
-        }
+        ResetTileParent();
 
-        foreach(Transform transform in tileParent)
+        spritePallate = map.readyForSave ? SaveSystem.LoadPallate(map.modPathIndex, map.quest) : TileTextureManager.GetDebugPallate();
+
+        foreach (Tile tile in tiles)
         {
-            if( transform.TryGetComponent(out TileBehaviour t))
+            if (tile!= null && tile.topHeight > 0)
             {
-                t.CacheTile();
+                TileBehaviour.GetTileBehaviour(tile, tileParent);
             }
         }
+        TileBehaviour.ClearCachedTiles();
+        MapGeneratedEvent?.Invoke();
+    }
+
+    public static void GenerateVirtualMap(Map map)
+    {
+        ResetTileParent();
 
         sizeX = map.sizeX;
         sizeY = map.sizeY;
@@ -62,42 +68,29 @@ public static class MapReader
         numTile = map.numTile;
         implements.Clear();
 
-        spritePallate = map.readyForSave ? SaveSystem.LoadPallate(map.modPathIndex, map.quest) : TileTextureManager.GetDebugPallate();
-
-        for (int y = 0; y < map.sizeY; y++)
+        foreach (MapTilePair mapTilePair in map)
         {
+            tiles[mapTilePair.index] = MapTile.ConvertTile(mapTilePair.mapTile, mapTilePair.tilePos.x, mapTilePair.tilePos.y);
+            Unit.GetUnit(mapTilePair.mapTile.unit);
+        }
+    }
 
-            for (int x = 0; x < map.sizeX; x++)
+    private static void ResetTileParent()
+    {
+        if (tileParent == null)
+        {
+            tileParent = new GameObject("Tile Parent").transform;
+        }
+        else
+        {
+            foreach (Transform transform in tileParent)
             {
-                MapTile[] mapTiles = map[x, y];
-                for (int i = 0; i < mapTiles.Length; i++)
+                if (transform.TryGetComponent(out TileBehaviour t) && t.cached)
                 {
-                    MapTile mapTile = mapTiles[i];
-                    Tile tile = MapTile.ConvertTile(mapTile, x, y);
-
-                    int index = 0;
-                    for (int a = 0; a < y * map.sizeX + x; a++)
-                    {
-                        index += map.numTile[a];
-                    }
-                    index += i;
-                    tiles[index] = tile;
-
-                    Unit.GetUnit(mapTile.unit);
-
+                    t.CacheTile();
                 }
             }
         }
-
-        foreach (Tile tile in tiles)
-        {
-            if (tile.topHeight > 0)
-            {
-                TileBehaviour.MakeNewTileBehaviour(tile, tileParent);
-            }
-        }
-        TileBehaviour.ClearCachedTiles();
-        MapGeneratedEvent?.Invoke();
     }
 
     public static Vector3 GridToWorldSpace(TilePos posInGrid)

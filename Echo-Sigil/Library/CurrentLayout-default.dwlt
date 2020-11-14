@@ -21,7 +21,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 4}
-  m_MinSize: {x: 875, y: 300}
+  m_MinSize: {x: 875, y: 542}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 --- !u!114 &2
@@ -44,10 +44,10 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 504, y: 342}
-  m_MaxSize: {x: 12004, y: 8042}
+  m_MinSize: {x: 534, y: 492}
+  m_MaxSize: {x: 18004, y: 14042}
   vertical: 1
-  controlID: 207
+  controlID: 38
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -120,7 +120,7 @@ MonoBehaviour:
     height: 30
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
-  m_LastLoadedLayoutName: Default
+  m_LastLoadedLayoutName: 
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -143,10 +143,10 @@ MonoBehaviour:
     y: 0
     width: 1920
     height: 947
-  m_MinSize: {x: 504, y: 342}
-  m_MaxSize: {x: 12004, y: 8042}
+  m_MinSize: {x: 534, y: 492}
+  m_MaxSize: {x: 18004, y: 14042}
   vertical: 0
-  controlID: 208
+  controlID: 39
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -189,10 +189,10 @@ MonoBehaviour:
     y: 0
     width: 551
     height: 947
-  m_MinSize: {x: 202, y: 342}
-  m_MaxSize: {x: 4002, y: 8042}
+  m_MinSize: {x: 232, y: 492}
+  m_MaxSize: {x: 10002, y: 14042}
   vertical: 1
-  controlID: 497
+  controlID: 40
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ConsoleWindow
+  m_Name: ProjectBrowser
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -267,14 +267,14 @@ MonoBehaviour:
     y: 588
     width: 551
     height: 359
-  m_MinSize: {x: 102, y: 121}
-  m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 14}
+  m_MinSize: {x: 232, y: 271}
+  m_MaxSize: {x: 10002, y: 10021}
+  m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
   - {fileID: 14}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -387,7 +387,7 @@ MonoBehaviour:
     height: 926
   m_ViewDataDictionary: {fileID: 0}
   m_Spl:
-    ID: 339
+    ID: 142
     splitterInitialOffset: 299
     currentActiveSplitter: -1
     realSizes: 83020000d5000000
@@ -443,7 +443,7 @@ MonoBehaviour:
       name: Tales From The Metahedron
       fullName: Tales From The Metahedron
       resultStatus: 2
-      duration: 3.5162206
+      duration: 0.0842765
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -459,7 +459,7 @@ MonoBehaviour:
       name: Tests.dll
       fullName: C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Library/ScriptAssemblies/Tests.dll
       resultStatus: 2
-      duration: 3.3715
+      duration: 0.0408481
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -475,7 +475,7 @@ MonoBehaviour:
       name: Camera_Tests
       fullName: Camera_Tests
       resultStatus: 2
-      duration: 0.3890589
+      duration: 0.176996
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -490,9 +490,9 @@ MonoBehaviour:
       uniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.rotation][suite]
       name: rotation
       fullName: Camera_Tests.rotation
-      resultStatus: 1
-      duration: 0.2597848
-      messages: 
+      resultStatus: 2
+      duration: 0.0972395
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -507,7 +507,7 @@ MonoBehaviour:
       name: camera_rotates_x
       fullName: Camera_Tests.rotation.camera_rotates_x
       resultStatus: 1
-      duration: 0.11727
+      duration: 0.0369267
       messages: 
       output: 
       stacktrace: 
@@ -523,11 +523,13 @@ MonoBehaviour:
       uniqueId: Tests.dll/Camera_Tests/rotation/[Tests][Camera_Tests.rotation.camera_rotates_y]
       name: camera_rotates_y
       fullName: Camera_Tests.rotation.camera_rotates_y
-      resultStatus: 1
-      duration: 0.0012018
-      messages: 
+      resultStatus: 2
+      duration: 0.0159912
+      messages: "  Expected: not equal to 0\r\n  But was:  0.0f\r\n"
       output: 
-      stacktrace: 
+      stacktrace: 'at Camera_Tests.rotation.camera_rotates_y () [0x00001] in C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil\Assets\Tests\CameraTests.cs:59
+
+'
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -541,7 +543,7 @@ MonoBehaviour:
       name: selection
       fullName: Camera_Tests.selection
       resultStatus: 2
-      duration: 0.1176565
+      duration: 0.0672781
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -557,7 +559,7 @@ MonoBehaviour:
       name: get_Screen_point_returns_z0_bottom_left
       fullName: Camera_Tests.selection.get_Screen_point_returns_z0_bottom_left
       resultStatus: 2
-      duration: 0.0699848
+      duration: 0.0049743
       messages: "  Expected: 0\r\n  But was:  -2.30940294f\r\n"
       output: 
       stacktrace: 'at Camera_Tests.selection.get_Screen_point_returns_z0_bottom_left
@@ -577,11 +579,11 @@ MonoBehaviour:
       name: get_Screen_point_returns_z0_middle
       fullName: Camera_Tests.selection.get_Screen_point_returns_z0_middle
       resultStatus: 2
-      duration: 0.0024593
+      duration: 0.0040399
       messages: "  Expected: 0\r\n  But was:  -0.00255250931f\r\n"
       output: 
       stacktrace: 'at Camera_Tests.selection.get_Screen_point_returns_z0_middle ()
-        [0x00026] in C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil\Assets\Tests\CameraTests.cs:38
+        [0x00026] in C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil\Assets\Tests\CameraTests.cs:37
 
 '
       notRunnable: 0
@@ -597,11 +599,11 @@ MonoBehaviour:
       name: get_Screen_point_returns_z0_top_right
       fullName: Camera_Tests.selection.get_Screen_point_returns_z0_top_right
       resultStatus: 2
-      duration: 0.002107
+      duration: 0.0025977
       messages: "  Expected: 0\r\n  But was:  2.30940127f\r\n"
       output: 
       stacktrace: 'at Camera_Tests.selection.get_Screen_point_returns_z0_top_right
-        () [0x00022] in C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil\Assets\Tests\CameraTests.cs:32
+        () [0x00022] in C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil\Assets\Tests\CameraTests.cs:31
 
 '
       notRunnable: 0
@@ -617,7 +619,7 @@ MonoBehaviour:
       name: unrotated_angle_is_0
       fullName: Camera_Tests.selection.unrotated_angle_is_0
       resultStatus: 1
-      duration: 0.0010416
+      duration: 0.0017209
       messages: 
       output: 
       stacktrace: 
@@ -633,9 +635,9 @@ MonoBehaviour:
       uniqueId: Tests.dll/[Tests][Map_Tests][suite]
       name: Map_Tests
       fullName: Map_Tests
-      resultStatus: 2
-      duration: 1.7329329
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 0.0249826
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -649,9 +651,9 @@ MonoBehaviour:
       uniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.conversions][suite]
       name: conversions
       fullName: Map_Tests.conversions
-      resultStatus: 2
-      duration: 0.9720474
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 0.0189558
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -665,64 +667,11 @@ MonoBehaviour:
       uniqueId: Tests.dll/Map_Tests/conversions/[Tests][Map_Tests.conversions.grid_to_world_space_3x3]
       name: grid_to_world_space_3x3
       fullName: Map_Tests.conversions.grid_to_world_space_3x3
-      resultStatus: 2
-      duration: 0.2814363
-      messages: 'Unhandled log message: ''[Error] Array size must be at least width*height''.
-        Use UnityEngine.TestTools.LogAssert.Expect'
-      output: 'Array size must be at least width*height
-
-        Array size must
-        be at least width*height
-
-        Array size must be at least width*height
-
-        Array
-        size must be at least width*height
-
-        Array size must be at least
-        width*height
-
-'
-      stacktrace: 'UnityEngine.Texture2D:SetPixels(Color[])
-
-        TileTextureManager:GetTextureSection(Texture2D,
-        Color, Int32, Int32, Int32, Int32, Boolean) (at Assets/Scripts/Movement/TileTextureManager.cs:438)
-
-        TileTextureManager:GetTileTextureSection(Texture2D,
-        TileTextureSection, Boolean, Boolean) (at Assets/Scripts/Movement/TileTextureManager.cs:301)
-
-        TileTextureManager:GetDebugTexture(Boolean)
-        (at Assets/Scripts/Movement/TileTextureManager.cs:60)
-
-        TileTextureManager:GetDebugPallate()
-        (at Assets/Scripts/Movement/TileTextureManager.cs:47)
-
-        MapReader:GeneratePhysicalMap(Map)
-        (at Assets/Scripts/Movement/MapReader.cs:65)
-
-        Map_Tests.conversions:grid_to_world_space_3x3()
-        (at Assets/Tests/MapTests.cs:48)
-
-        System.Reflection.MethodBase:Invoke(Object,
-        Object[])
-
-        NUnit.Framework.Internal.Reflect:InvokeMethod(MethodInfo,
-        Object, Object[])
-
-        NUnit.Framework.Internal.MethodWrapper:Invoke(Object,
-        Object[])
-
-        NUnit.Framework.Internal.Commands.TestMethodCommand:RunNonAsyncTestMethod(ITestExecutionContext)
-
-        NUnit.Framework.Internal.Commands.TestMethodCommand:RunTestMethod(ITestExecutionContext)
-
-        NUnit.Framework.Internal.Commands.TestMethodCommand:Execute(ITestExecutionContext)
-
-        UnityEditor.EditorApplication:Internal_CallUpdateFunctions()
-
-        
-
-'
+      resultStatus: 1
+      duration: 0.0092955
+      messages: 
+      output: 
+      stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -735,64 +684,11 @@ MonoBehaviour:
       uniqueId: Tests.dll/Map_Tests/conversions/[Tests][Map_Tests.conversions.grid_to_world_space_with_tile_parent_move]
       name: grid_to_world_space_with_tile_parent_move
       fullName: Map_Tests.conversions.grid_to_world_space_with_tile_parent_move
-      resultStatus: 2
-      duration: 0.1568164
-      messages: 'Unhandled log message: ''[Error] Array size must be at least width*height''.
-        Use UnityEngine.TestTools.LogAssert.Expect'
-      output: 'Array size must be at least width*height
-
-        Array size must
-        be at least width*height
-
-        Array size must be at least width*height
-
-        Array
-        size must be at least width*height
-
-        Array size must be at least
-        width*height
-
-'
-      stacktrace: 'UnityEngine.Texture2D:SetPixels(Color[])
-
-        TileTextureManager:GetTextureSection(Texture2D,
-        Color, Int32, Int32, Int32, Int32, Boolean) (at Assets/Scripts/Movement/TileTextureManager.cs:438)
-
-        TileTextureManager:GetTileTextureSection(Texture2D,
-        TileTextureSection, Boolean, Boolean) (at Assets/Scripts/Movement/TileTextureManager.cs:301)
-
-        TileTextureManager:GetDebugTexture(Boolean)
-        (at Assets/Scripts/Movement/TileTextureManager.cs:60)
-
-        TileTextureManager:GetDebugPallate()
-        (at Assets/Scripts/Movement/TileTextureManager.cs:47)
-
-        MapReader:GeneratePhysicalMap(Map)
-        (at Assets/Scripts/Movement/MapReader.cs:65)
-
-        Map_Tests.conversions:grid_to_world_space_with_tile_parent_move()
-        (at Assets/Tests/MapTests.cs:72)
-
-        System.Reflection.MethodBase:Invoke(Object,
-        Object[])
-
-        NUnit.Framework.Internal.Reflect:InvokeMethod(MethodInfo,
-        Object, Object[])
-
-        NUnit.Framework.Internal.MethodWrapper:Invoke(Object,
-        Object[])
-
-        NUnit.Framework.Internal.Commands.TestMethodCommand:RunNonAsyncTestMethod(ITestExecutionContext)
-
-        NUnit.Framework.Internal.Commands.TestMethodCommand:RunTestMethod(ITestExecutionContext)
-
-        NUnit.Framework.Internal.Commands.TestMethodCommand:Execute(ITestExecutionContext)
-
-        UnityEditor.EditorApplication:Internal_CallUpdateFunctions()
-
-        
-
-'
+      resultStatus: 1
+      duration: 0.0029386
+      messages: 
+      output: 
+      stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -805,27 +701,11 @@ MonoBehaviour:
       uniqueId: Tests.dll/Map_Tests/conversions/[Tests][Map_Tests.conversions.world_to_grid_space_3x3_0x0]
       name: world_to_grid_space_3x3_0x0
       fullName: Map_Tests.conversions.world_to_grid_space_3x3_0x0
-      resultStatus: 2
-      duration: 0.1768709
-      messages: "  Expected: (0, 0)\r\n  But was:  (1,1,-1)\r\n"
-      output: 'Array size must be at least width*height
-
-        Array size must
-        be at least width*height
-
-        Array size must be at least width*height
-
-        Array
-        size must be at least width*height
-
-        Array size must be at least
-        width*height
-
-'
-      stacktrace: 'at Map_Tests.conversions.world_to_grid_space_3x3_0x0 () [0x0000e]
-        in C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil\Assets\Tests\MapTests.cs:67
-
-'
+      resultStatus: 1
+      duration: 0.0025806
+      messages: 
+      output: 
+      stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -838,27 +718,11 @@ MonoBehaviour:
       uniqueId: Tests.dll/Map_Tests/conversions/[Tests][Map_Tests.conversions.world_to_grid_space_3x3_1x1]
       name: world_to_grid_space_3x3_1x1
       fullName: Map_Tests.conversions.world_to_grid_space_3x3_1x1
-      resultStatus: 2
-      duration: 0.1632203
-      messages: "  Expected: (0, 0)\r\n  But was:  (1,1,-1)\r\n"
-      output: 'Array size must be at least width*height
-
-        Array size must
-        be at least width*height
-
-        Array size must be at least width*height
-
-        Array
-        size must be at least width*height
-
-        Array size must be at least
-        width*height
-
-'
-      stacktrace: 'at Map_Tests.conversions.world_to_grid_space_3x3_1x1 () [0x0000e]
-        in C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil\Assets\Tests\MapTests.cs:61
-
-'
+      resultStatus: 1
+      duration: 0.0022624
+      messages: 
+      output: 
+      stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -871,27 +735,11 @@ MonoBehaviour:
       uniqueId: Tests.dll/Map_Tests/conversions/[Tests][Map_Tests.conversions.world_to_grid_space_3x3_center]
       name: world_to_grid_space_3x3_center
       fullName: Map_Tests.conversions.world_to_grid_space_3x3_center
-      resultStatus: 2
-      duration: 0.1629186
-      messages: "  Expected: (0, 0)\r\n  But was:  (1,1,0)\r\n"
-      output: 'Array size must be at least width*height
-
-        Array size must
-        be at least width*height
-
-        Array size must be at least width*height
-
-        Array
-        size must be at least width*height
-
-        Array size must be at least
-        width*height
-
-'
-      stacktrace: 'at Map_Tests.conversions.world_to_grid_space_3x3_center () [0x0000e]
-        in C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil\Assets\Tests\MapTests.cs:55
-
-'
+      resultStatus: 1
+      duration: 0.001897
+      messages: 
+      output: 
+      stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -905,7 +753,7 @@ MonoBehaviour:
       name: map
       fullName: Map_Tests.map
       resultStatus: 1
-      duration: 0.7000331
+      duration: 0.0304595
       messages: 
       output: 
       stacktrace: 
@@ -921,7 +769,7 @@ MonoBehaviour:
       name: map_can_not_return_null_1x1
       fullName: Map_Tests.map.map_can_not_return_null_1x1
       resultStatus: 1
-      duration: 0.0036335
+      duration: 0.0021093
       messages: 
       output: 
       stacktrace: 
@@ -938,7 +786,7 @@ MonoBehaviour:
       name: map_can_not_return_null_3x5
       fullName: Map_Tests.map.map_can_not_return_null_3x5
       resultStatus: 1
-      duration: 0.0010121
+      duration: 0.0008074
       messages: 
       output: 
       stacktrace: 
@@ -955,7 +803,7 @@ MonoBehaviour:
       name: new_map_overloads_equivalant
       fullName: Map_Tests.map.new_map_overloads_equivalant
       resultStatus: 1
-      duration: 0.0018483
+      duration: 0.0011116
       messages: 
       output: 
       stacktrace: 
@@ -972,7 +820,7 @@ MonoBehaviour:
       name: new_map_sets_size
       fullName: Map_Tests.map.new_map_sets_size
       resultStatus: 1
-      duration: 0.0010661
+      duration: 0.0006752
       messages: 
       output: 
       stacktrace: 
@@ -989,7 +837,7 @@ MonoBehaviour:
       name: new_maps_is_walkable
       fullName: Map_Tests.map.new_maps_is_walkable
       resultStatus: 1
-      duration: 0.0018314
+      duration: 0.0021318
       messages: 
       output: 
       stacktrace: 
@@ -1006,7 +854,7 @@ MonoBehaviour:
       name: Pathfinding_Tests
       fullName: Pathfinding_Tests
       resultStatus: 1
-      duration: 0.1410441
+      duration: 0.115693
       messages: 
       output: 
       stacktrace: 
@@ -1022,7 +870,7 @@ MonoBehaviour:
       name: a_star
       fullName: Pathfinding_Tests.a_star
       resultStatus: 1
-      duration: 0.0482987
+      duration: 0.0381516
       messages: 
       output: 
       stacktrace: 
@@ -1038,7 +886,7 @@ MonoBehaviour:
       name: long_path_contains_middle_item
       fullName: Pathfinding_Tests.a_star.long_path_contains_middle_item
       resultStatus: 1
-      duration: 0.0116787
+      duration: 0.0111765
       messages: 
       output: 
       stacktrace: 
@@ -1055,7 +903,7 @@ MonoBehaviour:
       name: long_path_does_not_contains_unwalkable_middle_item
       fullName: Pathfinding_Tests.a_star.long_path_does_not_contains_unwalkable_middle_item
       resultStatus: 1
-      duration: 0.0040968
+      duration: 0.0016522
       messages: 
       output: 
       stacktrace: 
@@ -1072,7 +920,7 @@ MonoBehaviour:
       name: long_path_fails_when_too_long
       fullName: Pathfinding_Tests.a_star.long_path_fails_when_too_long
       resultStatus: 1
-      duration: 0.0012931
+      duration: 0.0008629
       messages: 
       output: 
       stacktrace: 
@@ -1089,7 +937,7 @@ MonoBehaviour:
       name: long_path_sucsessful
       fullName: Pathfinding_Tests.a_star.long_path_sucsessful
       resultStatus: 1
-      duration: 0.0016455
+      duration: 0.0010231
       messages: 
       output: 
       stacktrace: 
@@ -1106,7 +954,7 @@ MonoBehaviour:
       name: short_path_contains_middle_item
       fullName: Pathfinding_Tests.a_star.short_path_contains_middle_item
       resultStatus: 1
-      duration: 0.0011905
+      duration: 0.0016259
       messages: 
       output: 
       stacktrace: 
@@ -1123,7 +971,7 @@ MonoBehaviour:
       name: short_path_does_not_contains_unwalkable_middle_item
       fullName: Pathfinding_Tests.a_star.short_path_does_not_contains_unwalkable_middle_item
       resultStatus: 1
-      duration: 0.0014677
+      duration: 0.0012729
       messages: 
       output: 
       stacktrace: 
@@ -1140,7 +988,7 @@ MonoBehaviour:
       name: short_path_sucsessful
       fullName: Pathfinding_Tests.a_star.short_path_sucsessful
       resultStatus: 1
-      duration: 0.0010175
+      duration: 0.0007026
       messages: 
       output: 
       stacktrace: 
@@ -1157,7 +1005,7 @@ MonoBehaviour:
       name: bfs
       fullName: Pathfinding_Tests.bfs
       resultStatus: 1
-      duration: 0.053276
+      duration: 0.0344828
       messages: 
       output: 
       stacktrace: 
@@ -1173,7 +1021,7 @@ MonoBehaviour:
       name: long_path_does_not_contains_unwalkable_middle_item
       fullName: Pathfinding_Tests.bfs.long_path_does_not_contains_unwalkable_middle_item
       resultStatus: 1
-      duration: 0.0059901
+      duration: 0.0059538
       messages: 
       output: 
       stacktrace: 
@@ -1190,7 +1038,7 @@ MonoBehaviour:
       name: long_path_fails_when_too_long
       fullName: Pathfinding_Tests.bfs.long_path_fails_when_too_long
       resultStatus: 1
-      duration: 0.00331
+      duration: 0.0013379
       messages: 
       output: 
       stacktrace: 
@@ -1207,7 +1055,7 @@ MonoBehaviour:
       name: long_path_sucsessful
       fullName: Pathfinding_Tests.bfs.long_path_sucsessful
       resultStatus: 1
-      duration: 0.0024486
+      duration: 0.0013794
       messages: 
       output: 
       stacktrace: 
@@ -1224,7 +1072,7 @@ MonoBehaviour:
       name: short_path_contains_middle_item
       fullName: Pathfinding_Tests.bfs.short_path_contains_middle_item
       resultStatus: 1
-      duration: 0.0013388
+      duration: 0.0007983
       messages: 
       output: 
       stacktrace: 
@@ -1241,7 +1089,7 @@ MonoBehaviour:
       name: short_path_does_not_contains_unwalkable_middle_item
       fullName: Pathfinding_Tests.bfs.short_path_does_not_contains_unwalkable_middle_item
       resultStatus: 1
-      duration: 0.0012583
+      duration: 0.0007994
       messages: 
       output: 
       stacktrace: 
@@ -1258,7 +1106,7 @@ MonoBehaviour:
       name: short_path_sucsessful
       fullName: Pathfinding_Tests.bfs.short_path_sucsessful
       resultStatus: 1
-      duration: 0.0009737
+      duration: 0.0006892
       messages: 
       output: 
       stacktrace: 
@@ -1275,7 +1123,7 @@ MonoBehaviour:
       name: Tile_Tests
       fullName: Tile_Tests
       resultStatus: 2
-      duration: 1.048208
+      duration: 0.0370865
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -1290,9 +1138,9 @@ MonoBehaviour:
       uniqueId: Tests.dll/Tile_Tests/[Tests][Tile_Tests.get_neighbor][suite]
       name: get_neighbor
       fullName: Tile_Tests.get_neighbor
-      resultStatus: 2
-      duration: 0.184404
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 8.181138
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1306,64 +1154,11 @@ MonoBehaviour:
       uniqueId: Tests.dll/Tile_Tests/get_neighbor/[Tests][Tile_Tests.get_neighbor.tiles_find_neighbor]
       name: tiles_find_neighbor
       fullName: Tile_Tests.get_neighbor.tiles_find_neighbor
-      resultStatus: 2
-      duration: 0.174876
-      messages: 'Unhandled log message: ''[Error] Array size must be at least width*height''.
-        Use UnityEngine.TestTools.LogAssert.Expect'
-      output: 'Array size must be at least width*height
-
-        Array size must
-        be at least width*height
-
-        Array size must be at least width*height
-
-        Array
-        size must be at least width*height
-
-        Array size must be at least
-        width*height
-
-'
-      stacktrace: 'UnityEngine.Texture2D:SetPixels(Color[])
-
-        TileTextureManager:GetTextureSection(Texture2D,
-        Color, Int32, Int32, Int32, Int32, Boolean) (at Assets/Scripts/Movement/TileTextureManager.cs:438)
-
-        TileTextureManager:GetTileTextureSection(Texture2D,
-        TileTextureSection, Boolean, Boolean) (at Assets/Scripts/Movement/TileTextureManager.cs:301)
-
-        TileTextureManager:GetDebugTexture(Boolean)
-        (at Assets/Scripts/Movement/TileTextureManager.cs:60)
-
-        TileTextureManager:GetDebugPallate()
-        (at Assets/Scripts/Movement/TileTextureManager.cs:47)
-
-        MapReader:GeneratePhysicalMap(Map)
-        (at Assets/Scripts/Movement/MapReader.cs:65)
-
-        Tile_Tests.get_neighbor:tiles_find_neighbor()
-        (at Assets/Tests/TileTests.cs:103)
-
-        System.Reflection.MethodBase:Invoke(Object,
-        Object[])
-
-        NUnit.Framework.Internal.Reflect:InvokeMethod(MethodInfo,
-        Object, Object[])
-
-        NUnit.Framework.Internal.MethodWrapper:Invoke(Object,
-        Object[])
-
-        NUnit.Framework.Internal.Commands.TestMethodCommand:RunNonAsyncTestMethod(ITestExecutionContext)
-
-        NUnit.Framework.Internal.Commands.TestMethodCommand:RunTestMethod(ITestExecutionContext)
-
-        NUnit.Framework.Internal.Commands.TestMethodCommand:Execute(ITestExecutionContext)
-
-        UnityEditor.EditorApplication:Internal_CallUpdateFunctions()
-
-        
-
-'
+      resultStatus: 1
+      duration: 8.126594
+      messages: 
+      output: 
+      stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1377,7 +1172,7 @@ MonoBehaviour:
       name: initialization
       fullName: Tile_Tests.initialization
       resultStatus: 2
-      duration: 0.4795511
+      duration: 0.0187254
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -1393,7 +1188,7 @@ MonoBehaviour:
       name: new_tile_can_hold_height_value
       fullName: Tile_Tests.initialization.new_tile_can_hold_height_value
       resultStatus: 1
-      duration: 0.0018962
+      duration: 0.0303259
       messages: 
       output: 
       stacktrace: 
@@ -1410,7 +1205,7 @@ MonoBehaviour:
       name: new_tile_can_hold_walkable
       fullName: Tile_Tests.initialization.new_tile_can_hold_walkable
       resultStatus: 1
-      duration: 0.0012657
+      duration: 0.0014219
       messages: 
       output: 
       stacktrace: 
@@ -1427,7 +1222,7 @@ MonoBehaviour:
       name: new_tile_can_not_return_null
       fullName: Tile_Tests.initialization.new_tile_can_not_return_null
       resultStatus: 1
-      duration: 0.0015393
+      duration: 0.005432
       messages: 
       output: 
       stacktrace: 
@@ -1443,64 +1238,11 @@ MonoBehaviour:
       uniqueId: Tests.dll/Tile_Tests/initialization/[Tests][Tile_Tests.initialization.pos_in_grid_is_acurate_0x0]
       name: pos_in_grid_is_acurate_0x0
       fullName: Tile_Tests.initialization.pos_in_grid_is_acurate_0x0
-      resultStatus: 2
-      duration: 0.0417697
-      messages: 'Unhandled log message: ''[Error] Array size must be at least width*height''.
-        Use UnityEngine.TestTools.LogAssert.Expect'
-      output: 'Array size must be at least width*height
-
-        Array size must
-        be at least width*height
-
-        Array size must be at least width*height
-
-        Array
-        size must be at least width*height
-
-        Array size must be at least
-        width*height
-
-'
-      stacktrace: 'UnityEngine.Texture2D:SetPixels(Color[])
-
-        TileTextureManager:GetTextureSection(Texture2D,
-        Color, Int32, Int32, Int32, Int32, Boolean) (at Assets/Scripts/Movement/TileTextureManager.cs:438)
-
-        TileTextureManager:GetTileTextureSection(Texture2D,
-        TileTextureSection, Boolean, Boolean) (at Assets/Scripts/Movement/TileTextureManager.cs:301)
-
-        TileTextureManager:GetDebugTexture(Boolean)
-        (at Assets/Scripts/Movement/TileTextureManager.cs:60)
-
-        TileTextureManager:GetDebugPallate()
-        (at Assets/Scripts/Movement/TileTextureManager.cs:47)
-
-        MapReader:GeneratePhysicalMap(Map)
-        (at Assets/Scripts/Movement/MapReader.cs:65)
-
-        Tile_Tests.initialization:pos_in_grid_is_acurate_0x0()
-        (at Assets/Tests/TileTests.cs:44)
-
-        System.Reflection.MethodBase:Invoke(Object,
-        Object[])
-
-        NUnit.Framework.Internal.Reflect:InvokeMethod(MethodInfo,
-        Object, Object[])
-
-        NUnit.Framework.Internal.MethodWrapper:Invoke(Object,
-        Object[])
-
-        NUnit.Framework.Internal.Commands.TestMethodCommand:RunNonAsyncTestMethod(ITestExecutionContext)
-
-        NUnit.Framework.Internal.Commands.TestMethodCommand:RunTestMethod(ITestExecutionContext)
-
-        NUnit.Framework.Internal.Commands.TestMethodCommand:Execute(ITestExecutionContext)
-
-        UnityEditor.EditorApplication:Internal_CallUpdateFunctions()
-
-        
-
-'
+      resultStatus: 1
+      duration: 0.0101115
+      messages: 
+      output: 
+      stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1514,61 +1256,11 @@ MonoBehaviour:
       name: pos_in_grid_is_acurate_3x5
       fullName: Tile_Tests.initialization.pos_in_grid_is_acurate_3x5
       resultStatus: 2
-      duration: 0.2439701
-      messages: 'Unhandled log message: ''[Error] Array size must be at least width*height''.
-        Use UnityEngine.TestTools.LogAssert.Expect'
-      output: 'Array size must be at least width*height
-
-        Array size must
-        be at least width*height
-
-        Array size must be at least width*height
-
-        Array
-        size must be at least width*height
-
-        Array size must be at least
-        width*height
-
-'
-      stacktrace: 'UnityEngine.Texture2D:SetPixels(Color[])
-
-        TileTextureManager:GetTextureSection(Texture2D,
-        Color, Int32, Int32, Int32, Int32, Boolean) (at Assets/Scripts/Movement/TileTextureManager.cs:438)
-
-        TileTextureManager:GetTileTextureSection(Texture2D,
-        TileTextureSection, Boolean, Boolean) (at Assets/Scripts/Movement/TileTextureManager.cs:301)
-
-        TileTextureManager:GetDebugTexture(Boolean)
-        (at Assets/Scripts/Movement/TileTextureManager.cs:60)
-
-        TileTextureManager:GetDebugPallate()
-        (at Assets/Scripts/Movement/TileTextureManager.cs:47)
-
-        MapReader:GeneratePhysicalMap(Map)
-        (at Assets/Scripts/Movement/MapReader.cs:65)
-
-        Tile_Tests.initialization:pos_in_grid_is_acurate_3x5()
-        (at Assets/Tests/TileTests.cs:52)
-
-        System.Reflection.MethodBase:Invoke(Object,
-        Object[])
-
-        NUnit.Framework.Internal.Reflect:InvokeMethod(MethodInfo,
-        Object, Object[])
-
-        NUnit.Framework.Internal.MethodWrapper:Invoke(Object,
-        Object[])
-
-        NUnit.Framework.Internal.Commands.TestMethodCommand:RunNonAsyncTestMethod(ITestExecutionContext)
-
-        NUnit.Framework.Internal.Commands.TestMethodCommand:RunTestMethod(ITestExecutionContext)
-
-        NUnit.Framework.Internal.Commands.TestMethodCommand:Execute(ITestExecutionContext)
-
-        UnityEditor.EditorApplication:Internal_CallUpdateFunctions()
-
-        
+      duration: 0.0024989
+      messages: "  Expected: (2, 4)\r\n  But was:  (7,4,1)\r\n"
+      output: 
+      stacktrace: 'at Tile_Tests.initialization.pos_in_grid_is_acurate_3x5 () [0x0000e]
+        in C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil\Assets\Tests\TileTests.cs:53
 
 '
       notRunnable: 0
@@ -1583,9 +1275,9 @@ MonoBehaviour:
       uniqueId: Tests.dll/Tile_Tests/[Tests][Tile_Tests.texture][suite]
       name: texture
       fullName: Tile_Tests.texture
-      resultStatus: 2
-      duration: 0.3377587
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 0.0757968
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1595,46 +1287,12 @@ MonoBehaviour:
       categories: []
       parentId: 1050
       parentUniqueId: Tests.dll/[Tests][Tile_Tests][suite]
-    - id: 1011
-      uniqueId: Tests.dll/Tile_Tests/texture/[Tests][Tile_Tests.texture.dubug_returns_correct_placement]
-      name: dubug_returns_correct_placement
-      fullName: Tile_Tests.texture.dubug_returns_correct_placement
-      resultStatus: 2
-      duration: 0.0444675
-      messages: "  Expected: not equal to RGBA(0.475, 0.475, 0.475, 1.000)\r\n  But
-        was:  RGBA(0.475, 0.475, 0.475, 1.000)\r\n"
-      output: 'Array size must be at least width*height
-
-        Array size must
-        be at least width*height
-
-        Array size must be at least width*height
-
-        Array
-        size must be at least width*height
-
-        Array size must be at least
-        width*height
-
-'
-      stacktrace: 'at Tile_Tests.texture.dubug_returns_correct_placement () [0x00028]
-        in C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil\Assets\Tests\TileTests.cs:92
-
-'
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1007
-      parentUniqueId: Tests.dll/Tile_Tests/[Tests][Tile_Tests.texture][suite]
     - id: 1010
       uniqueId: Tests.dll/Tile_Tests/texture/[Tests][Tile_Tests.texture.get_tile_border_returns_10_percent]
       name: get_tile_border_returns_10_percent
       fullName: Tile_Tests.texture.get_tile_border_returns_10_percent
       resultStatus: 1
-      duration: 0.003011
+      duration: 0.0304516
       messages: 
       output: 
       stacktrace: 
@@ -1651,7 +1309,7 @@ MonoBehaviour:
       name: original_returns_original_texture
       fullName: Tile_Tests.texture.original_returns_original_texture
       resultStatus: 1
-      duration: 0.0014477
+      duration: 0.0014656
       messages: 
       output: 
       stacktrace: 
@@ -1668,7 +1326,7 @@ MonoBehaviour:
       name: top_returns_square
       fullName: Tile_Tests.texture.top_returns_square
       resultStatus: 1
-      duration: 0.0015773
+      duration: 0.0032569
       messages: 
       output: 
       stacktrace: 
@@ -1680,111 +1338,13 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1007
       parentUniqueId: Tests.dll/Tile_Tests/[Tests][Tile_Tests.texture][suite]
-    m_ResultText: 'grid_to_world_space_3x3 (0.281s)
-
-      ---
-
-      Unhandled log
-      message: ''[Error] Array size must be at least width*height''. Use UnityEngine.TestTools.LogAssert.Expect
-
-      ---
-
-      UnityEngine.Texture2D:SetPixels(Color[])
-
-      TileTextureManager:GetTextureSection(Texture2D,
-      Color, Int32, Int32, Int32, Int32, Boolean) (at Assets/Scripts/Movement/TileTextureManager.cs:438)
-
-      TileTextureManager:GetTileTextureSection(Texture2D,
-      TileTextureSection, Boolean, Boolean) (at Assets/Scripts/Movement/TileTextureManager.cs:301)
-
-      TileTextureManager:GetDebugTexture(Boolean)
-      (at Assets/Scripts/Movement/TileTextureManager.cs:60)
-
-      TileTextureManager:GetDebugPallate()
-      (at Assets/Scripts/Movement/TileTextureManager.cs:47)
-
-      MapReader:GeneratePhysicalMap(Map)
-      (at Assets/Scripts/Movement/MapReader.cs:65)
-
-      Map_Tests.conversions:grid_to_world_space_3x3()
-      (at Assets/Tests/MapTests.cs:48)
-
-      System.Reflection.MethodBase:Invoke(Object,
-      Object[])
-
-      NUnit.Framework.Internal.Reflect:InvokeMethod(MethodInfo,
-      Object, Object[])
-
-      NUnit.Framework.Internal.MethodWrapper:Invoke(Object,
-      Object[])
-
-      NUnit.Framework.Internal.Commands.TestMethodCommand:RunNonAsyncTestMethod(ITestExecutionContext)
-
-      NUnit.Framework.Internal.Commands.TestMethodCommand:RunTestMethod(ITestExecutionContext)
-
-      NUnit.Framework.Internal.Commands.TestMethodCommand:Execute(ITestExecutionContext)
-
-      UnityEditor.EditorApplication:Internal_CallUpdateFunctions()
-
-      ---
-
-      Array
-      size must be at least width*height
-
-      Array size must be at least width*height
-
-      Array
-      size must be at least width*height
-
-      Array size must be at least width*height
-
-      Array
-      size must be at least width*height'
-    m_ResultStacktrace: 'UnityEngine.Texture2D:SetPixels(Color[])
-
-      TileTextureManager:GetTextureSection(Texture2D,
-      Color, Int32, Int32, Int32, Int32, Boolean) (at Assets/Scripts/Movement/TileTextureManager.cs:438)
-
-      TileTextureManager:GetTileTextureSection(Texture2D,
-      TileTextureSection, Boolean, Boolean) (at Assets/Scripts/Movement/TileTextureManager.cs:301)
-
-      TileTextureManager:GetDebugTexture(Boolean)
-      (at Assets/Scripts/Movement/TileTextureManager.cs:60)
-
-      TileTextureManager:GetDebugPallate()
-      (at Assets/Scripts/Movement/TileTextureManager.cs:47)
-
-      MapReader:GeneratePhysicalMap(Map)
-      (at Assets/Scripts/Movement/MapReader.cs:65)
-
-      Map_Tests.conversions:grid_to_world_space_3x3()
-      (at Assets/Tests/MapTests.cs:48)
-
-      System.Reflection.MethodBase:Invoke(Object,
-      Object[])
-
-      NUnit.Framework.Internal.Reflect:InvokeMethod(MethodInfo,
-      Object, Object[])
-
-      NUnit.Framework.Internal.MethodWrapper:Invoke(Object,
-      Object[])
-
-      NUnit.Framework.Internal.Commands.TestMethodCommand:RunNonAsyncTestMethod(ITestExecutionContext)
-
-      NUnit.Framework.Internal.Commands.TestMethodCommand:RunTestMethod(ITestExecutionContext)
-
-      NUnit.Framework.Internal.Commands.TestMethodCommand:Execute(ITestExecutionContext)
-
-      UnityEditor.EditorApplication:Internal_CallUpdateFunctions()
-
-      
-
-'
+    m_ResultText: tiles_find_neighbor (8.127s)
+    m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: dca230da
-      m_LastClickedID: -634346788
-      m_ExpandedIDs: 2756b58df58144dfe557abf72b220e14c76f405d371e5f68ffffff7f
+      m_SelectedIDs: 059c9fcc
+      m_LastClickedID: -861955067
+      m_ExpandedIDs: f58144df0b2469dfe557abf72b220e14f7bd6e67371e5f68ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1869,10 +1429,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 546
-    y: 490
-    width: 841
-    height: 509
+    x: 838
+    y: 661
+    width: 549
+    height: 338
   m_ViewDataDictionary: {fileID: 0}
   m_SearchFilter:
     m_NameFilter: 
@@ -1887,20 +1447,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets
+    - Assets/Scripts
   m_ViewMode: 1
   m_StartGridSize: 63
   m_LastFolders:
-  - Assets
+  - Assets/Scripts
   m_LastFoldersGridSize: 63
   m_LastProjectPath: C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 443b0000
-    m_LastClickedID: 15172
-    m_ExpandedIDs: 00000000f83a0000fa3a0000fc3a0000fe3a0000003b0000023b0000043b0000063b0000
+    m_SelectedIDs: 043b0000
+    m_LastClickedID: 15108
+    m_ExpandedIDs: 00000000023b0000043b0000063b0000083b00000a3b00000c3b00000e3b0000103b00001c3b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1928,7 +1488,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000f83a0000fa3a0000fc3a0000fe3a0000003b0000023b0000043b0000063b0000
+    m_ExpandedIDs: 00000000023b0000043b0000063b0000083b00000a3b00000c3b00000e3b0000103b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -2222,7 +1782,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: daf9ffff68faffff5efbffffa4380000
+      m_ExpandedIDs: 0af0ffff3ef0ffff72f0ffffa6f0ffffdaf0ffff0ef1ffffacf1ffff22f2ffffe6f2ffffaaf3fffff6f4ffffc6f5ffff5cf8ffff90f8ffff22f9ffff66fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -2246,3 +1806,28 @@ MonoBehaviour:
       m_IsLocked: 0
     m_CurrentSortingName: TransformSorting
   m_WindowGUID: fc39bf19ad558254e9d26f742ab1b36c
+--- !u!114 &21
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 12059, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEditor:UnityEditor.PackageManager.UI:PackageManagerProjectSettings
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Failed to load
+    m_Image: {fileID: 0}
+    m_Tooltip: 
+  m_Pos:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 320
+    height: 550
+  m_ViewDataDictionary: {fileID: 0}
