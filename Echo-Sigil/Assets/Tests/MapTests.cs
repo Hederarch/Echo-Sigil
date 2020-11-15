@@ -58,13 +58,17 @@ namespace Map_Tests
         public void world_to_grid_space_3x3_1x1()
         {
             MapReader.GenerateVirtualMap(new Map(3, 3));
-            Assert.AreEqual(Vector2Int.zero, MapReader.WorldToGridSpace(Vector2.one + (Vector2.one * .4f)));
+            Vector3 posInWorld = MapReader.GetTile(1, 1, 1).PosInWorld;
+            TilePos actual = MapReader.WorldToGridSpace(posInWorld);
+            Assert.AreEqual(Vector2Int.one, actual);
         }
         [Test]
         public void world_to_grid_space_3x3_0x0()
         {
             MapReader.GenerateVirtualMap(new Map(3, 3));
-            Assert.AreEqual(Vector2Int.zero, MapReader.WorldToGridSpace(Vector2.one - (Vector2.one * .4f)));
+            Vector3 posInWorld = MapReader.GetTile(0,0,1).PosInWorld;
+            TilePos actual = MapReader.WorldToGridSpace(posInWorld);
+            Assert.AreEqual(Vector2Int.zero, actual);
         }
         [Test]
         public void grid_to_world_space_with_tile_parent_move()

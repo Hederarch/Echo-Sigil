@@ -258,6 +258,11 @@ public struct MapTilePair
         this.tilePos = tilePos;
         this.index = index;
     }
+
+    public override string ToString()
+    {
+        return tilePos + " at " + index;
+    }
 }
 
 class MapTilePairEnum : IEnumerator<MapTilePair>
@@ -289,16 +294,17 @@ class MapTilePairEnum : IEnumerator<MapTilePair>
     {
         i++;
         tileIndex++;
-        if (i > map.numTile[numIndex])
+        if (i >= map.numTile[numIndex])
         {
             x++;
-            if (x > map.sizeX)
+            if (x >= map.sizeX)
             {
                 y++;
-                if (y > map.sizeY)
+                if (y >= map.sizeY)
                 {
                     return false;
                 }
+                x = 0;
             }
             numIndex++;
             i = 0;

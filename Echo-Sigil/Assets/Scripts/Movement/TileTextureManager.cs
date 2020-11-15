@@ -51,18 +51,15 @@ public class TileTextureManager : MonoBehaviour
     {
         Texture2D texture2D = SaveSystem.GetDefaultTiileTexture();
 
-        bool v = texture2D == null;
-        if (v)
+        if (texture2D == null)
         {
             texture2D = new Texture2D(64, 64 * 3);
+            texture2D = GetTileTextureSection(texture2D, TileTextureSection.Top, true, true);
+            texture2D = GetTileTextureSection(texture2D, TileTextureSection.Border, true, true);
+            texture2D = GetTileTextureSection(texture2D, TileTextureSection.Edge, true, true);
+            texture2D = GetTileTextureSection(texture2D, TileTextureSection.Side, true, true);
+            texture2D = GetTileTextureSection(texture2D, TileTextureSection.Extents, true, true);
         }
-
-        texture2D = GetTileTextureSection(texture2D, TileTextureSection.Top, true, v);
-        texture2D = GetTileTextureSection(texture2D, TileTextureSection.Border, true, v);
-        texture2D = GetTileTextureSection(texture2D, TileTextureSection.Edge, true, v);
-        texture2D = GetTileTextureSection(texture2D, TileTextureSection.Side, true, v);
-        texture2D = GetTileTextureSection(texture2D, TileTextureSection.Extents, true, v);
-
 
         texture2D.wrapMode = TextureWrapMode.Clamp;
         texture2D.filterMode = FilterMode.Point;
@@ -430,6 +427,7 @@ public class TileTextureManager : MonoBehaviour
         else
         {
             outputColors = texture.GetPixels(topLeftX, topLeftY, deltaX, deltaY);
+            
         }
 
         Texture2D outputTexture = deface ? texture : new Texture2D(deltaX, deltaY);

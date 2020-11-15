@@ -9,8 +9,9 @@ public class GamplayCamera : MonoBehaviour
     private Vector3 foucusPoint;
     [Range(0f, 1f)]
     public float speed = .1f;
-    public float offsetFromFoucus = 4;
+    public float distToSnap = .5f;
 
+    public float offsetFromFoucus = 4;
     public float offsetFromZ0 = 4;
     private bool cameraMoved;
 
@@ -36,7 +37,7 @@ public class GamplayCamera : MonoBehaviour
 
     public void FoucusInputs()
     {
-        float lerpAngle = Mathf.Abs(desieredAngle - angle) > .5f ? Mathf.Lerp(angle, desieredAngle, speed) : desieredAngle;
+        float lerpAngle = Mathf.Abs(desieredAngle - angle) > distToSnap ? Mathf.Lerp(angle, desieredAngle, speed) : desieredAngle;
         transform.position = CalcPostion(lerpAngle);
         transform.rotation = CalcRotation(transform.position,lerpAngle);
         angle = lerpAngle;
@@ -77,7 +78,7 @@ public class GamplayCamera : MonoBehaviour
         offset.z = -offsetFromZ0;
         if (foucus != null)
         {
-            foucusPoint = Vector3.Distance(foucusPoint, foucus.transform.position) > .5f
+            foucusPoint = Vector3.Distance(foucusPoint, foucus.transform.position) > distToSnap
                 ? Vector3.Lerp(foucusPoint, foucus.transform.position, speed)
                 : foucus.transform.position;
         }
