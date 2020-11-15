@@ -43,7 +43,7 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
+  serializedVersion: 11
   m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
@@ -98,8 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: f4c9b033a94503f41af5c3fd2a7ac66f,
-    type: 2}
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -119,8 +118,6 @@ NavMeshSettings:
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
-    maxJobWorkers: 0
-    preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
@@ -155,7 +152,7 @@ RectTransform:
   - {fileID: 862089038}
   - {fileID: 1332464908}
   m_Father: {fileID: 2136613824}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -272,7 +269,80 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
+--- !u!1 &59119765
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 59119766}
+  - component: {fileID: 59119768}
+  - component: {fileID: 59119767}
+  m_Layer: 5
+  m_Name: Item Background
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &59119766
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 59119765}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1993442487}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &59119767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 59119765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &59119768
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 59119765}
+  m_CullTransparentMesh: 0
 --- !u!1 &114164868
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,7 +395,6 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19215688, g: 0.40346435, b: 0.4745098, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -348,7 +417,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 114164868}
   m_CullTransparentMesh: 0
---- !u!1 &127344017
+--- !u!1 &282436615
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -356,131 +425,77 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 127344018}
-  - component: {fileID: 127344021}
-  - component: {fileID: 127344020}
-  - component: {fileID: 127344019}
+  - component: {fileID: 282436616}
+  - component: {fileID: 282436618}
+  - component: {fileID: 282436617}
   m_Layer: 5
-  m_Name: Load Game
+  m_Name: Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &127344018
+--- !u!224 &282436616
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 127344017}
+  m_GameObject: {fileID: 282436615}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 794981475}
-  m_Father: {fileID: 2136613824}
-  m_RootOrder: 1
+  m_Children: []
+  m_Father: {fileID: 439881453}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -7.5, y: -0.5}
+  m_SizeDelta: {x: -35, y: -13}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &127344019
+--- !u!114 &282436617
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 127344017}
+  m_GameObject: {fileID: 282436615}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 127344020}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2136613826}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: LoadGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &127344020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 127344017}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &127344021
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Load Game
+--- !u!222 &282436618
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 127344017}
+  m_GameObject: {fileID: 282436615}
   m_CullTransparentMesh: 0
---- !u!1 &221866149
+--- !u!1 &292387132
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -488,47 +503,125 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 221866150}
-  - component: {fileID: 221866153}
-  - component: {fileID: 221866152}
-  - component: {fileID: 221866151}
+  - component: {fileID: 292387133}
+  - component: {fileID: 292387135}
+  - component: {fileID: 292387134}
   m_Layer: 5
-  m_Name: Map Editor
+  m_Name: Item Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &221866150
+--- !u!224 &292387133
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 221866149}
+  m_GameObject: {fileID: 292387132}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1509359197}
-  m_Father: {fileID: 2136613824}
+  m_Children: []
+  m_Father: {fileID: 1993442487}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 5, y: -0.5}
+  m_SizeDelta: {x: -30, y: -3}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &221866151
+--- !u!114 &292387134
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 221866149}
+  m_GameObject: {fileID: 292387132}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 3
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Option A
+--- !u!222 &292387135
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292387132}
+  m_CullTransparentMesh: 0
+--- !u!1 &327717242
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 327717243}
+  - component: {fileID: 327717246}
+  - component: {fileID: 327717245}
+  - component: {fileID: 327717244}
+  m_Layer: 5
+  m_Name: Scrollbar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &327717243
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 327717242}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1742741428}
+  m_Father: {fileID: 1955790223}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 20, y: 0}
+  m_Pivot: {x: 1, y: 1}
+--- !u!114 &327717244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 327717242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a4db7a114972834c8e4117be1d82ba3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -558,29 +651,22 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 221866152}
-  m_OnClick:
+  m_TargetGraphic: {fileID: 1694581490}
+  m_HandleRect: {fileID: 1694581489}
+  m_Direction: 2
+  m_Value: 0
+  m_Size: 0.2
+  m_NumberOfSteps: 0
+  m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2136613826}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: MapEditor
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &221866152
+      m_Calls: []
+--- !u!114 &327717245
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 221866149}
+  m_GameObject: {fileID: 327717242}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -589,12 +675,11 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -604,13 +689,13 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!222 &221866153
+--- !u!222 &327717246
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 221866149}
+  m_GameObject: {fileID: 327717242}
   m_CullTransparentMesh: 0
 --- !u!1 &435574045
 GameObject:
@@ -648,6 +733,138 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &439881452
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 439881453}
+  - component: {fileID: 439881456}
+  - component: {fileID: 439881455}
+  - component: {fileID: 439881454}
+  m_Layer: 5
+  m_Name: Dropdown
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &439881453
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439881452}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 282436616}
+  - {fileID: 2015794165}
+  - {fileID: 1955790223}
+  m_Father: {fileID: 2136613824}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &439881454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439881452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d0b652f32a2cc243917e4028fa0f046, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 439881455}
+  m_Template: {fileID: 1955790223}
+  m_CaptionText: {fileID: 282436617}
+  m_CaptionImage: {fileID: 0}
+  m_ItemText: {fileID: 292387134}
+  m_ItemImage: {fileID: 0}
+  m_Value: 0
+  m_Options:
+    m_Options:
+    - m_Text: Load Game
+      m_Image: {fileID: 0}
+  m_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_AlphaFadeSpeed: 0.15
+--- !u!114 &439881455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439881452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &439881456
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439881452}
+  m_CullTransparentMesh: 0
 --- !u!1 &451311708
 GameObject:
   m_ObjectHideFlags: 0
@@ -700,7 +917,6 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.20265219, g: 0.35267004, b: 0.6226415, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -880,6 +1096,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1849407279}
+  - {fileID: 1674826300}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -971,7 +1188,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2136613826}
-        m_TargetAssemblyTypeName: 
         m_MethodName: NewGame
         m_Mode: 1
         m_Arguments:
@@ -997,7 +1213,6 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1020,7 +1235,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 786121682}
   m_CullTransparentMesh: 0
---- !u!1 &794981474
+--- !u!28 &803728803
+Texture2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Debug Tile Texture
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  serializedVersion: 2
+  m_Width: 64
+  m_Height: 192
+  m_CompleteImageSize: 65536
+  m_TextureFormat: 5
+  m_MipCount: 8
+  m_IsReadable: 1
+  m_IgnoreMasterTextureLimit: 0
+  m_IsPreProcessed: 0
+  m_StreamingMipmaps: 0
+  m_StreamingMipmapsPriority: 0
+  m_AlphaIsTransparency: 0
+  m_ImageCount: 1
+  m_TextureDimension: 2
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 0
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_LightmapFormat: 0
+  m_ColorSpace: 0
+  image data: 65536
+  _typelessdata: ff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff5d5d5dff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca3200000000ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06b0000000000000000ffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06b000000000000000000000000ffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca3200000000000000000000000000000000ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ffe7ca32ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff2626260000000000000000000000000000000000000000ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff797979ff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff5f5f5fff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff444444ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff646464ff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff646464ff646464ff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff646464ff6b6b6bff727272ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff6b6b6bff6b6b6bff727272ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff727272ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff6b6b6bff6b6b6bff727272ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff6b6b6bff646464ff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff646464ff646464ff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff646464ff646464ff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff646464ff646464ff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff646464ff6b6b6bff727272ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff6b6b6bff6b6b6bff727272ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6b6b6bff6b6b6bff727272ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff6b6b6bff6b6b6bff727272ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff6b6b6bff646464ff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff646464ff646464ff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff6b6b6bff646464ff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cbf4c451fff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06b00000000bfaa9c50ffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bffe3d06bff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782c0000000000000000bf7d6e22ff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff86782cff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff6c6c6cff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff515151ff515151ff515151ff515151ff515151ff515151ff515151ff515151ff515151ff515151ff515151ff515151ff515151ff515151ff515151ff515151ff515151ff515151ff515151ff515151ff515151ff515151ff515151ff515151ff515151ff515151ff515151ff515151ff515151ff515151ff515151ff515151ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff3c3c3cff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff2d2d2dff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff6a6a6aff727272ff727272ff727272ff727272ff727272ff727272ff6a6a6aff6a6a6aff727272ff727272ff727272ff727272ff727272ff727272ff6a6a6aff727272ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff727272ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff727272ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff727272ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff727272ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff727272ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff727272ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff727272ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff727272ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff727272ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff727272ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff727272ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff6a6a6aff727272ff727272ff727272ff727272ff727272ff727272ff6a6a6aff6a6a6aff727272ff727272ff727272ff727272ff727272ff727272ff6a6a6aff6a6a6aff727272ff727272ff727272ff727272ff727272ff727272ff6a6a6aff6a6a6aff727272ff727272ff727272ff727272ff727272ff727272ff6a6a6aff727272ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff727272ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff727272ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff727272ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff727272ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff727272ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff727272ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff727272ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff727272ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff727272ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff727272ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff727272ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff6a6a6aff727272ff727272ff727272ff727272ff727272ff727272ff6a6a6aff6a6a6aff727272ff727272ff727272ff727272ff727272ff727272ff6a6a6affb4a44bffb4a44bffb4a44bffb4a44bffb4a44bffb4a44bffb4a44bffb4a44b9f5f5626ffb4a44bffb4a44bffb4a44bffb4a44bffb4a44bffb4a44bffb4a44bff7f7852ff7f7852ff7f7852ff7f7852ff7f7852ff7f7852ff7f7852ff7f78527f3c3c3cef7d7650ff7f7852ff7f7852ff7f7852ff7f7852ff7f7852ff7f7852ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff727272ff727272ff727272ff727272ff727272ff727272ff727272ff727272ff727272ff727272ff727272ff727272ff727272ff727272ff727272ff727272ff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff585858ff585858ff585858ff585858ff585858ff585858ff585858ff585858ff585858ff585858ff585858ff585858ff585858ff585858ff585858ff585858ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff404040ff404040ff404040ff404040ff404040ff404040ff404040ff404040ff404040ff404040ff404040ff404040ff404040ff404040ff404040ff404040ff292929ff292929ff292929ff292929ff292929ff292929ff292929ff292929ff292929ff292929ff292929ff292929ff292929ff292929ff292929ff292929ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff717171ff757575ff757575ff717171ff717171ff757575ff757575ff717171ff757575ff797979ff797979ff757575ff757575ff797979ff797979ff757575ff757575ff797979ff797979ff757575ff757575ff797979ff797979ff757575ff717171ff757575ff757575ff717171ff717171ff757575ff757575ff717171ff717171ff757575ff757575ff717171ff717171ff757575ff757575ff717171ff757575ff797979ff797979ff757575ff757575ff797979ff797979ff757575ff757575ff797979ff797979ff757575ff757575ff797979ff797979ff757575ff717171ff757575ff757575ff717171ff717171ff757575ff757575ff717171ff998e4eff998e4eff998e4eff998e4ec3726b3fff998e4eff998e4eff998e4eff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff797979ff686868ff686868ff686868ff686868ff686868ff686868ff686868ff686868ff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5f5f5fff5b5b5bff5b5b5bff5b5b5bff5b5b5bff5b5b5bff5b5b5bff5b5b5bff5b5b5bff444444ff444444ff444444ff444444ff444444ff444444ff444444ff444444ff424242ff424242ff424242ff424242ff424242ff424242ff424242ff424242ff272727ff272727ff272727ff272727ff272727ff272727ff272727ff272727ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff757575ff757575ff757575ff757575ff757575ff757575ff757575ff757575ff757575ff757575ff757575ff757575ff757575ff757575ff757575ff757575ff898363ff898363f07f7a5fff898363ff707070ff707070ff707070ff707070ff5d5d5dff5d5d5dff5d5d5dff5d5d5dff434343ff434343ff434343ff434343ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff262626ff757575ff757575ff757575ff757575ff7c7969fb7a7768ff505050ff505050ff262626ff262626ff262626ff262626ff757575fe65645cff262626fe65645c
+  m_StreamData:
+    offset: 0
+    size: 0
+    path: 
+--- !u!1 &820574449
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1028,76 +1285,71 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 794981475}
-  - component: {fileID: 794981477}
-  - component: {fileID: 794981476}
+  - component: {fileID: 820574450}
+  - component: {fileID: 820574452}
+  - component: {fileID: 820574451}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Item Checkmark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &794981475
+--- !u!224 &820574450
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 794981474}
+  m_GameObject: {fileID: 820574449}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 127344018}
-  m_RootOrder: 0
+  m_Father: {fileID: 1993442487}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 10, y: 0}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &794981476
+--- !u!114 &820574451
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 794981474}
+  m_GameObject: {fileID: 820574449}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: Load Game
---- !u!222 &794981477
+  m_Sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &820574452
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 794981474}
+  m_GameObject: {fileID: 820574449}
   m_CullTransparentMesh: 0
 --- !u!1 &862089037
 GameObject:
@@ -1152,7 +1404,6 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1186,7 +1437,6 @@ GameObject:
   - component: {fileID: 879831160}
   - component: {fileID: 879831159}
   - component: {fileID: 879831158}
-  - component: {fileID: 879831157}
   - component: {fileID: 879831156}
   m_Layer: 0
   m_Name: Camera
@@ -1204,31 +1454,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 879831155}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d1ff7de691169e4f85c0b01b2f32247, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 879831159}
-  offsetFromFoucus: 2
-  offsetFromZ0: 2
---- !u!114 &879831157
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 879831155}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fea6c7c68b769824db7aa530e735717b, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b546f50611f18a47b0edcb385c705cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   foucus: {fileID: 0}
   foucusPoint: {x: 0, y: 0, z: 0}
-  speed: 0.5
+  speed: 0.05
+  distToSnap: 0.1
   offsetFromFoucus: 4
   offsetFromZ0: 4
-  angle: 0
-  cam: {fileID: 879831159}
+  desieredAngle: 0
+  cam: {fileID: 0}
 --- !u!81 &879831158
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1263,8 +1499,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 3
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -1346,7 +1582,6 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1405,7 +1640,7 @@ RectTransform:
   m_Children:
   - {fileID: 1183879634}
   m_Father: {fileID: 2136613824}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1456,7 +1691,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2136613826}
-        m_TargetAssemblyTypeName: 
         m_MethodName: QuitGame
         m_Mode: 1
         m_Arguments:
@@ -1482,7 +1716,6 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1557,7 +1790,6 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1632,7 +1864,6 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1660,6 +1891,95 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1183879633}
+  m_CullTransparentMesh: 0
+--- !u!1 &1216374896
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1216374897}
+  - component: {fileID: 1216374900}
+  - component: {fileID: 1216374899}
+  - component: {fileID: 1216374898}
+  m_Layer: 5
+  m_Name: Viewport
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1216374897
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216374896}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2106596349}
+  m_Father: {fileID: 1955790223}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -18, y: 0}
+  m_Pivot: {x: 0, y: 1}
+--- !u!114 &1216374898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216374896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 0
+--- !u!114 &1216374899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216374896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1216374900
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216374896}
   m_CullTransparentMesh: 0
 --- !u!1 &1332464907
 GameObject:
@@ -1713,7 +2033,6 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1739,85 +2058,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1332464907}
-  m_CullTransparentMesh: 0
---- !u!1 &1509359196
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1509359197}
-  - component: {fileID: 1509359199}
-  - component: {fileID: 1509359198}
-  m_Layer: 5
-  m_Name: Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1509359197
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1509359196}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 221866150}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1509359198
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1509359196}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: Map Editor
---- !u!222 &1509359199
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1509359196}
   m_CullTransparentMesh: 0
 --- !u!1 &1655662171
 GameObject:
@@ -1856,6 +2096,194 @@ RectTransform:
   m_AnchoredPosition: {x: 148.1, y: 0}
   m_SizeDelta: {x: 296.19653, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1674826299
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1674826300}
+  - component: {fileID: 1674826303}
+  - component: {fileID: 1674826302}
+  - component: {fileID: 1674826301}
+  - component: {fileID: 1674826304}
+  m_Layer: 5
+  m_Name: TileTextureChecker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1674826300
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674826299}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 4, y: 4, z: 1}
+  m_Children: []
+  m_Father: {fileID: 780923032}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -10, y: -10}
+  m_SizeDelta: {x: 64, y: 192}
+  m_Pivot: {x: 1, y: 1}
+--- !u!114 &1674826301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674826299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa110aa249874694eaddf152c11f99d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  border: 0
+  leftEdge: 0
+  rightEdge: 0
+--- !u!114 &1674826302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674826299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 803728803}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &1674826303
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674826299}
+  m_CullTransparentMesh: 0
+--- !u!61 &1674826304
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674826299}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!1 &1694581488
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1694581489}
+  - component: {fileID: 1694581491}
+  - component: {fileID: 1694581490}
+  m_Layer: 5
+  m_Name: Handle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1694581489
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694581488}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1742741428}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0.2}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 20, y: 20}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1694581490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694581488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1694581491
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694581488}
+  m_CullTransparentMesh: 0
 --- !u!1 &1734823773
 GameObject:
   m_ObjectHideFlags: 0
@@ -1918,7 +2346,42 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
+--- !u!1 &1742741427
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1742741428}
+  m_Layer: 5
+  m_Name: Sliding Area
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1742741428
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742741427}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1694581489}
+  m_Father: {fileID: 327717243}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -20, y: -20}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1849407278
 GameObject:
   m_ObjectHideFlags: 0
@@ -1956,6 +2419,309 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1955790222
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1955790223}
+  - component: {fileID: 1955790226}
+  - component: {fileID: 1955790225}
+  - component: {fileID: 1955790224}
+  m_Layer: 5
+  m_Name: Template
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1955790223
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955790222}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1216374897}
+  - {fileID: 327717243}
+  m_Father: {fileID: 439881453}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 0, y: 2}
+  m_SizeDelta: {x: 0, y: 150}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &1955790224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955790222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Content: {fileID: 2106596349}
+  m_Horizontal: 0
+  m_Vertical: 1
+  m_MovementType: 2
+  m_Elasticity: 0.1
+  m_Inertia: 1
+  m_DecelerationRate: 0.135
+  m_ScrollSensitivity: 1
+  m_Viewport: {fileID: 1216374897}
+  m_HorizontalScrollbar: {fileID: 0}
+  m_VerticalScrollbar: {fileID: 327717244}
+  m_HorizontalScrollbarVisibility: 0
+  m_VerticalScrollbarVisibility: 2
+  m_HorizontalScrollbarSpacing: 0
+  m_VerticalScrollbarSpacing: -3
+  m_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1955790225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955790222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1955790226
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955790222}
+  m_CullTransparentMesh: 0
+--- !u!1 &1993442486
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1993442487}
+  - component: {fileID: 1993442488}
+  m_Layer: 5
+  m_Name: Item
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1993442487
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993442486}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 59119766}
+  - {fileID: 820574450}
+  - {fileID: 292387133}
+  m_Father: {fileID: 2106596349}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 20}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1993442488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993442486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 59119767}
+  toggleTransition: 1
+  graphic: {fileID: 820574451}
+  m_Group: {fileID: 0}
+  onValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_IsOn: 1
+--- !u!1 &2015794164
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2015794165}
+  - component: {fileID: 2015794167}
+  - component: {fileID: 2015794166}
+  m_Layer: 5
+  m_Name: Arrow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2015794165
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015794164}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 439881453}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -15, y: 0}
+  m_SizeDelta: {x: 20, y: 20}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2015794166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015794164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &2015794167
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015794164}
+  m_CullTransparentMesh: 0
+--- !u!1 &2106596348
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2106596349}
+  m_Layer: 5
+  m_Name: Content
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2106596349
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106596348}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1993442487}
+  m_Father: {fileID: 1216374897}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 28}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &2117682792
 GameObject:
   m_ObjectHideFlags: 0
@@ -2008,7 +2774,6 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2061,8 +2826,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 786121683}
-  - {fileID: 127344018}
-  - {fileID: 221866150}
+  - {fileID: 439881453}
   - {fileID: 1022862443}
   - {fileID: 1673287}
   m_Father: {fileID: 1734823774}
@@ -2098,7 +2862,6 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!114 &2136613826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2111,10 +2874,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda8106042ffce64692b7763e177ecff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapDropdown: {fileID: 0}
+  developerToggle: {fileID: 1673288}
   canvas: {fileID: 780923032}
-  mapEditor: {fileID: 6340011524980719357, guid: 2cd99c0425be20e4980b7a3c5b921034,
-    type: 3}
-  gameplayGUIElements: {fileID: 3603964671066512797, guid: f008f8e5d3beaab479c7fbd6aa74b34d,
+  gameplayGUIElements: {fileID: 3509555923960221460, guid: 67625cf5b6f9844488aae61e9762de7b,
     type: 3}
   mainMenuElements: {fileID: 1849407278}
-  developerToggle: {fileID: 1673288}

@@ -13,14 +13,13 @@ namespace Camera_Tests
             Assert.AreEqual(0, point.z);
         }
 
-        public static TacticsMovementCamera ResetCamera()
+        public static GamplayCamera ResetCamera()
         {
             GameObject gameObject = new GameObject("TestCam");
-            TacticsMovementCamera tacticsMovementCamera = gameObject.AddComponent<TacticsMovementCamera>();
-            tacticsMovementCamera.cam = gameObject.AddComponent<Camera>();
+            GamplayCamera tacticsMovementCamera = gameObject.AddComponent<GamplayCamera>();
+            tacticsMovementCamera.cam = tacticsMovementCamera.GetComponent<Camera>();
             tacticsMovementCamera.offsetFromFoucus = 4;
             tacticsMovementCamera.offsetFromZ0 = 4;
-            tacticsMovementCamera.angle = (float)Math.PI;
             tacticsMovementCamera.FoucusInputs();
             return tacticsMovementCamera;
         }
@@ -40,18 +39,11 @@ namespace Camera_Tests
         [Test]
         public void unrotated_angle_is_0()
         {
-            TacticsMovementCamera tacticsMovementCamera = ResetCamera();
+            GamplayCamera tacticsMovementCamera = ResetCamera();
             tacticsMovementCamera.offsetFromFoucus = 0;
             tacticsMovementCamera.FoucusInputs();
             Assert.AreEqual(0, tacticsMovementCamera.GetAngleBetweenCameraForwardAndVectorForward());
 
-        }
-        [Test]
-        public void center_screen_starts_as_center_tile()
-        {
-            Vector3 point = ResetCamera().GetScreenPoint(Camera.main.pixelWidth/2, Camera.main.pixelHeight/2);
-            MapReader.GeneratePhysicalMap();
-            Assert.IsNotNull(MapReader.GetTile(MapReader.WorldToGridSpace(point)));
         }
     }
     class rotation
