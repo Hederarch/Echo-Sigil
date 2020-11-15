@@ -2,6 +2,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using MapEditor;
+using System.Collections.Generic;
+using System.Collections;
 
 public class MainMenuScript : MonoBehaviour
 {
@@ -11,7 +13,7 @@ public class MainMenuScript : MonoBehaviour
     public Transform canvas;
     public GameObject gameplayGUIElements;
     public GameObject mainMenuElements;
-    
+    public GameObject loadingElements;
 
     public void Start()
     {
@@ -21,7 +23,7 @@ public class MainMenuScript : MonoBehaviour
 
     public void NewGame()
     {
-        StartGame(new Map(5,5));
+        StartCoroutine("StartGame",new Map (5,5));
     }
 
     public void LoadGame()
@@ -29,9 +31,11 @@ public class MainMenuScript : MonoBehaviour
         throw new NotImplementedException();
     }
 
-    private void StartGame(Map map)
+    private IEnumerable StartGame(Map map)
     {
         mainMenuElements.SetActive(false);
+        Instantiate(loadingElements, canvas);
+        yield return null;
         Instantiate(gameplayGUIElements, canvas);
         MapReader.GenerateVirtualMap(map);
         MapReader.GeneratePhysicalMap(map);
