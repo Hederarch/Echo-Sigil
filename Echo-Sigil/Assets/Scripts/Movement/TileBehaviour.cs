@@ -317,7 +317,6 @@ public class Tile : ITile
         return posInGrid + " Tile";
     }
 }
-
 public interface ITile : IAStarItem<ITile>
 {
     bool current { get; set; }

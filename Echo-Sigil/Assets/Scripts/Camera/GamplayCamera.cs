@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class GamplayCamera : MonoBehaviour
 {
-    public FacesCamera foucus;
+    public Transform foucus;
     [SerializeField]
     private Vector3 foucusPoint;
     [Range(0f, 1f)]
@@ -13,45 +13,68 @@ public class GamplayCamera : MonoBehaviour
 
     public float offsetFromFoucus = 4;
     public float offsetFromZ0 = 4;
+
+    public Vector2 zoomMinMax = new Vector2(1, 5);
     private bool cameraMoved;
 
-    public float desieredAngle = 0;
+    public float DesieredAngle
+    {
+        get => desieredAngle; set
+        {
+            desieredAngle = value;
+            cameraMoved = true;
+        }
+    }
     public float angle { get; private set; } = 0;
 
     public Camera cam;
+    private float desieredAngle = 0;
+    public static Action<Vector2> CameraMoved;
 
     private void Start()
     {
         cam = GetComponent<Camera>();
         cam.orthographic = true;
         Unit.IsTurnEvent += SetAsFoucus;
+        FacesCamera.gameplayCamera = this;
     }
 
     // Update is called once per frame
     void Update()
     {
         PlayerInputs();
-        FoucusInputs();
-        SetSortMode();
+        if (angle != desieredAngle || (foucus != null && foucusPoint != foucus.position))
+        {
+            FoucusInputs();
+            SetSortMode();
+        }
     }
 
     public void FoucusInputs()
     {
-        float lerpAngle = Mathf.Abs(desieredAngle - angle) > distToSnap ? Mathf.Lerp(angle, desieredAngle, speed) : desieredAngle;
-        transform.position = CalcPostion(lerpAngle);
-        transform.rotation = CalcRotation(transform.position,lerpAngle);
-        angle = lerpAngle;
+        if (angle != desieredAngle)
+        {
+            angle = Mathf.Abs(DesieredAngle - angle) > distToSnap ? Mathf.Lerp(angle, DesieredAngle, speed) : DesieredAngle;
+        }
+        Vector2 angleVector = new Vector2((float)Math.Sin(angle), (float)Math.Cos(angle));
+        if (foucus != null)
+        {
+            foucusPoint = Vector3.Distance(foucusPoint, foucus.transform.position) > distToSnap
+                ? Vector3.Lerp(foucusPoint, foucus.transform.position, speed)
+                : foucus.position;
+        }
+        CameraMoved?.Invoke(transform.position = CalcPostion(foucusPoint, angleVector, offsetFromFoucus, offsetFromZ0));
+        transform.rotation = CalcRotation(foucusPoint, transform.position, angleVector, angle);
     }
 
     private void PlayerInputs()
     {
-        Vector3 desierdPosition = transform.position;
-        if(Input.GetAxisRaw("Camera") != 0 && !cameraMoved)
+        //Rotate
+        if (Input.GetAxisRaw("Camera") != 0 && !cameraMoved)
         {
-            desieredAngle -= Input.GetAxisRaw("Camera") * Mathf.PI/2;
-            cameraMoved = true;
+            DesieredAngle -= Input.GetAxisRaw("Camera") * Mathf.PI / 2;
             //clamp between 0 and 360
-            if(desieredAngle > Mathf.PI * 2)
+            if (desieredAngle > Mathf.PI * 2)
             {
                 desieredAngle -= Mathf.PI * 2;
                 angle -= Mathf.PI * 2;
@@ -64,33 +87,40 @@ public class GamplayCamera : MonoBehaviour
             //just in case the top bit dosent work;
             desieredAngle = Mathf.Clamp(desieredAngle, 0, Mathf.PI * 2);
         }
-        else if(Input.GetAxisRaw("Camera") == 0)
+        else if (Input.GetAxisRaw("Camera") == 0)
         {
             cameraMoved = false;
         }
-        transform.position = desierdPosition;
+
+        //Zoom
+        float orthographicSize = cam.orthographicSize;
+        float scroll = Input.mouseScrollDelta.y;
+        orthographicSize -= scroll * speed * 100 * Time.deltaTime;
+        cam.orthographicSize = Mathf.Clamp(orthographicSize, zoomMinMax.x, zoomMinMax.y);
     }
 
-    private Vector3 CalcPostion(float angle)
+    public static Vector3 CalcPostion(Vector3 origin, Vector2 angleVector, float offsetFromFoucus, float offsetFromZ0)
     {
-        Vector3 offset = new Vector3((float)Math.Sin(angle), (float)Math.Cos(angle));
+        Vector3 offset = angleVector;
         offset *= offsetFromFoucus;
         offset.z = -offsetFromZ0;
-        if (foucus != null)
-        {
-            foucusPoint = Vector3.Distance(foucusPoint, foucus.transform.position) > distToSnap
-                ? Vector3.Lerp(foucusPoint, foucus.transform.position, speed)
-                : foucus.transform.position;
-        }
-        return foucusPoint + offset;
+        return origin + offset;
     }
 
-    private Quaternion CalcRotation(Vector3 position, float angle)
+    public static Vector3 CalcPostion(Vector3 origin, float angle, float offsetFromFoucus, float offsetFromZ0) => CalcPostion(origin, new Vector2((float)Math.Sin(angle), (float)Math.Cos(angle)), offsetFromFoucus, offsetFromZ0);
+
+    public static Quaternion CalcRotation(Vector3 origin, Vector3 position, Vector2 angleVector, float angleInRadians)
     {
-        Vector3 rotation = Quaternion.LookRotation(foucusPoint - position).eulerAngles;
-        rotation.z = -angle * Mathf.Rad2Deg;
-        return Quaternion.Euler(rotation);
+        float opisite = position.z - origin.z;
+        float hypotonose = Vector3.Distance(origin, position);
+        float inverseSin = Mathf.Asin(opisite / hypotonose);
+        Vector3 angleVectorInverse = new Vector3(-angleVector.y, angleVector.x);
+        angleVectorInverse *= inverseSin * Mathf.Rad2Deg;
+        angleVectorInverse.z -= angleInRadians * Mathf.Rad2Deg;
+        return Quaternion.Euler(angleVectorInverse);
     }
+
+    public static Quaternion CalcRotation(Vector3 origin, Vector3 position, float angle) => CalcRotation(origin, position, new Vector2((float)Math.Sin(angle), (float)Math.Cos(angle)), angle);
 
     private void SetSortMode()
     {
@@ -98,68 +128,28 @@ public class GamplayCamera : MonoBehaviour
         Camera.main.transparencySortAxis = transform.up - transform.forward;
     }
 
-    public Vector3 GetScreenPoint(float x, float y) => GetScreenPoint(new Vector2(x, y));
-    /// <summary>
-    /// Screen to world point, but corrected for camera rotation
-    /// </summary>
-    /// <param name="pointOnScreen"></param>
-    /// <returns></returns>
-    public Vector3 GetScreenPoint(Vector2 pointOnScreen)
-    {
-        Vector3 screenPoint = cam.ScreenToWorldPoint(new Vector3(pointOnScreen.x, pointOnScreen.y, 0));
-        Vector3 screenPointZ = screenPoint;
-        screenPointZ.z = 0;
-        float distToZ0 = -screenPoint.z / Mathf.Cos(GetAngleBetweenCameraForwardAndVectorForward());
-        Vector3 point = cam.ScreenToWorldPoint(new Vector3(pointOnScreen.x, pointOnScreen.y, (float)distToZ0));
-
-        return point;
-    }
-
-
-    /// <summary>
-    /// Get the angle between forward and the way the camera is faceing
-    /// </summary>
-    /// <returns>Angle in radians</returns>
-    public float GetAngleBetweenCameraForwardAndVectorForward()
-    {
-        float angle = Vector3.Angle(Vector3.forward, transform.forward);
-        angle *= Mathf.Deg2Rad;
-        return angle;
-    }
-
     public void SetAsFoucus(Unit unit)
     {
-        foucus = unit;
-    }
-
-    public Direction GetRelativeDirection(Vector2 direction)
-    {
-        Vector2[] transformDirections = new Vector2[4]
+        if (unit != null)
         {
-            transform.up,
-            -transform.right,
-            -transform.up,
-            transform.right
-        };
-
-        int i = 0;
-        float maxDistance = 0;
-        int maxIndex = 0;
-        for (; i < 4; i++)
-        {
-            float y = direction.y - transformDirections[i].y;
-            float x = direction.x - transformDirections[i].x;
-            float distance = x*x + y*y;
-
-            if(maxDistance < distance)
-            {
-                maxDistance = distance;
-                maxIndex = i;
-            }
+            foucus = unit.transform;
         }
-
-        return (Direction)maxIndex;
+        else
+        {
+            foucus = null;
+        }
     }
 
-    public enum Direction { up,left,down,right }
+    private void OnDrawGizmosSelected()
+    {
+        if (angle != desieredAngle || (foucus != null && foucus.transform.position != foucusPoint))
+        {
+            Gizmos.color = Color.cyan;
+            Vector3 orgin = foucus != null ? foucus.transform.position : foucusPoint;
+            Vector3 final = CalcPostion(orgin, desieredAngle, offsetFromFoucus, offsetFromZ0);
+            Gizmos.DrawIcon(final, "Camera Gizmo", true, Color.cyan);
+            Gizmos.DrawWireSphere(final, distToSnap);
+        }
+    }
+
 }

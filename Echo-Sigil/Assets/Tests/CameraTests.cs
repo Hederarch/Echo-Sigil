@@ -4,59 +4,38 @@ using System;
 
 namespace Camera_Tests
 {
-    class selection
-    {
-        [Test]
-        public void get_Screen_point_returns_z0_bottom_left()
-        {
-            Vector3 point = ResetCamera().GetScreenPoint(0, 0);
-            Assert.AreEqual(0, point.z);
-        }
-
-        public static GamplayCamera ResetCamera()
-        {
-            GameObject gameObject = new GameObject("TestCam");
-            GamplayCamera tacticsMovementCamera = gameObject.AddComponent<GamplayCamera>();
-            tacticsMovementCamera.cam = tacticsMovementCamera.GetComponent<Camera>();
-            tacticsMovementCamera.offsetFromFoucus = 4;
-            tacticsMovementCamera.offsetFromZ0 = 4;
-            tacticsMovementCamera.FoucusInputs();
-            return tacticsMovementCamera;
-        }
-
-        [Test]
-        public void get_Screen_point_returns_z0_top_right()
-        {
-            Vector3 point = ResetCamera().GetScreenPoint(Camera.main.pixelWidth, Camera.main.pixelHeight);
-            Assert.AreEqual(0, point.z);
-        }
-        [Test]
-        public void get_Screen_point_returns_z0_middle()
-        {
-            Vector3 point = ResetCamera().GetScreenPoint(Camera.main.pixelWidth/2, Camera.main.pixelHeight/2);
-            Assert.AreEqual(0, point.z);
-        }
-        [Test]
-        public void unrotated_angle_is_0()
-        {
-            GamplayCamera tacticsMovementCamera = ResetCamera();
-            tacticsMovementCamera.offsetFromFoucus = 0;
-            tacticsMovementCamera.FoucusInputs();
-            Assert.AreEqual(0, tacticsMovementCamera.GetAngleBetweenCameraForwardAndVectorForward());
-
-        }
-    }
     class rotation
     {
         [Test]
-        public void camera_rotates_x()
+        public void offset_from_Z0_consitent()
         {
-            Assert.AreNotEqual(0, selection.ResetCamera().transform.rotation.eulerAngles.x);
+            GamplayCamera camera = new GameObject("Test Camera").AddComponent<GamplayCamera>();
+            for (float angle = 0; angle < Mathf.PI * 2f; angle += Mathf.PI / 4f)
+            {
+                camera.transform.position = GamplayCamera.CalcPostion(Vector3.zero, angle, 4, 4);
+                Assert.AreEqual(-4, camera.transform.position.z, " Angle was " + (angle * Mathf.Rad2Deg));
+            }
         }
         [Test]
-        public void camera_rotates_y()
+        public void offset_from_foucus_consitent()
         {
-            Assert.AreNotEqual(0, selection.ResetCamera().transform.rotation.eulerAngles.y);
+            GamplayCamera camera = new GameObject("Test Camera").AddComponent<GamplayCamera>();
+            for (float angle = 0; angle < Mathf.PI * 2f; angle += Mathf.PI / 4f)
+            {
+                camera.transform.position = GamplayCamera.CalcPostion(Vector3.zero, angle, 4, 4);
+                Assert.AreEqual(4, Vector3.Distance(Vector3.zero, (Vector2)camera.transform.position), " Angle was " + (angle * Mathf.Rad2Deg));
+            }
+        }
+        [Test]
+        public void rotation_consitent()
+        {
+            GamplayCamera camera = new GameObject("Test Camera").AddComponent<GamplayCamera>();
+            for (float angle = 0; angle < Mathf.PI * 2f; angle += Mathf.PI / 4f)
+            {
+                camera.transform.position = GamplayCamera.CalcPostion(Vector3.zero, angle, 4, 4);
+                camera.transform.rotation = GamplayCamera.CalcRotation(Vector3.zero, camera.transform.position,angle);
+                Assert.AreEqual(Mathf.Asin(4 / Vector3.Distance(Vector3.zero, camera.transform.position)) * Mathf.Rad2Deg, camera.transform.rotation.eulerAngles.x + camera.transform.rotation.eulerAngles.y, .5, " Angle was " + (angle * Mathf.Rad2Deg));
+            }
         }
     }
 }

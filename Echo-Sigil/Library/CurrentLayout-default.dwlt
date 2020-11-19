@@ -21,7 +21,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 4}
-  m_MinSize: {x: 875, y: 392}
+  m_MinSize: {x: 875, y: 542}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 --- !u!114 &2
@@ -44,10 +44,10 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 679, y: 342}
-  m_MaxSize: {x: 12004, y: 8042}
+  m_MinSize: {x: 708, y: 492}
+  m_MaxSize: {x: 18003, y: 14042}
   vertical: 1
-  controlID: 38
+  controlID: 4810
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -65,16 +65,17 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 838
+    width: 837
     height: 947
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 18}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 20}
   m_Panes:
-  - {fileID: 18}
-  - {fileID: 19}
+  - {fileID: 20}
+  - {fileID: 13}
+  - {fileID: 12}
   m_Selected: 0
-  m_LastSelected: 1
+  m_LastSelected: 0
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -97,7 +98,7 @@ MonoBehaviour:
     y: 0
     width: 1920
     height: 997
-  m_MinSize: {x: 875, y: 300}
+  m_MinSize: {x: 875, y: 542}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &5
 MonoBehaviour:
@@ -143,10 +144,10 @@ MonoBehaviour:
     y: 0
     width: 1920
     height: 947
-  m_MinSize: {x: 679, y: 342}
-  m_MaxSize: {x: 12004, y: 8042}
+  m_MinSize: {x: 708, y: 492}
+  m_MaxSize: {x: 18003, y: 14042}
   vertical: 0
-  controlID: 39
+  controlID: 4811
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -185,14 +186,14 @@ MonoBehaviour:
   - {fileID: 11}
   m_Position:
     serializedVersion: 2
-    x: 838
+    x: 837
     y: 0
-    width: 551
+    width: 550
     height: 947
-  m_MinSize: {x: 202, y: 342}
-  m_MaxSize: {x: 4002, y: 8042}
+  m_MinSize: {x: 232, y: 492}
+  m_MaxSize: {x: 10002, y: 14042}
   vertical: 1
-  controlID: 40
+  controlID: 4812
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -208,20 +209,20 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1389
+    x: 1387
     y: 0
-    width: 531
+    width: 533
     height: 947
   m_MinSize: {x: 276, y: 71}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 16}
+  m_ActualView: {fileID: 18}
   m_Panes:
-  - {fileID: 16}
+  - {fileID: 18}
+  - {fileID: 17}
   - {fileID: 15}
-  - {fileID: 13}
-  - {fileID: 12}
+  - {fileID: 14}
   m_Selected: 0
-  m_LastSelected: 1
+  m_LastSelected: 2
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -232,21 +233,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
+  m_Name: SceneView
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 551
-    height: 397
+    width: 550
+    height: 398
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 20}
+  m_ActualView: {fileID: 21}
   m_Panes:
-  - {fileID: 20}
-  m_Selected: 0
+  - {fileID: 22}
+  - {fileID: 21}
+  m_Selected: 1
   m_LastSelected: 0
 --- !u!114 &11
 MonoBehaviour:
@@ -258,24 +260,117 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ConsoleWindow
+  m_Name: ProjectBrowser
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 397
-    width: 551
-    height: 550
-  m_MinSize: {x: 102, y: 121}
-  m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 14}
+    y: 398
+    width: 550
+    height: 549
+  m_MinSize: {x: 232, y: 271}
+  m_MaxSize: {x: 10002, y: 10021}
+  m_ActualView: {fileID: 19}
   m_Panes:
-  - {fileID: 17}
-  - {fileID: 14}
-  m_Selected: 1
-  m_LastSelected: 0
+  - {fileID: 19}
+  - {fileID: 16}
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &12
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 12071, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Animation
+    m_Image: {fileID: 1561878555887300916, guid: 0000000000000000d000000000000000,
+      type: 0}
+    m_Tooltip: 
+  m_Pos:
+    serializedVersion: 2
+    x: 0
+    y: 73
+    width: 837
+    height: 926
+  m_ViewDataDictionary: {fileID: 0}
+  m_LockTracker:
+    m_IsLocked: 0
+  m_LastSelectedObjectID: 26994
+--- !u!114 &13
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 12914, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Animator
+    m_Image: {fileID: 663490763026382308, guid: 0000000000000000d000000000000000,
+      type: 0}
+    m_Tooltip: 
+  m_Pos:
+    serializedVersion: 2
+    x: 0
+    y: 73
+    width: 837
+    height: 926
+  m_ViewDataDictionary: {fileID: 0}
+  m_ViewTransforms:
+    m_KeySerializationHelper:
+    - {fileID: -5687521277087915298, guid: acf9954b274ce4147a83f6b0c305ad64, type: 2}
+    m_ValueSerializationHelper:
+    - e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+  m_PreviewAnimator: {fileID: 0}
+  m_AnimatorController: {fileID: 9100000, guid: acf9954b274ce4147a83f6b0c305ad64,
+    type: 2}
+  m_BreadCrumbs:
+  - m_Target: {fileID: -5687521277087915298, guid: acf9954b274ce4147a83f6b0c305ad64,
+      type: 2}
+    m_ScrollPosition: {x: 0, y: 0}
+  stateMachineGraph: {fileID: 0}
+  stateMachineGraphGUI: {fileID: 0}
+  blendTreeGraph: {fileID: 0}
+  blendTreeGraphGUI: {fileID: 0}
+  m_AutoLiveLink: 1
+  m_MiniTool: 0
+  m_LockTracker:
+    m_IsLocked: 0
+  m_CurrentEditor: 0
+  m_LayerEditor:
+    m_SelectedLayerIndex: 0
+--- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -296,16 +391,16 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1390
+    x: 1387
     y: 73
-    width: 529
-    height: 375
+    width: 532
+    height: 926
   m_ViewDataDictionary: {fileID: 0}
   m_PosLeft: {x: 0, y: 0}
   m_PosRight: {x: 0, y: 0}
   m_Scope: 0
   m_SplitterFlex: 0.19178082
---- !u!114 &13
+--- !u!114 &15
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -326,16 +421,16 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1390
+    x: 1387
     y: 73
-    width: 529
-    height: 375
+    width: 532
+    height: 926
   m_ViewDataDictionary: {fileID: 0}
   m_PosLeft: {x: 0, y: 0}
   m_PosRight: {x: 0, y: 0}
   m_Scope: 1
   m_SplitterFlex: 0.19178082
---- !u!114 &14
+--- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -356,12 +451,12 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 838
-    y: 470
-    width: 549
-    height: 529
+    x: 837
+    y: 471
+    width: 548
+    height: 528
   m_ViewDataDictionary: {fileID: 0}
---- !u!114 &15
+--- !u!114 &17
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -381,13 +476,13 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1389
+    x: 1387
     y: 73
-    width: 530
+    width: 532
     height: 926
   m_ViewDataDictionary: {fileID: 0}
   m_Spl:
-    ID: 152
+    ID: 161
     splitterInitialOffset: 299
     currentActiveSplitter: -1
     realSizes: 83020000d5000000
@@ -436,15 +531,15 @@ MonoBehaviour:
       availableCategories: []
     m_SelectedOption: 0
   m_EditModeTestListGUI:
-    m_Window: {fileID: 15}
+    m_Window: {fileID: 17}
     newResultList:
     - id: 1000
       uniqueId: '[Tales From The Metahedron][suite]'
       name: Tales From The Metahedron
       fullName: Tales From The Metahedron
-      resultStatus: 1
-      duration: 0.0775159
-      messages: 
+      resultStatus: 2
+      duration: 0.1948129
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -458,9 +553,9 @@ MonoBehaviour:
       uniqueId: '[Tests.dll][suite]'
       name: Tests.dll
       fullName: C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Library/ScriptAssemblies/Tests.dll
-      resultStatus: 1
-      duration: 0.0325864
-      messages: 
+      resultStatus: 2
+      duration: 0.1232488
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -475,7 +570,7 @@ MonoBehaviour:
       name: Camera_Tests
       fullName: Camera_Tests
       resultStatus: 2
-      duration: 0.1379959
+      duration: 0.1180318
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -491,59 +586,7 @@ MonoBehaviour:
       name: rotation
       fullName: Camera_Tests.rotation
       resultStatus: 2
-      duration: 0.0538837
-      messages: One or more child tests had errors
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1053
-      parentUniqueId: Tests.dll/[Tests][Camera_Tests][suite]
-    - id: 1047
-      uniqueId: Tests.dll/Camera_Tests/rotation/[Tests][Camera_Tests.rotation.camera_rotates_x]
-      name: camera_rotates_x
-      fullName: Camera_Tests.rotation.camera_rotates_x
-      resultStatus: 1
-      duration: 0.0141913
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1046
-      parentUniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.rotation][suite]
-    - id: 1048
-      uniqueId: Tests.dll/Camera_Tests/rotation/[Tests][Camera_Tests.rotation.camera_rotates_y]
-      name: camera_rotates_y
-      fullName: Camera_Tests.rotation.camera_rotates_y
-      resultStatus: 2
-      duration: 0.0206957
-      messages: "  Expected: not equal to 0\r\n  But was:  0.0f\r\n"
-      output: 
-      stacktrace: 'at Camera_Tests.rotation.camera_rotates_y () [0x00001] in C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil\Assets\Tests\CameraTests.cs:59
-
-'
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1046
-      parentUniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.rotation][suite]
-    - id: 1041
-      uniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.selection][suite]
-      name: selection
-      fullName: Camera_Tests.selection
-      resultStatus: 2
-      duration: 0.0607738
+      duration: 0.1118085
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -555,71 +598,11 @@ MonoBehaviour:
       parentId: 1053
       parentUniqueId: Tests.dll/[Tests][Camera_Tests][suite]
     - id: 1042
-      uniqueId: Tests.dll/Camera_Tests/selection/[Tests][Camera_Tests.selection.get_Screen_point_returns_z0_bottom_left]
-      name: get_Screen_point_returns_z0_bottom_left
-      fullName: Camera_Tests.selection.get_Screen_point_returns_z0_bottom_left
-      resultStatus: 2
-      duration: 0.0047856
-      messages: "  Expected: 0\r\n  But was:  -2.30940294f\r\n"
-      output: 
-      stacktrace: 'at Camera_Tests.selection.get_Screen_point_returns_z0_bottom_left
-        () [0x00016] in C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil\Assets\Tests\CameraTests.cs:13
-
-'
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1041
-      parentUniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.selection][suite]
-    - id: 1044
-      uniqueId: Tests.dll/Camera_Tests/selection/[Tests][Camera_Tests.selection.get_Screen_point_returns_z0_middle]
-      name: get_Screen_point_returns_z0_middle
-      fullName: Camera_Tests.selection.get_Screen_point_returns_z0_middle
-      resultStatus: 2
-      duration: 0.002429
-      messages: "  Expected: 0\r\n  But was:  -0.00255250931f\r\n"
-      output: 
-      stacktrace: 'at Camera_Tests.selection.get_Screen_point_returns_z0_middle ()
-        [0x00026] in C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil\Assets\Tests\CameraTests.cs:37
-
-'
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1041
-      parentUniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.selection][suite]
-    - id: 1043
-      uniqueId: Tests.dll/Camera_Tests/selection/[Tests][Camera_Tests.selection.get_Screen_point_returns_z0_top_right]
-      name: get_Screen_point_returns_z0_top_right
-      fullName: Camera_Tests.selection.get_Screen_point_returns_z0_top_right
-      resultStatus: 2
-      duration: 0.0027304
-      messages: "  Expected: 0\r\n  But was:  2.30940127f\r\n"
-      output: 
-      stacktrace: 'at Camera_Tests.selection.get_Screen_point_returns_z0_top_right
-        () [0x00022] in C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil\Assets\Tests\CameraTests.cs:31
-
-'
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1041
-      parentUniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.selection][suite]
-    - id: 1045
-      uniqueId: Tests.dll/Camera_Tests/selection/[Tests][Camera_Tests.selection.unrotated_angle_is_0]
-      name: unrotated_angle_is_0
-      fullName: Camera_Tests.selection.unrotated_angle_is_0
+      uniqueId: Tests.dll/Camera_Tests/rotation/[Tests][Camera_Tests.rotation.offset_from_foucus_consitent]
+      name: offset_from_foucus_consitent
+      fullName: Camera_Tests.rotation.offset_from_foucus_consitent
       resultStatus: 1
-      duration: 0.0024632
+      duration: 0.0495633
       messages: 
       output: 
       stacktrace: 
@@ -629,8 +612,45 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1041
-      parentUniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.selection][suite]
+      parentId: 1040
+      parentUniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.rotation][suite]
+    - id: 1041
+      uniqueId: Tests.dll/Camera_Tests/rotation/[Tests][Camera_Tests.rotation.offset_from_Z0_consitent]
+      name: offset_from_Z0_consitent
+      fullName: Camera_Tests.rotation.offset_from_Z0_consitent
+      resultStatus: 1
+      duration: 0.0022681
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1040
+      parentUniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.rotation][suite]
+    - id: 1043
+      uniqueId: Tests.dll/Camera_Tests/rotation/[Tests][Camera_Tests.rotation.rotation_consitent]
+      name: rotation_consitent
+      fullName: Camera_Tests.rotation.rotation_consitent
+      resultStatus: 2
+      duration: 0.0186202
+      messages: "   Angle was 45\r\n  Expected: 44.999998362420683d +/- 0.5d\r\n 
+        But was:  360.00000953674316d\r\n"
+      output: 
+      stacktrace: 'at Camera_Tests.rotation.rotation_consitent () [0x00060] in C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil\Assets\Tests\CameraTests.cs:37
+
+'
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1040
+      parentUniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.rotation][suite]
     - id: 1052
       uniqueId: Tests.dll/[Tests][Map_Tests][suite]
       name: Map_Tests
@@ -1335,13 +1355,18 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1007
       parentUniqueId: Tests.dll/Tile_Tests/[Tests][Tile_Tests.texture][suite]
-    m_ResultText: Tile_Tests (0.114s)
-    m_ResultStacktrace: 
+    m_ResultText: "rotation_consitent (0.019s)\n---\nAngle was 45\r\n  Expected:
+      44.999998362420683d +/- 0.5d\r\n  But was:  360.00000953674316d\n---\nat Camera_Tests.rotation.rotation_consitent
+      () [0x00060] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Tests\\CameraTests.cs:37"
+    m_ResultStacktrace: 'at Camera_Tests.rotation.rotation_consitent () [0x00060]
+      in C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil\Assets\Tests\CameraTests.cs:37
+
+'
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 2756b58d
-      m_LastClickedID: -1917495769
-      m_ExpandedIDs: f58144df0b2469dfe557abf72b220e14371e5f68ffffff7f
+      m_SelectedIDs: 8d5589f8
+      m_LastClickedID: -125217395
+      m_ExpandedIDs: e6a391a3f58144df0b2469dfe557abf72b220e145e2fcc1c371e5f68ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1367,7 +1392,7 @@ MonoBehaviour:
       selectedCategoryMask: 0
       availableCategories:
       - Uncategorized
---- !u!114 &16
+--- !u!114 &18
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1388,9 +1413,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1389
+    x: 1387
     y: 73
-    width: 530
+    width: 532
     height: 926
   m_ViewDataDictionary: {fileID: 0}
   m_OpenAddComponentMenu: 0
@@ -1405,7 +1430,7 @@ MonoBehaviour:
   m_PreviewWindow: {fileID: 0}
   m_LastInspectedObjectInstanceID: -1
   m_LastVerticalScrollValue: 0
---- !u!114 &17
+--- !u!114 &19
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1426,10 +1451,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 838
-    y: 470
-    width: 549
-    height: 529
+    x: 837
+    y: 471
+    width: 548
+    height: 528
   m_ViewDataDictionary: {fileID: 0}
   m_SearchFilter:
     m_NameFilter: 
@@ -1444,20 +1469,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets/Tests
   m_ViewMode: 1
   m_StartGridSize: 63
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Tests
   m_LastFoldersGridSize: 63
   m_LastProjectPath: C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 063b0000
-    m_LastClickedID: 15110
-    m_ExpandedIDs: 00000000043b0000063b0000083b00000a3b00000c3b00000e3b0000103b0000123b0000163b0000
+    m_SelectedIDs: 34580000
+    m_LastClickedID: 22580
+    m_ExpandedIDs: 00000000ce3a0000d03a0000d23a0000d43a0000d63a0000d83a0000da3a0000dc3a000032580000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1485,7 +1510,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000043b0000063b0000083b00000a3b00000c3b00000e3b0000103b0000123b0000
+    m_ExpandedIDs: 00000000ce3a0000d03a0000d23a0000d43a0000d63a0000d83a0000da3a0000dc3a0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1513,7 +1538,7 @@ MonoBehaviour:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
-    m_ExpandedInstanceIDs: c6230000
+    m_ExpandedInstanceIDs: c6230000a0400000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1529,7 +1554,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 9}
+      m_ClientGUIView: {fileID: 11}
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
       m_InstanceID: 0
@@ -1541,7 +1566,7 @@ MonoBehaviour:
     m_GridSize: 63
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 110
---- !u!114 &18
+--- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1564,7 +1589,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 73
-    width: 837
+    width: 836
     height: 926
   m_ViewDataDictionary: {fileID: 0}
   m_SerializedViewNames: []
@@ -1575,7 +1600,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 837, y: 905}
+  m_TargetSize: {x: 836, y: 905}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -1590,8 +1615,8 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -418.5
-    m_HBaseRangeMax: 418.5
+    m_HBaseRangeMin: -418
+    m_HBaseRangeMax: 418
     m_VBaseRangeMin: -452.5
     m_VBaseRangeMax: 452.5
     m_HAllowExceedBaseRangeMin: 1
@@ -1611,29 +1636,29 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 837
+      width: 836
       height: 905
     m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 418.5, y: 452.5}
+    m_Translation: {x: 418, y: 452.5}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -418.5
+      x: -418
       y: -452.5
-      width: 837
+      width: 836
       height: 905
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 837, y: 926}
+  m_LastWindowPixelSize: {x: 836, y: 926}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
   m_XRRenderMode: 0
   m_RenderTexture: {fileID: 0}
---- !u!114 &19
+--- !u!114 &21
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1654,10 +1679,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 0
+    x: 837
     y: 73
-    width: 837
-    height: 926
+    width: 548
+    height: 377
   m_ViewDataDictionary: {fileID: 0}
   m_ShowContextualTools: 0
   m_WindowGUID: 9bbdba7dddcf77147951abff5b4a4e52
@@ -1669,9 +1694,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -8.856146, y: 58.226585, z: -226.91881}
+    m_Target: {x: 44.167664, y: -40.77287, z: 117.18934}
     speed: 2
-    m_Value: {x: -8.856146, y: 58.226585, z: -226.91881}
+    m_Value: {x: 44.167664, y: -40.77287, z: 117.18934}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1717,13 +1742,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.0033884994, y: -0.9928655, z: -0.12089608, w: 0.012318706}
+    m_Target: {x: 0.15801321, y: 0.16591585, z: -0.026160806, w: 0.97334594}
     speed: 2
-    m_Value: {x: -0.0033875492, y: -0.9925871, z: -0.12086218, w: 0.012315252}
+    m_Value: {x: 0.15796717, y: 0.16586751, z: -0.026153184, w: 0.97306234}
   m_Size:
-    m_Target: 120.30475
+    m_Target: 73.023415
     speed: 2
-    m_Value: 120.30475
+    m_Value: 73.023415
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1748,7 +1773,7 @@ MonoBehaviour:
   m_SceneVisActive: 1
   m_LastLockedObject: {fileID: 0}
   m_ViewIsLockedToObject: 0
---- !u!114 &20
+--- !u!114 &22
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1769,17 +1794,17 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 838
+    x: 837
     y: 73
-    width: 549
-    height: 376
+    width: 548
+    height: 377
   m_ViewDataDictionary: {fileID: 0}
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 54d8ffffd2e0fffffee0ffff62e2ffff96e2ffff16e3ffff4ae3ffff7ee3ffffb2e3ffffdae4ffffeaeaffff9eeeffff34f1ffffdef1ffff28f2ffff1ef3ffff52f3ffffdef3ffff14f4ffff1ef7ffff6cf7ffffb2f7ffff48faffff66fbffff
+      m_ExpandedIDs: 2030ffff003dffffccf0fffff0f0ffff80f1ffffc2f8ffff54f9ffff00fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1803,7 +1828,7 @@ MonoBehaviour:
       m_IsLocked: 0
     m_CurrentSortingName: TransformSorting
   m_WindowGUID: fc39bf19ad558254e9d26f742ab1b36c
---- !u!114 &21
+--- !u!114 &23
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
