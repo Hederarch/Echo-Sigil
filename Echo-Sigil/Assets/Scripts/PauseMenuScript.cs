@@ -9,26 +9,18 @@ public class PauseMenuScript : MonoBehaviour
 
     void Start()
     {
-        TurnManager.GameWinEvent += GameWin;
-        TurnManager.GameLoseEvent += GameLose;
+        TurnManager.playerWinEvent += GameWin;
     }
 
-    void GameWin()
+    void GameWin(bool win)
     {
         Unsubscribe();
-        text.text = "You Won!";
-    }
-
-    void GameLose()
-    {
-        Unsubscribe();
-        text.text = "You Lost.";
+        text.text = win ? "You Won!" : "You Lost.";
     }
 
     void Unsubscribe()
     {
-        TurnManager.GameWinEvent -= GameWin;
-        TurnManager.GameLoseEvent -= GameLose;
+        TurnManager.playerWinEvent -= GameWin;
         animatior.SetBool("Paused", true);
         animatior.SetBool("UnPauseable", true);
     }

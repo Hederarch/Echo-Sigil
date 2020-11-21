@@ -1,111 +1,192 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public static class TurnManager
 {
-    static Dictionary<string, List<ITurn>> units = new Dictionary<string, List<ITurn>>();
-    static Queue<string> turnKey = new Queue<string>();
-    static Queue<ITurn> turnTeam = new Queue<ITurn>();
+    public static Queue<Team> teamQueue = new Queue<Team>();
 
-    public static bool IsPlayerTurn { get => turnKey.Peek() == "Player" ; }
-    public static ITurn CurrentUnit { get => turnTeam.Peek() ; }
+    public static Action<bool> playerWinEvent;
 
-    public static event Action GameWinEvent;
-    public static event Action GameLoseEvent;
+    public static bool IsPlayerTurn => teamQueue.Peek().tag == "Player";
+    public static ITurn Current => teamQueue.Peek().Current;
 
-    public static void InitTeamTurnQueue()
+    public static void Reset()
     {
-        if (units.Count > 0)
-        {
-            List<ITurn> teamList = units[turnKey.Peek()];
-
-            foreach (ITurn unit in teamList)
-            {
-                turnTeam.Enqueue(unit);
-            }
-
-            StartTurn(); 
-        }
+        teamQueue.Clear();
     }
+
     public static void StartTurn()
     {
-        if (turnTeam.Count > 0)
+        if (teamQueue.Count > 0)
         {
-            ITurn i = turnTeam.Peek();
-            if(i != null)
+            CheckForWin();
+            Team team = teamQueue.Peek();
+            if (team != null)
             {
-                i.BeginTurn();
-            } 
+                if (team.MoveNext())
+                {
+                    team.Current.BeginTurn();
+                }
+                else
+                {
+                    team.Reset();
+                    teamQueue.Enqueue(teamQueue.Dequeue());
+                    StartTurn();
+                }
+            }
             else
             {
-                turnTeam.Dequeue();
+                teamQueue.Dequeue();
                 StartTurn();
             }
-            
         }
     }
     public static void EndTurn()
     {
-        ITurn unit = turnTeam.Dequeue();
-        unit.EndTurn();
-
-        if (turnTeam.Count > 0)
-        {
-            StartTurn();
-        }
-        else
-        {
-            string team = turnKey.Dequeue();
-            turnKey.Enqueue(team);
-            InitTeamTurnQueue();
-        }
-        
+        Current.EndTurn();
+        StartTurn();
     }
     public static void CheckForWin()
     {
-        if (units["Player"].Count <= 0)
+        foreach (Team entry in teamQueue)
         {
-            GameLoseEvent?.Invoke();
-        }
-        if (units["NPC"].Count <= 0)
-        {
-            GameWinEvent?.Invoke();
+            if (entry.units.Count <= 0)
+            {
+                playerWinEvent?.Invoke(entry.tag == PlayerUnit.playerTag);
+            }
         }
     }
     public static void AddUnit(ITurn unit)
     {
-        List<ITurn> list;
-
-        if (!units.ContainsKey(unit.Tag))
+        //Do we already have this team?
+        foreach (Team team in teamQueue)
         {
-            list = new List<ITurn>();
-            units[unit.Tag] = list;
-
-            if (!turnKey.Contains(unit.Tag))
+            if (team.tag == unit.Tag)
             {
-                turnKey.Enqueue(unit.Tag);
+                team.units.Enqueue(unit);
+                return;
             }
-        } 
-        else
-        {
-            list = units[unit.Tag];
         }
+        //Create new team
+        teamQueue.Enqueue(new Team(unit.Tag, unit, unit.GetTeamColor(), unit.GetTeamTexture()));
 
-        list.Add(unit);
     }
     public static void RemoveUnit(ITurn unit)
     {
-        string unitTag = unit.Tag;
-        List<ITurn> dictonaryList = units[unitTag];
-        if (dictonaryList.Contains(unit))
+        //Do we already have this team?
+        foreach (Team team in teamQueue)
         {
-            dictonaryList.Remove(unit);
+            if (team.tag == unit.Tag)
+            {
+                if (team.units.Contains(unit))
+                {
+                    if(unit == team.units.Peek())
+                    {
+                        team.units.Dequeue();
+                    }
+                    else
+                    {
+                        bool removed = false;
+                        ITurn current = team.units.Peek();
+                        while(!removed && current != team.units.Peek())
+                        {
+                            ITurn considered = team.units.Dequeue();
+                            if(considered != unit)
+                            {
+                                team.units.Enqueue(considered);
+                            }
+                            else
+                            {
+                                removed = true;
+                            }
+                        }
+                    }
+                    CheckForWin();
+                    return;
+                }
+                throw new NullReferenceException("Team " + unit.Tag + " does not contain " + unit.GetHashCode());
+            }
         }
-        if (turnKey.Peek() == unitTag)
+        throw new NullReferenceException("Team " + unit.Tag + " does not exist");
+    }
+}
+
+public interface ITurn
+{
+    string Tag { get; }
+    Color GetTeamColor();
+    Texture2D GetTeamTexture();
+    void BeginTurn();
+    void EndTurn();
+}
+
+public class Team : IEnumerator<ITurn>, IEquatable<string>
+{
+    public Queue<ITurn> units = new Queue<ITurn>();
+    public string tag;
+    public Color color;
+    private Texture2D icon;
+    public Texture2D Icon { get => GetIcon(); set => icon = value; }
+
+    private int curIndex;
+    public ITurn Current => units.Peek();
+
+    object IEnumerator.Current => Current;
+
+    public Texture2D GetIcon()
+    {
+        if (icon == null)
         {
-            //Cant do the same thing for this. Bugger. Alright, I guess muder lets you move more, why not
-            turnTeam.Clear();
-            InitTeamTurnQueue();
+            Color[] colors = new Color[64 * 64];
+            for (int i = 0; i < colors.Length; i++)
+            {
+                colors[i] = color;
+            }
+            Texture2D texture2D = new Texture2D(64, 64);
+            texture2D.SetPixels(colors);
+            texture2D.Apply();
+            return texture2D;
         }
+        return icon;
+
+    }
+
+    public bool MoveNext()
+    {
+        curIndex++;
+        if (curIndex >= units.Count)
+        {
+            Reset();
+            return false;
+        }
+        units.Enqueue(units.Dequeue());
+        return true;
+    }
+
+    public void Reset()
+    {
+        curIndex = -1;
+    }
+
+    public void Dispose()
+    {
+
+    }
+
+    public bool Equals(string other)
+    {
+        return tag.Equals(other);
+    }
+
+    public Team(string tag, ITurn first) : this(tag, first, Color.black) { }
+    public Team(string tag, ITurn first, Color color, Texture2D icon = null)
+    {
+        Reset();
+        this.tag = tag;
+        units.Enqueue(first);
+        this.color = color;
+        this.icon = icon;
     }
 }

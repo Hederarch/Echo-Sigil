@@ -92,6 +92,7 @@ public struct Map : IEnumerable<MapTilePair>
             if (numTile.Length / 2 == i)
             {
                 mapTiles[i].unit = new MapImplement("Test", new TilePos(sizeX / 2, sizeY / 2, 1));
+                mapTiles[i].unit.player = true;
             }
         }
 

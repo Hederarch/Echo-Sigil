@@ -12,14 +12,14 @@ public class Unit : FacesCamera, ITurn
 
     public static Action<Unit> IsTurnEvent;
 
-    public string Tag => gameObject.tag;
+    public virtual string Tag => gameObject.tag;
 
-    public void BeginTurn()
+    public virtual void BeginTurn()
     {
         IsTurnEvent?.Invoke(this);
     }
 
-    public void EndTurn()
+    public virtual void EndTurn()
     {
         
     }
@@ -67,16 +67,34 @@ public class Unit : FacesCamera, ITurn
                 unit = unitObject.AddComponent<NPCUnit>();
             }
 
+            TurnManager.AddUnit(unit);
+            MapReader.implements.Add(unit);
+
             unit.SetValues(mapImplement.movementSettings);
             unit.SetValues(mapImplement.battleSettings);
 
             unit.SetSprite();
             unit.SetPos(mapImplement.posInGrid);
 
-            MapReader.implements.Add(unit);
+            
 
             return unit;
         }
         return null;
-    } 
+    }
+
+    private void OnDestroy()
+    {
+        TurnManager.RemoveUnit(this);
+    }
+
+    public virtual Color GetTeamColor()
+    {
+        return Color.black;
+    }
+
+    public virtual Texture2D GetTeamTexture()
+    {
+        return null;
+    }
 }

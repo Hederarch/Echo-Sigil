@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class NPCUnit : Unit
 {
-
+    public override string Tag => "NPC";
 }

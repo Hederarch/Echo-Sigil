@@ -21,7 +21,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 4}
-  m_MinSize: {x: 875, y: 300}
+  m_MinSize: {x: 875, y: 542}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 --- !u!114 &2
@@ -44,10 +44,10 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 709, y: 492}
-  m_MaxSize: {x: 18004, y: 14042}
+  m_MinSize: {x: 707, y: 492}
+  m_MaxSize: {x: 18002, y: 14042}
   vertical: 1
-  controlID: 112
+  controlID: 133
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -65,10 +65,10 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 837
+    width: 780
     height: 947
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 20}
@@ -98,7 +98,7 @@ MonoBehaviour:
     y: 0
     width: 1920
     height: 997
-  m_MinSize: {x: 875, y: 300}
+  m_MinSize: {x: 875, y: 542}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &5
 MonoBehaviour:
@@ -144,10 +144,10 @@ MonoBehaviour:
     y: 0
     width: 1920
     height: 947
-  m_MinSize: {x: 709, y: 492}
-  m_MaxSize: {x: 18004, y: 14042}
+  m_MinSize: {x: 707, y: 492}
+  m_MaxSize: {x: 18002, y: 14042}
   vertical: 0
-  controlID: 113
+  controlID: 134
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -186,14 +186,14 @@ MonoBehaviour:
   - {fileID: 11}
   m_Position:
     serializedVersion: 2
-    x: 837
+    x: 780
     y: 0
-    width: 550
+    width: 492
     height: 947
   m_MinSize: {x: 232, y: 492}
   m_MaxSize: {x: 10002, y: 14042}
   vertical: 1
-  controlID: 66
+  controlID: 85
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -209,12 +209,12 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1387
+    x: 1272
     y: 0
-    width: 533
+    width: 648
     height: 947
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
@@ -222,7 +222,7 @@ MonoBehaviour:
   - {fileID: 15}
   - {fileID: 14}
   m_Selected: 0
-  m_LastSelected: 2
+  m_LastSelected: 1
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -240,7 +240,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 550
+    width: 492
     height: 398
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
@@ -267,7 +267,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 398
-    width: 550
+    width: 492
     height: 549
   m_MinSize: {x: 232, y: 271}
   m_MaxSize: {x: 10002, y: 10021}
@@ -451,9 +451,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 837
+    x: 780
     y: 471
-    width: 548
+    width: 490
     height: 528
   m_ViewDataDictionary: {fileID: 0}
 --- !u!114 &17
@@ -476,13 +476,13 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1387
+    x: 1272
     y: 73
-    width: 532
+    width: 647
     height: 926
   m_ViewDataDictionary: {fileID: 0}
   m_Spl:
-    ID: 161
+    ID: 572
     splitterInitialOffset: 299
     currentActiveSplitter: -1
     realSizes: 83020000d5000000
@@ -537,9 +537,9 @@ MonoBehaviour:
       uniqueId: '[Tales From The Metahedron][suite]'
       name: Tales From The Metahedron
       fullName: Tales From The Metahedron
-      resultStatus: 2
-      duration: 0.1948129
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 0.1430894
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -553,9 +553,9 @@ MonoBehaviour:
       uniqueId: '[Tests.dll][suite]'
       name: Tests.dll
       fullName: C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Library/ScriptAssemblies/Tests.dll
-      resultStatus: 2
-      duration: 0.1232488
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 0.0831772
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -651,6 +651,357 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1040
       parentUniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.rotation][suite]
+    - id: 1048
+      uniqueId: Tests.dll/[Implement_Tests][suite]
+      name: Implement_Tests
+      fullName: Implement_Tests
+      resultStatus: 1
+      duration: 0.0763946
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1046
+      parentUniqueId: '[Tests.dll][suite]'
+    - id: 1049
+      uniqueId: Tests.dll/Implement_Tests/[Tests][Implement_Tests.Pathfinding][suite]
+      name: Pathfinding
+      fullName: Implement_Tests.Pathfinding
+      resultStatus: 1
+      duration: 0.1136461
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1048
+      parentUniqueId: Tests.dll/[Implement_Tests][suite]
+    - id: 1013
+      uniqueId: Tests.dll/Implement_Tests/Pathfinding/[Tests][Implement_Tests.Pathfinding.a_star][suite]
+      name: a_star
+      fullName: Implement_Tests.Pathfinding.a_star
+      resultStatus: 1
+      duration: 0.0381075
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1049
+      parentUniqueId: Tests.dll/Implement_Tests/[Tests][Implement_Tests.Pathfinding][suite]
+    - id: 1018
+      uniqueId: Tests.dll/Implement_Tests/Pathfinding/a_star/[Tests][Implement_Tests.Pathfinding.a_star.long_path_contains_middle_item]
+      name: long_path_contains_middle_item
+      fullName: Implement_Tests.Pathfinding.a_star.long_path_contains_middle_item
+      resultStatus: 1
+      duration: 0.0081931
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1013
+      parentUniqueId: Tests.dll/Implement_Tests/Pathfinding/[Tests][Implement_Tests.Pathfinding.a_star][suite]
+    - id: 1019
+      uniqueId: Tests.dll/Implement_Tests/Pathfinding/a_star/[Tests][Implement_Tests.Pathfinding.a_star.long_path_does_not_contains_unwalkable_middle_item]
+      name: long_path_does_not_contains_unwalkable_middle_item
+      fullName: Implement_Tests.Pathfinding.a_star.long_path_does_not_contains_unwalkable_middle_item
+      resultStatus: 1
+      duration: 0.0017531
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1013
+      parentUniqueId: Tests.dll/Implement_Tests/Pathfinding/[Tests][Implement_Tests.Pathfinding.a_star][suite]
+    - id: 1020
+      uniqueId: Tests.dll/Implement_Tests/Pathfinding/a_star/[Tests][Implement_Tests.Pathfinding.a_star.long_path_fails_when_too_long]
+      name: long_path_fails_when_too_long
+      fullName: Implement_Tests.Pathfinding.a_star.long_path_fails_when_too_long
+      resultStatus: 1
+      duration: 0.0010365
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1013
+      parentUniqueId: Tests.dll/Implement_Tests/Pathfinding/[Tests][Implement_Tests.Pathfinding.a_star][suite]
+    - id: 1017
+      uniqueId: Tests.dll/Implement_Tests/Pathfinding/a_star/[Tests][Implement_Tests.Pathfinding.a_star.long_path_sucsessful]
+      name: long_path_sucsessful
+      fullName: Implement_Tests.Pathfinding.a_star.long_path_sucsessful
+      resultStatus: 1
+      duration: 0.0010812
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1013
+      parentUniqueId: Tests.dll/Implement_Tests/Pathfinding/[Tests][Implement_Tests.Pathfinding.a_star][suite]
+    - id: 1015
+      uniqueId: Tests.dll/Implement_Tests/Pathfinding/a_star/[Tests][Implement_Tests.Pathfinding.a_star.short_path_contains_middle_item]
+      name: short_path_contains_middle_item
+      fullName: Implement_Tests.Pathfinding.a_star.short_path_contains_middle_item
+      resultStatus: 1
+      duration: 0.0008588
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1013
+      parentUniqueId: Tests.dll/Implement_Tests/Pathfinding/[Tests][Implement_Tests.Pathfinding.a_star][suite]
+    - id: 1016
+      uniqueId: Tests.dll/Implement_Tests/Pathfinding/a_star/[Tests][Implement_Tests.Pathfinding.a_star.short_path_does_not_contains_unwalkable_middle_item]
+      name: short_path_does_not_contains_unwalkable_middle_item
+      fullName: Implement_Tests.Pathfinding.a_star.short_path_does_not_contains_unwalkable_middle_item
+      resultStatus: 1
+      duration: 0.0008344
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1013
+      parentUniqueId: Tests.dll/Implement_Tests/Pathfinding/[Tests][Implement_Tests.Pathfinding.a_star][suite]
+    - id: 1014
+      uniqueId: Tests.dll/Implement_Tests/Pathfinding/a_star/[Tests][Implement_Tests.Pathfinding.a_star.short_path_sucsessful]
+      name: short_path_sucsessful
+      fullName: Implement_Tests.Pathfinding.a_star.short_path_sucsessful
+      resultStatus: 1
+      duration: 0.0006805
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1013
+      parentUniqueId: Tests.dll/Implement_Tests/Pathfinding/[Tests][Implement_Tests.Pathfinding.a_star][suite]
+    - id: 1021
+      uniqueId: Tests.dll/Implement_Tests/Pathfinding/[Tests][Implement_Tests.Pathfinding.bfs][suite]
+      name: bfs
+      fullName: Implement_Tests.Pathfinding.bfs
+      resultStatus: 1
+      duration: 0.0505054
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1049
+      parentUniqueId: Tests.dll/Implement_Tests/[Tests][Implement_Tests.Pathfinding][suite]
+    - id: 1026
+      uniqueId: Tests.dll/Implement_Tests/Pathfinding/bfs/[Tests][Implement_Tests.Pathfinding.bfs.long_path_does_not_contains_unwalkable_middle_item]
+      name: long_path_does_not_contains_unwalkable_middle_item
+      fullName: Implement_Tests.Pathfinding.bfs.long_path_does_not_contains_unwalkable_middle_item
+      resultStatus: 1
+      duration: 0.0060357
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1021
+      parentUniqueId: Tests.dll/Implement_Tests/Pathfinding/[Tests][Implement_Tests.Pathfinding.bfs][suite]
+    - id: 1027
+      uniqueId: Tests.dll/Implement_Tests/Pathfinding/bfs/[Tests][Implement_Tests.Pathfinding.bfs.long_path_fails_when_too_long]
+      name: long_path_fails_when_too_long
+      fullName: Implement_Tests.Pathfinding.bfs.long_path_fails_when_too_long
+      resultStatus: 1
+      duration: 0.0011491
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1021
+      parentUniqueId: Tests.dll/Implement_Tests/Pathfinding/[Tests][Implement_Tests.Pathfinding.bfs][suite]
+    - id: 1025
+      uniqueId: Tests.dll/Implement_Tests/Pathfinding/bfs/[Tests][Implement_Tests.Pathfinding.bfs.long_path_sucsessful]
+      name: long_path_sucsessful
+      fullName: Implement_Tests.Pathfinding.bfs.long_path_sucsessful
+      resultStatus: 1
+      duration: 0.0011903
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1021
+      parentUniqueId: Tests.dll/Implement_Tests/Pathfinding/[Tests][Implement_Tests.Pathfinding.bfs][suite]
+    - id: 1023
+      uniqueId: Tests.dll/Implement_Tests/Pathfinding/bfs/[Tests][Implement_Tests.Pathfinding.bfs.short_path_contains_middle_item]
+      name: short_path_contains_middle_item
+      fullName: Implement_Tests.Pathfinding.bfs.short_path_contains_middle_item
+      resultStatus: 1
+      duration: 0.0008653
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1021
+      parentUniqueId: Tests.dll/Implement_Tests/Pathfinding/[Tests][Implement_Tests.Pathfinding.bfs][suite]
+    - id: 1024
+      uniqueId: Tests.dll/Implement_Tests/Pathfinding/bfs/[Tests][Implement_Tests.Pathfinding.bfs.short_path_does_not_contains_unwalkable_middle_item]
+      name: short_path_does_not_contains_unwalkable_middle_item
+      fullName: Implement_Tests.Pathfinding.bfs.short_path_does_not_contains_unwalkable_middle_item
+      resultStatus: 1
+      duration: 0.0007889
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1021
+      parentUniqueId: Tests.dll/Implement_Tests/Pathfinding/[Tests][Implement_Tests.Pathfinding.bfs][suite]
+    - id: 1022
+      uniqueId: Tests.dll/Implement_Tests/Pathfinding/bfs/[Tests][Implement_Tests.Pathfinding.bfs.short_path_sucsessful]
+      name: short_path_sucsessful
+      fullName: Implement_Tests.Pathfinding.bfs.short_path_sucsessful
+      resultStatus: 1
+      duration: 0.0006462
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1021
+      parentUniqueId: Tests.dll/Implement_Tests/Pathfinding/[Tests][Implement_Tests.Pathfinding.bfs][suite]
+    - id: 1050
+      uniqueId: Tests.dll/Implement_Tests/[Tests][Implement_Tests.Unit][suite]
+      name: Unit
+      fullName: Implement_Tests.Unit
+      resultStatus: 1
+      duration: 0.0732842
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1048
+      parentUniqueId: Tests.dll/[Implement_Tests][suite]
+    - id: 1028
+      uniqueId: Tests.dll/Implement_Tests/Unit/[Tests][Implement_Tests.Unit.turn_manager][suite]
+      name: turn_manager
+      fullName: Implement_Tests.Unit.turn_manager
+      resultStatus: 1
+      duration: 0.0605651
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1050
+      parentUniqueId: Tests.dll/Implement_Tests/[Tests][Implement_Tests.Unit][suite]
+    - id: 1042
+      uniqueId: Tests.dll/Implement_Tests/Unit/turn_manager/[Tests][Implement_Tests.Unit.turn_manager.check_for_win_returns_lose_on_player_win]
+      name: check_for_win_returns_lose_on_player_win
+      fullName: Implement_Tests.Unit.turn_manager.check_for_win_returns_lose_on_player_win
+      resultStatus: 1
+      duration: 0.0216676
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1040
+      parentUniqueId: Tests.dll/Implement_Tests/Unit/[Tests][Implement_Tests.Unit.turn_manager][suite]
+    - id: 1041
+      uniqueId: Tests.dll/Implement_Tests/Unit/turn_manager/[Tests][Implement_Tests.Unit.turn_manager.check_for_win_returns_win_on_player_win]
+      name: check_for_win_returns_win_on_player_win
+      fullName: Implement_Tests.Unit.turn_manager.check_for_win_returns_win_on_player_win
+      resultStatus: 1
+      duration: 0.0012809
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1040
+      parentUniqueId: Tests.dll/Implement_Tests/Unit/[Tests][Implement_Tests.Unit.turn_manager][suite]
     - id: 1052
       uniqueId: Tests.dll/[Tests][Map_Tests][suite]
       name: Map_Tests
@@ -869,275 +1220,6 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1029
       parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map][suite]
-    - id: 1051
-      uniqueId: Tests.dll/[Tests][Pathfinding_Tests][suite]
-      name: Pathfinding_Tests
-      fullName: Pathfinding_Tests
-      resultStatus: 1
-      duration: 0.0939672
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1049
-      parentUniqueId: '[Tests.dll][suite]'
-    - id: 1014
-      uniqueId: Tests.dll/Pathfinding_Tests/[Tests][Pathfinding_Tests.a_star][suite]
-      name: a_star
-      fullName: Pathfinding_Tests.a_star
-      resultStatus: 1
-      duration: 0.0324306
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1051
-      parentUniqueId: Tests.dll/[Tests][Pathfinding_Tests][suite]
-    - id: 1019
-      uniqueId: Tests.dll/Pathfinding_Tests/a_star/[Tests][Pathfinding_Tests.a_star.long_path_contains_middle_item]
-      name: long_path_contains_middle_item
-      fullName: Pathfinding_Tests.a_star.long_path_contains_middle_item
-      resultStatus: 1
-      duration: 0.0093837
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1014
-      parentUniqueId: Tests.dll/Pathfinding_Tests/[Tests][Pathfinding_Tests.a_star][suite]
-    - id: 1020
-      uniqueId: Tests.dll/Pathfinding_Tests/a_star/[Tests][Pathfinding_Tests.a_star.long_path_does_not_contains_unwalkable_middle_item]
-      name: long_path_does_not_contains_unwalkable_middle_item
-      fullName: Pathfinding_Tests.a_star.long_path_does_not_contains_unwalkable_middle_item
-      resultStatus: 1
-      duration: 0.001687
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1014
-      parentUniqueId: Tests.dll/Pathfinding_Tests/[Tests][Pathfinding_Tests.a_star][suite]
-    - id: 1021
-      uniqueId: Tests.dll/Pathfinding_Tests/a_star/[Tests][Pathfinding_Tests.a_star.long_path_fails_when_too_long]
-      name: long_path_fails_when_too_long
-      fullName: Pathfinding_Tests.a_star.long_path_fails_when_too_long
-      resultStatus: 1
-      duration: 0.0008451
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1014
-      parentUniqueId: Tests.dll/Pathfinding_Tests/[Tests][Pathfinding_Tests.a_star][suite]
-    - id: 1018
-      uniqueId: Tests.dll/Pathfinding_Tests/a_star/[Tests][Pathfinding_Tests.a_star.long_path_sucsessful]
-      name: long_path_sucsessful
-      fullName: Pathfinding_Tests.a_star.long_path_sucsessful
-      resultStatus: 1
-      duration: 0.0010212
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1014
-      parentUniqueId: Tests.dll/Pathfinding_Tests/[Tests][Pathfinding_Tests.a_star][suite]
-    - id: 1016
-      uniqueId: Tests.dll/Pathfinding_Tests/a_star/[Tests][Pathfinding_Tests.a_star.short_path_contains_middle_item]
-      name: short_path_contains_middle_item
-      fullName: Pathfinding_Tests.a_star.short_path_contains_middle_item
-      resultStatus: 1
-      duration: 0.0015335
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1014
-      parentUniqueId: Tests.dll/Pathfinding_Tests/[Tests][Pathfinding_Tests.a_star][suite]
-    - id: 1017
-      uniqueId: Tests.dll/Pathfinding_Tests/a_star/[Tests][Pathfinding_Tests.a_star.short_path_does_not_contains_unwalkable_middle_item]
-      name: short_path_does_not_contains_unwalkable_middle_item
-      fullName: Pathfinding_Tests.a_star.short_path_does_not_contains_unwalkable_middle_item
-      resultStatus: 1
-      duration: 0.0013666
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1014
-      parentUniqueId: Tests.dll/Pathfinding_Tests/[Tests][Pathfinding_Tests.a_star][suite]
-    - id: 1015
-      uniqueId: Tests.dll/Pathfinding_Tests/a_star/[Tests][Pathfinding_Tests.a_star.short_path_sucsessful]
-      name: short_path_sucsessful
-      fullName: Pathfinding_Tests.a_star.short_path_sucsessful
-      resultStatus: 1
-      duration: 0.0009813
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1014
-      parentUniqueId: Tests.dll/Pathfinding_Tests/[Tests][Pathfinding_Tests.a_star][suite]
-    - id: 1022
-      uniqueId: Tests.dll/Pathfinding_Tests/[Tests][Pathfinding_Tests.bfs][suite]
-      name: bfs
-      fullName: Pathfinding_Tests.bfs
-      resultStatus: 1
-      duration: 0.0357196
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1051
-      parentUniqueId: Tests.dll/[Tests][Pathfinding_Tests][suite]
-    - id: 1027
-      uniqueId: Tests.dll/Pathfinding_Tests/bfs/[Tests][Pathfinding_Tests.bfs.long_path_does_not_contains_unwalkable_middle_item]
-      name: long_path_does_not_contains_unwalkable_middle_item
-      fullName: Pathfinding_Tests.bfs.long_path_does_not_contains_unwalkable_middle_item
-      resultStatus: 1
-      duration: 0.0059884
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1022
-      parentUniqueId: Tests.dll/Pathfinding_Tests/[Tests][Pathfinding_Tests.bfs][suite]
-    - id: 1028
-      uniqueId: Tests.dll/Pathfinding_Tests/bfs/[Tests][Pathfinding_Tests.bfs.long_path_fails_when_too_long]
-      name: long_path_fails_when_too_long
-      fullName: Pathfinding_Tests.bfs.long_path_fails_when_too_long
-      resultStatus: 1
-      duration: 0.0016265
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1022
-      parentUniqueId: Tests.dll/Pathfinding_Tests/[Tests][Pathfinding_Tests.bfs][suite]
-    - id: 1026
-      uniqueId: Tests.dll/Pathfinding_Tests/bfs/[Tests][Pathfinding_Tests.bfs.long_path_sucsessful]
-      name: long_path_sucsessful
-      fullName: Pathfinding_Tests.bfs.long_path_sucsessful
-      resultStatus: 1
-      duration: 0.0016743
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1022
-      parentUniqueId: Tests.dll/Pathfinding_Tests/[Tests][Pathfinding_Tests.bfs][suite]
-    - id: 1024
-      uniqueId: Tests.dll/Pathfinding_Tests/bfs/[Tests][Pathfinding_Tests.bfs.short_path_contains_middle_item]
-      name: short_path_contains_middle_item
-      fullName: Pathfinding_Tests.bfs.short_path_contains_middle_item
-      resultStatus: 1
-      duration: 0.0008936
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1022
-      parentUniqueId: Tests.dll/Pathfinding_Tests/[Tests][Pathfinding_Tests.bfs][suite]
-    - id: 1025
-      uniqueId: Tests.dll/Pathfinding_Tests/bfs/[Tests][Pathfinding_Tests.bfs.short_path_does_not_contains_unwalkable_middle_item]
-      name: short_path_does_not_contains_unwalkable_middle_item
-      fullName: Pathfinding_Tests.bfs.short_path_does_not_contains_unwalkable_middle_item
-      resultStatus: 1
-      duration: 0.0007881
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1022
-      parentUniqueId: Tests.dll/Pathfinding_Tests/[Tests][Pathfinding_Tests.bfs][suite]
-    - id: 1023
-      uniqueId: Tests.dll/Pathfinding_Tests/bfs/[Tests][Pathfinding_Tests.bfs.short_path_sucsessful]
-      name: short_path_sucsessful
-      fullName: Pathfinding_Tests.bfs.short_path_sucsessful
-      resultStatus: 1
-      duration: 0.0006369
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1022
-      parentUniqueId: Tests.dll/Pathfinding_Tests/[Tests][Pathfinding_Tests.bfs][suite]
     - id: 1050
       uniqueId: Tests.dll/[Tests][Tile_Tests][suite]
       name: Tile_Tests
@@ -1355,18 +1437,13 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1007
       parentUniqueId: Tests.dll/Tile_Tests/[Tests][Tile_Tests.texture][suite]
-    m_ResultText: "rotation_consitent (0.019s)\n---\nAngle was 45\r\n  Expected:
-      44.999998362420683d +/- 0.5d\r\n  But was:  360.00000953674316d\n---\nat Camera_Tests.rotation.rotation_consitent
-      () [0x00060] in C:\\Users\\Sam\\Documents\\GitHub\\Echo-Sigil\\Echo-Sigil\\Assets\\Tests\\CameraTests.cs:37"
-    m_ResultStacktrace: 'at Camera_Tests.rotation.rotation_consitent () [0x00060]
-      in C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil\Assets\Tests\CameraTests.cs:37
-
-'
+    m_ResultText: Unit (0.073s)
+    m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 8d5589f8
-      m_LastClickedID: -125217395
-      m_ExpandedIDs: e6a391a3f58144df0b2469dfe557abf72b220e145e2fcc1c371e5f68ffffff7f
+      m_SelectedIDs: 025e0a53
+      m_LastClickedID: 1393188354
+      m_ExpandedIDs: e6a391a3335c20c8f58144df0b2469dfe557abf7c69432fc2b220e1488d74d175e2fcc1c0fb3812324dae83f025e0a532fef885d371e5f68ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1413,9 +1490,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1387
+    x: 1272
     y: 73
-    width: 532
+    width: 647
     height: 926
   m_ViewDataDictionary: {fileID: 0}
   m_OpenAddComponentMenu: 0
@@ -1451,9 +1528,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 837
+    x: 780
     y: 471
-    width: 548
+    width: 490
     height: 528
   m_ViewDataDictionary: {fileID: 0}
   m_SearchFilter:
@@ -1469,20 +1546,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Tests
+    - Assets/Scripts/TurnManagment
   m_ViewMode: 1
   m_StartGridSize: 63
   m_LastFolders:
-  - Assets/Tests
+  - Assets/Scripts/TurnManagment
   m_LastFoldersGridSize: 63
   m_LastProjectPath: C:\Users\Sam\Documents\GitHub\Echo-Sigil\Echo-Sigil
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 3c3b0000
-    m_LastClickedID: 15164
-    m_ExpandedIDs: 00000000283b00002a3b00002c3b00002e3b0000303b0000323b0000343b0000363b00003a3b0000
+    m_SelectedIDs: 1c3b0000
+    m_LastClickedID: 15132
+    m_ExpandedIDs: 00000000143b0000163b0000183b00001a3b00001c3b00001e3b0000203b0000223b0000283b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1510,7 +1587,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000283b00002a3b00002c3b00002e3b0000303b0000323b0000343b0000363b0000
+    m_ExpandedIDs: 00000000143b0000163b0000183b00001a3b00001c3b00001e3b0000203b0000223b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1589,7 +1666,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 73
-    width: 836
+    width: 779
     height: 926
   m_ViewDataDictionary: {fileID: 0}
   m_SerializedViewNames: []
@@ -1600,7 +1677,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 836, y: 905}
+  m_TargetSize: {x: 779, y: 905}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -1615,8 +1692,8 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -418
-    m_HBaseRangeMax: 418
+    m_HBaseRangeMin: -389.5
+    m_HBaseRangeMax: 389.5
     m_VBaseRangeMin: -452.5
     m_VBaseRangeMax: 452.5
     m_HAllowExceedBaseRangeMin: 1
@@ -1636,23 +1713,23 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 836
+      width: 779
       height: 905
     m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 418, y: 452.5}
+    m_Translation: {x: 389.5, y: 452.5}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -418
+      x: -389.5
       y: -452.5
-      width: 836
+      width: 779
       height: 905
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 836, y: 926}
+  m_LastWindowPixelSize: {x: 779, y: 926}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -1679,9 +1756,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 837
+    x: 780
     y: 73
-    width: 548
+    width: 490
     height: 377
   m_ViewDataDictionary: {fileID: 0}
   m_ShowContextualTools: 0
@@ -1694,9 +1771,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 44.167664, y: -40.77287, z: 117.18934}
+    m_Target: {x: 114.64391, y: -82.129135, z: -17.250988}
     speed: 2
-    m_Value: {x: 44.167664, y: -40.77287, z: 117.18934}
+    m_Value: {x: 114.64391, y: -82.129135, z: -17.250988}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1742,9 +1819,9 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.15801321, y: 0.16591585, z: -0.026160806, w: 0.97334594}
+    m_Target: {x: 0.19389045, y: 0.72597957, z: -0.22542106, w: 0.62059003}
     speed: 2
-    m_Value: {x: 0, y: 0, z: 0, w: 1}
+    m_Value: {x: 0.19417143, y: 0.72483534, z: -0.22506396, w: 0.621496}
   m_Size:
     m_Target: 73.023415
     speed: 2
@@ -1794,9 +1871,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 837
+    x: 780
     y: 73
-    width: 548
+    width: 490
     height: 377
   m_ViewDataDictionary: {fileID: 0}
   m_SceneHierarchy:
@@ -1804,7 +1881,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 10fbffff
+      m_ExpandedIDs: bec7ffff38ceffffb8d4ffff60e1ffff7ee1fffffce1ffffb0e2ffffe0e2ffffece4ffff7cf6ffff64fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1828,28 +1905,3 @@ MonoBehaviour:
       m_IsLocked: 0
     m_CurrentSortingName: TransformSorting
   m_WindowGUID: fc39bf19ad558254e9d26f742ab1b36c
---- !u!114 &23
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 12059, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEditor:UnityEditor.PackageManager.UI:PackageManagerProjectSettings
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_TitleContent:
-    m_Text: Failed to load
-    m_Image: {fileID: 0}
-    m_Tooltip: 
-  m_Pos:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 320
-    height: 550
-  m_ViewDataDictionary: {fileID: 0}
