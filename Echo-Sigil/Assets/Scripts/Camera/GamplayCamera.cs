@@ -1,23 +1,20 @@
 ﻿using System;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 [RequireComponent(typeof(Camera))]
 public class GamplayCamera : MonoBehaviour
 {
-    public Transform foucus;
-    [SerializeField]
-    private Vector3 foucusPoint;
-    [Range(0f, 1f)]
-    public float speed = .1f;
-    public float distToSnap = .5f;
-
-    public float offsetFromFoucus = 4;
-    public float offsetFromZ0 = 4;
+    [HideInInspector]
+    public Camera cam;
 
     public Vector2 zoomMinMax = new Vector2(1, 5);
-    private bool cameraMoved;
 
-    public float DesieredAngle
+    [Range(0, 1f)]
+    public float rotationSpeed = .1f;
+    public Angle DesieredAngle
     {
         get => desieredAngle; set
         {
@@ -25,10 +22,19 @@ public class GamplayCamera : MonoBehaviour
             cameraMoved = true;
         }
     }
-    public float angle { get; private set; } = 0;
+    [SerializeField]
+    private Angle desieredAngle = 0;
+    public Angle angle { get; private set; } = 0;
+    public float offsetFromFoucus = 4;
+    public float offsetFromZ0 = 4;
 
-    public Camera cam;
-    private float desieredAngle = 0;
+    [Range(0f, 1f)]
+    public float positionSpeed = .05f;
+    public float distToSnap = .5f;
+    public Vector3 desieredFoucus;
+    public Vector3 foucus { get; internal set; }
+
+    private bool cameraMoved;
     public static Action<Vector2> CameraMoved;
 
     private void Start()
@@ -36,14 +42,13 @@ public class GamplayCamera : MonoBehaviour
         cam = GetComponent<Camera>();
         cam.orthographic = true;
         Unit.IsTurnEvent += SetAsFoucus;
-        FacesCamera.gameplayCamera = this;
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         PlayerInputs();
-        if (angle != desieredAngle || (foucus != null && foucusPoint != foucus.position))
+        if (angle != desieredAngle || foucus != desieredFoucus)
         {
             FoucusInputs();
             SetSortMode();
@@ -54,17 +59,26 @@ public class GamplayCamera : MonoBehaviour
     {
         if (angle != desieredAngle)
         {
-            angle = Mathf.Abs(DesieredAngle - angle) > distToSnap ? Mathf.Lerp(angle, DesieredAngle, speed) : DesieredAngle;
+            float sign = Mathf.Sign(desieredAngle - angle);
+            float amountOfChange = (10 * rotationSpeed) * sign * Time.deltaTime;
+            bool snap = Mathf.Abs(amountOfChange) > Mathf.Abs(desieredAngle - angle);
+            if (snap)
+            {
+                angle = desieredAngle;
+            }
+            else
+            {
+                angle += amountOfChange;
+            }
         }
-        Vector2 angleVector = new Vector2((float)Math.Sin(angle), (float)Math.Cos(angle));
-        if (foucus != null)
+        if (foucus != desieredFoucus)
         {
-            foucusPoint = Vector3.Distance(foucusPoint, foucus.transform.position) > distToSnap
-                ? Vector3.Lerp(foucusPoint, foucus.transform.position, speed)
-                : foucus.position;
+            foucus = Vector3.Distance(foucus, desieredFoucus) > distToSnap
+                ? Vector3.Lerp(foucus, desieredFoucus, positionSpeed)
+                : desieredFoucus;
         }
-        CameraMoved?.Invoke(transform.position = CalcPostion(foucusPoint, angleVector, offsetFromFoucus, offsetFromZ0));
-        transform.rotation = CalcRotation(foucusPoint, transform.position, angleVector, angle);
+        CameraMoved?.Invoke(transform.position = CalcPostion(foucus, angle, offsetFromFoucus, offsetFromZ0));
+        transform.rotation = Quaternion.LookRotation(foucus - transform.position, Vector3.forward);
     }
 
     private void PlayerInputs()
@@ -95,32 +109,17 @@ public class GamplayCamera : MonoBehaviour
         //Zoom
         float orthographicSize = cam.orthographicSize;
         float scroll = Input.mouseScrollDelta.y;
-        orthographicSize -= scroll * speed * 100 * Time.deltaTime;
+        orthographicSize -= scroll * positionSpeed * 100 * Time.deltaTime;
         cam.orthographicSize = Mathf.Clamp(orthographicSize, zoomMinMax.x, zoomMinMax.y);
     }
 
-    public static Vector3 CalcPostion(Vector3 origin, Vector2 angleVector, float offsetFromFoucus, float offsetFromZ0)
+    public static Vector3 CalcPostion(Vector3 origin, Angle angle, float offsetFromFoucus, float offsetFromZ0)
     {
-        Vector3 offset = angleVector;
+        Vector3 offset = angle.Vector;
         offset *= offsetFromFoucus;
         offset.z = -offsetFromZ0;
         return origin + offset;
     }
-
-    public static Vector3 CalcPostion(Vector3 origin, float angle, float offsetFromFoucus, float offsetFromZ0) => CalcPostion(origin, new Vector2((float)Math.Sin(angle), (float)Math.Cos(angle)), offsetFromFoucus, offsetFromZ0);
-
-    public static Quaternion CalcRotation(Vector3 origin, Vector3 position, Vector2 angleVector, float angleInRadians)
-    {
-        float opisite = position.z - origin.z;
-        float hypotonose = Vector3.Distance(origin, position);
-        float inverseSin = Mathf.Asin(opisite / hypotonose);
-        Vector3 angleVectorInverse = new Vector3(-angleVector.y, angleVector.x);
-        angleVectorInverse *= inverseSin * Mathf.Rad2Deg;
-        angleVectorInverse.z -= angleInRadians * Mathf.Rad2Deg;
-        return Quaternion.Euler(angleVectorInverse);
-    }
-
-    public static Quaternion CalcRotation(Vector3 origin, Vector3 position, float angle) => CalcRotation(origin, position, new Vector2((float)Math.Sin(angle), (float)Math.Cos(angle)), angle);
 
     private void SetSortMode()
     {
@@ -128,28 +127,85 @@ public class GamplayCamera : MonoBehaviour
         Camera.main.transparencySortAxis = transform.up - transform.forward;
     }
 
-    public void SetAsFoucus(Unit unit)
+    private void SetAsFoucus(Unit unit)
     {
         if (unit != null)
         {
-            foucus = unit.transform;
-        }
-        else
-        {
-            foucus = null;
+            desieredFoucus = unit.transform.position;
         }
     }
 
     private void OnDrawGizmosSelected()
     {
-        if (angle != desieredAngle || (foucus != null && foucus.transform.position != foucusPoint))
+        if (angle != desieredAngle || desieredFoucus != foucus)
         {
             Gizmos.color = Color.cyan;
-            Vector3 orgin = foucus != null ? foucus.transform.position : foucusPoint;
-            Vector3 final = CalcPostion(orgin, desieredAngle, offsetFromFoucus, offsetFromZ0);
+            Vector3 final = CalcPostion(desieredFoucus, desieredAngle, offsetFromFoucus, offsetFromZ0);
             Gizmos.DrawIcon(final, "Camera Gizmo", true, Color.cyan);
             Gizmos.DrawWireSphere(final, distToSnap);
         }
     }
 
 }
+
+[Serializable]
+public struct Angle
+{
+    public float angleInRadians;
+    public float AngleInDegrees { get => angleInRadians * Mathf.Rad2Deg; set => angleInRadians = value * Mathf.Deg2Rad; }
+    public float X => Mathf.Sin(angleInRadians);
+    public float Y => Mathf.Cos(angleInRadians);
+    public Vector2 Vector => new Vector2(X, Y);
+
+    public Angle(float angleInRadians)
+    {
+        this.angleInRadians = angleInRadians;
+    }
+
+    public static implicit operator float(Angle a) => a.angleInRadians;
+    public static implicit operator Vector2(Angle a) => a.Vector;
+
+    public static implicit operator Angle(float f) => new Angle(f);
+    public static explicit operator Angle(Vector2 v)
+    {
+        v.Normalize();
+        return new Angle(Mathf.Atan2(v.y, v.x));
+    }
+
+}
+
+#if UNITY_EDITOR
+[CustomPropertyDrawer(typeof(Angle))]
+public class AngleDrawer : PropertyDrawer
+{
+    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+    {
+        return base.GetPropertyHeight(property, label) * (property.isExpanded ? 3 : 1);
+    }
+
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    {
+        SerializedProperty angleInRadians = property.FindPropertyRelative("angleInRadians");
+        property.isExpanded = EditorGUI.Foldout(position, property.isExpanded, label, false);
+        position = EditorGUI.PrefixLabel(position, new GUIContent(" "));
+        if (property.isExpanded)
+        {
+            Rect drawSpace = new Rect(position.x + (position.width - GetPropertyHeight(property, label)), position.y, GetPropertyHeight(property, label), GetPropertyHeight(property, label));
+            EditorGUI.DrawRect(drawSpace, Color.black * .2f);
+            position.width -= GetPropertyHeight(property, label);
+
+            Vector2 angleVector = new Vector2(Mathf.Sin(angleInRadians.floatValue), Mathf.Cos(angleInRadians.floatValue));
+            Vector2 centerDrawSpace = drawSpace.position;
+            float halfHeight = GetPropertyHeight(property, label) * .5f;
+            centerDrawSpace.x += halfHeight - 1;
+            centerDrawSpace.y += halfHeight - 1;
+            Rect anglePoint = new Rect(centerDrawSpace + (angleVector * (halfHeight - 4)), Vector2.one * 3);
+            EditorGUI.DrawRect(anglePoint, Color.green);
+
+            position.height = GetPropertyHeight(property, label) / 3;
+            position.y += GetPropertyHeight(property, label) / 3;
+        }
+        angleInRadians.floatValue = EditorGUI.Slider(position, angleInRadians.floatValue * Mathf.Rad2Deg, 0, 360) * Mathf.Deg2Rad;
+    }
+}
+#endif

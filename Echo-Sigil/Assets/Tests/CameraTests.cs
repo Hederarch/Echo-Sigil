@@ -26,16 +26,9 @@ namespace Camera_Tests
                 Assert.AreEqual(4, Vector3.Distance(Vector3.zero, (Vector2)camera.transform.position), " Angle was " + (angle * Mathf.Rad2Deg));
             }
         }
-        [Test]
-        public void rotation_consitent()
-        {
-            GamplayCamera camera = new GameObject("Test Camera").AddComponent<GamplayCamera>();
-            for (float angle = 0; angle < Mathf.PI * 2f; angle += Mathf.PI / 4f)
-            {
-                camera.transform.position = GamplayCamera.CalcPostion(Vector3.zero, angle, 4, 4);
-                camera.transform.rotation = GamplayCamera.CalcRotation(Vector3.zero, camera.transform.position,angle);
-                Assert.AreEqual(Mathf.Asin(4 / Vector3.Distance(Vector3.zero, camera.transform.position)) * Mathf.Rad2Deg, camera.transform.rotation.eulerAngles.x + camera.transform.rotation.eulerAngles.y, .5, " Angle was " + (angle * Mathf.Rad2Deg));
-            }
-        }
+    }
+    class selection
+    {
+
     }
 }

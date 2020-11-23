@@ -85,11 +85,14 @@ public static class MapReader
         {
             foreach (Transform transform in tileParent)
             {
-                if (transform.TryGetComponent(out TileBehaviour t) && t.cached)
+                if (transform.TryGetComponent(out TileBehaviour t) && !t.cached)
                 {
                     t.CacheTile();
                 }
             }
+            tileParent.position = Vector3.zero;
+            tileParent.localScale = Vector3.one;
+            tileParent.rotation = Quaternion.identity;
         }
     }
 

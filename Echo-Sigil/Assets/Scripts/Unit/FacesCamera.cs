@@ -2,7 +2,6 @@
 
 public class FacesCamera : MonoBehaviour
 {
-    public static GamplayCamera gameplayCamera;
     public SpriteRenderer unitSprite;
 
     private void Start()
@@ -12,9 +11,9 @@ public class FacesCamera : MonoBehaviour
 
     private void FaceTarget(Vector2 target)
     {
-        if (gameplayCamera != null)
+        if (Selector.instance != null)
         {
-            Vector2 forward = (Vector2)gameplayCamera.transform.position - (Vector2)transform.position;
+            Vector2 forward = (Vector2)Selector.instance.transform.position - (Vector2)transform.position;
             if (forward != Vector2.zero)
             {
                 unitSprite.transform.rotation = Quaternion.LookRotation(-forward, Vector3.forward);

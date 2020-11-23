@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Collections;
 
 [Serializable]
-public struct Map : IEnumerable<MapTilePair>
+public struct Map : IEnumerable<MapTilePair>, IEnumerable<MapTile>
 {
     public bool readyForSave;
     public string name;
@@ -68,6 +68,11 @@ public struct Map : IEnumerable<MapTilePair>
     IEnumerator IEnumerable.GetEnumerator()
     {
         return GetEnumerator();
+    }
+
+    IEnumerator<MapTile> IEnumerable<MapTile>.GetEnumerator()
+    {
+        return new MapTilePairEnum(this);
     }
 
     public Map(Vector2Int size) : this(size.x, size.y) { }
@@ -266,7 +271,7 @@ public struct MapTilePair
     }
 }
 
-class MapTilePairEnum : IEnumerator<MapTilePair>
+class MapTilePairEnum : IEnumerator<MapTilePair>, IEnumerator<MapTile>
 {
     Map map;
 
@@ -278,6 +283,8 @@ class MapTilePairEnum : IEnumerator<MapTilePair>
     public MapTilePair Current => new MapTilePair(map.mapTiles[tileIndex], new TilePos(x, y, map.mapTiles[tileIndex].topHeight), tileIndex);
 
     object IEnumerator.Current => Current;
+
+    MapTile IEnumerator<MapTile>.Current => map.mapTiles[tileIndex];
 
     int numIndex;
     int tileIndex = -1;
