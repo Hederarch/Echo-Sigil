@@ -26,6 +26,26 @@ namespace Camera_Tests
                 Assert.AreEqual(4, Vector3.Distance(Vector3.zero, (Vector2)camera.transform.position), " Angle was " + (angle * Mathf.Rad2Deg));
             }
         }
+        [Test]
+        public void angle_sign_bigger_returns_minus()
+        {
+            Assert.IsFalse(Angle.Sign(Mathf.PI, Mathf.PI / 2f));
+        }
+        [Test]
+        public void angle_sign_bigger_returns_plus()
+        {
+            Assert.IsTrue(Angle.Sign(Mathf.PI + (Mathf.PI / 2f), 0));
+        }
+        [Test]
+        public void angle_sign_smaller_returns_minus()
+        {
+            Assert.IsFalse(Angle.Sign(0, Mathf.PI + (Mathf.PI / 2f)));
+        }
+        [Test]
+        public void angle_sign_smaller_returns_plus()
+        {
+            Assert.IsTrue(Angle.Sign(Mathf.PI / 2f, Mathf.PI));
+        }
     }
     class selection
     {

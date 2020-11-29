@@ -9,10 +9,10 @@ public class GamplayCamera : MonoBehaviour
 {
     [HideInInspector]
     public Camera cam;
+    public static GamplayCamera instance;
 
     public Vector2 zoomMinMax = new Vector2(1, 5);
 
-    [Range(0, 1f)]
     public float rotationSpeed = .1f;
     public Angle DesieredAngle
     {
@@ -24,31 +24,36 @@ public class GamplayCamera : MonoBehaviour
     }
     [SerializeField]
     private Angle desieredAngle = 0;
-    public Angle angle { get; private set; } = 0;
+    public Angle Angle { get => angle; private set => angle = value; }
+    [SerializeField]
+    private Angle angle = 0;
     public float offsetFromFoucus = 4;
     public float offsetFromZ0 = 4;
 
-    [Range(0f, 1f)]
     public float positionSpeed = .05f;
     public float distToSnap = .5f;
     public Vector3 desieredFoucus;
-    public Vector3 foucus { get; internal set; }
+    public Vector3 Foucus { get => foucus; private set => foucus = value; }
+    [SerializeField]
+    private Vector3 foucus;
 
     private bool cameraMoved;
     public static Action<Vector2> CameraMoved;
+
 
     private void Start()
     {
         cam = GetComponent<Camera>();
         cam.orthographic = true;
         Unit.IsTurnEvent += SetAsFoucus;
+        instance = this;
     }
 
     // Update is called once per frame
     public virtual void Update()
     {
         PlayerInputs();
-        if (angle != desieredAngle || foucus != desieredFoucus)
+        if (Angle != desieredAngle || Foucus != desieredFoucus)
         {
             FoucusInputs();
             SetSortMode();
@@ -57,28 +62,28 @@ public class GamplayCamera : MonoBehaviour
 
     public void FoucusInputs()
     {
-        if (angle != desieredAngle)
+        if (Angle != desieredAngle)
         {
-            float sign = Mathf.Sign(desieredAngle - angle);
-            float amountOfChange = (10 * rotationSpeed) * sign * Time.deltaTime;
-            bool snap = Mathf.Abs(amountOfChange) > Mathf.Abs(desieredAngle - angle);
+            bool sign = Angle.Sign(Angle, desieredAngle);
+            float amountOfChange = rotationSpeed * Time.deltaTime;
+            bool snap = amountOfChange > Mathf.Abs(desieredAngle - Angle);
             if (snap)
             {
-                angle = desieredAngle;
+                Angle = desieredAngle;
             }
             else
             {
-                angle += amountOfChange;
+                Angle += sign ? amountOfChange : -amountOfChange;
             }
         }
-        if (foucus != desieredFoucus)
+        if (Foucus != desieredFoucus)
         {
-            foucus = Vector3.Distance(foucus, desieredFoucus) > distToSnap
-                ? Vector3.Lerp(foucus, desieredFoucus, positionSpeed)
+            Foucus = Vector3.Distance(Foucus, desieredFoucus) > distToSnap
+                ? Vector3.Lerp(Foucus, desieredFoucus, positionSpeed)
                 : desieredFoucus;
         }
-        CameraMoved?.Invoke(transform.position = CalcPostion(foucus, angle, offsetFromFoucus, offsetFromZ0));
-        transform.rotation = Quaternion.LookRotation(foucus - transform.position, Vector3.forward);
+        CameraMoved?.Invoke(transform.position = CalcPostion(Foucus, Angle, offsetFromFoucus, offsetFromZ0));
+        transform.rotation = Quaternion.LookRotation(Foucus - transform.position, Vector3.forward);
     }
 
     private void PlayerInputs()
@@ -87,19 +92,6 @@ public class GamplayCamera : MonoBehaviour
         if (Input.GetAxisRaw("Camera") != 0 && !cameraMoved)
         {
             DesieredAngle -= Input.GetAxisRaw("Camera") * Mathf.PI / 2;
-            //clamp between 0 and 360
-            if (desieredAngle > Mathf.PI * 2)
-            {
-                desieredAngle -= Mathf.PI * 2;
-                angle -= Mathf.PI * 2;
-            }
-            else if (desieredAngle < 0)
-            {
-                desieredAngle += Mathf.PI * 2;
-                angle += Mathf.PI * 2;
-            }
-            //just in case the top bit dosent work;
-            desieredAngle = Mathf.Clamp(desieredAngle, 0, Mathf.PI * 2);
         }
         else if (Input.GetAxisRaw("Camera") == 0)
         {
@@ -123,8 +115,8 @@ public class GamplayCamera : MonoBehaviour
 
     private void SetSortMode()
     {
-        Camera.main.transparencySortMode = TransparencySortMode.CustomAxis;
-        Camera.main.transparencySortAxis = transform.up - transform.forward;
+        cam.transparencySortMode = TransparencySortMode.CustomAxis;
+        cam.transparencySortAxis = -transform.forward;
     }
 
     private void SetAsFoucus(Unit unit)
@@ -137,7 +129,7 @@ public class GamplayCamera : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        if (angle != desieredAngle || desieredFoucus != foucus)
+        if (Angle != desieredAngle || desieredFoucus != Foucus)
         {
             Gizmos.color = Color.cyan;
             Vector3 final = CalcPostion(desieredFoucus, desieredAngle, offsetFromFoucus, offsetFromZ0);
@@ -162,6 +154,25 @@ public struct Angle
         this.angleInRadians = angleInRadians;
     }
 
+    public override string ToString()
+    {
+        return (angleInRadians * Mathf.Rad2Deg).ToString();
+    }
+
+    /// <summary>
+    /// Is it faster to add to a to get to b?
+    /// </summary>
+    /// <param name="a">Sourse</param>
+    /// <param name="b">Destination</param>
+    /// <returns></returns>
+    public static bool Sign(Angle a, Angle b)
+    {
+        bool bigger = a.angleInRadians > b.angleInRadians;
+        float minusAmount = bigger ? a.angleInRadians - b.angleInRadians : b.angleInRadians - (a.angleInRadians * Mathf.PI * 2);
+        float plusAmount = bigger ? a.angleInRadians - Mathf.PI * 2 + b.angleInRadians : b.angleInRadians - a.angleInRadians;
+        return plusAmount < minusAmount;
+    }
+
     public static implicit operator float(Angle a) => a.angleInRadians;
     public static implicit operator Vector2(Angle a) => a.Vector;
 
@@ -172,6 +183,23 @@ public struct Angle
         return new Angle(Mathf.Atan2(v.y, v.x));
     }
 
+    public static Angle operator +(Angle a, float f)
+    {
+        a.angleInRadians += f;
+        //clamp between 0 and 360
+        if (a.angleInRadians > Mathf.PI * 2)
+        {
+            a.angleInRadians -= Mathf.PI * 2;
+        }
+        else if (a.angleInRadians < 0)
+        {
+            a.angleInRadians += Mathf.PI * 2;
+        }
+        //just in case the top bit dosent work;
+        a.angleInRadians = Mathf.Clamp(a.angleInRadians, 0, Mathf.PI * 2);
+        return a;
+    }
+    public static Angle operator -(Angle a, float f) => a + (-f);
 }
 
 #if UNITY_EDITOR
@@ -200,12 +228,61 @@ public class AngleDrawer : PropertyDrawer
             centerDrawSpace.x += halfHeight - 1;
             centerDrawSpace.y += halfHeight - 1;
             Rect anglePoint = new Rect(centerDrawSpace + (angleVector * (halfHeight - 4)), Vector2.one * 3);
-            EditorGUI.DrawRect(anglePoint, Color.green);
+            EditorGUI.DrawRect(anglePoint, GUI.enabled ? Color.green : Color.green * .5f);
 
             position.height = GetPropertyHeight(property, label) / 3;
             position.y += GetPropertyHeight(property, label) / 3;
         }
         angleInRadians.floatValue = EditorGUI.Slider(position, angleInRadians.floatValue * Mathf.Rad2Deg, 0, 360) * Mathf.Deg2Rad;
+    }
+}
+
+[CustomEditor(typeof(GamplayCamera))]
+[CanEditMultipleObjects]
+public class GamplayCmaeraEditor : Editor
+{
+    private bool angle;
+    private bool position;
+
+    public override void OnInspectorGUI()
+    {
+
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("zoomMinMax"));
+
+        if (angle = EditorGUILayout.BeginFoldoutHeaderGroup(angle, "Angle"))
+        {
+            EditorGUI.indentLevel += 1;
+
+            EditorGUILayout.Slider(serializedObject.FindProperty("rotationSpeed"), 0, 10);
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("offsetFromFoucus"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("offsetFromZ0"));
+
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("desieredAngle"));
+            GUI.enabled = false;
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("angle"));
+            GUI.enabled = true;
+
+            EditorGUI.indentLevel -= 1;
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        if (position = EditorGUILayout.BeginFoldoutHeaderGroup(position, "Position"))
+        {
+            EditorGUI.indentLevel += 1;
+
+            EditorGUILayout.Slider(serializedObject.FindProperty("positionSpeed"), 0, 1);
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("distToSnap"));
+
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("desieredFoucus"));
+            GUI.enabled = false;
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("foucus"));
+            GUI.enabled = true;
+
+            EditorGUI.indentLevel -= 1;
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        serializedObject.ApplyModifiedProperties();
     }
 }
 #endif

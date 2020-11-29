@@ -12,6 +12,6 @@ public class PlayerUnit : Unit
     public override void BeginTurn()
     {
         base.BeginTurn();
-        Selector.GetCursor();
+        Cursor.GetCursor();
     }
 }
