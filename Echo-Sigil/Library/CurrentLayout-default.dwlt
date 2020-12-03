@@ -44,10 +44,10 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 534, y: 492}
-  m_MaxSize: {x: 18004, y: 14042}
+  m_MinSize: {x: 708, y: 492}
+  m_MaxSize: {x: 18003, y: 14042}
   vertical: 1
-  controlID: 130
+  controlID: 359
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -67,8 +67,8 @@ MonoBehaviour:
     y: 0
     width: 780
     height: 947
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 20}
@@ -98,7 +98,7 @@ MonoBehaviour:
     y: 0
     width: 1920
     height: 997
-  m_MinSize: {x: 875, y: 300}
+  m_MinSize: {x: 875, y: 542}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &5
 MonoBehaviour:
@@ -144,10 +144,10 @@ MonoBehaviour:
     y: 0
     width: 1920
     height: 947
-  m_MinSize: {x: 534, y: 492}
-  m_MaxSize: {x: 18004, y: 14042}
+  m_MinSize: {x: 708, y: 492}
+  m_MaxSize: {x: 18003, y: 14042}
   vertical: 0
-  controlID: 131
+  controlID: 360
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -193,7 +193,7 @@ MonoBehaviour:
   m_MinSize: {x: 232, y: 492}
   m_MaxSize: {x: 10002, y: 14042}
   vertical: 1
-  controlID: 81
+  controlID: 52
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -204,7 +204,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: TestRunnerWindow
+  m_Name: InspectorWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -213,16 +213,16 @@ MonoBehaviour:
     y: 0
     width: 648
     height: 947
-  m_MinSize: {x: 101, y: 121}
+  m_MinSize: {x: 276, y: 71}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 17}
+  m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
   - {fileID: 17}
   - {fileID: 14}
   - {fileID: 15}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -242,8 +242,8 @@ MonoBehaviour:
     y: 0
     width: 492
     height: 398
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 22}
   m_Panes:
   - {fileID: 22}
@@ -305,7 +305,7 @@ MonoBehaviour:
   m_ViewDataDictionary: {fileID: 0}
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 14862
+  m_LastSelectedObjectID: 17346
 --- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -482,7 +482,7 @@ MonoBehaviour:
     height: 926
   m_ViewDataDictionary: {fileID: 0}
   m_Spl:
-    ID: 3979
+    ID: 165
     splitterInitialOffset: 299
     currentActiveSplitter: -1
     realSizes: 83020000d5000000
@@ -554,9 +554,9 @@ MonoBehaviour:
       uniqueId: '[Tales From The Metahedron][suite]'
       name: Tales From The Metahedron
       fullName: Tales From The Metahedron
-      resultStatus: 2
-      duration: 0.1665479
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 0.1420139
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -570,9 +570,9 @@ MonoBehaviour:
       uniqueId: '[Tests.dll][suite]'
       name: Tests.dll
       fullName: C:/Users/Sam/Documents/GitHub/Echo-Sigil/Echo-Sigil/Library/ScriptAssemblies/Tests.dll
-      resultStatus: 2
-      duration: 0.1044299
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 0.0836982
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -586,9 +586,9 @@ MonoBehaviour:
       uniqueId: Tests.dll/[Tests][Camera_Tests][suite]
       name: Camera_Tests
       fullName: Camera_Tests
-      resultStatus: 2
-      duration: 0.0975414
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 0.0779324
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -602,9 +602,9 @@ MonoBehaviour:
       uniqueId: Tests.dll/Camera_Tests/[Tests][Camera_Tests.rotation][suite]
       name: rotation
       fullName: Camera_Tests.rotation
-      resultStatus: 2
-      duration: 0.089712
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 0.0715054
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -618,14 +618,11 @@ MonoBehaviour:
       uniqueId: Tests.dll/Camera_Tests/rotation/[Tests][Camera_Tests.rotation.angle_sign_bigger_returns_minus]
       name: angle_sign_bigger_returns_minus
       fullName: Camera_Tests.rotation.angle_sign_bigger_returns_minus
-      resultStatus: 2
-      duration: 0.0286573
-      messages: "  Expected: False\r\n  But was:  True\r\n"
+      resultStatus: 1
+      duration: 0.0183497
+      messages: 
       output: 
-      stacktrace: 'at Camera_Tests.rotation.angle_sign_bigger_returns_minus () [0x00001]
-        in C:\Users\Unity\Documents\GitHub\Tales-From-the-Metaheadron\Echo-Sigil\Assets\Tests\CameraTests.cs:32
-
-'
+      stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -639,7 +636,7 @@ MonoBehaviour:
       name: angle_sign_bigger_returns_plus
       fullName: Camera_Tests.rotation.angle_sign_bigger_returns_plus
       resultStatus: 1
-      duration: 0.0043713
+      duration: 0.0011834
       messages: 
       output: 
       stacktrace: 
@@ -656,7 +653,7 @@ MonoBehaviour:
       name: angle_sign_smaller_returns_minus
       fullName: Camera_Tests.rotation.angle_sign_smaller_returns_minus
       resultStatus: 1
-      duration: 0.0008582
+      duration: 0.000545
       messages: 
       output: 
       stacktrace: 
@@ -672,14 +669,11 @@ MonoBehaviour:
       uniqueId: Tests.dll/Camera_Tests/rotation/[Tests][Camera_Tests.rotation.angle_sign_smaller_returns_plus]
       name: angle_sign_smaller_returns_plus
       fullName: Camera_Tests.rotation.angle_sign_smaller_returns_plus
-      resultStatus: 2
-      duration: 0.0012782
-      messages: "  Expected: True\r\n  But was:  False\r\n"
+      resultStatus: 1
+      duration: 0.0004423
+      messages: 
       output: 
-      stacktrace: 'at Camera_Tests.rotation.angle_sign_smaller_returns_plus () [0x00001]
-        in C:\Users\Unity\Documents\GitHub\Tales-From-the-Metaheadron\Echo-Sigil\Assets\Tests\CameraTests.cs:47
-
-'
+      stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -693,7 +687,7 @@ MonoBehaviour:
       name: offset_from_foucus_consitent
       fullName: Camera_Tests.rotation.offset_from_foucus_consitent
       resultStatus: 1
-      duration: 0.0106057
+      duration: 0.0114523
       messages: 
       output: 
       stacktrace: 
@@ -710,7 +704,7 @@ MonoBehaviour:
       name: offset_from_Z0_consitent
       fullName: Camera_Tests.rotation.offset_from_Z0_consitent
       resultStatus: 1
-      duration: 0.0012182
+      duration: 0.0013145
       messages: 
       output: 
       stacktrace: 
@@ -1508,13 +1502,13 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1007
       parentUniqueId: Tests.dll/Tile_Tests/[Tests][Tile_Tests.texture][suite]
-    m_ResultText: Tile_Tests (0.104s)
+    m_ResultText: Camera_Tests (0.078s)
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 2756b58d
-      m_LastClickedID: -1917495769
-      m_ExpandedIDs: e6a391a3335c20c8f58144df0b2469dfe557abf7c69432fc2b220e1488d74d175e2fcc1c0fb3812324dae83f025e0a53371e5f68ffffff7f
+      m_SelectedIDs: 5e2fcc1c
+      m_LastClickedID: 483143518
+      m_ExpandedIDs: 335c20c8f58144df0b2469dfc69432fc2b220e1488d74d170fb3812324dae83f025e0a53371e5f68ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1576,7 +1570,7 @@ MonoBehaviour:
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_PreviewWindow: {fileID: 0}
-  m_LastInspectedObjectInstanceID: 14298
+  m_LastInspectedObjectInstanceID: -1
   m_LastVerticalScrollValue: 0
 --- !u!114 &19
 MonoBehaviour:
@@ -1617,20 +1611,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Tests
+    - Assets/Scripts/Camera
   m_ViewMode: 1
   m_StartGridSize: 63
   m_LastFolders:
-  - Assets/Tests
+  - Assets/Scripts/Camera
   m_LastFoldersGridSize: 63
   m_LastProjectPath: C:\Users\Unity\Documents\GitHub\Tales-From-the-Metaheadron\Echo-Sigil
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 423b0000
-    m_LastClickedID: 15170
-    m_ExpandedIDs: 00000000183b00001a3b00001c3b00001e3b0000203b0000223b0000243b0000263b0000283b000000ca9a3b
+    m_SelectedIDs: 323b0000
+    m_LastClickedID: 15154
+    m_ExpandedIDs: 00000000123b0000143b0000163b0000183b00001a3b00001c3b00001e3b0000203b0000223b000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1658,7 +1652,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000183b00001a3b00001c3b00001e3b0000203b0000223b0000243b0000263b0000283b0000
+    m_ExpandedIDs: 00000000123b0000143b0000163b0000183b00001a3b00001c3b00001e3b0000203b0000223b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1950,9 +1944,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: da370000
-      m_LastClickedID: 0
-      m_ExpandedIDs: ea6fffff6870ffff9470ffff1271ffff3e71ffff6a71ffff9671ffff4072ffff4efbffff
+      m_SelectedIDs: d6470000
+      m_LastClickedID: 18390
+      m_ExpandedIDs: 66e8ffffa4e8ffff20efffff5eefffffd8f5ffff16f6ffffbaf6ffff0af7fffffef7ffffa0f8ffff4af9ffffcafaffff44fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
