@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using UnityEngine;
-using System;
 
 namespace Camera_Tests
 {

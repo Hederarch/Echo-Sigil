@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using UnityEngine;
-using MapEditor;
+using TileMap;
 
 namespace Tile_Tests
 {

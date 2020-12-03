@@ -131,10 +131,8 @@ public class GamplayCamera : MonoBehaviour
     {
         if (Angle != desieredAngle || desieredFoucus != Foucus)
         {
-            Gizmos.color = Color.cyan;
             Vector3 final = CalcPostion(desieredFoucus, desieredAngle, offsetFromFoucus, offsetFromZ0);
             Gizmos.DrawIcon(final, "Camera Gizmo", true, Color.cyan);
-            Gizmos.DrawWireSphere(final, distToSnap);
         }
     }
 

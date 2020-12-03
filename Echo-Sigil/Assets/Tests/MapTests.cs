@@ -1,7 +1,6 @@
-﻿using MapEditor;
+﻿using TileMap;
 using NUnit.Framework;
 using UnityEngine;
-using Pathfinding;
 
 namespace Map_Tests
 {

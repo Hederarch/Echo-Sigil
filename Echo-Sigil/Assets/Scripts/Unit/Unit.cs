@@ -2,6 +2,7 @@
 using UnityEngine;
 using Pathfinding;
 using System.Collections.Generic;
+using TileMap;
 
 /// <summary>
 /// Character in the world
@@ -43,6 +44,11 @@ public class Unit : FacesCamera, ITurn
     public void SetValues(MapImplement.MovementSettings movementSettings)
     {
 
+    }
+
+    internal TileBehaviour GetCurTile()
+    {
+        throw new NotImplementedException();
     }
 
     public void SetValues(MapImplement.BattleSettings battleSettings)

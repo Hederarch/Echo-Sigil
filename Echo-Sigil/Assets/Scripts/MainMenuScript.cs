@@ -1,7 +1,8 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
-using MapEditor;
+using TileMap;
+using SaveSystem;
 
 public class MainMenuScript : MonoBehaviour
 {
@@ -15,13 +16,13 @@ public class MainMenuScript : MonoBehaviour
 
     public void Start()
     {
-        developerToggle.isOn = SaveSystem.developerMode;
-        developerToggle.onValueChanged.AddListener(delegate { SaveSystem.developerMode = developerToggle.isOn; });
+        developerToggle.isOn = Mod.developerMode;
+        developerToggle.onValueChanged.AddListener(delegate { Mod.developerMode = developerToggle.isOn; });
     }
 
     public void NewGame()
     {
-        StartGame(new Map(5,5));
+        StartGame(new TileMap.Map(5,5));
     }
 
     public void LoadGame()
@@ -29,7 +30,7 @@ public class MainMenuScript : MonoBehaviour
         throw new NotImplementedException();
     }
 
-    private void StartGame(Map map)
+    private void StartGame(TileMap.Map map)
     {
         mainMenuElements.SetActive(false);
         Instantiate(gameplayGUIElements, canvas);
