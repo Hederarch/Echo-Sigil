@@ -109,14 +109,14 @@ public class GamplayCamera : MonoBehaviour
     {
         Vector3 offset = angle.Vector;
         offset *= offsetFromFoucus;
-        offset.z = -offsetFromZ0;
+        offset.z = offsetFromZ0;
         return origin + offset;
     }
 
     private void SetSortMode()
     {
         cam.transparencySortMode = TransparencySortMode.CustomAxis;
-        cam.transparencySortAxis = -transform.forward;
+        cam.transparencySortAxis = transform.forward;
     }
 
     private void SetAsFoucus(Unit unit)
@@ -143,15 +143,14 @@ public class GamplayCamera : MonoBehaviour
 [CanEditMultipleObjects]
 public class GamplayCameraEditor : Editor
 {
-    private bool angle;
-    private bool position;
 
     public override void OnInspectorGUI()
     {
 
         EditorGUILayout.PropertyField(serializedObject.FindProperty("zoomMinMax"));
 
-        if (angle = EditorGUILayout.BeginFoldoutHeaderGroup(angle, "Angle"))
+        SerializedProperty angle = serializedObject.FindProperty("rotationSpeed");
+        if (angle.isExpanded = EditorGUILayout.BeginFoldoutHeaderGroup(angle.isExpanded, "Angle"))
         {
             EditorGUI.indentLevel += 1;
 
@@ -168,7 +167,8 @@ public class GamplayCameraEditor : Editor
         }
         EditorGUILayout.EndFoldoutHeaderGroup();
 
-        if (position = EditorGUILayout.BeginFoldoutHeaderGroup(position, "Position"))
+        SerializedProperty position = serializedObject.FindProperty("positionSpeed");
+        if (position.isExpanded = EditorGUILayout.BeginFoldoutHeaderGroup(position.isExpanded, "Position"))
         {
             EditorGUI.indentLevel += 1;
 

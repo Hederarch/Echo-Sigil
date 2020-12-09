@@ -42,7 +42,7 @@ namespace Tile_Tests
 
         {
             MapReader.GenerateVirtualMap(new Map(1, 1));
-            Assert.AreEqual(new Vector2Int(0, 0), MapReader.GetTile(0, 0, 1).posInGrid);
+            Assert.AreEqual(new Vector2Int(0, 0), MapReader.GetTile(0, 0, 0, 2).posInGrid);
         }
         [Test]
 
@@ -50,7 +50,7 @@ namespace Tile_Tests
 
         {
             MapReader.GenerateVirtualMap(new Map(3, 5));
-            Assert.AreEqual(new Vector2Int(2, 4), MapReader.GetTile(2, 4, 0).posInGrid);
+            Assert.AreEqual(new Vector2Int(2, 4), MapReader.GetTile(2, 4, 0, 2).posInGrid);
         }
     }
 
@@ -90,7 +90,7 @@ namespace Tile_Tests
         public void tiles_find_neighbor()
         {
             MapReader.GenerateVirtualMap(new Map(3, 3));
-            ITile[] tiles = MapReader.GetTile(1, 1, 1).FindNeighbors();
+            ITile[] tiles = MapReader.GetTile(1, 1, 0, 2).FindNeighbors();
             Assert.IsNotNull(tiles);
             Assert.Greater(tiles.Length, 0);
         }

@@ -50,7 +50,7 @@ namespace TileMap
 
         private static Texture2D GetDebugTexture()
         {
-            Texture2D texture2D = SaveSystem.Tile.GetDefaultTiileTexture();
+            Texture2D texture2D = SaveSystem.Tile.DefaultTiileTexture;
 
             if (texture2D == null)
             {
@@ -284,7 +284,7 @@ namespace TileMap
         {
             if (debug)
             {
-                Texture2D texture2D = SaveSystem.Tile.GetDefaultTiileTexture();
+                Texture2D texture2D = SaveSystem.Tile.DefaultTiileTexture;
                 if (texture2D != null)
                 {
                     texture = texture2D;

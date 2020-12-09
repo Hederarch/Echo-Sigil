@@ -61,7 +61,7 @@ namespace TileMap
 
         internal static Vector3 AlignWorldPosToGrid(Vector3 vector3)
         {
-            return GridToWorldSpace(WorldToGridSpace(vector3));
+            return new Vector3(Mathf.RoundToInt(vector3.x), Mathf.RoundToInt(vector3.y), vector3.z);
         }
 
         public static void GenerateVirtualMap(Map map)
@@ -140,24 +140,22 @@ namespace TileMap
             return output;
         }
 
-        public static Tile GetTile(TilePos pos) => GetTile(pos.x, pos.y, pos.z);
+        public static Tile GetTile(TilePos pos) => GetTile(pos.x, pos.y, pos.z-1, pos.z+1);
 
-        public static Tile GetTile(int x, int y, float nearestHeight)
+        public static Tile GetTile(int x, int y, float minHeight, float MaxHeight)
         {
             Tile[] tiles = GetTiles(x, y);
             if (tiles.Length > 0)
             {
-                Tile output = tiles[0];
                 foreach (Tile tile in tiles)
                 {
-                    output = Mathf.Abs(nearestHeight - output.topHeight) < Mathf.Abs(nearestHeight - tile.topHeight) ? output : tile;
-                }
-                return output;
+                    if(tile != null && tile.bottomHeight >= minHeight && tile.topHeight <= MaxHeight)
+                    {
+                        return tile;
+                    }
+                } 
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
     } 

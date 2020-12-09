@@ -57,7 +57,7 @@ namespace Map_Tests
         public void world_to_grid_space_3x3_1x1()
         {
             MapReader.GenerateVirtualMap(new Map(3, 3));
-            Vector3 posInWorld = MapReader.GetTile(1, 1, 1).PosInWorld;
+            Vector3 posInWorld = MapReader.GetTile(1, 1, 0, 2).PosInWorld;
             TilePos actual = MapReader.WorldToGridSpace(posInWorld);
             Assert.AreEqual(Vector2Int.one, actual);
         }
@@ -65,7 +65,7 @@ namespace Map_Tests
         public void world_to_grid_space_3x3_0x0()
         {
             MapReader.GenerateVirtualMap(new Map(3, 3));
-            Vector3 posInWorld = MapReader.GetTile(0,0,1).PosInWorld;
+            Vector3 posInWorld = MapReader.GetTile(0, 0, 0, 2).PosInWorld;
             TilePos actual = MapReader.WorldToGridSpace(posInWorld);
             Assert.AreEqual(Vector2Int.zero, actual);
         }

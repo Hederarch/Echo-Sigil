@@ -11,6 +11,8 @@ public class Unit : FacesCamera, ITurn
 {
     public TilePos posInGrid => MapReader.WorldToGridSpace(transform.position);
 
+    public Tile CurTile => MapReader.GetTile(posInGrid);
+
     public static Action<Unit> IsTurnEvent;
 
     public virtual string Tag => gameObject.tag;
@@ -44,11 +46,6 @@ public class Unit : FacesCamera, ITurn
     public void SetValues(MapImplement.MovementSettings movementSettings)
     {
 
-    }
-
-    internal TileBehaviour GetCurTile()
-    {
-        throw new NotImplementedException();
     }
 
     public void SetValues(MapImplement.BattleSettings battleSettings)

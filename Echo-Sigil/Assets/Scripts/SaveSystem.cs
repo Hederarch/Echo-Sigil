@@ -8,16 +8,15 @@ namespace SaveSystem
 {
     public static class Tile
     {
-        public static Texture2D GetDefaultTiileTexture() => PNG.LoadPNG(UnityEngine.Application.dataPath + "/Sprites/DefaultTileTexture.png");
+        public static Texture2D DefaultTiileTexture => PNG.LoadPNG(PNG.SpritesFolderPath + "/DefaultTileTexture.png");
 
-        internal static Sprite GetFloatingCursorTexture()
+        public static Sprite CursorSprite
         {
-            throw new NotImplementedException();
-        }
-
-        internal static Sprite GetCursorTexture()
-        {
-            throw new NotImplementedException();
+            get
+            {
+                Texture2D texture = PNG.LoadPNG(PNG.SpritesFolderPath + "/Cursor.png");
+                return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one * .5f, 320);
+            }
         }
 
         public static void SavePallate(int modPathIndex, string quest, Sprite[] pallate)
@@ -118,6 +117,7 @@ namespace SaveSystem
     }
     public static class PNG
     {
+        public static string SpritesFolderPath => Application.dataPath + "/Sprites";
         public static Texture2D LoadPNG(string filePath)
         {
             if (File.Exists(filePath))

@@ -193,6 +193,21 @@ namespace TileMap
         }
 
         public Vector3 PosInWorld => MapReader.GridToWorldSpace(posInGrid);
+        public TileBehaviour TileBehaviour
+        {
+            get
+            {
+                foreach (Collider collider in Physics.OverlapBox(PosInWorld, Vector3.one * .5f))
+                {
+                    if (collider.TryGetComponent(out TileBehaviour tileBehaviour))
+                    {
+                        return tileBehaviour;
+                    }
+                }
+                return null;
+            }
+        }
+
         public float topHeight;
         public float bottomHeight;
         public float midHeight => (topHeight + bottomHeight) / 2f;
