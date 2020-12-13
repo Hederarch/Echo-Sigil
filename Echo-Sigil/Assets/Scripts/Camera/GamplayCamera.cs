@@ -41,7 +41,7 @@ public class GamplayCamera : MonoBehaviour
     public static Action<Vector2> CameraMoved;
 
 
-    private void Start()
+    public void Start()
     {
         cam = GetComponent<Camera>();
         cam.orthographic = true;

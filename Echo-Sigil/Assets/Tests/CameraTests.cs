@@ -12,7 +12,7 @@ namespace Camera_Tests
             for (float angle = 0; angle < Mathf.PI * 2f; angle += Mathf.PI / 4f)
             {
                 camera.transform.position = GamplayCamera.CalcPostion(Vector3.zero, angle, 4, 4);
-                Assert.AreEqual(-4, camera.transform.position.z, " Angle was " + (angle * Mathf.Rad2Deg));
+                Assert.AreEqual(4, camera.transform.position.z, " Angle was " + (angle * Mathf.Rad2Deg));
             }
         }
         [Test]
@@ -48,6 +48,15 @@ namespace Camera_Tests
     }
     class selection
     {
-
+        [Test]
+        public void center_sceen_returns_tile()
+        {
+            TileMap.MapReader.GeneratePhysicalMap(new TileMap.Map(1, 1));
+            GamplayCamera camera = new GameObject("Test Camera").AddComponent<GamplayCamera>();
+            camera.Start();
+            camera.transform.position = GamplayCamera.CalcPostion(new Vector3(0, 0, 1), 0, 4, 4);
+            Cursor.GetCursor(out TileMap.TileBehaviour tileBehaviour, true);
+            Assert.IsNotNull(tileBehaviour);
+        }
     }
 }

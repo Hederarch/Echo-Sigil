@@ -17,7 +17,7 @@ public class CursorBehaviour : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        if(GamplayCamera.instance != null)
+        if (GamplayCamera.instance != null)
         {
             Gizmos.color = Color.blue;
             Vector3 centered = GamplayCamera.instance.cam.ScreenToWorldPoint(new Vector3(GamplayCamera.instance.cam.pixelWidth * .5f, GamplayCamera.instance.cam.pixelHeight * .5f, 0));
@@ -50,7 +50,7 @@ public static class Cursor
 
     public static void GetCursor()
     {
-        if(behaviour == null)
+        if (behaviour == null)
         {
             behaviour = new GameObject("Cursor", typeof(CursorBehaviour)).GetComponent<CursorBehaviour>();
         }
@@ -59,13 +59,13 @@ public static class Cursor
 
     public static Vector3 GetCursor(bool centerMouse) => GetCursor(out TileMap.TileBehaviour tileBehaviour, centerMouse);
 
-    public static Vector3 GetCursor(out TileMap.TileBehaviour tileBehaviour,bool centerMouse)
+    public static Vector3 GetCursor(out TileMap.TileBehaviour tileBehaviour, bool centerMouse)
     {
         TileMap.Tile tile = null;
         Vector3 from = GamplayCamera.instance.cam.ScreenToWorldPoint(centerMouse ? new Vector3(GamplayCamera.instance.cam.pixelWidth * .5f, GamplayCamera.instance.cam.pixelHeight * .5f, 0) : Input.mousePosition);
         if (Physics.Raycast(from, GamplayCamera.instance.transform.forward, out RaycastHit hit))
         {
-            
+
             if (hit.collider.TryGetComponent(out Unit unit))
             {
                 tile = unit.CurTile;
@@ -90,7 +90,7 @@ public static class Cursor
     public static Vector3 WorldPointToZ0(Vector3 position, Vector3 forward)
     {
         float degree = Vector3.Angle(forward, Vector3.back) * Mathf.Deg2Rad;
-        float distance = position.z/ Mathf.Cos(degree);
+        float distance = position.z / Mathf.Cos(degree);
         return position + forward.normalized * distance;
     }
 }
@@ -102,7 +102,7 @@ public class CursorEditor : Editor
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-        Cursor.locked = EditorGUILayout.Toggle("Locked",Cursor.locked);
+        Cursor.locked = EditorGUILayout.Toggle("Locked", Cursor.locked);
     }
 }
 #endif

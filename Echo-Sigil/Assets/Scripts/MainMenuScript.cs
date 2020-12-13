@@ -35,7 +35,6 @@ public class MainMenuScript : MonoBehaviour
         mainMenuElements.SetActive(false);
         Instantiate(gameplayGUIElements, canvas);
         TurnManager.Reset();
-        MapReader.GenerateVirtualMap(map);
         MapReader.GeneratePhysicalMap(map);
         TurnManager.StartTurn();
     }

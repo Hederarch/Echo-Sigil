@@ -23,6 +23,10 @@ namespace TileMap
         private static int[] numTile;
         public static List<Unit> implements = new List<Unit>();
 
+        public static string mapName;
+        public static string mapQuest;
+        public static int mapModPathIndex;
+
         public static Texture2D[] spritePallate;
 
         public static Map Map => new Map(tiles, numTile, sizeX, sizeY, implements.ToArray());
@@ -44,9 +48,15 @@ namespace TileMap
 
         public static void GeneratePhysicalMap(Map map)
         {
+            GenerateVirtualMap(map);
+            GeneratePhysicalMap();
+        }
+
+        private static void GeneratePhysicalMap()
+        {
             ResetTileParent();
 
-            spritePallate = map.readyForSave ? SaveSystem.Tile.LoadPallate(map.modPathIndex, map.quest) : TileTextureManager.GetDebugPallate();
+            spritePallate = mapName != "" && mapQuest != "" ? SaveSystem.Tile.LoadPallate(mapModPathIndex, mapQuest) : TileTextureManager.GetDebugPallate();
 
             foreach (Tile tile in tiles)
             {
@@ -67,6 +77,10 @@ namespace TileMap
         public static void GenerateVirtualMap(Map map)
         {
             ResetTileParent();
+
+            mapName = map.name;
+            mapQuest = map.quest;
+            mapModPathIndex = map.modPathIndex;
 
             sizeX = map.sizeX;
             sizeY = map.sizeY;

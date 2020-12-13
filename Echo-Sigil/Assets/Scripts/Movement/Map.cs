@@ -129,6 +129,16 @@ namespace TileMap
                 mapTile.unit = (MapImplement)unit;
             }
         }
+
+        public Map(string name, string quest, int modPathIndex, Tile[] tiles, int[] numTile, int sizeX, int sizeY, Unit[] units) : this(tiles, numTile, sizeX, sizeY, units)
+        {
+            this.name = name;
+            this.quest = quest;
+            this.modPathIndex = modPathIndex;
+            readyForSave = name != "" && quest != "";
+
+        }
+
     }
     [Serializable]
     public class MapImplement
