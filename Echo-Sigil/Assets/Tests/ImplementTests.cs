@@ -78,6 +78,15 @@ namespace Implement_Tests
             }
 
         }
+        class inistalization
+        {
+            [Test]
+            public void mapreader_sets_spriterender_hieght_defualt()
+            {
+                TileMap.MapReader.GeneratePhysicalMap(new TileMap.Map(1, 1));
+                Assert.AreEqual(0,TileMap.MapReader.implements[0].unitSprite.transform.position.z);
+            }
+        }
     }
     namespace Pathfinding
     {

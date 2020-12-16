@@ -9,13 +9,25 @@ using TileMap;
 /// </summary>
 public class Unit : FacesCamera, ITurn
 {
-    public TilePos posInGrid => MapReader.WorldToGridSpace(transform.position);
+    public TilePos PosInGrid
+    {
+        get
+        {
+            return MapReader.WorldToGridSpace(transform.position);
+        }
+        set
+        {
+            transform.position = MapReader.GridToWorldSpace(value);
+        }
+    }
 
-    public Tile CurTile => MapReader.GetTile(posInGrid);
+    public Tile CurTile => MapReader.GetTile(PosInGrid);
 
     public static Action<Unit> IsTurnEvent;
 
     public virtual string Tag => gameObject.tag;
+
+    public Implement implement;
 
     public virtual void BeginTurn()
     {
@@ -24,23 +36,21 @@ public class Unit : FacesCamera, ITurn
 
     public virtual void EndTurn()
     {
-        
+
     }
 
-    public void SetPos(TilePos tilePos)
-    {
-        transform.position = MapReader.GridToWorldSpace(tilePos);
-    }
-
-    public void SetSprite()
+    public void SetSprite(Sprite sprite)
     {
         GameObject spriteRender = new GameObject(name + " Sprite Renderer");
         spriteRender.transform.parent = transform;
-        spriteRender.transform.localPosition = new Vector3(0, 0, .1f);
         SpriteRenderer spriteRenderer = spriteRender.AddComponent<SpriteRenderer>();
         unitSprite = spriteRenderer;
-        spriteRenderer.spriteSortPoint = SpriteSortPoint.Pivot;
-        spriteRender.AddComponent<BoxCollider>().size = new Vector3(1, 1, .2f);
+        unitSprite.sprite = sprite;
+        BoxCollider boxCollider = spriteRender.AddComponent<BoxCollider>();
+        boxCollider.size = new Vector3(1, 1, .2f);
+        //sprites pivot is at the bottom, this is to compensate.
+        boxCollider.center = Vector3.up * .5f;
+        
     }
 
     public void SetValues(MapImplement.MovementSettings movementSettings)
@@ -53,7 +63,14 @@ public class Unit : FacesCamera, ITurn
 
     }
 
-    public static Unit GetUnit(MapImplement mapImplement)
+    private void SetValues(Implement implement)
+    {
+        SetSprite(implement.baseSprite);
+        name = implement.name;
+        this.implement = implement;
+    }
+
+    public static Unit GetUnit(MapImplement mapImplement, int modPathIndex)
     {
         if (mapImplement != null)
         {
@@ -76,10 +93,9 @@ public class Unit : FacesCamera, ITurn
             unit.SetValues(mapImplement.movementSettings);
             unit.SetValues(mapImplement.battleSettings);
 
-            unit.SetSprite();
-            unit.SetPos(mapImplement.posInGrid);
+            unit.PosInGrid = mapImplement.posInGrid;
 
-            
+            unit.SetValues(SaveSystem.Unit.GetImplement(mapImplement.name, modPathIndex));
 
             return unit;
         }

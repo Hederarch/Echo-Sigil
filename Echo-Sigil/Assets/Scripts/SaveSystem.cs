@@ -8,7 +8,7 @@ namespace SaveSystem
 {
     public static class Tile
     {
-        public static Texture2D DefaultTiileTexture => PNG.LoadPNG(PNG.SpritesFolderPath + "/DefaultTileTexture.png");
+        public static Texture2D DefaultTileTexture => PNG.LoadPNG(PNG.SpritesFolderPath + "/DefaultTileTexture.png");
 
         public static Sprite CursorSprite
         {
@@ -43,13 +43,18 @@ namespace SaveSystem
             if (!Directory.Exists(path))
             {
                 Debug.LogError("Pallate folder does not exist in " + quest + " directory. Are you sure this is a quest folder?");
-                return null;
+                return GetDebugPallate();
             }
             for (int i = 0; File.Exists(path + i + ".png"); i++)
             {
                 spritePallate.Add(PNG.LoadPNG(path + i + ".png"));
             }
             return spritePallate.ToArray();
+        }
+    
+        public static Texture2D[] GetDebugPallate()
+        {
+            return new Texture2D[1] { DefaultTileTexture };
         }
     }
     public static class Map
@@ -120,12 +125,17 @@ namespace SaveSystem
         public static string SpritesFolderPath => Application.dataPath + "/Sprites";
         public static Texture2D LoadPNG(string filePath)
         {
+            Path.ChangeExtension(filePath, "png");
             if (File.Exists(filePath))
             {
                 byte[] fileData;
                 fileData = File.ReadAllBytes(filePath);
                 Texture2D tex = new Texture2D(2, 2, TextureFormat.RGBA32, true);
                 tex.LoadImage(fileData); //..this will auto-resize the texture dimensions.
+
+                tex.filterMode = FilterMode.Point;
+                tex.wrapMode = TextureWrapMode.Clamp;
+                tex.name = Path.GetFileNameWithoutExtension(filePath);
 
                 return tex;
             }
@@ -146,6 +156,31 @@ namespace SaveSystem
             byte[] fileData;
             fileData = texture.EncodeToPNG();
             File.WriteAllBytes(filePath, fileData);
+        }
+    }
+    public static class Unit
+    {
+        public static Sprite GetDefaultBaseSprite()
+        {
+            Texture2D texture2D = PNG.LoadPNG(PNG.SpritesFolderPath + "/the_guy.png");
+            Sprite sprite = Sprite.Create(texture2D, new Rect(0, 0, texture2D.width, texture2D.height), new Vector2(.5f, 0), texture2D.width);
+            sprite.name = "Defualt Unit Base Sprite";
+            return sprite;
+        }
+
+        public static Implement GetDefaultImplement()
+        {
+            return new Implement("Defualt", GetDefaultBaseSprite());
+        }
+
+        internal static AnimatorOverrideController GetAnimationControler(string name, Sprite baseSprite)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static Implement GetImplement(string name, int modPathIndex)
+        {
+            return GetDefaultImplement();
         }
     }
     public struct ModPath

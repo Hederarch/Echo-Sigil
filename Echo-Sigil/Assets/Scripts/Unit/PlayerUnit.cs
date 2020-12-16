@@ -14,4 +14,14 @@ public class PlayerUnit : Unit
         base.BeginTurn();
         Cursor.GetCursor();
     }
+
+    public override Color GetTeamColor()
+    {
+        return Color.green;
+    }
+
+    public override Texture2D GetTeamTexture()
+    {
+        return base.GetTeamTexture();
+    }
 }

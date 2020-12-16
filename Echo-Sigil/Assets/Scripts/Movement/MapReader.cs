@@ -56,7 +56,7 @@ namespace TileMap
         {
             ResetTileParent();
 
-            spritePallate = mapName != "" && mapQuest != "" ? SaveSystem.Tile.LoadPallate(mapModPathIndex, mapQuest) : TileTextureManager.GetDebugPallate();
+            spritePallate = mapName != "" && mapQuest != "" ? SaveSystem.Tile.LoadPallate(mapModPathIndex, mapQuest) : SaveSystem.Tile.GetDebugPallate();
 
             foreach (Tile tile in tiles)
             {
@@ -91,7 +91,7 @@ namespace TileMap
             foreach (MapTilePair mapTilePair in map)
             {
                 tiles[mapTilePair.index] = MapTile.ConvertTile(mapTilePair.mapTile, mapTilePair.tilePos.x, mapTilePair.tilePos.y);
-                Unit.GetUnit(mapTilePair.mapTile.unit);
+                Unit.GetUnit(mapTilePair.mapTile.unit, mapModPathIndex);
             }
         }
 

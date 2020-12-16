@@ -125,7 +125,7 @@ namespace TileMap
 
             foreach (Unit unit in units)
             {
-                MapTile mapTile = GetMapTile(unit.posInGrid.x, unit.posInGrid.y, unit.posInGrid.z);
+                MapTile mapTile = GetMapTile(unit.PosInGrid.x, unit.PosInGrid.y, unit.PosInGrid.z);
                 mapTile.unit = (MapImplement)unit;
             }
         }

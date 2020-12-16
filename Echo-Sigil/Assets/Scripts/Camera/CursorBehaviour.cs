@@ -57,18 +57,20 @@ public static class Cursor
         behaviour.transform.position = GetCursor(locked);
     }
 
-    public static Vector3 GetCursor(bool centerMouse) => GetCursor(out TileMap.TileBehaviour tileBehaviour, centerMouse);
+    public static Vector3 GetCursor(bool centerMouse) => GetCursor(out Unit unit, out TileMap.TileBehaviour tileBehaviour, centerMouse);
 
-    public static Vector3 GetCursor(out TileMap.TileBehaviour tileBehaviour, bool centerMouse)
+    public static Vector3 GetCursor(out Unit unit, out TileMap.TileBehaviour tileBehaviour, bool centerMouse)
     {
         TileMap.Tile tile = null;
+        unit = null;
+        tileBehaviour = null;
         Vector3 from = GamplayCamera.instance.cam.ScreenToWorldPoint(centerMouse ? new Vector3(GamplayCamera.instance.cam.pixelWidth * .5f, GamplayCamera.instance.cam.pixelHeight * .5f, 0) : Input.mousePosition);
         if (Physics.Raycast(from, GamplayCamera.instance.transform.forward, out RaycastHit hit))
         {
-
-            if (hit.collider.TryGetComponent(out Unit unit))
+            if (hit.collider.TryGetComponent(out unit))
             {
                 tile = unit.CurTile;
+                tileBehaviour = tile.TileBehaviour;
             }
             else if (hit.collider.TryGetComponent(out tileBehaviour))
             {
@@ -76,15 +78,18 @@ public static class Cursor
             }
             if (tile != null)
             {
-                tileBehaviour = null;
-                Vector3 pos = tile.PosInWorld;
-                return pos += new Vector3(0, 0, .02f);
+                return tile.PosInWorld + new Vector3(0, 0, .02f);
             }
         }
-        Vector3 tilePos = TileMap.MapReader.AlignWorldPosToGrid(WorldPointToZ0(from, GamplayCamera.instance.transform.forward) + new Vector3(0, 0, .02f));
-        tile = TileMap.MapReader.GetTile(TileMap.MapReader.WorldToGridSpace(tilePos));
-        tileBehaviour = tile != null ? tile.TileBehaviour : null;
-        return tilePos;
+
+        Vector3 pos = TileMap.MapReader.AlignWorldPosToGrid(WorldPointToZ0(from, GamplayCamera.instance.transform.forward) + Vector3.forward * .02f);
+        tile = TileMap.MapReader.GetTile(TileMap.MapReader.WorldToGridSpace(pos));
+        if (tile != null)
+        {
+            pos = tile.PosInWorld + Vector3.forward * .02f;
+            tileBehaviour = tile.TileBehaviour;
+        }
+        return pos;
     }
 
     public static Vector3 WorldPointToZ0(Vector3 position, Vector3 forward)
@@ -102,7 +107,14 @@ public class CursorEditor : Editor
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
+        EditorGUILayout.BeginHorizontal();
         Cursor.locked = EditorGUILayout.Toggle("Locked", Cursor.locked);
+        Cursor.GetCursor(out Unit unit, out TileMap.TileBehaviour tileBehaviour, Cursor.locked);
+        if (tileBehaviour != null)
+        {
+            EditorGUILayout.LabelField((unit != null ? unit.ToString() : "nobody") + " at " + tileBehaviour.tile.posInGrid);
+        }
+        EditorGUILayout.EndHorizontal();
     }
 }
 #endif

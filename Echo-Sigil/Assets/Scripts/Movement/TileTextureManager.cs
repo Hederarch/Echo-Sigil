@@ -18,7 +18,7 @@ namespace TileMap
         public void OnValidate()
         {
             RawImage rawImage = GetComponent<RawImage>();
-            Texture2D texture = GetDebugTexture();
+            Texture2D texture = SaveSystem.Tile.DefaultTileTexture;
             if (border)
             {
                 Texture2D texture2d = new Texture2D(texture.width, texture.width / 10);
@@ -43,30 +43,7 @@ namespace TileMap
             return originalColor;
         }
 
-        public static Texture2D[] GetDebugPallate()
-        {
-            return new Texture2D[1] { GetDebugTexture() };
-        }
 
-        private static Texture2D GetDebugTexture()
-        {
-            Texture2D texture2D = SaveSystem.Tile.DefaultTiileTexture;
-
-            if (texture2D == null)
-            {
-                texture2D = new Texture2D(64, 64 * 3);
-                texture2D = GetTileTextureSection(texture2D, TileTextureSection.Top, true, true);
-                texture2D = GetTileTextureSection(texture2D, TileTextureSection.Border, true, true);
-                texture2D = GetTileTextureSection(texture2D, TileTextureSection.Edge, true, true);
-                texture2D = GetTileTextureSection(texture2D, TileTextureSection.Side, true, true);
-                texture2D = GetTileTextureSection(texture2D, TileTextureSection.Extents, true, true);
-            }
-
-            texture2D.wrapMode = TextureWrapMode.Clamp;
-            texture2D.filterMode = FilterMode.Point;
-            texture2D.name = "Debug Tile Texture";
-            return texture2D;
-        }
 
         public static Sprite GetTileSprite(int spriteIndex, TileTextureSection tileTextureSection, Tile tile = null)
         {
@@ -78,7 +55,7 @@ namespace TileMap
 
         public static Texture2D GetTileTexture(Texture2D texture, TileTextureSection tileTextureSection, bool debug = false, Tile tile = null)
         {
-            Texture2D sectionTexture = GetTileTextureSection(debug ? GetDebugTexture() : texture, tileTextureSection);
+            Texture2D sectionTexture = GetTileTextureSection(debug ? SaveSystem.Tile.DefaultTileTexture : texture, tileTextureSection);
 
             if (tile == null)
             {
@@ -284,7 +261,7 @@ namespace TileMap
         {
             if (debug)
             {
-                Texture2D texture2D = SaveSystem.Tile.DefaultTiileTexture;
+                Texture2D texture2D = SaveSystem.Tile.DefaultTileTexture;
                 if (texture2D != null)
                 {
                     texture = texture2D;

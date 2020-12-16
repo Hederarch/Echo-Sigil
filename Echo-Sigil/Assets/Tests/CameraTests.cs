@@ -46,17 +46,4 @@ namespace Camera_Tests
             Assert.IsTrue(Angle.Sign(Mathf.PI / 2f, Mathf.PI));
         }
     }
-    class selection
-    {
-        [Test]
-        public void center_sceen_returns_tile()
-        {
-            TileMap.MapReader.GeneratePhysicalMap(new TileMap.Map(1, 1));
-            GamplayCamera camera = new GameObject("Test Camera").AddComponent<GamplayCamera>();
-            camera.Start();
-            camera.transform.position = GamplayCamera.CalcPostion(new Vector3(0, 0, 1), 0, 4, 4);
-            Cursor.GetCursor(out TileMap.TileBehaviour tileBehaviour, true);
-            Assert.IsNotNull(tileBehaviour);
-        }
-    }
 }
