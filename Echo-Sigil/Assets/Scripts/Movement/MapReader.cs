@@ -127,7 +127,9 @@ namespace TileMap
         public static TilePos WorldToGridSpace(Vector3 posInWorld)
         {
             Vector3 realitivePosition = posInWorld - tileParent.position;
-            return new TilePos((int)Math.Abs(realitivePosition.x - mapHalfSize.x - .5f), (int)Math.Abs(realitivePosition.y - mapHalfSize.y - .5f), realitivePosition.z);
+            int x = (int)Math.Abs(realitivePosition.x - mapHalfSize.x - .5f);
+            int y = (int)Math.Abs(realitivePosition.y - mapHalfSize.y - .5f);
+            return new TilePos(x, y, realitivePosition.z);
         }
 
         public static TilePos WorldToGridSpace(float x, float y, float z) => WorldToGridSpace(new Vector3(x, y, z));

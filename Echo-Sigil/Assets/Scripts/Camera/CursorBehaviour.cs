@@ -15,28 +15,6 @@ public class CursorBehaviour : MonoBehaviour
         spriteRenderer.sprite = SaveSystem.Tile.CursorSprite;
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        if (GamplayCamera.instance != null)
-        {
-            Gizmos.color = Color.blue;
-            Vector3 centered = GamplayCamera.instance.cam.ScreenToWorldPoint(new Vector3(GamplayCamera.instance.cam.pixelWidth * .5f, GamplayCamera.instance.cam.pixelHeight * .5f, 0));
-            Vector3 to = Cursor.GetCursor(true);
-            Gizmos.DrawLine(centered, to);
-            Gizmos.color *= .5f;
-            to = Cursor.WorldPointToZ0(centered, GamplayCamera.instance.transform.forward);
-            Gizmos.DrawLine(centered, to);
-
-            Gizmos.color = Color.green;
-            Vector3 moused = GamplayCamera.instance.cam.ScreenToWorldPoint(Input.mousePosition);
-            to = Cursor.GetCursor(false);
-            Gizmos.DrawLine(moused, to);
-            Gizmos.color *= .5f;
-            to = Cursor.WorldPointToZ0(moused, GamplayCamera.instance.transform.forward);
-            Gizmos.DrawLine(moused, to);
-        }
-    }
-
     private void Update()
     {
         Cursor.GetCursor();
@@ -67,7 +45,7 @@ public static class Cursor
         Vector3 from = GamplayCamera.instance.cam.ScreenToWorldPoint(centerMouse ? new Vector3(GamplayCamera.instance.cam.pixelWidth * .5f, GamplayCamera.instance.cam.pixelHeight * .5f, 0) : Input.mousePosition);
         if (Physics.Raycast(from, GamplayCamera.instance.transform.forward, out RaycastHit hit))
         {
-            if (hit.collider.TryGetComponent(out unit))
+            if (hit.collider.transform.parent.TryGetComponent(out unit))
             {
                 tile = unit.CurTile;
                 tileBehaviour = tile.TileBehaviour;
@@ -75,6 +53,13 @@ public static class Cursor
             else if (hit.collider.TryGetComponent(out tileBehaviour))
             {
                 tile = tileBehaviour.tile;
+                foreach(Collider collider in Physics.OverlapBox(tile.PosInWorld,Vector3.one *.5f))
+                {
+                    if (collider.transform.parent.TryGetComponent(out unit))
+                    {
+                        break;
+                    }
+                }
             }
             if (tile != null)
             {
