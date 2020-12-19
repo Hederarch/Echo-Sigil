@@ -47,14 +47,26 @@ namespace Map_Tests
             public void grid_to_world_space_3x3()
             {
                 MapReader.GenerateVirtualMap(new Map(3, 3));
-                Assert.AreEqual(Vector3.one, MapReader.GridToWorldSpace(0, 0, 1));
+                for (int x = -1; x < 2; x++)
+                {
+                    for (int y = -1; y < 2; y++)
+                    {
+                        Assert.AreEqual(new Vector3(x, y, 1), MapReader.GridToWorldSpace(x + 1, y + 1, 1), new Vector2(x, y).ToString());
+                    }
+                }
             }
             [Test]
             public void grid_to_world_space_with_tile_parent_move()
             {
                 MapReader.GenerateVirtualMap(new Map(3, 3));
                 MapReader.tileParent.position += Vector3.one;
-                Assert.AreEqual(Vector3.one * 2 - Vector3.forward, MapReader.GridToWorldSpace(0, 0, 1));
+                for (int x = -1; x < 2; x++)
+                {
+                    for (int y = -1; y < 2; y++)
+                    {
+                        Assert.AreEqual(new Vector3(x, y, 1) + Vector3.one, MapReader.GridToWorldSpace(x + 1, y + 1, 1), new Vector2(x, y).ToString());
+                    }
+                }
             }
         }
         class world_to_grid_space
@@ -63,28 +75,23 @@ namespace Map_Tests
             public void world_to_grid_space_3x3_center()
             {
                 MapReader.GenerateVirtualMap(new Map(3, 3));
-                Assert.AreEqual(Vector2Int.zero, MapReader.WorldToGridSpace(Vector3.one));
+                Assert.AreEqual(Vector2Int.one, MapReader.WorldToGridSpace(Vector3.zero));
             }
             [Test]
             public void world_to_grid_space_3x3_1x1()
             {
                 MapReader.GenerateVirtualMap(new Map(3, 3));
-                Vector3 posInWorld = MapReader.GetTile(1, 1, 0, 2).PosInWorld;
-                TilePos actual = MapReader.WorldToGridSpace(posInWorld);
-                Assert.AreEqual(Vector2Int.one, actual);
+                Tile tile = MapReader.GetTile(1, 1, 0, 2);
+                Assert.AreEqual(tile.posInGrid, MapReader.WorldToGridSpace(tile.PosInWorld));
             }
             [Test]
             public void world_to_grid_space_3x3_0x0()
             {
                 MapReader.GenerateVirtualMap(new Map(3, 3));
-                Vector3 posInWorld = MapReader.GetTile(0, 0, 0, 2).PosInWorld;
-                TilePos actual = MapReader.WorldToGridSpace(posInWorld);
-                Assert.AreEqual(Vector2Int.zero, actual);
+                Tile tile = MapReader.GetTile(0, 0, 0, 2);
+                Assert.AreEqual(tile.posInGrid, MapReader.WorldToGridSpace(tile.PosInWorld));
             }
-        }
-        class out_of_bounds
-        {
-            class world_to_grid_space
+            class out_of_bounds
             {
                 [Test]
                 public void returns_null_positive_x()
@@ -99,6 +106,12 @@ namespace Map_Tests
                     Assert.Null(MapReader.GetTile(MapReader.WorldToGridSpace(new Vector3(0, 3, 1))));
                 }
                 [Test]
+                public void returns_null_positive()
+                {
+                    MapReader.GenerateVirtualMap(new Map(5, 5));
+                    Assert.Null(MapReader.GetTile(MapReader.WorldToGridSpace(new Vector3(3, 3, 1))));
+                }
+                [Test]
                 public void returns_null_negitive_x()
                 {
                     MapReader.GenerateVirtualMap(new Map(5, 5));
@@ -108,37 +121,26 @@ namespace Map_Tests
                 public void returns_null_negitive_y()
                 {
                     MapReader.GenerateVirtualMap(new Map(5, 5));
-                    Assert.Null(MapReader.GetTile(MapReader.WorldToGridSpace(new Vector3(0,-3,1))));
+                    Assert.Null(MapReader.GetTile(MapReader.WorldToGridSpace(new Vector3(0, -3, 1))));
                 }
-            }
-
-            [Test]
-            public void returns_null_positive_x()
-            {
-                MapReader.GenerateVirtualMap(new Map(5, 5));
-                Assert.Zero(MapReader.GetTiles(5, 0).Length);
-                Assert.Null(MapReader.GetTile(5, 0, 0, 1));
-            }
-            [Test]
-            public void returns_null_positive_y()
-            {
-                MapReader.GenerateVirtualMap(new Map(5, 5));
-                Assert.Zero(MapReader.GetTiles(0, 5).Length);
-                Assert.Null(MapReader.GetTile(0, 5, 0, 1));
-            }
-            [Test]
-            public void returns_null_negitive_x()
-            {
-                MapReader.GenerateVirtualMap(new Map(5, 5));
-                Assert.Zero(MapReader.GetTiles(-1, 0).Length);
-                Assert.Null(MapReader.GetTile(-1, 0, 0, 1));
-            }
-            [Test]
-            public void returns_null_negitive_y()
-            {
-                MapReader.GenerateVirtualMap(new Map(5, 5));
-                Assert.Zero(MapReader.GetTiles(0, -1).Length);
-                Assert.Null(MapReader.GetTile(0, -1, 0, 1));
+                [Test]
+                public void returns_null_negitive()
+                {
+                    MapReader.GenerateVirtualMap(new Map(5, 5));
+                    Assert.Null(MapReader.GetTile(MapReader.WorldToGridSpace(new Vector3(-3, -3, 1))));
+                }
+                [Test]
+                public void returns_null_positive_x_negitive_y()
+                {
+                    MapReader.GenerateVirtualMap(new Map(5, 5));
+                    Assert.Null(MapReader.GetTile(MapReader.WorldToGridSpace(new Vector3(3, -3, 1))));
+                }
+                [Test]
+                public void returns_null_negitive_x_positive_y()
+                {
+                    MapReader.GenerateVirtualMap(new Map(5, 5));
+                    Assert.Null(MapReader.GetTile(MapReader.WorldToGridSpace(new Vector3(-3, 3, 1))));
+                }
             }
         }
     }

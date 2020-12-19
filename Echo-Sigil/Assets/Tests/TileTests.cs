@@ -54,36 +54,6 @@ namespace Tile_Tests
         }
     }
 
-    class texture
-    {
-        [Test]
-        public void original_returns_original_texture()
-        {
-            Texture2D texture2D = new Texture2D(64, 64);
-            Assert.AreEqual(texture2D, TileTextureManager.GetTileTexture(texture2D, TileTextureSection.Original, false));
-        }
-
-        [Test]
-        public void top_returns_square()
-        {
-            int random = Random.Range(2, 256);
-            Texture2D texture2D = new Texture2D(random, random);
-            texture2D = TileTextureManager.GetTileTexture(texture2D, TileTextureSection.Top);
-            Assert.AreEqual(texture2D.width, texture2D.height);
-        }
-
-        [Test]
-        public void get_tile_border_returns_10_percent()
-        {
-            int random = Random.Range(2, 256);
-            Texture2D texture2D = new Texture2D(random, random + random / 10);
-            int width = texture2D.width;
-            texture2D = TileTextureManager.GetTileTexture(texture2D, TileTextureSection.Border);
-            Assert.AreEqual(width / 10, texture2D.height);
-        }
-
-    }
-
     class get_neighbor
     {
         [Test]

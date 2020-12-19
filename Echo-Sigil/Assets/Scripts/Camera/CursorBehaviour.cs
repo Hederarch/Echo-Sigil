@@ -53,7 +53,7 @@ public static class Cursor
             else if (hit.collider.TryGetComponent(out tileBehaviour))
             {
                 tile = tileBehaviour.tile;
-                foreach(Collider collider in Physics.OverlapBox(tile.PosInWorld,Vector3.one *.5f))
+                foreach (Collider collider in Physics.OverlapBox(tile.PosInWorld, Vector3.one * .1f))
                 {
                     if (collider.transform.parent.TryGetComponent(out unit))
                     {

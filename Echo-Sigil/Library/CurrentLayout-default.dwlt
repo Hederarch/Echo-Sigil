@@ -44,10 +44,10 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 534, y: 492}
-  m_MaxSize: {x: 18004, y: 14042}
+  m_MinSize: {x: 504, y: 342}
+  m_MaxSize: {x: 12004, y: 8042}
   vertical: 1
-  controlID: 121
+  controlID: 62
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -65,18 +65,18 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 782
+    width: 689
     height: 947
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 21}
   m_Panes:
   - {fileID: 13}
-  - {fileID: 21}
   - {fileID: 20}
   - {fileID: 12}
-  m_Selected: 1
-  m_LastSelected: 2
+  - {fileID: 21}
+  m_Selected: 3
+  m_LastSelected: 1
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -145,10 +145,10 @@ MonoBehaviour:
     y: 0
     width: 1920
     height: 947
-  m_MinSize: {x: 534, y: 492}
-  m_MaxSize: {x: 18004, y: 14042}
+  m_MinSize: {x: 504, y: 342}
+  m_MaxSize: {x: 12004, y: 8042}
   vertical: 0
-  controlID: 122
+  controlID: 63
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -187,14 +187,14 @@ MonoBehaviour:
   - {fileID: 11}
   m_Position:
     serializedVersion: 2
-    x: 782
+    x: 689
     y: 0
-    width: 498
+    width: 591
     height: 947
-  m_MinSize: {x: 232, y: 492}
-  m_MaxSize: {x: 10002, y: 14042}
+  m_MinSize: {x: 202, y: 342}
+  m_MaxSize: {x: 4002, y: 8042}
   vertical: 1
-  controlID: 126
+  controlID: 64
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -241,7 +241,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 498
+    width: 591
     height: 398
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
@@ -260,23 +260,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ProjectBrowser
+  m_Name: ConsoleWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
     x: 0
     y: 398
-    width: 498
+    width: 591
     height: 549
-  m_MinSize: {x: 232, y: 271}
-  m_MaxSize: {x: 10002, y: 10021}
-  m_ActualView: {fileID: 19}
+  m_MinSize: {x: 102, y: 121}
+  m_MaxSize: {x: 4002, y: 4021}
+  m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 19}
   - {fileID: 16}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -305,7 +305,7 @@ MonoBehaviour:
   m_ViewDataDictionary: {fileID: 0}
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 29528
+  m_LastSelectedObjectID: 37094
 --- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -451,9 +451,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 782
+    x: 689
     y: 471
-    width: 496
+    width: 589
     height: 528
   m_ViewDataDictionary: {fileID: 0}
 --- !u!114 &17
@@ -482,7 +482,7 @@ MonoBehaviour:
     height: 926
   m_ViewDataDictionary: {fileID: 0}
   m_Spl:
-    ID: 695
+    ID: 154
     splitterInitialOffset: 712
     currentActiveSplitter: -1
     realSizes: 83020000d5000000
@@ -554,9 +554,9 @@ MonoBehaviour:
       uniqueId: '[Tales From The Metahedron][suite]'
       name: Tales From The Metahedron
       fullName: Tales From The Metahedron
-      resultStatus: 2
-      duration: 7.733208
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 0.4387134
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -570,9 +570,9 @@ MonoBehaviour:
       uniqueId: '[Tests.dll][suite]'
       name: Tests.dll
       fullName: C:/Users/Unity/Documents/GitHub/Tales-From-the-Metaheadron/Echo-Sigil/Library/ScriptAssemblies/Tests.dll
-      resultStatus: 2
-      duration: 7.674136
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 0.2085637
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -587,7 +587,7 @@ MonoBehaviour:
       name: Camera_Tests
       fullName: Camera_Tests
       resultStatus: 1
-      duration: 0.0836524
+      duration: 0.1039803
       messages: 
       output: 
       stacktrace: 
@@ -603,7 +603,7 @@ MonoBehaviour:
       name: rotation
       fullName: Camera_Tests.rotation
       resultStatus: 1
-      duration: 0.0770376
+      duration: 0.0962019
       messages: 
       output: 
       stacktrace: 
@@ -619,7 +619,7 @@ MonoBehaviour:
       name: angle_sign_bigger_returns_minus
       fullName: Camera_Tests.rotation.angle_sign_bigger_returns_minus
       resultStatus: 1
-      duration: 0.0188522
+      duration: 0.0263435
       messages: 
       output: 
       stacktrace: 
@@ -636,7 +636,7 @@ MonoBehaviour:
       name: angle_sign_bigger_returns_plus
       fullName: Camera_Tests.rotation.angle_sign_bigger_returns_plus
       resultStatus: 1
-      duration: 0.0013702
+      duration: 0.0012731
       messages: 
       output: 
       stacktrace: 
@@ -653,7 +653,7 @@ MonoBehaviour:
       name: angle_sign_smaller_returns_minus
       fullName: Camera_Tests.rotation.angle_sign_smaller_returns_minus
       resultStatus: 1
-      duration: 0.0007892
+      duration: 0.0005662
       messages: 
       output: 
       stacktrace: 
@@ -670,7 +670,7 @@ MonoBehaviour:
       name: angle_sign_smaller_returns_plus
       fullName: Camera_Tests.rotation.angle_sign_smaller_returns_plus
       resultStatus: 1
-      duration: 0.0006418
+      duration: 0.0004412
       messages: 
       output: 
       stacktrace: 
@@ -687,7 +687,7 @@ MonoBehaviour:
       name: offset_from_foucus_consitent
       fullName: Camera_Tests.rotation.offset_from_foucus_consitent
       resultStatus: 1
-      duration: 0.0103104
+      duration: 0.0122079
       messages: 
       output: 
       stacktrace: 
@@ -704,7 +704,7 @@ MonoBehaviour:
       name: offset_from_Z0_consitent
       fullName: Camera_Tests.rotation.offset_from_Z0_consitent
       resultStatus: 1
-      duration: 0.0016072
+      duration: 0.0012476
       messages: 
       output: 
       stacktrace: 
@@ -721,7 +721,7 @@ MonoBehaviour:
       name: Implement_Tests
       fullName: Implement_Tests
       resultStatus: 1
-      duration: 0.270718
+      duration: 0.2027886
       messages: 
       output: 
       stacktrace: 
@@ -737,7 +737,7 @@ MonoBehaviour:
       name: Pathfinding
       fullName: Implement_Tests.Pathfinding
       resultStatus: 1
-      duration: 0.1046682
+      duration: 0.0949093
       messages: 
       output: 
       stacktrace: 
@@ -753,7 +753,7 @@ MonoBehaviour:
       name: a_star
       fullName: Implement_Tests.Pathfinding.a_star
       resultStatus: 1
-      duration: 0.043384
+      duration: 0.0344322
       messages: 
       output: 
       stacktrace: 
@@ -769,7 +769,7 @@ MonoBehaviour:
       name: long_path_contains_middle_item
       fullName: Implement_Tests.Pathfinding.a_star.long_path_contains_middle_item
       resultStatus: 1
-      duration: 0.0086383
+      duration: 0.0121506
       messages: 
       output: 
       stacktrace: 
@@ -786,7 +786,7 @@ MonoBehaviour:
       name: long_path_does_not_contains_unwalkable_middle_item
       fullName: Implement_Tests.Pathfinding.a_star.long_path_does_not_contains_unwalkable_middle_item
       resultStatus: 1
-      duration: 0.0014524
+      duration: 0.0014327
       messages: 
       output: 
       stacktrace: 
@@ -803,7 +803,7 @@ MonoBehaviour:
       name: long_path_fails_when_too_long
       fullName: Implement_Tests.Pathfinding.a_star.long_path_fails_when_too_long
       resultStatus: 1
-      duration: 0.0007822
+      duration: 0.0008077
       messages: 
       output: 
       stacktrace: 
@@ -820,7 +820,7 @@ MonoBehaviour:
       name: long_path_sucsessful
       fullName: Implement_Tests.Pathfinding.a_star.long_path_sucsessful
       resultStatus: 1
-      duration: 0.0010021
+      duration: 0.001169
       messages: 
       output: 
       stacktrace: 
@@ -837,7 +837,7 @@ MonoBehaviour:
       name: short_path_contains_middle_item
       fullName: Implement_Tests.Pathfinding.a_star.short_path_contains_middle_item
       resultStatus: 1
-      duration: 0.0008563
+      duration: 0.0015076
       messages: 
       output: 
       stacktrace: 
@@ -854,7 +854,7 @@ MonoBehaviour:
       name: short_path_does_not_contains_unwalkable_middle_item
       fullName: Implement_Tests.Pathfinding.a_star.short_path_does_not_contains_unwalkable_middle_item
       resultStatus: 1
-      duration: 0.0008605
+      duration: 0.0009528
       messages: 
       output: 
       stacktrace: 
@@ -871,7 +871,7 @@ MonoBehaviour:
       name: short_path_sucsessful
       fullName: Implement_Tests.Pathfinding.a_star.short_path_sucsessful
       resultStatus: 1
-      duration: 0.0007024
+      duration: 0.0008777
       messages: 
       output: 
       stacktrace: 
@@ -888,7 +888,7 @@ MonoBehaviour:
       name: bfs
       fullName: Implement_Tests.Pathfinding.bfs
       resultStatus: 1
-      duration: 0.032637
+      duration: 0.0363048
       messages: 
       output: 
       stacktrace: 
@@ -904,7 +904,7 @@ MonoBehaviour:
       name: long_path_does_not_contains_unwalkable_middle_item
       fullName: Implement_Tests.Pathfinding.bfs.long_path_does_not_contains_unwalkable_middle_item
       resultStatus: 1
-      duration: 0.0060056
+      duration: 0.0086759
       messages: 
       output: 
       stacktrace: 
@@ -921,7 +921,7 @@ MonoBehaviour:
       name: long_path_fails_when_too_long
       fullName: Implement_Tests.Pathfinding.bfs.long_path_fails_when_too_long
       resultStatus: 1
-      duration: 0.0011508
+      duration: 0.001148
       messages: 
       output: 
       stacktrace: 
@@ -938,7 +938,7 @@ MonoBehaviour:
       name: long_path_sucsessful
       fullName: Implement_Tests.Pathfinding.bfs.long_path_sucsessful
       resultStatus: 1
-      duration: 0.0011592
+      duration: 0.0011666
       messages: 
       output: 
       stacktrace: 
@@ -955,7 +955,7 @@ MonoBehaviour:
       name: short_path_contains_middle_item
       fullName: Implement_Tests.Pathfinding.bfs.short_path_contains_middle_item
       resultStatus: 1
-      duration: 0.0007717
+      duration: 0.0007451
       messages: 
       output: 
       stacktrace: 
@@ -972,7 +972,7 @@ MonoBehaviour:
       name: short_path_does_not_contains_unwalkable_middle_item
       fullName: Implement_Tests.Pathfinding.bfs.short_path_does_not_contains_unwalkable_middle_item
       resultStatus: 1
-      duration: 0.0007699
+      duration: 0.0008786
       messages: 
       output: 
       stacktrace: 
@@ -989,7 +989,7 @@ MonoBehaviour:
       name: short_path_sucsessful
       fullName: Implement_Tests.Pathfinding.bfs.short_path_sucsessful
       resultStatus: 1
-      duration: 0.000995
+      duration: 0.0006302
       messages: 
       output: 
       stacktrace: 
@@ -1006,7 +1006,7 @@ MonoBehaviour:
       name: Unit
       fullName: Implement_Tests.Unit
       resultStatus: 1
-      duration: 0.1269091
+      duration: 0.19992
       messages: 
       output: 
       stacktrace: 
@@ -1022,7 +1022,7 @@ MonoBehaviour:
       name: inistalization
       fullName: Implement_Tests.Unit.inistalization
       resultStatus: 1
-      duration: 0.0746895
+      duration: 0.1800221
       messages: 
       output: 
       stacktrace: 
@@ -1038,7 +1038,7 @@ MonoBehaviour:
       name: mapreader_sets_spriterender_hieght_defualt
       fullName: Implement_Tests.Unit.inistalization.mapreader_sets_spriterender_hieght_defualt
       resultStatus: 1
-      duration: 0.0698513
+      duration: 0.1316073
       messages: 
       output: 
       stacktrace: 
@@ -1055,7 +1055,7 @@ MonoBehaviour:
       name: turn_manager
       fullName: Implement_Tests.Unit.turn_manager
       resultStatus: 1
-      duration: 0.0352112
+      duration: 0.0277723
       messages: 
       output: 
       stacktrace: 
@@ -1071,7 +1071,7 @@ MonoBehaviour:
       name: check_for_win_returns_lose_on_player_win
       fullName: Implement_Tests.Unit.turn_manager.check_for_win_returns_lose_on_player_win
       resultStatus: 1
-      duration: 0.0033146
+      duration: 0.0012481
       messages: 
       output: 
       stacktrace: 
@@ -1088,7 +1088,7 @@ MonoBehaviour:
       name: check_for_win_returns_win_on_player_win
       fullName: Implement_Tests.Unit.turn_manager.check_for_win_returns_win_on_player_win
       resultStatus: 1
-      duration: 0.000762
+      duration: 0.0006336
       messages: 
       output: 
       stacktrace: 
@@ -1104,9 +1104,9 @@ MonoBehaviour:
       uniqueId: Tests.dll/[Map_Tests][suite]
       name: Map_Tests
       fullName: Map_Tests
-      resultStatus: 2
-      duration: 7.6684976
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 0.2087915
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1120,9 +1120,9 @@ MonoBehaviour:
       uniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.Convertions][suite]
       name: Convertions
       fullName: Map_Tests.Convertions
-      resultStatus: 2
-      duration: 7.654586
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 0.1387024
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1137,7 +1137,7 @@ MonoBehaviour:
       name: grid_to_world_space
       fullName: Map_Tests.Convertions.grid_to_world_space
       resultStatus: 1
-      duration: 0.0855084
+      duration: 0.0196319
       messages: 
       output: 
       stacktrace: 
@@ -1153,7 +1153,7 @@ MonoBehaviour:
       name: grid_to_world_space_3x3
       fullName: Map_Tests.Convertions.grid_to_world_space.grid_to_world_space_3x3
       resultStatus: 1
-      duration: 0.0424958
+      duration: 0.0099666
       messages: 
       output: 
       stacktrace: 
@@ -1170,7 +1170,7 @@ MonoBehaviour:
       name: grid_to_world_space_with_tile_parent_move
       fullName: Map_Tests.Convertions.grid_to_world_space.grid_to_world_space_with_tile_parent_move
       resultStatus: 1
-      duration: 0.0062324
+      duration: 0.0033345
       messages: 
       output: 
       stacktrace: 
@@ -1182,186 +1182,12 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1027
       parentUniqueId: Tests.dll/Map_Tests/Convertions/[Tests][Map_Tests.Convertions.grid_to_world_space][suite]
-    - id: 1026
-      uniqueId: Tests.dll/Map_Tests/Convertions/[Tests][Map_Tests.Convertions.out_of_bounds][suite]
-      name: out_of_bounds
-      fullName: Map_Tests.Convertions.out_of_bounds
-      resultStatus: 1
-      duration: 0.0797855
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1061
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.Convertions][suite]
-    - id: 1029
-      uniqueId: Tests.dll/Map_Tests/Convertions/out_of_bounds/[Tests][Map_Tests.Convertions.out_of_bounds.returns_null_negitive_x]
-      name: returns_null_negitive_x
-      fullName: Map_Tests.Convertions.out_of_bounds.returns_null_negitive_x
-      resultStatus: 1
-      duration: 0.017385
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1026
-      parentUniqueId: Tests.dll/Map_Tests/Convertions/[Tests][Map_Tests.Convertions.out_of_bounds][suite]
-    - id: 1030
-      uniqueId: Tests.dll/Map_Tests/Convertions/out_of_bounds/[Tests][Map_Tests.Convertions.out_of_bounds.returns_null_negitive_y]
-      name: returns_null_negitive_y
-      fullName: Map_Tests.Convertions.out_of_bounds.returns_null_negitive_y
-      resultStatus: 1
-      duration: 0.0026282
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1026
-      parentUniqueId: Tests.dll/Map_Tests/Convertions/[Tests][Map_Tests.Convertions.out_of_bounds][suite]
-    - id: 1027
-      uniqueId: Tests.dll/Map_Tests/Convertions/out_of_bounds/[Tests][Map_Tests.Convertions.out_of_bounds.returns_null_positive_x]
-      name: returns_null_positive_x
-      fullName: Map_Tests.Convertions.out_of_bounds.returns_null_positive_x
-      resultStatus: 1
-      duration: 0.0038651
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1026
-      parentUniqueId: Tests.dll/Map_Tests/Convertions/[Tests][Map_Tests.Convertions.out_of_bounds][suite]
-    - id: 1028
-      uniqueId: Tests.dll/Map_Tests/Convertions/out_of_bounds/[Tests][Map_Tests.Convertions.out_of_bounds.returns_null_positive_y]
-      name: returns_null_positive_y
-      fullName: Map_Tests.Convertions.out_of_bounds.returns_null_positive_y
-      resultStatus: 1
-      duration: 0.0034121
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1026
-      parentUniqueId: Tests.dll/Map_Tests/Convertions/[Tests][Map_Tests.Convertions.out_of_bounds][suite]
-    - id: 1058
-      uniqueId: Tests.dll/Map_Tests/Convertions/[Tests][Map_Tests.Convertions.out_of_bounds+world_to_grid_space][suite]
-      name: out_of_bounds+world_to_grid_space
-      fullName: Map_Tests.Convertions.out_of_bounds+world_to_grid_space
-      resultStatus: 2
-      duration: 7.6353474
-      messages: One or more child tests had errors
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1066
-      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.Convertions][suite]
-    - id: 1061
-      uniqueId: Tests.dll/Map_Tests/Convertions/out_of_bounds+world_to_grid_space/[Tests][Map_Tests.Convertions.out_of_bounds+world_to_grid_space.returns_null_negitive_x]
-      name: returns_null_negitive_x
-      fullName: Map_Tests.Convertions.out_of_bounds+world_to_grid_space.returns_null_negitive_x
-      resultStatus: 1
-      duration: 2.5457046
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1058
-      parentUniqueId: Tests.dll/Map_Tests/Convertions/[Tests][Map_Tests.Convertions.out_of_bounds+world_to_grid_space][suite]
-    - id: 1062
-      uniqueId: Tests.dll/Map_Tests/Convertions/out_of_bounds+world_to_grid_space/[Tests][Map_Tests.Convertions.out_of_bounds+world_to_grid_space.returns_null_negitive_y]
-      name: returns_null_negitive_y
-      fullName: Map_Tests.Convertions.out_of_bounds+world_to_grid_space.returns_null_negitive_y
-      resultStatus: 1
-      duration: 1.7049024
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1058
-      parentUniqueId: Tests.dll/Map_Tests/Convertions/[Tests][Map_Tests.Convertions.out_of_bounds+world_to_grid_space][suite]
-    - id: 1059
-      uniqueId: Tests.dll/Map_Tests/Convertions/out_of_bounds+world_to_grid_space/[Tests][Map_Tests.Convertions.out_of_bounds+world_to_grid_space.returns_null_positive_x]
-      name: returns_null_positive_x
-      fullName: Map_Tests.Convertions.out_of_bounds+world_to_grid_space.returns_null_positive_x
-      resultStatus: 2
-      duration: 1.5581784
-      messages: "  Expected: null\r\n  But was:  <(0,2,1) Tile>\r\n"
-      output: 
-      stacktrace: 'at Map_Tests.Convertions.out_of_bounds+world_to_grid_space.returns_null_positive_x
-        () [0x0000e] in C:\Users\Unity\Documents\GitHub\Tales-From-the-Metaheadron\Echo-Sigil\Assets\Tests\MapTests.cs:93
-
-'
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1058
-      parentUniqueId: Tests.dll/Map_Tests/Convertions/[Tests][Map_Tests.Convertions.out_of_bounds+world_to_grid_space][suite]
-    - id: 1060
-      uniqueId: Tests.dll/Map_Tests/Convertions/out_of_bounds+world_to_grid_space/[Tests][Map_Tests.Convertions.out_of_bounds+world_to_grid_space.returns_null_positive_y]
-      name: returns_null_positive_y
-      fullName: Map_Tests.Convertions.out_of_bounds+world_to_grid_space.returns_null_positive_y
-      resultStatus: 2
-      duration: 1.8060424
-      messages: "  Expected: null\r\n  But was:  <(2,0,1) Tile>\r\n"
-      output: 
-      stacktrace: 'at Map_Tests.Convertions.out_of_bounds+world_to_grid_space.returns_null_positive_y
-        () [0x0000e] in C:\Users\Unity\Documents\GitHub\Tales-From-the-Metaheadron\Echo-Sigil\Assets\Tests\MapTests.cs:99
-
-'
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1058
-      parentUniqueId: Tests.dll/Map_Tests/Convertions/[Tests][Map_Tests.Convertions.out_of_bounds+world_to_grid_space][suite]
     - id: 1022
       uniqueId: Tests.dll/Map_Tests/Convertions/[Tests][Map_Tests.Convertions.world_to_grid_space][suite]
       name: world_to_grid_space
       fullName: Map_Tests.Convertions.world_to_grid_space
       resultStatus: 1
-      duration: 0.0353503
+      duration: 0.0399813
       messages: 
       output: 
       stacktrace: 
@@ -1377,7 +1203,7 @@ MonoBehaviour:
       name: world_to_grid_space_3x3_0x0
       fullName: Map_Tests.Convertions.world_to_grid_space.world_to_grid_space_3x3_0x0
       resultStatus: 1
-      duration: 0.0046985
+      duration: 0.0045425
       messages: 
       output: 
       stacktrace: 
@@ -1394,7 +1220,7 @@ MonoBehaviour:
       name: world_to_grid_space_3x3_1x1
       fullName: Map_Tests.Convertions.world_to_grid_space.world_to_grid_space_3x3_1x1
       resultStatus: 1
-      duration: 0.0034453
+      duration: 0.0030456
       messages: 
       output: 
       stacktrace: 
@@ -1411,7 +1237,7 @@ MonoBehaviour:
       name: world_to_grid_space_3x3_center
       fullName: Map_Tests.Convertions.world_to_grid_space.world_to_grid_space_3x3_center
       resultStatus: 1
-      duration: 0.003051
+      duration: 0.0045112
       messages: 
       output: 
       stacktrace: 
@@ -1423,12 +1249,164 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1022
       parentUniqueId: Tests.dll/Map_Tests/Convertions/[Tests][Map_Tests.Convertions.world_to_grid_space][suite]
+    - id: 1053
+      uniqueId: Tests.dll/Map_Tests/Convertions/[Tests][Map_Tests.Convertions.world_to_grid_space+out_of_bounds][suite]
+      name: world_to_grid_space+out_of_bounds
+      fullName: Map_Tests.Convertions.world_to_grid_space+out_of_bounds
+      resultStatus: 1
+      duration: 0.066086
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1065
+      parentUniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.Convertions][suite]
+    - id: 1059
+      uniqueId: Tests.dll/Map_Tests/Convertions/world_to_grid_space+out_of_bounds/[Tests][Map_Tests.Convertions.world_to_grid_space+out_of_bounds.returns_null_negitive]
+      name: returns_null_negitive
+      fullName: Map_Tests.Convertions.world_to_grid_space+out_of_bounds.returns_null_negitive
+      resultStatus: 1
+      duration: 0.004007
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1053
+      parentUniqueId: Tests.dll/Map_Tests/Convertions/[Tests][Map_Tests.Convertions.world_to_grid_space+out_of_bounds][suite]
+    - id: 1057
+      uniqueId: Tests.dll/Map_Tests/Convertions/world_to_grid_space+out_of_bounds/[Tests][Map_Tests.Convertions.world_to_grid_space+out_of_bounds.returns_null_negitive_x]
+      name: returns_null_negitive_x
+      fullName: Map_Tests.Convertions.world_to_grid_space+out_of_bounds.returns_null_negitive_x
+      resultStatus: 1
+      duration: 0.0045976
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1053
+      parentUniqueId: Tests.dll/Map_Tests/Convertions/[Tests][Map_Tests.Convertions.world_to_grid_space+out_of_bounds][suite]
+    - id: 1061
+      uniqueId: Tests.dll/Map_Tests/Convertions/world_to_grid_space+out_of_bounds/[Tests][Map_Tests.Convertions.world_to_grid_space+out_of_bounds.returns_null_negitive_x_positive_y]
+      name: returns_null_negitive_x_positive_y
+      fullName: Map_Tests.Convertions.world_to_grid_space+out_of_bounds.returns_null_negitive_x_positive_y
+      resultStatus: 1
+      duration: 0.0035011
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1053
+      parentUniqueId: Tests.dll/Map_Tests/Convertions/[Tests][Map_Tests.Convertions.world_to_grid_space+out_of_bounds][suite]
+    - id: 1058
+      uniqueId: Tests.dll/Map_Tests/Convertions/world_to_grid_space+out_of_bounds/[Tests][Map_Tests.Convertions.world_to_grid_space+out_of_bounds.returns_null_negitive_y]
+      name: returns_null_negitive_y
+      fullName: Map_Tests.Convertions.world_to_grid_space+out_of_bounds.returns_null_negitive_y
+      resultStatus: 1
+      duration: 0.0034535
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1053
+      parentUniqueId: Tests.dll/Map_Tests/Convertions/[Tests][Map_Tests.Convertions.world_to_grid_space+out_of_bounds][suite]
+    - id: 1056
+      uniqueId: Tests.dll/Map_Tests/Convertions/world_to_grid_space+out_of_bounds/[Tests][Map_Tests.Convertions.world_to_grid_space+out_of_bounds.returns_null_positive]
+      name: returns_null_positive
+      fullName: Map_Tests.Convertions.world_to_grid_space+out_of_bounds.returns_null_positive
+      resultStatus: 1
+      duration: 0.0053211
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1053
+      parentUniqueId: Tests.dll/Map_Tests/Convertions/[Tests][Map_Tests.Convertions.world_to_grid_space+out_of_bounds][suite]
+    - id: 1054
+      uniqueId: Tests.dll/Map_Tests/Convertions/world_to_grid_space+out_of_bounds/[Tests][Map_Tests.Convertions.world_to_grid_space+out_of_bounds.returns_null_positive_x]
+      name: returns_null_positive_x
+      fullName: Map_Tests.Convertions.world_to_grid_space+out_of_bounds.returns_null_positive_x
+      resultStatus: 1
+      duration: 0.0027417
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1053
+      parentUniqueId: Tests.dll/Map_Tests/Convertions/[Tests][Map_Tests.Convertions.world_to_grid_space+out_of_bounds][suite]
+    - id: 1060
+      uniqueId: Tests.dll/Map_Tests/Convertions/world_to_grid_space+out_of_bounds/[Tests][Map_Tests.Convertions.world_to_grid_space+out_of_bounds.returns_null_positive_x_negitive_y]
+      name: returns_null_positive_x_negitive_y
+      fullName: Map_Tests.Convertions.world_to_grid_space+out_of_bounds.returns_null_positive_x_negitive_y
+      resultStatus: 1
+      duration: 0.0027804
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1053
+      parentUniqueId: Tests.dll/Map_Tests/Convertions/[Tests][Map_Tests.Convertions.world_to_grid_space+out_of_bounds][suite]
+    - id: 1055
+      uniqueId: Tests.dll/Map_Tests/Convertions/world_to_grid_space+out_of_bounds/[Tests][Map_Tests.Convertions.world_to_grid_space+out_of_bounds.returns_null_positive_y]
+      name: returns_null_positive_y
+      fullName: Map_Tests.Convertions.world_to_grid_space+out_of_bounds.returns_null_positive_y
+      resultStatus: 1
+      duration: 0.0059305
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1053
+      parentUniqueId: Tests.dll/Map_Tests/Convertions/[Tests][Map_Tests.Convertions.world_to_grid_space+out_of_bounds][suite]
     - id: 1013
       uniqueId: Tests.dll/Map_Tests/[Tests][Map_Tests.map][suite]
       name: map
       fullName: Map_Tests.map
       resultStatus: 1
-      duration: 0.0352945
+      duration: 0.0354222
       messages: 
       output: 
       stacktrace: 
@@ -1444,7 +1422,7 @@ MonoBehaviour:
       name: map_can_not_return_null_1x1
       fullName: Map_Tests.map.map_can_not_return_null_1x1
       resultStatus: 1
-      duration: 0.0038901
+      duration: 0.0043262
       messages: 
       output: 
       stacktrace: 
@@ -1461,7 +1439,7 @@ MonoBehaviour:
       name: map_can_not_return_null_3x5
       fullName: Map_Tests.map.map_can_not_return_null_3x5
       resultStatus: 1
-      duration: 0.000868
+      duration: 0.001121
       messages: 
       output: 
       stacktrace: 
@@ -1478,7 +1456,7 @@ MonoBehaviour:
       name: new_map_overloads_equivalant
       fullName: Map_Tests.map.new_map_overloads_equivalant
       resultStatus: 1
-      duration: 0.001852
+      duration: 0.0015223
       messages: 
       output: 
       stacktrace: 
@@ -1495,7 +1473,7 @@ MonoBehaviour:
       name: new_map_sets_size
       fullName: Map_Tests.map.new_map_sets_size
       resultStatus: 1
-      duration: 0.001069
+      duration: 0.0009654
       messages: 
       output: 
       stacktrace: 
@@ -1512,7 +1490,7 @@ MonoBehaviour:
       name: new_maps_is_walkable
       fullName: Map_Tests.map.new_maps_is_walkable
       resultStatus: 1
-      duration: 0.0016875
+      duration: 0.0008894
       messages: 
       output: 
       stacktrace: 
@@ -1529,7 +1507,7 @@ MonoBehaviour:
       name: Tile_Tests
       fullName: Tile_Tests
       resultStatus: 1
-      duration: 0.111062
+      duration: 0.0734616
       messages: 
       output: 
       stacktrace: 
@@ -1545,7 +1523,7 @@ MonoBehaviour:
       name: get_neighbor
       fullName: Tile_Tests.get_neighbor
       resultStatus: 1
-      duration: 0.0245794
+      duration: 0.0157521
       messages: 
       output: 
       stacktrace: 
@@ -1561,7 +1539,7 @@ MonoBehaviour:
       name: tiles_find_neighbor
       fullName: Tile_Tests.get_neighbor.tiles_find_neighbor
       resultStatus: 1
-      duration: 0.0102328
+      duration: 0.0073206
       messages: 
       output: 
       stacktrace: 
@@ -1578,7 +1556,7 @@ MonoBehaviour:
       name: initialization
       fullName: Tile_Tests.initialization
       resultStatus: 1
-      duration: 0.033705
+      duration: 0.0328076
       messages: 
       output: 
       stacktrace: 
@@ -1594,7 +1572,7 @@ MonoBehaviour:
       name: new_tile_can_hold_height_value
       fullName: Tile_Tests.initialization.new_tile_can_hold_height_value
       resultStatus: 1
-      duration: 0.0013856
+      duration: 0.0007465
       messages: 
       output: 
       stacktrace: 
@@ -1611,7 +1589,7 @@ MonoBehaviour:
       name: new_tile_can_hold_walkable
       fullName: Tile_Tests.initialization.new_tile_can_hold_walkable
       resultStatus: 1
-      duration: 0.0008362
+      duration: 0.000638
       messages: 
       output: 
       stacktrace: 
@@ -1628,7 +1606,7 @@ MonoBehaviour:
       name: new_tile_can_not_return_null
       fullName: Tile_Tests.initialization.new_tile_can_not_return_null
       resultStatus: 1
-      duration: 0.0005219
+      duration: 0.0011818
       messages: 
       output: 
       stacktrace: 
@@ -1645,7 +1623,7 @@ MonoBehaviour:
       name: pos_in_grid_is_acurate_0x0
       fullName: Tile_Tests.initialization.pos_in_grid_is_acurate_0x0
       resultStatus: 1
-      duration: 0.0027812
+      duration: 0.0029059
       messages: 
       output: 
       stacktrace: 
@@ -1662,7 +1640,7 @@ MonoBehaviour:
       name: pos_in_grid_is_acurate_3x5
       fullName: Tile_Tests.initialization.pos_in_grid_is_acurate_3x5
       resultStatus: 1
-      duration: 0.0028729
+      duration: 0.0029968
       messages: 
       output: 
       stacktrace: 
@@ -1674,85 +1652,13 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1001
       parentUniqueId: Tests.dll/Tile_Tests/[Tests][Tile_Tests.initialization][suite]
-    - id: 1007
-      uniqueId: Tests.dll/Tile_Tests/[Tests][Tile_Tests.texture][suite]
-      name: texture
-      fullName: Tile_Tests.texture
-      resultStatus: 1
-      duration: 0.0282729
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1053
-      parentUniqueId: Tests.dll/[Tests][Tile_Tests][suite]
-    - id: 1010
-      uniqueId: Tests.dll/Tile_Tests/texture/[Tests][Tile_Tests.texture.get_tile_border_returns_10_percent]
-      name: get_tile_border_returns_10_percent
-      fullName: Tile_Tests.texture.get_tile_border_returns_10_percent
-      resultStatus: 1
-      duration: 0.0023434
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1007
-      parentUniqueId: Tests.dll/Tile_Tests/[Tests][Tile_Tests.texture][suite]
-    - id: 1008
-      uniqueId: Tests.dll/Tile_Tests/texture/[Tests][Tile_Tests.texture.original_returns_original_texture]
-      name: original_returns_original_texture
-      fullName: Tile_Tests.texture.original_returns_original_texture
-      resultStatus: 1
-      duration: 0.0013146
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1007
-      parentUniqueId: Tests.dll/Tile_Tests/[Tests][Tile_Tests.texture][suite]
-    - id: 1009
-      uniqueId: Tests.dll/Tile_Tests/texture/[Tests][Tile_Tests.texture.top_returns_square]
-      name: top_returns_square
-      fullName: Tile_Tests.texture.top_returns_square
-      resultStatus: 1
-      duration: 0.0028348
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1007
-      parentUniqueId: Tests.dll/Tile_Tests/[Tests][Tile_Tests.texture][suite]
-    m_ResultText: 'out_of_bounds+world_to_grid_space (7.635s)
-
-      ---
-
-      One
-      or more child tests had errors'
+    m_ResultText: inistalization (0.180s)
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 70173a3c
-      m_LastClickedID: 1010440048
-      m_ExpandedIDs: 335c20c867c4eacdf58144df0b2469df42ef4bee28bd3ff4e557abf72b220e145e2fcc1c0fb3812370173a3c26be873f24dae83f025e0a5347b72a58c76f405d371e5f68ffffff7f
+      m_SelectedIDs: 47b72a58
+      m_LastClickedID: 1479194439
+      m_ExpandedIDs: 5b3b5086335c20c867c4eacd0b2469df42ef4bee28bd3ff4e557abf72b220e147f90af200fb3812370173a3c26be873f24dae83f50b14747025e0a5347b72a58c76f405d2fef885d371e5f68ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1855,20 +1761,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Tests
+    - Assets/Scripts/Camera
   m_ViewMode: 1
   m_StartGridSize: 63
   m_LastFolders:
-  - Assets/Tests
+  - Assets/Scripts/Camera
   m_LastFoldersGridSize: 63
   m_LastProjectPath: C:\Users\Unity\Documents\GitHub\Tales-From-the-Metaheadron\Echo-Sigil
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 303b0000
-    m_LastClickedID: 15152
-    m_ExpandedIDs: 00000000123b0000143b0000163b0000183b00001a3b00001c3b00002c3b000000ca9a3b
+    m_SelectedIDs: 3e590000
+    m_LastClickedID: 22846
+    m_ExpandedIDs: 00000000123b0000143b0000163b0000183b00001a3b00001c3b00002a3b000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1921,8 +1827,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
+    m_SelectedInstanceIDs: a848ffff
+    m_LastClickedInstanceID: -46936
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000a0400000423b0000
     m_RenameOverlay:
@@ -1975,7 +1881,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 73
-    width: 781
+    width: 688
     height: 926
   m_ViewDataDictionary: {fileID: 0}
   m_SerializedViewNames: []
@@ -1986,7 +1892,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 781, y: 905}
+  m_TargetSize: {x: 688, y: 905}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -2001,8 +1907,8 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -390.5
-    m_HBaseRangeMax: 390.5
+    m_HBaseRangeMin: -344
+    m_HBaseRangeMax: 344
     m_VBaseRangeMin: -452.5
     m_VBaseRangeMax: 452.5
     m_HAllowExceedBaseRangeMin: 1
@@ -2022,23 +1928,23 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 781
+      width: 688
       height: 905
     m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 390.5, y: 452.5}
+    m_Translation: {x: 344, y: 452.5}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -390.5
+      x: -344
       y: -452.5
-      width: 781
+      width: 688
       height: 905
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 781, y: 926}
+  m_LastWindowPixelSize: {x: 688, y: 926}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -2067,7 +1973,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 73
-    width: 781
+    width: 688
     height: 926
   m_ViewDataDictionary: {fileID: 0}
   m_ShowContextualTools: 0
@@ -2080,9 +1986,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 135.69719, y: 39.42337, z: 14.661447}
+    m_Target: {x: 47.84706, y: -44.877724, z: -110.567604}
     speed: 2
-    m_Value: {x: 135.69719, y: 39.42337, z: 14.661447}
+    m_Value: {x: 47.84706, y: -44.877724, z: -110.567604}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -2128,13 +2034,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.09700594, y: -0.66794497, z: -0.09077835, w: -0.7327333}
+    m_Target: {x: -0.03606804, y: -0.965372, z: 0.1712117, w: -0.19532186}
     speed: 2
-    m_Value: {x: 0.09697203, y: -0.6677115, z: -0.09074662, w: -0.7324772}
+    m_Value: {x: -0.036055274, y: -0.9650304, z: 0.1711511, w: -0.19525273}
   m_Size:
-    m_Target: 73.023415
+    m_Target: 69.17421
     speed: 2
-    m_Value: 73.023415
+    m_Value: 69.17421
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -2180,17 +2086,17 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 782
+    x: 689
     y: 73
-    width: 496
+    width: 589
     height: 377
   m_ViewDataDictionary: {fileID: 0}
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 22e7ffff
+      m_SelectedIDs: ea18ffff
       m_LastClickedID: 0
-      m_ExpandedIDs: bce2ffff06e3ffffa8e3ffff94e4ffff78e5ffff18edffff0eeeffffb6efffff58f1ffff06f9ffff64fbffff
+      m_ExpandedIDs: 120affffe80cfffff418fffff818ffff681fffff6c1fffff2026ffff2426ffff942cffff982cffff4c41ffffb043ffff0c44ffff3447ffffa84dffff765bffffd268ffff0c6affffba6bffff986cffff5872ffff1473ffff4673ffff8a73ffffce73ffffac74fffff074ffffbe75ffff6277ffff4078ffffb078ffff0a79ffffc279ffff7c7affff287cffff6c7cffffb07cfffff47cffffd27dffffb07effff527fffff967fffffda7fffff8a80ffff3482ffff4483ffffe483ffff2a84ffffea85ffff2687ffff8487ffff4088ffffb28bffff4e91ffff7e9fffffe4a1ffff02b8ffffcab8ffff12b9ffffecbefffff0beffffa2bfffff1cc2ffff76c3ffffbcc4ffffe6c5ffff2cc7ffffc4c8ffff62cafffffacbffff40cdffffa4ceffff4acfffff9ecfffff36d1ffffced2fffffad4ffffd4daffffd8daffff9ae8ffffd4e9ffff24ebffffbaedffff08efffff90f6ffffeef6ffff46faffff64fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

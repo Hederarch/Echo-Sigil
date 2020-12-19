@@ -43,6 +43,7 @@ public class Unit : FacesCamera, ITurn
     {
         GameObject spriteRender = new GameObject(name + " Sprite Renderer");
         spriteRender.transform.parent = transform;
+        spriteRender.transform.localPosition = Vector3.zero;
         SpriteRenderer spriteRenderer = spriteRender.AddComponent<SpriteRenderer>();
         unitSprite = spriteRenderer;
         unitSprite.sprite = sprite;
@@ -50,7 +51,6 @@ public class Unit : FacesCamera, ITurn
         boxCollider.size = new Vector3(1, 1, .2f);
         //sprites pivot is at the bottom, this is to compensate.
         boxCollider.center = Vector3.up * .5f;
-        
     }
 
     public void SetValues(MapImplement.MovementSettings movementSettings)

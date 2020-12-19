@@ -10,6 +10,8 @@ namespace TileMap
     [RequireComponent(typeof(RawImage))]
     public class TileTextureManager : MonoBehaviour
     {
+        private enum TileTextureSection { Original, Top, Border, Edge, Side, Extents }
+
         public bool border = true;
         [HideInInspector]
         public bool leftEdge = false;
@@ -43,66 +45,45 @@ namespace TileMap
             return originalColor;
         }
 
-
-
-        public static Sprite GetTileSprite(int spriteIndex, TileTextureSection tileTextureSection, Tile tile = null)
+        public static Sprite GetTileTop(int spriteIndex, Tile tile = null)
         {
-            Texture2D texture = GetTileTexture(MapReader.spritePallate[spriteIndex], tileTextureSection, false, tile);
+            Texture2D texture = GetTileTop(MapReader.spritePallate[spriteIndex], tile);
             texture.wrapMode = TextureWrapMode.Clamp;
             texture.filterMode = FilterMode.Point;
             return Sprite.Create(texture, new Rect(Vector2.zero, new Vector2(texture.width, texture.height)), Vector2.one / 2f, texture.width);
         }
 
-        public static Texture2D GetTileTexture(Texture2D texture, TileTextureSection tileTextureSection, bool debug = false, Tile tile = null)
+        private static Texture2D GetTileTop(Texture2D texture, Tile tile)
         {
-            Texture2D sectionTexture = GetTileTextureSection(debug ? SaveSystem.Tile.DefaultTileTexture : texture, tileTextureSection);
-
-            if (tile == null)
+            Texture2D topTexture = new Texture2D(texture.width, texture.height);
+            topTexture.SetPixels(texture.GetPixels());
+            topTexture.Apply();
+            for (int y = -1; y <= 1; y++)
             {
-                return sectionTexture;
+                for (int x = -1; x <= 1; x++)
+                {
+                    if (Mathf.Abs(x) != Mathf.Abs(y))
+                    {
+                        Vector2Int checkDirection = new Vector2Int(x, y);
+                        topTexture = ApplyBorder(topTexture, tile, checkDirection);
+                    }
+                }
             }
-
-            switch (tileTextureSection)
+            topTexture = GetTileTextureSection(topTexture, TileTextureSection.Top);
+            Color[] colors = topTexture.GetPixels();
+            for (int i = 0; i < colors.Length; i++)
             {
-                case TileTextureSection.Top:
-                    Texture2D topTexture = new Texture2D(texture.width, texture.height);
-                    topTexture.SetPixels(texture.GetPixels());
-                    topTexture.Apply();
-                    for (int y = -1; y <= 1; y++)
-                    {
-                        for (int x = -1; x <= 1; x++)
-                        {
-                            if (Mathf.Abs(x) != Mathf.Abs(y))
-                            {
-                                Vector2Int checkDirection = new Vector2Int(x, y);
-                                topTexture = ApplyBorder(topTexture, tile, checkDirection);
-                            }
-                        }
-                    }
-                    topTexture = GetTileTextureSection(topTexture, TileTextureSection.Top);
-                    Color[] colors = topTexture.GetPixels();
-                    for (int i = 0; i < colors.Length; i++)
-                    {
-                        colors[i] = GetFogColor(colors[i], tile.topHeight);
-                    }
-                    topTexture.SetPixels(colors);
-                    topTexture.Apply();
-                    return topTexture;
-                case TileTextureSection.Side:
-                    return GetTileSide(texture, Mathf.RoundToInt(Mathf.Min(tile.topHeight, tile.sideLength) * texture.width), tile.bottomHeight);
-
+                colors[i] = GetFogColor(colors[i], tile.topHeight);
             }
-
-            return sectionTexture;
+            topTexture.SetPixels(colors);
+            topTexture.Apply();
+            return topTexture;
         }
 
         private static Texture2D ApplyBorder(Texture2D texture, Tile tile, Vector2Int direction)
         {
             if ((direction.x == 0 || direction.y == 0) && (direction.x != direction.y))
             {
-                if (direction.x == 0)
-                {
-                }
                 Tile neighbor = tile.FindNeighbor(direction);
                 if (neighbor == null || neighbor != null && neighbor.topHeight != tile.topHeight)
                 {
@@ -123,15 +104,15 @@ namespace TileMap
                     for (int i = 0; i < div10 * width; i++)
                     {
                         int index;
-                        if (direction.y == 1)
+                        if (direction.y == -1)
                         {
                             index = i;
                         }
-                        else if (direction.y == -1)
+                        else if (direction.y == 1)
                         {
                             index = width * width - i - 1;
                         }
-                        else if (direction.x == 1)
+                        else if (direction.x == -1)
                         {
                             index = (i / width) + ((width - y - 1) * width);
                             y++;
@@ -193,6 +174,8 @@ namespace TileMap
 
             return completeEdgeColors;
         }
+
+        public static Texture2D GetTileSide(Texture2D texture, Tile tile) => GetTileSide(texture, Mathf.RoundToInt(Mathf.Min(tile.topHeight, tile.sideLength) * texture.width), tile.bottomHeight);
 
         public static Sprite GetTileSide(int pallateIndex, float heightInWorldUnits, float distToZ0InWorldUnits)
         {
@@ -419,8 +402,6 @@ namespace TileMap
         }
 
     }
-
-    public enum TileTextureSection { Original, Top, Border, Edge, Side, Extents }
 
 #if UNITY_EDITOR
     [CustomEditor(typeof(TileTextureManager))]

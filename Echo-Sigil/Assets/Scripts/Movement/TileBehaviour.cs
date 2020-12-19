@@ -36,13 +36,13 @@ namespace TileMap
             Vector3 center = Vector3.forward * (tile.sideLength / 2f);
             topSprite.gameObject.transform.localPosition = center;
             selectionCollider.center = center;
-            topSprite.sprite = TileTextureManager.GetTileSprite(tile.spriteIndex, TileTextureSection.Top, tile);
+            topSprite.sprite = TileTextureManager.GetTileTop(tile.spriteIndex, tile);
 
         }
 
         public void SetSideSprite(Vector2Int direction)
         {
-            SpriteRenderer spriteRenderer = null;
+            SpriteRenderer spriteRenderer;
             if (sideSprites.ContainsKey(direction))
             {
                 spriteRenderer = sideSprites[direction];
@@ -51,7 +51,7 @@ namespace TileMap
             {
                 GameObject sideSpriteGameObject = new GameObject(tile.posInGrid + " side sprite " + direction);
                 sideSpriteGameObject.transform.parent = transform;
-                sideSpriteGameObject.transform.localPosition = new Vector3(-direction.x / 2f, -direction.y / 2f);
+                sideSpriteGameObject.transform.localPosition = new Vector3(direction.x / 2f, direction.y / 2f);
                 sideSpriteGameObject.transform.localRotation = Quaternion.LookRotation(new Vector3(direction.x, direction.y, 0), -Vector3.forward);
 
                 spriteRenderer = sideSpriteGameObject.AddComponent<SpriteRenderer>();
@@ -174,6 +174,10 @@ namespace TileMap
             return tile.ToString() + " Behaviour";
         }
 
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.DrawWireCube(tile.PosInWorld, Vector3.one * .2f);
+        }
     }
 
     public class Tile : ITile
@@ -197,7 +201,7 @@ namespace TileMap
         {
             get
             {
-                foreach (Collider collider in Physics.OverlapBox(PosInWorld, Vector3.one * .5f))
+                foreach (Collider collider in Physics.OverlapBox(PosInWorld, Vector3.one * .1f))
                 {
                     if (collider.TryGetComponent(out TileBehaviour tileBehaviour))
                     {
@@ -378,6 +382,8 @@ namespace TileMap
 
         public static implicit operator Vector2Int(TilePos t) => t.PosInGrid;
 
+        public static implicit operator Vector3(TilePos t) => new Vector3(t.x, t.y, t.z);
+
         public static implicit operator string(TilePos t) => t.ToString();
 
         public override string ToString()
@@ -394,5 +400,10 @@ namespace TileMap
         {
             return new TilePos(a.x - b.x, a.y - b.y, a.z);
         }
-    } 
+
+        public static TilePos operator -(TilePos a, Vector3 b)
+        {
+            return new TilePos(Mathf.RoundToInt(a.x - b.x), Mathf.RoundToInt(a.y - b.y), a.z - b.z);
+        }
+    }
 }

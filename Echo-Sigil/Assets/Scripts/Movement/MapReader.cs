@@ -14,7 +14,7 @@ namespace TileMap
         public static int sizeX;
         public static int sizeY;
         public static Vector2Int Size => new Vector2Int(sizeX, sizeY);
-        public static Vector2 mapHalfSize => new Vector2(sizeX / 2, sizeY / 2);
+        public static Vector2 mapHalfSize => new Vector2(sizeX / 2f, sizeY / 2f);
 
         private static Tile[] tiles;
         /// <summary>
@@ -118,18 +118,22 @@ namespace TileMap
 
         public static Vector3 GridToWorldSpace(TilePos posInGrid)
         {
-            Vector3 realitivePosition = new Vector3(posInGrid.x - mapHalfSize.x, posInGrid.y - mapHalfSize.y, 0);
-            return new Vector3(tileParent.transform.position.x, tileParent.transform.position.y, posInGrid.z) - realitivePosition;
+            float xRealitive = (int)(posInGrid.x + .5f - mapHalfSize.x);
+            float yRealitive = (int)(posInGrid.y + .5f - mapHalfSize.y);
+            float x = xRealitive + tileParent.position.x;
+            float y = yRealitive + tileParent.position.y;
+            return new Vector3(x, y, posInGrid.z + tileParent.position.z);
         }
 
         public static Vector3 GridToWorldSpace(int x, int y, float z) => GridToWorldSpace(new TilePos(x, y, z));
 
         public static TilePos WorldToGridSpace(Vector3 posInWorld)
         {
-            Vector3 realitivePosition = posInWorld - tileParent.position;
-            int x = (int)Math.Abs(realitivePosition.x - mapHalfSize.x - .5f);
-            int y = (int)Math.Abs(realitivePosition.y - mapHalfSize.y - .5f);
-            return new TilePos(x, y, realitivePosition.z);
+            float xRealitive = posInWorld.x - tileParent.position.x;
+            float yRealitive = posInWorld.y - tileParent.position.y;
+            int x = (int)(xRealitive -.5f + mapHalfSize.x);
+            int y = (int)(yRealitive - .5f + mapHalfSize.y);
+            return new TilePos(x, y, posInWorld.z + tileParent.position.z);
         }
 
         public static TilePos WorldToGridSpace(float x, float y, float z) => WorldToGridSpace(new Vector3(x, y, z));
@@ -156,7 +160,7 @@ namespace TileMap
             return output;
         }
 
-        public static Tile GetTile(TilePos pos) => GetTile(pos.x, pos.y, pos.z-1, pos.z+1);
+        public static Tile GetTile(TilePos pos) => GetTile(pos.x, pos.y, pos.z - 1, pos.z + 1);
 
         public static Tile GetTile(int x, int y, float minHeight, float MaxHeight)
         {
@@ -165,14 +169,14 @@ namespace TileMap
             {
                 foreach (Tile tile in tiles)
                 {
-                    if(tile != null && tile.bottomHeight >= minHeight && tile.topHeight <= MaxHeight)
+                    if (tile != null && tile.bottomHeight >= minHeight && tile.topHeight <= MaxHeight)
                     {
                         return tile;
                     }
-                } 
+                }
             }
             return null;
         }
 
-    } 
+    }
 }
