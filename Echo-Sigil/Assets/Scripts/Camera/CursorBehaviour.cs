@@ -25,6 +25,9 @@ public static class Cursor
 {
     private static CursorBehaviour behaviour;
     public static bool locked = true;
+    public static Unit unit;
+    public static TileMap.TileBehaviour tileBehaviour;
+    public static TileMap.Tile Tile => tileBehaviour.tile;
 
     public static void GetCursor()
     {
@@ -35,9 +38,7 @@ public static class Cursor
         behaviour.transform.position = GetCursor(locked);
     }
 
-    public static Vector3 GetCursor(bool centerMouse) => GetCursor(out Unit unit, out TileMap.TileBehaviour tileBehaviour, centerMouse);
-
-    public static Vector3 GetCursor(out Unit unit, out TileMap.TileBehaviour tileBehaviour, bool centerMouse)
+    public static Vector3 GetCursor(bool centerMouse)
     {
         TileMap.Tile tile = null;
         unit = null;
