@@ -173,11 +173,6 @@ namespace TileMap
         {
             return tile.ToString() + " Behaviour";
         }
-
-        private void OnDrawGizmosSelected()
-        {
-            Gizmos.DrawWireCube(tile.PosInWorld, Vector3.one * .2f);
-        }
     }
 
     public class Tile : ITile

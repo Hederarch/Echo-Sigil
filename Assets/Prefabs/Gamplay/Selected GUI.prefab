@@ -744,7 +744,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9634bf86a0feee94c9c882388252d5f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameText: {fileID: 0}
+  nameText: {fileID: 3619611809624034093}
   iconStencil: {fileID: 5839108688142487744}
   baseImage: {fileID: 3678544745347172322}
   moveButton: {fileID: 8118251043022988510}

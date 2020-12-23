@@ -15,7 +15,10 @@ public class SelectionGUI : MonoBehaviour
     private void Start()
     {
         instance = this;
+        Cursor.GotCursorEvent += SetSelected;
     }
+
+    public void SetSelected() => SetSelected(Cursor.unit);
 
     public void SetSelected(Unit unit)
     {
@@ -34,5 +37,10 @@ public class SelectionGUI : MonoBehaviour
     public void PlayerMove()
     {
         Debug.Log("The player wants to move you see");
+    }
+
+    private void OnDestroy()
+    {
+        Cursor.GotCursorEvent -= SetSelected;
     }
 }

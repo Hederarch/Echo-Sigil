@@ -7,6 +7,7 @@ using UnityEditor;
 [RequireComponent(typeof(SpriteRenderer))]
 public class CursorBehaviour : MonoBehaviour
 {
+    private static CursorBehaviour behaviour;
     private SpriteRenderer spriteRenderer;
 
     private void Start()
@@ -17,17 +18,16 @@ public class CursorBehaviour : MonoBehaviour
 
     private void Update()
     {
-        Cursor.GetCursor();
+        GetCursor();
+        Vector3 desieredFoucus = GamplayCamera.instance.desieredFoucus = Cursor.posInWorld;
+        float y = Input.GetAxisRaw("Vertical");
+        float x = Input.GetAxisRaw("Horizontal");
+        float yAdd = (Cursor.posInGrid.y + y);
+        float xAdd = (Cursor.posInGrid.x + x);
+        desieredFoucus.y = desieredFoucus.y + (0 <= yAdd && yAdd < TileMap.MapReader.sizeY ? y : 0);
+        desieredFoucus.x = desieredFoucus.x + (0 <= xAdd && xAdd < TileMap.MapReader.sizeX ? x : 0);
+        GamplayCamera.instance.desieredFoucus = desieredFoucus;
     }
-}
-
-public static class Cursor
-{
-    private static CursorBehaviour behaviour;
-    public static bool locked = true;
-    public static Unit unit;
-    public static TileMap.TileBehaviour tileBehaviour;
-    public static TileMap.Tile Tile => tileBehaviour.tile;
 
     public static void GetCursor()
     {
@@ -35,10 +35,22 @@ public static class Cursor
         {
             behaviour = new GameObject("Cursor", typeof(CursorBehaviour)).GetComponent<CursorBehaviour>();
         }
-        behaviour.transform.position = GetCursor(locked);
+        Cursor.GetCursor(Cursor.locked);
+        behaviour.transform.position = Cursor.posInWorld;
     }
+}
 
-    public static Vector3 GetCursor(bool centerMouse)
+public static class Cursor
+{
+    public static bool locked = true;
+    public static Unit unit;
+    public static TileMap.TileBehaviour tileBehaviour;
+    public static TileMap.Tile Tile => tileBehaviour.tile;
+    public static TileMap.TilePos posInGrid;
+    public static Vector3 posInWorld => posInGrid + (Vector3.forward * .02f);
+    public static Action GotCursorEvent;
+
+    public static void GetCursor(bool centerMouse)
     {
         TileMap.Tile tile = null;
         unit = null;
@@ -64,18 +76,22 @@ public static class Cursor
             }
             if (tile != null)
             {
-                return tile.PosInWorld + new Vector3(0, 0, .02f);
+                posInGrid = tile.posInGrid;
             }
         }
 
-        Vector3 pos = TileMap.MapReader.AlignWorldPosToGrid(WorldPointToZ0(from, GamplayCamera.instance.transform.forward) + Vector3.forward * .02f);
-        tile = TileMap.MapReader.GetTile(TileMap.MapReader.WorldToGridSpace(pos));
+        TileMap.TilePos pos = TileMap.MapReader.WorldToGridSpace(WorldPointToZ0(from, GamplayCamera.instance.transform.forward));
+        tile = TileMap.MapReader.GetTile(pos);
         if (tile != null)
         {
-            pos = tile.PosInWorld + Vector3.forward * .02f;
+            posInGrid = tile.posInGrid;
             tileBehaviour = tile.TileBehaviour;
         }
-        return pos;
+        else
+        {
+            posInGrid = pos;
+        }
+        GotCursorEvent?.Invoke();
     }
 
     public static Vector3 WorldPointToZ0(Vector3 position, Vector3 forward)
@@ -93,14 +109,15 @@ public class CursorEditor : Editor
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-        EditorGUILayout.BeginHorizontal();
         Cursor.locked = EditorGUILayout.Toggle("Locked", Cursor.locked);
-        Cursor.GetCursor(Cursor.locked);
         if (Cursor.tileBehaviour != null)
         {
             EditorGUILayout.LabelField((Cursor.unit != null ? Cursor.unit.ToString() : "nobody") + " at " + Cursor.Tile.posInGrid);
         }
-        EditorGUILayout.EndHorizontal();
+        if (GUILayout.Button("GetCursor()"))
+        {
+            Cursor.GetCursor(Cursor.locked);
+        }
     }
 }
 #endif

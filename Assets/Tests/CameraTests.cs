@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using UnityEngine;
+using TileMap;
 
 namespace Camera_Tests
 {
@@ -44,6 +45,37 @@ namespace Camera_Tests
         public void angle_sign_smaller_returns_plus()
         {
             Assert.IsTrue(Angle.Sign(Mathf.PI / 2f, Mathf.PI));
+        }
+    }
+    class selection
+    {
+        [Test]
+        public void center_cursor_selects_single_tile()
+        {
+            InitalCursorSetup(new Map(1, 1));
+            Cursor.GetCursor(true);
+            Assert.AreEqual(MapReader.GetTile(0, 0, 0, 1), Cursor.Tile);
+        }
+        [Test]
+        public void center_cursor_selects_center_tile()
+        {
+            InitalCursorSetup(new Map(3, 3));
+            Cursor.GetCursor(true);
+            Assert.AreEqual(MapReader.GetTile(1, 1, 0, 1), Cursor.Tile);
+        }
+        [Test]
+        public void center_cursor_at_0_0()
+        {
+            InitalCursorSetup(new Map(3, 3));
+            Cursor.GetCursor(true);
+            Assert.AreEqual(Vector3.zero, Cursor.posInWorld);
+        }
+
+        private static void InitalCursorSetup(Map map)
+        {
+            MapReader.GeneratePhysicalMap(map);
+            GamplayCamera gamplayCamera = new GameObject("Camera", typeof(GamplayCamera)).GetComponent<GamplayCamera>();
+            gamplayCamera.Start();
         }
     }
 }

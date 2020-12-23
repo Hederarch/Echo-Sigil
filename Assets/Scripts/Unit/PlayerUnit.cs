@@ -12,7 +12,7 @@ public class PlayerUnit : Unit
     public override void BeginTurn()
     {
         base.BeginTurn();
-        Cursor.GetCursor();
+        CursorBehaviour.GetCursor();
     }
 
     public override Color GetTeamColor()
