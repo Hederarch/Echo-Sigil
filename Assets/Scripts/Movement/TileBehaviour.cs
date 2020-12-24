@@ -15,14 +15,6 @@ namespace TileMap
 
         public bool cached;
 
-        private void Update()
-        {
-            if (topSprite != null)
-            {
-                topSprite.color = tile.CheckColor();
-            }
-        }
-
         public void SetTopSprite()
         {
             if (topSprite == null)
@@ -206,6 +198,20 @@ namespace TileMap
                 return null;
             }
         }
+        public Unit Unit
+        {
+            get
+            {
+                foreach (Collider collider in Physics.OverlapBox(PosInWorld, Vector3.one * .1f))
+                {
+                    if (collider.transform.parent.TryGetComponent(out Unit unit))
+                    {
+                        return unit;
+                    }
+                }
+                return null;
+            }
+        }
 
         public float topHeight;
         public float bottomHeight;
@@ -222,39 +228,6 @@ namespace TileMap
         }
 
         public int spriteIndex;
-
-        //State managment
-        public bool current { get; set; }
-        public bool target { get; set; }
-        public bool selectable { get; set; }
-        public Color CheckColor()
-        {
-            Color output = Color.white;
-            if (selectable)
-            {
-                output = Color.green;
-            }
-            if (target)
-            {
-                output = Color.red;
-            }
-            if (current)
-            {
-                output = Color.blue;
-            }
-            if (!walkable)
-            {
-                output -= Color.white / 2f;
-                output.a = 1;
-            }
-            return output;
-        }
-        public void ResetTile()
-        {
-            current = false;
-            target = false;
-            selectable = false;
-        }
 
         //Pathfinding stuff
         public ITile parent { get; set; }
@@ -335,10 +308,6 @@ namespace TileMap
     }
     public interface ITile : IAStarItem<ITile>
     {
-        bool current { get; set; }
-        bool target { get; set; }
-        bool selectable { get; set; }
-
         TilePos posInGrid { get; }
         Func<List<ITile>, List<ITile>> OnFindNeighbors { get; set; }
     }

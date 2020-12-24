@@ -14,6 +14,11 @@ public class PlayerUnit : Unit
         base.BeginTurn();
         CursorBehaviour.GetCursor();
     }
+    public override void EndTurn()
+    {
+        base.EndTurn();
+        CursorBehaviour.HideCursor();
+    }
 
     public override Color GetTeamColor()
     {

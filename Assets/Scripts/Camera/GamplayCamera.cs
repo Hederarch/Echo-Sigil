@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using System.Runtime.InteropServices;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -7,6 +8,12 @@ using UnityEditor;
 [RequireComponent(typeof(Camera))]
 public class GamplayCamera : MonoBehaviour
 {
+    [DllImport("user32.dll", EntryPoint = "SetCursorPos")]
+    private static extern bool SetCursorPos(int X, int Y);
+    [DllImport("user32.dll")]
+    public static extern bool GetCursorPos(out System.Drawing.Point lpPoint);
+    public bool fixedCursor = true;
+
     [HideInInspector]
     public Camera cam;
     public static GamplayCamera instance;
@@ -19,7 +26,7 @@ public class GamplayCamera : MonoBehaviour
         get => desieredAngle; set
         {
             desieredAngle = value;
-            cameraMoved = true;
+            angleChanged = true;
         }
     }
     [SerializeField]
@@ -32,20 +39,37 @@ public class GamplayCamera : MonoBehaviour
 
     public float positionSpeed = .05f;
     public float distToSnap = .5f;
-    public Vector3 desieredFoucus;
+    private Vector3 desieredFoucus;
     public Vector3 Foucus { get => foucus; private set => foucus = value; }
+    public Vector3 DesieredFoucus
+    {
+        get => desieredFoucus;
+        set
+        {
+            desieredFoucus = value;
+            finishedPositionChangedEvent?.Invoke();
+        }
+    }
+
     [SerializeField]
     private Vector3 foucus;
 
-    private bool cameraMoved;
-    public static Action<Vector2> CameraMoved;
+    private bool angleChanged;
+    private bool positionChanged;
+    /// <summary>
+    /// Event when camera positon has changed
+    /// </summary>
+    public Action<Vector2> CameraMoved;
+    /// <summary>
+    /// Event when the camera has finished going to the current desierd position
+    /// </summary>
+    public Action finishedPositionChangedEvent;
 
 
     public void Start()
     {
         cam = GetComponent<Camera>();
         cam.orthographic = true;
-        Unit.IsTurnEvent += SetAsFoucus;
         instance = this;
     }
 
@@ -53,56 +77,56 @@ public class GamplayCamera : MonoBehaviour
     public virtual void Update()
     {
         PlayerInputs();
-        if (Angle != desieredAngle || Foucus != desieredFoucus)
-        {
-            FoucusInputs();
-            SetSortMode();
-        }
+        FoucusInputs();
     }
 
     public void FoucusInputs()
     {
-        if (Angle != desieredAngle)
+        angleChanged = Angle != desieredAngle;
+        if (angleChanged)
         {
-            bool sign = Angle.Sign(Angle, desieredAngle);
             float amountOfChange = rotationSpeed * Time.deltaTime;
-            bool snap = amountOfChange > Mathf.Abs(desieredAngle - Angle);
-            if (snap)
-            {
-                Angle = desieredAngle;
-            }
-            else
-            {
-                Angle += sign ? amountOfChange : -amountOfChange;
-            }
+            Angle = amountOfChange > Mathf.Abs(desieredAngle - Angle)
+                ? desieredAngle
+                : Angle + (Angle.Sign(Angle, desieredAngle)
+                    ? amountOfChange
+                    : -amountOfChange);
         }
-        if (Foucus != desieredFoucus)
+        bool pastMovementState = positionChanged;
+        positionChanged = Foucus != DesieredFoucus;
+        if (positionChanged)
         {
-            Foucus = Vector3.Distance(Foucus, desieredFoucus) > distToSnap
-                ? Vector3.Lerp(Foucus, desieredFoucus, positionSpeed)
-                : desieredFoucus;
+            Foucus = Vector3.Distance(Foucus, DesieredFoucus) > distToSnap
+                ? Vector3.Lerp(Foucus, DesieredFoucus, positionSpeed)
+                : DesieredFoucus;
         }
-        CameraMoved?.Invoke(transform.position = CalcPostion(Foucus, Angle, offsetFromFoucus, offsetFromZ0));
-        transform.rotation = Quaternion.LookRotation(Foucus - transform.position, Vector3.forward);
+
+        if (positionChanged || angleChanged)
+        {
+            Vector3 finalPosition = CalcPostion(Foucus, Angle, offsetFromFoucus, offsetFromZ0);
+            Vector3 initialPosition = transform.position;
+            CameraMoved?.Invoke(transform.position = finalPosition);
+            if (!angleChanged && fixedCursor)
+            {
+                MoveCursor(initialPosition, finalPosition);
+            }
+            transform.rotation = Quaternion.LookRotation(Foucus - finalPosition, Vector3.forward);
+            SetSortMode();
+        }
+
+        if (pastMovementState && !positionChanged)
+        {
+            finishedPositionChangedEvent?.Invoke();
+        }
     }
 
     private void PlayerInputs()
     {
         //Rotate
-        if (Input.GetAxisRaw("Camera") != 0 && !cameraMoved)
-        {
-            DesieredAngle -= Input.GetAxisRaw("Camera") * Mathf.PI / 2;
-        }
-        else if (Input.GetAxisRaw("Camera") == 0)
-        {
-            cameraMoved = false;
-        }
+        DesieredAngle -= angleChanged ? 0 : Input.GetAxisRaw("Camera") * Mathf.PI / 2;
 
         //Zoom
-        float orthographicSize = cam.orthographicSize;
-        float scroll = Input.mouseScrollDelta.y;
-        orthographicSize -= scroll * positionSpeed * 100 * Time.deltaTime;
-        cam.orthographicSize = Mathf.Clamp(orthographicSize, zoomMinMax.x, zoomMinMax.y);
+        cam.orthographicSize = Mathf.Clamp(cam.orthographicSize - (Input.mouseScrollDelta.y * positionSpeed * 100 * Time.deltaTime), zoomMinMax.x, zoomMinMax.y);
     }
 
     public static Vector3 CalcPostion(Vector3 origin, Angle angle, float offsetFromFoucus, float offsetFromZ0)
@@ -119,19 +143,20 @@ public class GamplayCamera : MonoBehaviour
         cam.transparencySortAxis = transform.forward;
     }
 
-    private void SetAsFoucus(Unit unit)
+    public static void MoveCursor(Vector3 initial, Vector3 final, bool reversed = true)
     {
-        if (unit != null)
-        {
-            desieredFoucus = unit.transform.position;
-        }
+        Vector3 initalScreenPoint = instance.cam.WorldToScreenPoint(initial);
+        Vector3 finalScreenPoint = instance.cam.WorldToScreenPoint(final);
+        Vector3 direction = reversed ? initalScreenPoint - finalScreenPoint : finalScreenPoint - initalScreenPoint;
+        GetCursorPos(out System.Drawing.Point position);
+        SetCursorPos(position.X + (int)direction.x, position.Y - (int)direction.y);
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
-        if (Angle != desieredAngle || desieredFoucus != Foucus)
+        if (Angle != desieredAngle || DesieredFoucus != Foucus)
         {
-            Vector3 final = CalcPostion(desieredFoucus, desieredAngle, offsetFromFoucus, offsetFromZ0);
+            Vector3 final = CalcPostion(DesieredFoucus, desieredAngle, offsetFromFoucus, offsetFromZ0);
             Gizmos.DrawIcon(final, "Camera Gizmo", true, Color.cyan);
         }
     }
@@ -146,8 +171,10 @@ public class GamplayCameraEditor : Editor
 
     public override void OnInspectorGUI()
     {
-
+        EditorGUILayout.BeginHorizontal();
         EditorGUILayout.PropertyField(serializedObject.FindProperty("zoomMinMax"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("fixedCursor"));
+        EditorGUILayout.EndHorizontal();
 
         SerializedProperty angle = serializedObject.FindProperty("rotationSpeed");
         if (angle.isExpanded = EditorGUILayout.BeginFoldoutHeaderGroup(angle.isExpanded, "Angle"))

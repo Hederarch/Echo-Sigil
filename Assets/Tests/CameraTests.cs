@@ -64,11 +64,25 @@ namespace Camera_Tests
             Assert.AreEqual(MapReader.GetTile(1, 1, 0, 1), Cursor.Tile);
         }
         [Test]
-        public void center_cursor_at_0_0()
+        public void center_cursor_at_0_0_posInWorld()
         {
             InitalCursorSetup(new Map(3, 3));
             Cursor.GetCursor(true);
-            Assert.AreEqual(Vector3.zero, Cursor.posInWorld);
+            Assert.AreEqual(Vector3.forward, Cursor.posInWorld);
+        }
+        [Test]
+        public void center_cursor_at_1_1_posInGrid()
+        {
+            InitalCursorSetup(new Map(3, 3));
+            Cursor.GetCursor(true);
+            Assert.AreEqual(new TilePos(1,1,1), Cursor.posInGrid);
+        }
+        [Test]
+        public void center_cursor_posInGrid_matches_tile()
+        {
+            InitalCursorSetup(new Map(3, 3));
+            Cursor.GetCursor(true);
+            Assert.AreEqual(Cursor.Tile.posInGrid, Cursor.posInGrid);
         }
 
         private static void InitalCursorSetup(Map map)
@@ -76,6 +90,8 @@ namespace Camera_Tests
             MapReader.GeneratePhysicalMap(map);
             GamplayCamera gamplayCamera = new GameObject("Camera", typeof(GamplayCamera)).GetComponent<GamplayCamera>();
             gamplayCamera.Start();
+            gamplayCamera.transform.position = GamplayCamera.CalcPostion(Vector3.forward, 0, 4, 4);
+            gamplayCamera.transform.rotation = Quaternion.LookRotation(Vector3.forward - gamplayCamera.transform.position, Vector3.forward);
         }
     }
 }

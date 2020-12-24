@@ -69,11 +69,6 @@ namespace TileMap
             MapGeneratedEvent?.Invoke();
         }
 
-        internal static Vector3 AlignWorldPosToGrid(Vector3 vector3)
-        {
-            return new Vector3(Mathf.RoundToInt(vector3.x), Mathf.RoundToInt(vector3.y), vector3.z);
-        }
-
         public static void GenerateVirtualMap(Map map)
         {
             ResetTileParent();
@@ -116,28 +111,6 @@ namespace TileMap
             }
         }
 
-        public static Vector3 GridToWorldSpace(TilePos posInGrid)
-        {
-            float xRealitive = (int)(posInGrid.x + .5f - mapHalfSize.x);
-            float yRealitive = (int)(posInGrid.y + .5f - mapHalfSize.y);
-            float x = xRealitive + tileParent.position.x;
-            float y = yRealitive + tileParent.position.y;
-            return new Vector3(x, y, posInGrid.z + tileParent.position.z);
-        }
-
-        public static Vector3 GridToWorldSpace(int x, int y, float z) => GridToWorldSpace(new TilePos(x, y, z));
-
-        public static TilePos WorldToGridSpace(Vector3 posInWorld)
-        {
-            float xRealitive = posInWorld.x - tileParent.position.x;
-            float yRealitive = posInWorld.y - tileParent.position.y;
-            int x = (int)(xRealitive -.5f + mapHalfSize.x);
-            int y = (int)(yRealitive - .5f + mapHalfSize.y);
-            return new TilePos(x, y, posInWorld.z + tileParent.position.z);
-        }
-
-        public static TilePos WorldToGridSpace(float x, float y, float z) => WorldToGridSpace(new Vector3(x, y, z));
-
         public static Tile[] GetTiles(int x, int y)
         {
             if (x >= sizeX || y >= sizeY || x < 0 || y < 0)
@@ -160,8 +133,6 @@ namespace TileMap
             return output;
         }
 
-        public static Tile GetTile(TilePos pos) => GetTile(pos.x, pos.y, pos.z - 1, pos.z + 1);
-
         public static Tile GetTile(int x, int y, float minHeight, float MaxHeight)
         {
             Tile[] tiles = GetTiles(x, y);
@@ -177,6 +148,41 @@ namespace TileMap
             }
             return null;
         }
+
+        public static Tile GetTile(TilePos pos) => GetTile(pos.x, pos.y, pos.z - 1, pos.z + 1);
+
+        public static Vector3 GridToWorldSpace(TilePos posInGrid)
+        {
+            float xRealitive = (int)(posInGrid.x + .5f - mapHalfSize.x);
+            float yRealitive = (int)(posInGrid.y + .5f - mapHalfSize.y);
+            float x = xRealitive + tileParent.position.x;
+            float y = yRealitive + tileParent.position.y;
+            return new Vector3(x, y, posInGrid.z + tileParent.position.z);
+        }
+
+        public static Vector3 GridToWorldSpace(int x, int y, float z) => GridToWorldSpace(new TilePos(x, y, z));
+
+        public static TilePos WorldToGridSpace(Vector3 posInWorld)
+        {
+            float xRealitive = posInWorld.x - tileParent.position.x;
+            float yRealitive = posInWorld.y - tileParent.position.y;
+            int x = (int)(xRealitive - .5f + mapHalfSize.x);
+            int y = (int)(yRealitive - .5f + mapHalfSize.y);
+            return new TilePos(x, y, posInWorld.z + tileParent.position.z);
+        }
+
+        public static TilePos WorldToGridSpace(float x, float y, float z) => WorldToGridSpace(new Vector3(x, y, z));
+
+        public static Vector3 AlignWorldPosToGrid(Vector3 posInWorld) => new Vector3(Mathf.RoundToInt(posInWorld.x), Mathf.RoundToInt(posInWorld.y), posInWorld.z);
+
+        public static TilePos ConstrainToMap(TilePos posInGrid)
+        {
+            posInGrid.x = Mathf.Clamp(posInGrid.x, 0, sizeX - 1);
+            posInGrid.y = Mathf.Clamp(posInGrid.y, 0, sizeY - 1);
+            return posInGrid;
+        }
+
+        public static Vector3 ConstrainToMap(Vector3 posInWorld) => GridToWorldSpace(ConstrainToMap(WorldToGridSpace(posInWorld)));
 
     }
 }

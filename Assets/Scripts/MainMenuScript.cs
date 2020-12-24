@@ -12,7 +12,7 @@ public class MainMenuScript : MonoBehaviour
     public Transform canvas;
     public GameObject gameplayGUIElements;
     public GameObject mainMenuElements;
-    
+
 
     public void Start()
     {
@@ -22,7 +22,7 @@ public class MainMenuScript : MonoBehaviour
 
     public void NewGame()
     {
-        StartGame(new TileMap.Map(5,5));
+        StartGame(new TileMap.Map(5, 5));
     }
 
     public void LoadGame()

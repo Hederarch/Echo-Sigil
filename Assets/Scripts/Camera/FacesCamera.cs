@@ -6,7 +6,7 @@ public class FacesCamera : MonoBehaviour
 
     private void Start()
     {
-        GamplayCamera.CameraMoved += FaceTarget;
+        GamplayCamera.instance.CameraMoved += FaceTarget;
     }
 
     private void FaceTarget(Vector2 target)

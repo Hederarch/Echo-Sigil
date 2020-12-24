@@ -1,5 +1,7 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using TileMap;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -19,14 +21,18 @@ public class CursorBehaviour : MonoBehaviour
     private void Update()
     {
         GetCursor();
-        Vector3 desieredFoucus = GamplayCamera.instance.desieredFoucus = Cursor.posInWorld;
-        float y = Input.GetAxisRaw("Vertical");
-        float x = Input.GetAxisRaw("Horizontal");
-        float yAdd = (Cursor.posInGrid.y + y);
-        float xAdd = (Cursor.posInGrid.x + x);
-        desieredFoucus.y = desieredFoucus.y + (0 <= yAdd && yAdd < TileMap.MapReader.sizeY ? y : 0);
-        desieredFoucus.x = desieredFoucus.x + (0 <= xAdd && xAdd < TileMap.MapReader.sizeX ? x : 0);
-        GamplayCamera.instance.desieredFoucus = desieredFoucus;
+        Vector2 direction = Input.GetAxisRaw("Horizontal") * GamplayCamera.instance.transform.right;
+        direction += Input.GetAxisRaw("Vertical") * (Vector2)GamplayCamera.instance.transform.up;
+        Vector2Int directionInt = new Vector2Int(Mathf.RoundToInt(direction.x),Mathf.RoundToInt(direction.y));
+        if(directionInt != Vector2Int.zero)
+        {
+            Cursor.MoveCursor(directionInt);
+        }
+        GamplayCamera.instance.DesieredFoucus = MapReader.ConstrainToMap(Cursor.posInWorld);
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+        {
+            Cursor.locked = !Cursor.locked;
+        }
     }
 
     public static void GetCursor()
@@ -34,64 +40,113 @@ public class CursorBehaviour : MonoBehaviour
         if (behaviour == null)
         {
             behaviour = new GameObject("Cursor", typeof(CursorBehaviour)).GetComponent<CursorBehaviour>();
+            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+            UnityEngine.Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            behaviour.gameObject.SetActive(true);
         }
         Cursor.GetCursor(Cursor.locked);
-        behaviour.transform.position = Cursor.posInWorld;
+        behaviour.transform.position = Cursor.posInWorld + (Vector3.forward * .02f);
+    }
+
+    public static void HideCursor()
+    {
+        behaviour.gameObject.SetActive(false);
     }
 }
 
 public static class Cursor
 {
-    public static bool locked = true;
+    public static bool locked = false;
     public static Unit unit;
-    public static TileMap.TileBehaviour tileBehaviour;
-    public static TileMap.Tile Tile => tileBehaviour.tile;
-    public static TileMap.TilePos posInGrid;
-    public static Vector3 posInWorld => posInGrid + (Vector3.forward * .02f);
+    public static TileBehaviour tileBehaviour;
+    public static Tile Tile => tileBehaviour.tile;
+    public static TilePos posInGrid;
+    public static Vector3 posInWorld => MapReader.GridToWorldSpace(posInGrid);
     public static Action GotCursorEvent;
+    private static bool moveing;
 
     public static void GetCursor(bool centerMouse)
     {
-        TileMap.Tile tile = null;
-        unit = null;
-        tileBehaviour = null;
-        Vector3 from = GamplayCamera.instance.cam.ScreenToWorldPoint(centerMouse ? new Vector3(GamplayCamera.instance.cam.pixelWidth * .5f, GamplayCamera.instance.cam.pixelHeight * .5f, 0) : Input.mousePosition);
-        if (Physics.Raycast(from, GamplayCamera.instance.transform.forward, out RaycastHit hit))
+        if ((centerMouse && !moveing) || !centerMouse)
         {
-            if (hit.collider.transform.parent.TryGetComponent(out unit))
+            Tile tile = null;
+            unit = null;
+            tileBehaviour = null;
+            Vector3 from = centerMouse ? GamplayCamera.instance.transform.position : GamplayCamera.instance.cam.ScreenToWorldPoint(Input.mousePosition);
+            foreach (RaycastHit hit in Physics.RaycastAll(from, GamplayCamera.instance.transform.forward))
             {
-                tile = unit.CurTile;
-                tileBehaviour = tile.TileBehaviour;
-            }
-            else if (hit.collider.TryGetComponent(out tileBehaviour))
-            {
-                tile = tileBehaviour.tile;
-                foreach (Collider collider in Physics.OverlapBox(tile.PosInWorld, Vector3.one * .1f))
+                if (!centerMouse && hit.collider.transform.parent.TryGetComponent(out unit))
                 {
-                    if (collider.transform.parent.TryGetComponent(out unit))
+                    tile = unit.CurTile;
+                    tileBehaviour = tile.TileBehaviour;
+                }
+                else if (hit.collider.TryGetComponent(out tileBehaviour))
+                {
+                    tile = tileBehaviour.tile;
+                    foreach (Collider collider in Physics.OverlapBox(tile.PosInWorld, Vector3.one * .1f))
                     {
-                        break;
+                        if (collider.transform.parent.TryGetComponent(out unit))
+                        {
+                            break;
+                        }
                     }
                 }
+                if (tile != null)
+                {
+                    posInGrid = tile.posInGrid;
+                    break;
+                }
             }
-            if (tile != null)
+            if (tileBehaviour == null)
             {
-                posInGrid = tile.posInGrid;
+                TilePos pos = MapReader.WorldToGridSpace(WorldPointToZ0(from, GamplayCamera.instance.transform.forward));
+                tile = MapReader.GetTile(pos);
+                if (tile != null)
+                {
+                    posInGrid = tile.posInGrid;
+                    tileBehaviour = tile.TileBehaviour;
+                }
+                else
+                {
+                    posInGrid = pos;
+                }
             }
+            GotCursorEvent?.Invoke();
         }
+    }
 
-        TileMap.TilePos pos = TileMap.MapReader.WorldToGridSpace(WorldPointToZ0(from, GamplayCamera.instance.transform.forward));
-        tile = TileMap.MapReader.GetTile(pos);
-        if (tile != null)
+    public static void MoveCursor(Vector2Int direction)
+    {
+        if (!moveing)
         {
-            posInGrid = tile.posInGrid;
-            tileBehaviour = tile.TileBehaviour;
+            moveing = true;
+            GamplayCamera.instance.finishedPositionChangedEvent += EndMoveing;
+            GamplayCamera.instance.fixedCursor = false;
+            posInGrid = MapReader.ConstrainToMap(posInGrid + direction);
+            Tile tile = MapReader.GetTile(posInGrid);
+            
+            if(tile != null)
+            {
+                tileBehaviour = tile.TileBehaviour;
+                unit = Tile.Unit;
+            }
+            else
+            {
+                tileBehaviour = null;
+                unit = null;
+            }
+            GamplayCamera.instance.DesieredFoucus += new Vector3(direction.x,direction.y);
         }
-        else
-        {
-            posInGrid = pos;
-        }
-        GotCursorEvent?.Invoke();
+    }
+
+    private static void EndMoveing()
+    {
+        moveing = false;
+        GamplayCamera.instance.finishedPositionChangedEvent -= EndMoveing;
+        GamplayCamera.instance.fixedCursor = true;
     }
 
     public static Vector3 WorldPointToZ0(Vector3 position, Vector3 forward)
